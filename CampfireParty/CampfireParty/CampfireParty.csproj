@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{805F2293-53A5-4541-B165-12F69666E492}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CampfireParty</RootNamespace>
+    <AssemblyName>CampfireParty</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_Pyre.cs" />
+    <Compile Include="Building_PyreOn.cs" />
+    <Compile Include="JobDriver_UpdateThought.cs" />
+    <Compile Include="JobDriver_Dance.cs" />
+    <Compile Include="JobDriver_PlayTheGuitar.cs" />
+    <Compile Include="JobDriver_Pyre.cs" />
+    <Compile Include="JobDriver_ShootUpInTheAir.cs" />
+    <Compile Include="JobDriver_DropClothes.cs" />
+    <Compile Include="JobDriver_IngestBeer.cs" />
+    <Compile Include="JobDriver_WanderAroundPyre.cs" />
+    <Compile Include="Util_CampfireParty.cs" />
+    <Compile Include="PartyJobType.cs" />
+    <Compile Include="JobDriver_StartCampfireParty.cs" />
+    <Compile Include="PlaceWorker_Pyre.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CampfireParty\About\About.xml" />
+    <Content Include="CampfireParty\Defs\JobDefs\Jobs_CampfireParty.xml" />
+    <Content Include="CampfireParty\Defs\ThingDefs\Buildings_Misc_Pyre.xml" />
+    <Content Include="CampfireParty\Defs\ThingDefs\Motes.xml" />
+    <Content Include="CampfireParty\Defs\ThoughtDefs\Thoughts_Memories.xml" />
+    <Content Include="CampfireParty\Textures\Effects\LaserFence.png" />
+    <Content Include="CampfireParty\Textures\Things\Building\Security\DummyTexture.png" />
+    <Content Include="CampfireParty\Textures\Things\Building\Security\LaserFencePylon.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\EastFenceActive.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\EastFenceInactive.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\NorthFenceActive.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\NorthFenceInactive.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\SouthFenceActive.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\SouthFenceInactive.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\WestFenceActive.png" />
+    <Content Include="CampfireParty\Textures\Ui\Commands\WestFenceInactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CampfireParty\Textures\Effects\Thumbs.db" />
+    <None Include="CampfireParty\Textures\Things\Building\Security\LaserFencePylon.pdn" />
+    <None Include="CampfireParty\Textures\Things\Building\Security\Thumbs.db" />
+    <None Include="CampfireParty\Textures\Ui\Commands\NorthFence.pdn" />
+    <None Include="CampfireParty\Textures\Ui\Thumbs.db" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CampfireParty\Assemblies\" />
+    <Folder Include="CampfireParty\Defs\WorkGiverDefs\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>REM xcopy /Y "C:\Users\Temp\CampfireParty\CampfireParty\Release\CampfireParty.dll" "C:\Users\Temp\CampfireParty\CampfireParty\CampfireParty\Assemblies"
+REM xcopy /E /Y /I "C:\Users\Temp\CampfireParty\CampfireParty\CampfireParty" "C:\Users\Temp\RimWorld914Win\Mods\CampfireParty"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
