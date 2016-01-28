@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="CampfireParty\About\About.xml" />
+    <Content Include="CampfireParty\About\Preview.png" />
     <Content Include="CampfireParty\Defs\JobDefs\Jobs_CampfireParty.xml" />
     <Content Include="CampfireParty\Defs\ThingDefs\Buildings_Misc_Pyre.xml" />
     <Content Include="CampfireParty\Defs\ThingDefs\Motes.xml" />
@@ -95,7 +96,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>REM xcopy /Y "C:\Users\Temp\CampfireParty\CampfireParty\Release\CampfireParty.dll" "C:\Users\Temp\CampfireParty\CampfireParty\CampfireParty\Assemblies"
+    <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CampfireParty\Assemblies
+
 REM xcopy /E /Y /I "C:\Users\Temp\CampfireParty\CampfireParty\CampfireParty" "C:\Users\Temp\RimWorld914Win\Mods\CampfireParty"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
