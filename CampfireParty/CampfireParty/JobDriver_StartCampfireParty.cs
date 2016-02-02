@@ -151,7 +151,7 @@ namespace CampfireParty
                 switch (partyJobsType[jobIndex])
                 {
                     case PartyJobType.WanderAroundPyre:
-                        // TODO: not used to generate job???
+                        this.pawn.jobs.jobQueue.EnqueueLast(new Job(Util_CampfireParty.Job_WanderAroundPyre, pyre));
                         break;
 
                     case PartyJobType.PlayTheGuitar:

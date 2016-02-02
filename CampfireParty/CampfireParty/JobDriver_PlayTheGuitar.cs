@@ -45,7 +45,8 @@ namespace CampfireParty
                     tickCounter = Rand.Range(35, 50);
                     MoteAttached moteAttached = (MoteAttached)ThingMaker.MakeThing(Util_CampfireParty.Mote_Guitar);
                     moteAttached.AttachTo(this.pawn);
-                    GenSpawn.Spawn(moteAttached, this.pawn.Position);                    
+                    GenSpawn.Spawn(moteAttached, this.pawn.Position);
+                    this.pawn.drawer.rotator.FaceCell(this.pawn.Position + new IntVec3(0, 0, -1));
                 },
                 tickAction = () =>
                 {
