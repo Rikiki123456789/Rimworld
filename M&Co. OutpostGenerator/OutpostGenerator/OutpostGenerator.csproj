@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>OutpostGenerator</RootNamespace>
+    <AssemblyName>M&amp;Co. OutpostGenerator</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.11.5662.35584, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="M&amp;Co. LaserFence">
+      <HintPath>..\..\M&amp;Co. LaserFence\LaserFence\M&amp;Co. LaserFence\Assemblies\M&amp;Co. LaserFence.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_OutpostCommandConsole.cs" />
+    <Compile Include="Building_WarfieldGenerator.cs" />
+    <Compile Include="OG_LaserFence.cs" />
+    <Compile Include="OG_ZoneSpecial.cs" />
+    <Compile Include="OG_ZoneSmallRoomSpecial.cs" />
+    <Compile Include="OG_ZoneOther.cs" />
+    <Compile Include="OG_ZoneSmallRoom.cs" />
+    <Compile Include="Zone.cs" />
+    <Compile Include="OG_Common.cs" />
+    <Compile Include="OG_ZoneBigRoom.cs" />
+    <Compile Include="ZoneProperties.cs" />
+    <Compile Include="ZoneTypeWithWeight.cs" />
+    <Compile Include="ZoneType.cs" />
+    <Compile Include="OG_OutPostSize.cs" />
+    <Compile Include="OG_OutpostData.cs" />
+    <Compile Include="TriggerIntrusion.cs" />
+    <Compile Include="JobDriver_TryToCaptureOutpost.cs" />
+    <Compile Include="OG_Util.cs" />
+    <Compile Include="RectTriggerUnfogArea.cs" />
+    <Compile Include="OG_SmallOutpost.cs" />
+    <Compile Include="Genstep_GenerateOutpost.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="M&amp;Co. OutpostGenerator\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\DamageDefs\Damages_Conflagration.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\JobDefs\Jobs_OutpostGenerator.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\MapGeneratorDefs\MapGenerators.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Buildings_Misc_OutpostCommandConsole.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Buildings_Special_WarfieldGenerator.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Buildings_Power_CompactAutonomousGenerator.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Things_Special_OutpostGenerator.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="M&amp;Co. OutpostGenerator\Assemblies\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\M&amp;Co. OutpostGenerator\Assemblies</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

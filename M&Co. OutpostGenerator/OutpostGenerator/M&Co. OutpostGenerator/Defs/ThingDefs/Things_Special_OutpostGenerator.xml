@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefinitions>
+
+  <ThingDef>
+    <defName>RectTriggerUnfogArea</defName>
+    <category>Ethereal</category>
+    <label>RectTriggerUnfogArea</label>
+    <thingClass>OutpostGenerator.RectTriggerUnfogArea</thingClass>
+    <drawerType>None</drawerType>
+    <tickerType>Normal</tickerType>
+  </ThingDef>
+
+  <ThingDef>
+    <defName>TriggerIntrusion</defName>
+    <category>Ethereal</category>
+    <label>TriggerIntrusion</label>
+    <thingClass>OutpostGenerator.TriggerIntrusion</thingClass>
+    <drawerType>None</drawerType>
+    <tickerType>Normal</tickerType>
+  </ThingDef>
+
+</ThingDefinitions>

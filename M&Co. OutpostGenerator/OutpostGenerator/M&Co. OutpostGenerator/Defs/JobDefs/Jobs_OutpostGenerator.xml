@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<JobDefs>
+
+  <JobDef>
+    <defName>JobDef_TryToCaptureOutpost</defName>
+    <driverClass>OutpostGenerator.JobDriver_TryToCaptureOutpost</driverClass>
+    <reportString>Capturing command console.</reportString>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+  </JobDef>
+
+</JobDefs>
