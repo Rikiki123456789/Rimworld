@@ -20,12 +20,12 @@ namespace CaveworldFlora
     /// Remember learning is always better than just copy/paste...</permission>
     public class PlaceWorker_FungiponicsBasin : PlaceWorker
     {
-        public const float minDistanceBetweenFungiponicBasins = 5.9f;
+        public const float minDistanceBetweenFungiponicsBasins = 5.9f;
 
         /// <summary>
-        /// Check if a new fungiponic basin can be built at this location.
+        /// Check if a new fungiponics basin can be built at this location.
         /// - the fungiponics basin must be roofed.
-        /// - must not be too near from another fungiponic basin.
+        /// - must not be too near from another fungiponics basin.
         /// </summary>
         public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
         {
@@ -55,9 +55,9 @@ namespace CaveworldFlora
             }
             foreach (Thing basin in fungiponicsBasinsList)
             {
-                if (basin.Position.InHorDistOf(loc, minDistanceBetweenFungiponicBasins))
+                if (basin.Position.InHorDistOf(loc, minDistanceBetweenFungiponicsBasins))
                 {
-                    return new AcceptanceReport("An other fungiponic basin is too close.");
+                    return new AcceptanceReport("An other fungiponics basin is too close.");
                 }
             }
 
