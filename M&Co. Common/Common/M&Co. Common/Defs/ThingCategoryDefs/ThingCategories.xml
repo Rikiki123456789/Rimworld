@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingCategoryDefs>
+
+  <ThingCategoryDef>
+    <defName>Electronics</defName>
+    <label>Electronics</label>
+    <parent>Manufactured</parent>
+    <iconPath>Ui/Icons/ThingCategories/Electronics</iconPath>
+  </ThingCategoryDef>
+
+</ThingCategoryDefs>

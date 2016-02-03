@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Buildings>
+
+	<ThingDef Name="BuildingBase" Abstract="True">
+	  <category>Building</category>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+	  <selectable>true</selectable>
+	  <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+	  <repairEffect>Repair</repairEffect>
+    <filthLeaving>BuildingRubble</filthLeaving>
+	</ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ElectronicWorkbench</defName>
+    <Label>Electronic workbench</Label>
+    <Description>A workbench equipped with fine tools to design and make advanced (but still home-made) electronic devices.</Description>
+    <graphicData>
+      <texPath>Things/Building/Production/ElectronicWorkbench</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,1)</drawSize>
+    </graphicData>
+    <ThingClass>Common.Building_ElectronicWorkbench</ThingClass>
+    <CostList>
+      <Steel>250</Steel>
+    </CostList>
+    <AltitudeLayer>Waist</AltitudeLayer>
+    <statBases>
+      <WorkToMake>2500</WorkToMake>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <useHitPoints>True</useHitPoints>
+    <Size>(3,1)</Size>
+    <DesignationCategory>Production</DesignationCategory>
+    <Passability>Impassable</Passability>
+    <hasInteractionCell>True</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <surfaceType>Item</surfaceType>
+    <recipes>
+      <li>MakeIntegratedCircuitsBoard</li>
+    </recipes>
+    <inspectorTabs>
+      <li>ITab_Bills</li>
+    </inspectorTabs>
+    <comps>
+      <li>
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>true</startElectricalFires>
+        <basePowerConsumption>200</basePowerConsumption>
+        <soundPowerOn>PowerOnSmall</soundPowerOn>
+        <soundPowerOff>PowerOffSmall</soundPowerOff>
+      </li>
+      <li>
+        <compClass>CompGlower</compClass>
+        <glowRadius>2</glowRadius>
+        <glowColor>(50,75,15,0)</glowColor>
+      </li>
+    </comps>
+    <building>
+      <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
+      <heatPerTickWhileWorking>0.25</heatPerTickWhileWorking>
+    </building>
+    <researchPrerequisite>ResearchIntegratedCircuits</researchPrerequisite>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ChargingEnergyPack</defName>
+    <label>Charging energy pack</label>
+    <description>Charging energy pack. It will be usable once fully charged.</description>
+    <thingClass>Common.Building_ChargingEnergyPack</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Power/ChargingEnergyPack</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <altitudeLayer>Waist</altitudeLayer>
+    <passability>Impassable</passability>
+    <rotatable>False</rotatable>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>0.3</fillPercent>
+    <tickerType>Rare</tickerType>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToMake>200</WorkToMake>
+      <Flammability>1.0</Flammability>
+      <Beauty>0</Beauty>
+    </statBases>
+    <size>(1,1)</size>
+    <costList>
+      <Steel>20</Steel>
+    </costList>
+    <comps>
+      <li>
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>true</startElectricalFires>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+    </comps>
+    <killedLeavings>
+      <ChunkSlagSteel>1</ChunkSlagSteel>
+    </killedLeavings>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Power</designationCategory>
+    <staticSunShadowHeight>0.1</staticSunShadowHeight>
+    <constructEffect>ConstructMetal</constructEffect>
+    <researchPrerequisite>ResearchEnergyPack</researchPrerequisite>
+  </ThingDef>
+
+</Buildings>
