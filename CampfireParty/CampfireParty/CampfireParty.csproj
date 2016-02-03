@@ -95,9 +95,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CampfireParty\Assemblies
-
-REM xcopy /E /Y /I "C:\Users\Temp\CampfireParty\CampfireParty\CampfireParty" "C:\Users\Temp\RimWorld914Win\Mods\CampfireParty"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CampfireParty\Assemblies</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
