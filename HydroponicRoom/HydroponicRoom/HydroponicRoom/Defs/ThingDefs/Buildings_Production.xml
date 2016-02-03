@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+
+  <!-- ========== Hydroponics ==============-->
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>HydroponicsBasin</defName>
+    <label>hydroponics basin</label>
+    <thingClass>HydroponicRoom.Building_PlantGrowerLinked</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Production/HydroponicsBasin</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,4)</drawSize>
+    </graphicData>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <pathCost>60</pathCost>
+    <castEdgeShadows>true</castEdgeShadows>
+    <constructEffect>ConstructMetal</constructEffect>
+    <fillPercent>0.30</fillPercent>
+    <statBases>
+      <WorkToMake>2800</WorkToMake>
+      <MaxHitPoints>180</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <Cleanliness>-3</Cleanliness>
+    </statBases>
+    <description>For growing food. Hydroponics basins grow a few plants quickly. The basin requires power to work, and plants will die if power is cut.</description>
+    <size>(1,4)</size>
+    <costList>
+      <Steel>100</Steel>
+    </costList>
+    <inspectorTabs>
+      <li>ITab_Growing</li>
+    </inspectorTabs>
+    <fertility>1.7</fertility>
+    <building>
+      <defaultPlantToGrow>PlantPotato</defaultPlantToGrow>
+      <plantsDestroyWithMe>true</plantsDestroyWithMe>
+      <sowTag>Hydroponic</sowTag>
+    </building>
+    <tickerType>Rare</tickerType>
+    <comps>
+      <li>
+        <compClass>CompForbiddable</compClass>
+      </li>
+      <li>
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>70</basePowerConsumption>
+      </li>
+    </comps>
+    <researchPrerequisite>Hydroponics</researchPrerequisite>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <designationCategory>Production</designationCategory>
+    <designationHotKey>Y</designationHotKey>
+  </ThingDef>
+
+</ThingDefs>
