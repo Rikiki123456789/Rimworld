@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{714B137A-A3B5-4FB5-8B64-C3FDDC358216}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CaveworldFlora</RootNamespace>
+    <AssemblyName>CaveworldFlora</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Jeux\RimWorld914Win\RimWorld914Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\Program Files\Jeux\RimWorld914Win\RimWorld914Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CavePlant_Gleamcap.cs" />
+    <Compile Include="Building_FungiponicsBasin.cs" />
+    <Compile Include="GleamcapSporeSpawner.cs" />
+    <Compile Include="MapComponent_CavePlant.cs" />
+    <Compile Include="GenCavePlantReproduction.cs" />
+    <Compile Include="CavePlant.cs" />
+    <Compile Include="PlaceWorker_FungiponicsBasin.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util_CavePlant.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CaveworldFlora\Assemblies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CaveworldFlora\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveworldFlora\About\Preview.png" />
+    <Content Include="CaveworldFlora\Defs\ResearchProjectDefs\ResearchProjects_Fungiponics.xml" />
+    <Content Include="CaveworldFlora\Defs\ThingDefs\Buildings_CavePlants.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveworldFlora\Defs\ThingDefs\Buildings_FungiponicsBasin.xml" />
+    <Content Include="CaveworldFlora\Defs\ThingDefs\Items_Resource_Organic.xml" />
+    <Content Include="CaveworldFlora\Defs\ThingDefs\Plants_Wild_CavePlants.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveworldFlora\Defs\ThoughtDefs\Thoughts_Memories_CavePlant.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveworldFlora\Textures\Things\Building\DummyTexture.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Item\Resource\GleamcapStem.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\RawGlowbulb.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\RawShimmershroom.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Gleamcap\GleamcapA.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Gleamcap\GleamcapB.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Glowbulb\GlowbulbA.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Glowbulb\GlowbulbB.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Glowbulb\GlowbulbC.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Shimmershroom\ShimmershroomA.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Shimmershroom\ShimmershroomB.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Shimmershroom\ShimmershroomC.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\Thumbs.db" />
+    <None Include="CaveworldFlora\Textures\Things\Plant\Gleamcap\Thumbs.db" />
+    <None Include="CaveworldFlora\Textures\Things\Plant\Glowbulb\Thumbs.db" />
+    <None Include="CaveworldFlora\Textures\Things\Plant\Mushies.psd" />
+    <None Include="CaveworldFlora\Textures\Things\Plant\Shimmershroom\Thumbs.db" />
+    <None Include="CaveworldFlora\Textures\Things\Plant\Thumbs.db" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CaveworldFlora\Assemblies</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
