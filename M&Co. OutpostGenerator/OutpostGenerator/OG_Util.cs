@@ -22,6 +22,26 @@ namespace OutpostGenerator
     {
         public static string JobDefName_TryToCaptureOutpost = "JobDef_TryToCaptureOutpost";
 
+        public static ThingDef FireproofPowerConduitDef
+        {
+            get
+            {
+                return ThingDef.Named("FireproofPowerConduit");
+            }
+        }
+
+        // TODO: add corresponding designator (check console has been captured/destroyed to allow removing it) OR get rid of it :/
+        public static RoofDef IronedRoofDef
+        {
+            get
+            {
+                return DefDatabase<RoofDef>.GetNamed("IronedRoof");
+            }
+        }
+
+        /// <summary>
+        /// Return a copy of the listToRefresh but remove any destroyed item.
+        /// </summary>
         public static List<Thing> RefreshThingList(List<Thing> listToRefresh)
         {
             List<Thing> refreshedList = new List<Thing>();

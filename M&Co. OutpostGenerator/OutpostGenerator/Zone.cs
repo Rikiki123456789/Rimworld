@@ -19,26 +19,26 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Zone
     {
-        public static void GetAdjacentZone(int zoneAbs, int zoneOrd, Rot4 relativeRotation, out int adjacentZoneAbs, out int adjacentZoneOrd)
+        public static void GetAdjacentZone(int zoneAbs, int zoneOrd, Rot4 direction, out int adjacentZoneAbs, out int adjacentZoneOrd)
         {
             adjacentZoneAbs = 0;
             adjacentZoneOrd = 0;
-            if (relativeRotation == Rot4.North)
+            if (direction == Rot4.North)
             {
                 adjacentZoneAbs = zoneAbs;
                 adjacentZoneOrd = zoneOrd + 1;
             }
-            else if (relativeRotation == Rot4.East)
+            else if (direction == Rot4.East)
             {
                 adjacentZoneAbs = zoneAbs + 1;
                 adjacentZoneOrd = zoneOrd;
             }
-            else if (relativeRotation == Rot4.South)
+            else if (direction == Rot4.South)
             {
                 adjacentZoneAbs = zoneAbs;
                 adjacentZoneOrd = zoneOrd - 1;
             }
-            else if (relativeRotation == Rot4.West)
+            else if (direction == Rot4.West)
             {
                 adjacentZoneAbs = zoneAbs - 1;
                 adjacentZoneOrd = zoneOrd;

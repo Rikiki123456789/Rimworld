@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Roofs>
+
+  <RoofDef>
+    <defName>RoofIroned</defName>
+    <label>ironed roof</label>
+    <isThickRoof>true</isThickRoof>
+    <isNatural>false</isNatural>
+    <filthLeaving>RockRubble</filthLeaving>
+  </RoofDef>
+
+</Roofs>

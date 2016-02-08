@@ -29,10 +29,14 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDefOf.SolarGenerator, null, solarPanelZoneOrigin + new IntVec3(7, 0, 2), false, Rot4.North, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.SolarGenerator, null, solarPanelZoneOrigin + new IntVec3(2, 0, 7), false, Rot4.North, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.SolarGenerator, null, solarPanelZoneOrigin + new IntVec3(7, 0, 7), false, Rot4.North, ref outpostData);
-            OG_Common.SpawnPowerConduitAt(solarPanelZoneOrigin + new IntVec3(5, 0, 1), ref outpostData);
-            OG_Common.SpawnPowerConduitAt(solarPanelZoneOrigin + new IntVec3(1, 0, 5), ref outpostData);
-            OG_Common.SpawnPowerConduitAt(solarPanelZoneOrigin + new IntVec3(9, 0, 5), ref outpostData);
-            OG_Common.SpawnPowerConduitAt(solarPanelZoneOrigin + new IntVec3(5, 0, 9), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(5, 0, 1), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(5, 0, 0), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(1, 0, 5), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(0, 0, 5), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(9, 0, 5), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(10, 0, 5), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(5, 0, 9), ref outpostData);
+            OG_Common.SpawnFireproofPowerConduitAt(solarPanelZoneOrigin + new IntVec3(5, 0, 10), ref outpostData);
         }
 
         public static void GenerateDropZone(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, ref OG_OutpostData outpostData)

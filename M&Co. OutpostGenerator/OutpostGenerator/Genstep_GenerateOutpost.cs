@@ -11,6 +11,8 @@ using Verse;         // RimWorld universal objects are here
 
 namespace OutpostGenerator
 {
+    // TODO: add automated supply ship landing.
+
     /// <summary>
     /// Genstep_GenerateOutpost class.
     /// </summary>
@@ -19,8 +21,8 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Genstep_GenerateOutpost : Genstep_Scatterer
     {
-        public static int zoneSideSize = 11; // Side size of a zone.
-        public static int zoneSideCenterOffset = 5;
+        public const int zoneSideSize = 11; // Side size of a zone.
+        public const int zoneSideCenterOffset = 5;
 
         OG_OutpostData outpostData = new OG_OutpostData();
 
@@ -41,23 +43,34 @@ namespace OutpostGenerator
             Log.Message(" - isRuined: " + outpostData.isRuined.ToString());
             Log.Message(" - isInhabited: " + outpostData.isInhabited.ToString());
 
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-40, 0, 40);
-            OG_SmallOutpost.GenerateOutpost(outpostData);
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(40, 0, 40);
-            OG_SmallOutpost.GenerateOutpost(outpostData);
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(40, 0, -40);
-            OG_SmallOutpost.GenerateOutpost(outpostData);
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-40, 0, -40);
-            OG_SmallOutpost.GenerateOutpost(outpostData);
-            ////*/
+            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, 70);
+            OG_BigOutpost.GenerateOutpost(outpostData);
+            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(70, 0, 70);
+            OG_BigOutpost.GenerateOutpost(outpostData);
+            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(70, 0, -70);
+            OG_BigOutpost.GenerateOutpost(outpostData);
+            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, -70);
+            OG_BigOutpost.GenerateOutpost(outpostData);*/
+            ////
 
             // Check this outpost can be spawned somewhere on the map.
-            if (CellFinderLoose.TryFindRandomNotEdgeCellWith(this.minEdgeDist, new Predicate<IntVec3>(this.CanScatterAt), out outpostData.areaSouthWestOrigin) == false) // TODO: verify minEdgeDist is correctly used.
+            bool validSpawnPointIsFound = false;
+            for (int tryIndex = 0; tryIndex < 15; tryIndex++)
             {
-                if (this.warnOnFail)
+                if (CellFinderLoose.TryFindRandomNotEdgeCellWith(this.minEdgeDist, new Predicate<IntVec3>(this.CanScatterAt), out outpostData.areaSouthWestOrigin))
                 {
-                    Log.Message("Scatterer " + this.ToString() + " could not find an area to generate an outpost.");
+                    // A valid spawn location has been found.
+                    validSpawnPointIsFound = true;
+                    break;
                 }
+                else
+                {
+                    Log.Message("tryIndex = " + tryIndex); // TODO: debug
+                }
+            }
+            if (validSpawnPointIsFound == false)
+            {
+                Log.Message("Scatterer " + this.ToString() + " could not find an area to generate an outpost.");
                 return;
             }
             
@@ -67,6 +80,11 @@ namespace OutpostGenerator
 
         protected override bool CanScatterAt(IntVec3 loc)
         {
+            int mountainousBorderCells = 0;
+            int mountainousBorderCellsThreshold = 0;
+            int aquaticCells = 0;
+            int aquaticCellsThreshold = 0;
+
             if (base.CanScatterAt(loc) == false)
             {
                 return false;
@@ -79,29 +97,51 @@ namespace OutpostGenerator
                     minFreeAreaSideSize = OG_SmallOutpost.areaSideLength;
                     break;
                 case OG_OutpostSize.BigOutpost:
-                    // TODO: implement it.
-                    //minFreeAreaSideSize = OG_BigOutpost.areaSideLength;
+                    minFreeAreaSideSize = OG_BigOutpost.areaSideLength;
                     break;
             }
             CellRect outpostArea = new CellRect(loc.x, loc.z, minFreeAreaSideSize, minFreeAreaSideSize);
+            mountainousBorderCellsThreshold = (2 * outpostArea.Width + 2 * outpostArea.Height) / 4;
+            aquaticCellsThreshold = outpostArea.Area / 100;
             foreach (IntVec3 cell in outpostArea)
             {
-                if (cell.CloseToEdge(20))
+                // Only for border cells: too close from edge or crossing an existing structure (potentially a shrine).
+                if ((cell.x == outpostArea.minX)
+                    || (cell.x == outpostArea.maxX)
+                    || (cell.z == outpostArea.minZ)
+                    || (cell.z == outpostArea.maxZ))
                 {
-                    return false;
-                }
-                Building building = cell.GetEdifice();
-                if (building != null)
-                {
-                    return false;
+                    if (cell.CloseToEdge(20))
+                    {
+                        return false;
+                    }
+
+                    Building building = cell.GetEdifice();
+                    if (building != null)
+                    {
+                        mountainousBorderCells++;
+                        if (mountainousBorderCells > mountainousBorderCellsThreshold)
+                        {
+                            Log.Message("Invalid spawn point. Covering too much mountainous cells (threshold = " + mountainousBorderCellsThreshold + ")."); // TODO. debug
+                            return false;
+                        }
+                    }
                 }
                 TerrainDef terrain = Find.TerrainGrid.TerrainAt(cell);
-                if ((terrain == TerrainDef.Named("Marsh"))
-                    || (terrain == TerrainDef.Named("Mud"))
-                    || (terrain == TerrainDef.Named("WaterDeep"))
-                    || (terrain == TerrainDef.Named("WaterShallow")))
+                if (terrain == TerrainDef.Named("WaterDeep"))
                 {
                     return false;
+                }
+                if ((terrain == TerrainDef.Named("Marsh"))
+                    || (terrain == TerrainDef.Named("Mud"))
+                    || (terrain == TerrainDef.Named("WaterShallow")))
+                {
+                    aquaticCells++;
+                    if (aquaticCells > aquaticCellsThreshold)
+                    {
+                        Log.Message("Invalid spawn point. Covering too much aquatic cells (threshold = " + aquaticCellsThreshold + ")."); // TODO. debug
+                        return false;
+                    }
                 }
                 List<Thing> thingList = cell.GetThingList();
                 foreach (Thing thing in thingList)
@@ -112,6 +152,7 @@ namespace OutpostGenerator
                     }
                 }
             }
+            Log.Message("Valid spawn point found! Mountainous cells/threshold, aquatic cells/threshold = " + mountainousBorderCells + "/" + mountainousBorderCellsThreshold + ", " + aquaticCells + "/" + aquaticCellsThreshold); // TODO. debug
             return true;
         }
 
@@ -123,9 +164,7 @@ namespace OutpostGenerator
                     OG_SmallOutpost.GenerateOutpost(outpostData);
                     break;
                 case OG_OutpostSize.BigOutpost:
-                    // TODO: implement it.
-                    //OG_BigOutpost.GenerateOutpost(outpostData);
-                    Log.Warning("Big outpost generation not yet implemented.");
+                    OG_BigOutpost.GenerateOutpost(outpostData);
                     break;
             }
         }
@@ -142,25 +181,24 @@ namespace OutpostGenerator
         protected void GetOutpostSize(ref OG_OutpostData outpostData)
         {
             // Get outpost size.
-            // TODO: debug
             /*float outpostSizeSelector = Rand.Value;
             if (outpostSizeSelector < 0.2f)
             {
                 // No outpost.
-                outpostData.size = OutpostSize.NoOutpost;
+                outpostData.size = OG_OutpostSize.NoOutpost;
             }
             else if (outpostSizeSelector < 0.5f)
             {
-                // TODO: implement it.
                 // Generate a big outpost.
-                Log.Warning("Big outpost generation not yet implemented.");
-                outpostData.size = OutpostSize.BigOutpost;
+                outpostData.size = OG_OutpostSize.BigOutpost;
             }
-            else*/
+            else
             {
                 // Generate a small outpost.
                 outpostData.size = OG_OutpostSize.SmallOutpost;
-            }
+            }*/
+            // TODO: debug
+            outpostData.size = OG_OutpostSize.BigOutpost;
         }
 
         protected void GetOutpostType(ref OG_OutpostData outpostData)

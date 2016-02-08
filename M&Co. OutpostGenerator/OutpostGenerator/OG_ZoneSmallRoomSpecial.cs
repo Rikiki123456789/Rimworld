@@ -30,7 +30,6 @@ namespace OutpostGenerator
 
             // Generate batteries.
             OG_Common.TrySpawnThingAt(ThingDef.Named("CompactAutonomousGenerator"), null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            //OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 2, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 4, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 5, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 5).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
@@ -52,10 +51,9 @@ namespace OutpostGenerator
                 }
                 OG_Common.SpawnDoorAt(rotatedOrigin + new IntVec3(smallRoomWallOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset).RotatedBy(rotation), ref outpostData);
                 OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(smallRoomWallOffset + 5, 0, smallRoomWallOffset + 3).RotatedBy(rotation), Color.red, ref outpostData);
-                for (int xOffset = -1; xOffset <= 1; xOffset++)
+                for (int xOffset = 0; xOffset <= 1; xOffset++)
                 {
-                    OG_Common.SpawnPowerConduitAt(rotatedOrigin + new IntVec3(xOffset, 0, smallRoomWallOffset).RotatedBy(rotation), ref outpostData);
-                    OG_Common.SpawnPowerConduitAt(rotatedOrigin + new IntVec3(xOffset, 0, smallRoomWallOffset + 6).RotatedBy(rotation), ref outpostData);
+                    OG_Common.SpawnFireproofPowerConduitAt(rotatedOrigin + new IntVec3(xOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset).RotatedBy(rotation), ref outpostData);
                 }
             }
             else if (linkedZoneRelativeRotation == Rot4.East)
@@ -66,10 +64,9 @@ namespace OutpostGenerator
                 }
                 OG_Common.SpawnDoorAt(rotatedOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideSize - smallRoomWallOffset - 1, 0, Genstep_GenerateOutpost.zoneSideCenterOffset).RotatedBy(rotation), ref outpostData);
                 OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 3).RotatedBy(rotation), Color.red, ref outpostData);
-                for (int xOffset = Genstep_GenerateOutpost.zoneSideSize - 2; xOffset <= Genstep_GenerateOutpost.zoneSideSize; xOffset++)
+                for (int xOffset = Genstep_GenerateOutpost.zoneSideSize - 2; xOffset <= Genstep_GenerateOutpost.zoneSideSize - 1; xOffset++)
                 {
-                    OG_Common.SpawnPowerConduitAt(rotatedOrigin + new IntVec3(xOffset, 0, smallRoomWallOffset).RotatedBy(rotation), ref outpostData);
-                    OG_Common.SpawnPowerConduitAt(rotatedOrigin + new IntVec3(xOffset, 0, smallRoomWallOffset + 6).RotatedBy(rotation), ref outpostData);
+                    OG_Common.SpawnFireproofPowerConduitAt(rotatedOrigin + new IntVec3(xOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset).RotatedBy(rotation), ref outpostData);
                 }
             }
         }

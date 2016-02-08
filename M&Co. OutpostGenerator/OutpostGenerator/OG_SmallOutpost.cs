@@ -23,7 +23,7 @@ namespace OutpostGenerator
         public const int verticalZonesNumber = 3;
         public const int mainRoomZoneAbs = 1;
         public const int mainRoomZoneOrd = 1;
-        public const int areaSideLength = 11 + 11 + 11;
+        public const int areaSideLength = 3 * Genstep_GenerateOutpost.zoneSideSize;
         static int smallRoomWallOffset = 2; // Empty space in every direction of the room in the zone.
 
         static ZoneProperties[,] zoneMap = new ZoneProperties[verticalZonesNumber, horizontalZonesNumber];
@@ -34,7 +34,7 @@ namespace OutpostGenerator
         public static void GenerateOutpost(OG_OutpostData outpostDataParameter)
         {
             outpostData = outpostDataParameter;
-            outpostData.structureStuffDef = ThingDefOf.Steel;
+            outpostData.structureStuffDef = ThingDef.Named("Granite");
             outpostData.furnitureStuffDef = ThingDefOf.Steel;
             outpostData.triggerIntrusion = null;
             outpostData.outpostThingList = new List<Thing>();
@@ -47,10 +47,11 @@ namespace OutpostGenerator
                     zoneMap[zoneOrd, zoneAbs] = new ZoneProperties(ZoneType.NotYetGenerated, Rot4.North, Rot4.North);
                 }
             }
-            // Clear the whole area.
+            // Clear the whole area and remove any roof.
             CellRect rect = new CellRect(outpostData.areaSouthWestOrigin.x - 1, outpostData.areaSouthWestOrigin.z - 1, areaSideLength + 2, areaSideLength + 2);
             foreach (IntVec3 cell in rect.Cells)
             {
+                Find.RoofGrid.SetRoof(cell, null);
                 List<Thing> thingList = cell.GetThingList();
                 for (int j = thingList.Count - 1; j >= 0; j--)
                 {
@@ -66,7 +67,6 @@ namespace OutpostGenerator
             GenSpawn.Spawn(outpostData.triggerIntrusion, rect.Center);
 
             GenerateOutpostLayout();
-            GenerateOutpostZones(outpostData.areaSouthWestOrigin);
             
             // TODO: debug. Display the generated layout.
             /*for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
@@ -77,6 +77,7 @@ namespace OutpostGenerator
                     Log.Message("Layout: zoneMap[" + zoneOrd + "," + zoneAbs + "] => " + zone.zoneType.ToString() + "," + zone.rotation.ToString() + "," + zone.linkedZoneRelativeRotation.ToString());
                 }
             }*/
+            //GenerateOutpostZones(outpostData.areaSouthWestOrigin);
 
             // TODO: improve sas generation (should be more generic).
             IntVec3 mainRoomZoneOrigin = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, mainRoomZoneAbs, mainRoomZoneOrd);
@@ -150,8 +151,8 @@ namespace OutpostGenerator
 
         static void GenerateOutpostLayoutMainRoom()
         {
-            ZoneType mainRoomType = GetRandomZoneTypeBigRoom();
-            Rot4 mainRoomRotation = new Rot4(Rand.RangeInclusive(0, 3));
+            ZoneType mainRoomType = OG_Common.GetRandomZoneTypeBigRoom(outpostData);
+            Rot4 mainRoomRotation = Rot4.Random;
             zoneMap[mainRoomZoneOrd, mainRoomZoneAbs] = new ZoneProperties(mainRoomType, mainRoomRotation, Rot4.North);
         }
 
@@ -267,76 +268,10 @@ namespace OutpostGenerator
                 Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, rotation, out zoneAbs, out zoneOrd);
                 if (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.NotYetGenerated)
                 {
-                    ZoneType secondaryRoomType = GetRandomZoneTypeSmallRoom();
+                    ZoneType secondaryRoomType = OG_Common.GetRandomZoneTypeSmallRoom(outpostData);
                     zoneMap[zoneOrd, zoneAbs] = new ZoneProperties(secondaryRoomType, rotation, Rot4.North);
                 }
             }
-        }
-
-        static ZoneType GetRandomZoneTypeBigRoom()
-        {
-            List<ZoneTypeWithWeight> bigRoomsList = new List<ZoneTypeWithWeight>();
-            if (outpostData.isMilitary)
-            {
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomLivingRoom, 2f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomWarehouse, 2f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomPrison, 6f));
-            }
-            else
-            {
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomLivingRoom, 4f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomWarehouse, 4f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomPrison, 2f));
-            }
-
-            ZoneType bigRoomType = GetRandomZoneTypeByWeight(bigRoomsList);
-            return bigRoomType;
-        }
-
-        static ZoneType GetRandomZoneTypeSmallRoom()
-        {
-            List<ZoneTypeWithWeight> smallRoomsList = new List<ZoneTypeWithWeight>();
-            if (outpostData.isMilitary)
-            {
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomBarracks, 2f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomMedibay, 1f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomWeaponRoom, 5f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.EntranchedZone, 6f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
-            }
-            else
-            {
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomBarracks, 4f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomMedibay, 3f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomWeaponRoom, 1f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.EntranchedZone, 2f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
-            }
-
-            ZoneType smallRoomType = GetRandomZoneTypeByWeight(smallRoomsList);
-            return smallRoomType;
-        }
-
-        static ZoneType GetRandomZoneTypeByWeight(List<ZoneTypeWithWeight> list)
-        {
-            float weightTotalSum = 0;
-            foreach (ZoneTypeWithWeight element in list)
-            {
-                weightTotalSum += element.weight;
-            }
-            float elementSelector = Rand.Range(0f, weightTotalSum);
-
-            float weightSum = 0;
-            foreach (ZoneTypeWithWeight element in list)
-            {
-                weightSum += element.weight;
-                if (elementSelector <= weightSum)
-                {
-                    return element.zoneType;
-                }
-            }
-
-            return ZoneType.Empty;
         }
 
         // ######## Zone generation functions ######## //
@@ -392,8 +327,8 @@ namespace OutpostGenerator
                         case ZoneType.Empty:
                             OG_ZoneOther.GenerateEmptyZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation);
                             break;
-                        case ZoneType.EntranchedZone:
-                            OG_ZoneOther.GenerateEntranchedZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                        case ZoneType.SecondaryEntrance:
+                            OG_ZoneOther.GenerateSecondaryEntranceZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                     }
                 }
@@ -461,7 +396,7 @@ namespace OutpostGenerator
             {
                 for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
                 {
-                    if (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.EntranchedZone)
+                    if (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.SecondaryEntrance)
                     {
                         battleZoneAbs = zoneAbs;
                         battleZoneOrd = zoneOrd;

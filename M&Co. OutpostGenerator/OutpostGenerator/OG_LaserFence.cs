@@ -124,7 +124,7 @@ namespace OutpostGenerator
                                 laserFenceOrigin = zoneRotatedOrigin + new IntVec3(0, 0, Genstep_GenerateOutpost.zoneSideSize - 1).RotatedBy(new Rot4(zone.rotation.AsInt));
                                 SpawnLaserFenceWithEntrance(laserFenceOrigin, zone.rotation, 1, ref outpostData);
                                 break;
-                            case ZoneType.EntranchedZone:
+                            case ZoneType.SecondaryEntrance:
                                 laserFenceOrigin = zoneRotatedOrigin + new IntVec3(0, 0, Genstep_GenerateOutpost.zoneSideSize - 1).RotatedBy(new Rot4(zone.rotation.AsInt));
                                 SpawnLaserFenceWithEntrance(laserFenceOrigin, zone.rotation, 3, ref outpostData);
                                 break;
@@ -146,7 +146,7 @@ namespace OutpostGenerator
                 {
                     OG_Common.TrySpawnLaserFencePylonAt(position, ref outpostData);
                 }
-                OG_Common.SpawnPowerConduitAt(position, ref outpostData);
+                OG_Common.SpawnFireproofPowerConduitAt(position, ref outpostData);
                 Find.TerrainGrid.SetTerrain(position, TerrainDefOf.Concrete);
             }
         }
@@ -210,7 +210,7 @@ namespace OutpostGenerator
                         }
                     }
                 }
-                OG_Common.SpawnPowerConduitAt(position, ref outpostData);
+                OG_Common.SpawnFireproofPowerConduitAt(position, ref outpostData);
                 Find.TerrainGrid.SetTerrain(position, TerrainDefOf.Concrete);
                 if (xOffset == Genstep_GenerateOutpost.zoneSideCenterOffset)
                 {

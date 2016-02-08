@@ -51,7 +51,7 @@ namespace OutpostGenerator
                 if ((cell.x == rect.minX) || (cell.x == rect.maxX) || (cell.z == rect.minZ) || (cell.z == rect.maxZ))
                 {
                     OG_Common.TrySpawnWallAt(cell, ref outpostData);
-                    OG_Common.SpawnPowerConduitAt(cell, ref outpostData);
+                    OG_Common.SpawnFireproofPowerConduitAt(cell, ref outpostData);
                 }
             }
             // Trigger to unfog area when a pawn enters the room.
@@ -59,6 +59,7 @@ namespace OutpostGenerator
             // Generate roof.
             foreach (IntVec3 cell in rect.Cells)
             {
+                // TODO: add ironed roof as an option.
                 Find.RoofGrid.SetRoof(cell, RoofDefOf.RoofConstructed);
             }
             // Generate room default floor.
@@ -235,19 +236,19 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(wallDef, outpostData.structureStuffDef, position, false, Rot4.North, ref outpostData);
         }
 
-        public static void SpawnPowerConduitAt(IntVec3 position, ref OG_OutpostData outpostData)
+        public static void SpawnFireproofPowerConduitAt(IntVec3 position, ref OG_OutpostData outpostData)
         {
-            Thing powerConduit = ThingMaker.MakeThing(ThingDefOf.PowerConduit);
-            powerConduit.SetFaction(outpostData.faction);
+            Thing fireproofPowerConduit = ThingMaker.MakeThing(OG_Util.FireproofPowerConduitDef);
+            fireproofPowerConduit.SetFaction(outpostData.faction);
             foreach (Thing thing in position.GetThingList())
             {
-                if (thing.def == ThingDefOf.PowerConduit)
+                if (thing.def == OG_Util.FireproofPowerConduitDef)
                 {
                     return;
                 }
             }
-            outpostData.outpostThingList.Add(powerConduit);
-            GenSpawn.Spawn(powerConduit, position);
+            outpostData.outpostThingList.Add(fireproofPowerConduit);
+            GenSpawn.Spawn(fireproofPowerConduit, position);
         }
 
         public static void SpawnDoorAt(IntVec3 position, ref OG_OutpostData outpostData)
@@ -274,5 +275,95 @@ namespace OutpostGenerator
             return (OG_Common.TrySpawnThingAt(laserFencePylonDef, null, position, false, Rot4.North, ref outpostData) as LaserFence.Building_LaserFencePylon);
         }
 
+        public static ZoneType GetRandomZoneTypeBigRoom(OG_OutpostData outpostData)
+        {
+            List<ZoneTypeWithWeight> bigRoomsList = new List<ZoneTypeWithWeight>();
+            if (outpostData.isMilitary)
+            {
+                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomLivingRoom, 2f));
+                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomWarehouse, 2f));
+                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomPrison, 6f));
+            }
+            else
+            {
+                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomLivingRoom, 4f));
+                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomWarehouse, 4f));
+                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomPrison, 2f));
+            }
+
+            ZoneType bigRoomType = GetRandomZoneTypeByWeight(bigRoomsList);
+            return bigRoomType;
+        }
+
+        public static ZoneType GetRandomZoneTypeSmallRoom(OG_OutpostData outpostData)
+        {
+            List<ZoneTypeWithWeight> smallRoomsList = new List<ZoneTypeWithWeight>();
+            if (outpostData.isMilitary)
+            {
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomBarracks, 2f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomMedibay, 1f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomWeaponRoom, 5f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SecondaryEntrance, 6f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
+            }
+            else
+            {
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomBarracks, 4f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomMedibay, 3f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomWeaponRoom, 1f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SecondaryEntrance, 2f));
+                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
+            }
+
+            ZoneType smallRoomType = GetRandomZoneTypeByWeight(smallRoomsList);
+            return smallRoomType;
+        }
+
+        public static ZoneType GetRandomZoneTypeExteriorZone(OG_OutpostData outpostData)
+        {
+            List<ZoneTypeWithWeight> exteriorZonesList = new List<ZoneTypeWithWeight>();
+            if (outpostData.isMilitary)
+            {
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.WaterPool, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ShootingRange, 7f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Cemetery, 4f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ExteriorRecRoom, 2f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 3f));
+            }
+            else
+            {
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.WaterPool, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Farm, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ShootingRange, 1f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Cemetery, 3f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ExteriorRecRoom, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
+            }
+
+            ZoneType exteriorZoneType = GetRandomZoneTypeByWeight(exteriorZonesList);
+            return exteriorZoneType;
+        }
+
+        private static ZoneType GetRandomZoneTypeByWeight(List<ZoneTypeWithWeight> list)
+        {
+            float weightTotalSum = 0;
+            foreach (ZoneTypeWithWeight element in list)
+            {
+                weightTotalSum += element.weight;
+            }
+            float elementSelector = Rand.Range(0f, weightTotalSum);
+
+            float weightSum = 0;
+            foreach (ZoneTypeWithWeight element in list)
+            {
+                weightSum += element.weight;
+                if (elementSelector <= weightSum)
+                {
+                    return element.zoneType;
+                }
+            }
+
+            return ZoneType.Empty;
+        }
     }
 }

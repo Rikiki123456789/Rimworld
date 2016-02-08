@@ -22,27 +22,54 @@ namespace OutpostGenerator
     {
         NotYetGenerated,  // Zone not yet generated.
         
-        // Standard big rooms.
+        // Big rooms.
+            // Standard: used in random selector.
         BigRoomLivingRoom,
         BigRoomWarehouse,
         BigRoomPrison,
+            // Special: used during big outpost generation.
+        BigRoomRefectory,
+        BigRoomBatteryRoom,
+        BigRoomCommandRoom,
+        BigRoomBarracks,
+        BigRoomHydroponics,
 
-        // Standard small rooms.
+        // Medium rooms.
+            // Standard: used in random selector.
+
+
+        // Small rooms.
+            // Standard: used in random selector.
         SmallRoomBarracks,
         SmallRoomMedibay,
         SmallRoomWeaponRoom,
-
-        // Special small rooms.
+            // Special: used during small outpost generation.
         SmallRoomBatteryRoom,
         SmallRoomCommandRoom,
 
-        // Special zones.
+        // Special zones: used during small/big outpost generation.
         SolarPanelZone,
         DropZone,
+        LandingPadTop,
+        LandingPadBottom,
+        RadarDome,
+
+        // Exterior zones: used in random selector.
+        WaterPool,
+        Farm,
+        ShootingRange,
+        Cemetery,
+        ExteriorRecRoom,
 
         // Other zones.
         Empty, // Zone is empty.
-        EntranchedZone
+        MainEntrance,
+        SecondaryEntrance,
+        StraightAlley,
+        Plaza,
+        BigSas,
+        EntranchedZone,
+        SamSite
     }
 
 }

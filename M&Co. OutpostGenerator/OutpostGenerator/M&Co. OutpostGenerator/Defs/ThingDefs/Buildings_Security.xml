@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>SamSite</defName>
+    <label>SAM site</label>
+    <description>Anti-air missile battery. Automatically launches missiles at enemy air targets.</description>
+    <thingClass>OutpostGenerator.Building_SamSite</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Security/SamSite</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <uiIconPath>Things/Building/Security/SamSiteUiIcon</uiIconPath>
+    <size>(3,3)</size>
+    <altitudeLayer>BuildingTall</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <WorkToMake>25000</WorkToMake>
+      <Beauty>-20</Beauty>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li>
+        <compClass>CompExplosive</compClass>
+        <explosiveRadius>5.9</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+      </li>
+      <li>
+        <compClass>CompForbiddable</compClass>
+      </li>
+      <li>
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>500</basePowerConsumption>
+      </li>
+    </comps>
+    <passability>Impassable</passability>
+    <fillPercent>1.0</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <hasTooltip>false</hasTooltip>
+    <costList>
+      <Steel>400</Steel>
+      <Plasteel>200</Plasteel>
+      <IntegratedCircuitsBoard>10</IntegratedCircuitsBoard>
+    </costList>
+    <combatTargetBuilding>true</combatTargetBuilding>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <designationCategory>Security</designationCategory>
+    <building>
+      <ai_combatDangerous>false</ai_combatDangerous>
+      <turretBurstCooldownTicks>400</turretBurstCooldownTicks>
+      <turretTopgraphicPath>Things/Building/Security/SamSite_Top</turretTopgraphicPath>
+      <turretShellDef>SamMissile</turretShellDef>
+    </building>
+  </ThingDef>
+
+</ThingDefs>
