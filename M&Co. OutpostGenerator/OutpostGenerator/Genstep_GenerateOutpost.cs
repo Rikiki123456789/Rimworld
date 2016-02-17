@@ -11,8 +11,6 @@ using Verse;         // RimWorld universal objects are here
 
 namespace OutpostGenerator
 {
-    // TODO: add automated supply ship landing.
-
     /// <summary>
     /// Genstep_GenerateOutpost class.
     /// </summary>
@@ -122,7 +120,7 @@ namespace OutpostGenerator
                         mountainousBorderCells++;
                         if (mountainousBorderCells > mountainousBorderCellsThreshold)
                         {
-                            Log.Message("Invalid spawn point. Covering too much mountainous cells (threshold = " + mountainousBorderCellsThreshold + ")."); // TODO. debug
+                            //Log.Message("Invalid spawn point. Covering too much mountainous cells (threshold = " + mountainousBorderCellsThreshold + ")."); // TODO. debug
                             return false;
                         }
                     }
@@ -139,7 +137,7 @@ namespace OutpostGenerator
                     aquaticCells++;
                     if (aquaticCells > aquaticCellsThreshold)
                     {
-                        Log.Message("Invalid spawn point. Covering too much aquatic cells (threshold = " + aquaticCellsThreshold + ")."); // TODO. debug
+                        //Log.Message("Invalid spawn point. Covering too much aquatic cells (threshold = " + aquaticCellsThreshold + ")."); // TODO. debug
                         return false;
                     }
                 }
@@ -207,11 +205,21 @@ namespace OutpostGenerator
             if (outpostTypeSelector < 0.25f)
             {
                 outpostData.isMilitary = true;
+                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = true;
+                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
+                Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
             }
             else
             {
                 outpostData.isMilitary = false;
+                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = false;
+                float goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.RandomInRange;
+                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = goodwill;
+                Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = goodwill;
             }
+            Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = false;
+            Log.Message("Colony.RelationWithMAndCo goodwill/hostile = " + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill + "/" + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile);
+            Log.Message("MAndCo.RelationWithColony goodwill/hostile = " + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill + "/" + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile);
         }
 
         protected void GetBattleOccured(ref OG_OutpostData outpostData)

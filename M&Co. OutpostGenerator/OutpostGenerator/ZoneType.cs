@@ -57,19 +57,19 @@ namespace OutpostGenerator
         // Exterior zones: used in random selector.
         WaterPool,
         Farm,
+        ExteriorRecRoom,
         ShootingRange,
         Cemetery,
-        ExteriorRecRoom,
 
         // Other zones.
         Empty, // Zone is empty.
         MainEntrance,
         SecondaryEntrance,
-        StraightAlley,
-        Plaza,
-        BigSas,
         EntranchedZone,
-        SamSite
+        SamSite,
+        BigSas,
+        Plaza,
+        StraightAlley
     }
 
 }

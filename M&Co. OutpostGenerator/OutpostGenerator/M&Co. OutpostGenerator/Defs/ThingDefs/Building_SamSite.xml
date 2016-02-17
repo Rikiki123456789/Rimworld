@@ -26,9 +26,9 @@
     <size>(3,3)</size>
     <altitudeLayer>BuildingTall</altitudeLayer>
     <statBases>
-      <MaxHitPoints>400</MaxHitPoints>
+      <MaxHitPoints>500</MaxHitPoints>
       <Flammability>0.2</Flammability>
-      <WorkToMake>25000</WorkToMake>
+      <WorkToMake>45000</WorkToMake>
       <Beauty>-20</Beauty>
     </statBases>
     <tickerType>Normal</tickerType>
@@ -47,8 +47,9 @@
       </li>
     </comps>
     <passability>Impassable</passability>
-    <fillPercent>1.0</fillPercent>
+    <fillPercent>0.5</fillPercent>
     <castEdgeShadows>true</castEdgeShadows>
+    <staticSunShadowHeight>0.50</staticSunShadowHeight>
     <hasTooltip>false</hasTooltip>
     <costList>
       <Steel>400</Steel>
@@ -60,9 +61,9 @@
     <designationCategory>Security</designationCategory>
     <building>
       <ai_combatDangerous>false</ai_combatDangerous>
-      <turretBurstCooldownTicks>400</turretBurstCooldownTicks>
       <turretTopgraphicPath>Things/Building/Security/SamSite_Top</turretTopgraphicPath>
-      <turretShellDef>SamMissile</turretShellDef>
+      <turretShellDef>Sam</turretShellDef>
+      <soundDispense>GeothermalPlant_Ambience</soundDispense>
     </building>
   </ThingDef>
 

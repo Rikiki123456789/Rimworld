@@ -16,14 +16,14 @@
 
   <!-- ================ SAM missile ============== -->
   <ThingDef ParentName="BaseBullet">
-    <defName>SamMissile</defName>
-    <label>SAM missile</label>
+    <defName>Sam</defName>
+    <label>SAM</label>
     <graphicData>
       <texPath>Things/Projectile/Rocket_Big</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shaderType>TransparentPostLight</shaderType>
     </graphicData>
-    <thingClass>OutpostGenerator.Projectile_SamMissile</thingClass>
+    <thingClass>OutpostGenerator.Projectile_Sam</thingClass>
     <altitudeLayer>FlyingItem</altitudeLayer>
     <projectile>
       <damageDef>Bomb</damageDef>

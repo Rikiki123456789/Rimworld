@@ -13,61 +13,9 @@
   </ThingDef>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>FireproofPowerConduit</defName>
-    <label>fireproof power conduit</label>
-    <thingClass>Building</thingClass>
-    <category>Building</category>
-    <graphicData>
-      <texPath>Things/Building/Linked/PowerConduit_Atlas</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <linkType>Transmitter</linkType>
-      <linkFlags>
-        <li>PowerConduit</li>
-      </linkFlags>
-    </graphicData>
-    <blueprintGraphicData>
-      <texPath>Things/Building/Linked/PowerConduit_Blueprint_Atlas</texPath>
-    </blueprintGraphicData>
-    <uiIconPath>Things/Building/Linked/PowerConduit_MenuIcon</uiIconPath>
-    <building>
-      <isInert>true</isInert>
-      <ignoreNeedsPower>true</ignoreNeedsPower>
-      <isEdifice>false</isEdifice>
-    </building>
-    <altitudeLayer>FloorEmplacement</altitudeLayer>
-    <passability>Standable</passability>
-    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
-    <statBases>
-      <MaxHitPoints>120</MaxHitPoints>
-      <WorkToMake>100</WorkToMake>
-      <Flammability>0.0</Flammability>
-      <Beauty>0</Beauty>
-    </statBases>
-    <description>A set of fireproof electrical cables for moving power around. Can be placed under walls and other buildings.</description>
-    <placingDraggableDimensions>1</placingDraggableDimensions>
-    <costList>
-      <Steel>3</Steel>
-    </costList>
-    <comps>
-      <li>
-        <compClass>CompPowerTransmitter</compClass>
-        <transmitsPower>true</transmitsPower>
-      </li>
-    </comps>
-    <placeWorkers>
-      <li>PlaceWorker_Conduit</li>
-    </placeWorkers>
-    <rotatable>false</rotatable>
-    <selectable>true</selectable>
-    <neverMultiSelect>true</neverMultiSelect>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <constructEffect>ConstructMetal</constructEffect>
-  </ThingDef>
-
-  <ThingDef ParentName="BuildingBase">
     <defName>CompactAutonomousGenerator</defName>
     <label>compact autonomous generator</label>
+    <description>Produces a high quantity of energy from auto-regulated fusion/fission cycles. Warning! The generator will explode in a massive conflagration if destabilized.</description>
     <thingClass>Building</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -86,7 +34,6 @@
       <Flammability>1.0</Flammability>
       <Beauty>100</Beauty>
     </statBases>
-    <description>Produces a high quantity of energy from auto-regulated fusion/fission cycles. Warning! The generator will explode in a massive conflagration if destabilized.</description>
     <size>(2,2)</size>
     <costList>
       <Steel>300</Steel>

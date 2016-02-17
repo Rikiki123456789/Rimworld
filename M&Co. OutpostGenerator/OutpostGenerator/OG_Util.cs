@@ -20,8 +20,10 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public static class OG_Util
     {
+        // Job def.
         public static string JobDefName_TryToCaptureOutpost = "JobDef_TryToCaptureOutpost";
 
+        // Thing defs.
         public static ThingDef FireproofPowerConduitDef
         {
             get
@@ -30,12 +32,53 @@ namespace OutpostGenerator
             }
         }
 
+        public static ThingDef SamSiteDef
+        {
+            get
+            {
+                return ThingDef.Named("SamSite");
+            }
+        }
+        
+        public static ThingDef SamDef
+        {
+            get
+            {
+                return ThingDef.Named("Sam");
+            }
+        }
+
+        public static ThingDef VulcanTurretDef
+        {
+            get
+            {
+                return ThingDef.Named("VulcanTurret");
+            }
+        }
+
+        // Roof def.
         // TODO: add corresponding designator (check console has been captured/destroyed to allow removing it) OR get rid of it :/
         public static RoofDef IronedRoofDef
         {
             get
             {
                 return DefDatabase<RoofDef>.GetNamed("IronedRoof");
+            }
+        }
+
+        public static Faction FactionOfMAndCo
+        {
+            get
+            {
+                return Find.FactionManager.FirstFactionOfDef(FactionDef.Named("MAndCo"));
+            }
+        }
+
+        public static SoundDef MissileLaunchSoundDef
+        {
+            get
+            {
+                return DefDatabase<SoundDef>.GetNamed("MissileLaunch");
             }
         }
 

@@ -50,7 +50,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_OutpostCommandConsole.cs" />
-    <Compile Include="Projectile_SamMissile.cs" />
+    <Compile Include="OG_ZoneExterior.cs" />
+    <Compile Include="Projectile_Sam.cs" />
     <Compile Include="Building_SamSite.cs" />
     <Compile Include="Building_WarfieldGenerator.cs" />
     <Compile Include="OG_LaserFence.cs" />
@@ -83,22 +84,33 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\DamageDefs\Damages_Conflagration.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\FactionDefs\Factions.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\JobDefs\Jobs_OutpostGenerator.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\MapGeneratorDefs\MapGenerators.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\OG_Roofs.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FireproofPowerConduit.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_VulcanTurret.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Weapon_VulcanGun.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Sounds\MissileLaunch\MissileLaunch.wav" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSiteUiIcon.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite_Top.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite.png" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Buildings_Misc.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Buildings_Security.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Buildings_Special.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Buildings_Power.xml">
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_OutpostCommandConsole.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SamSite.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_Special_WarfieldGenerator.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_CompactAutonomousGenerator.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Things_Special.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Weapons_Guns.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Things_Special_Trigger.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Projectile_Sam.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\VulcanTurret_Top.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="M&amp;Co. OutpostGenerator\Assemblies\" />
@@ -106,6 +118,7 @@
   <ItemGroup>
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite_Top.pdn" />
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite.pdn" />
+    <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\VulcanTurret_Top.pdn" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

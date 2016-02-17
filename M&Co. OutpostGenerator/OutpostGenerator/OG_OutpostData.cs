@@ -24,20 +24,6 @@ namespace OutpostGenerator
         public bool battleOccured;
         public bool isRuined;
         public bool isInhabited;
-        public Faction faction
-        {
-            get
-            {
-                if (this.isMilitary)
-                {
-                    return Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
-                }
-                else
-                {
-                    return Find.FactionManager.FirstFactionOfDef(FactionDefOf.Spacer);
-                }
-            }
-        }
         public IntVec3 areaSouthWestOrigin;
         public IntVec3 dropZoneCenter;
 

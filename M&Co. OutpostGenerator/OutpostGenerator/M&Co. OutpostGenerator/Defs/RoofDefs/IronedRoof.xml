@@ -2,7 +2,7 @@
 <Roofs>
 
   <RoofDef>
-    <defName>RoofIroned</defName>
+    <defName>IronedRoof</defName>
     <label>ironed roof</label>
     <isThickRoof>true</isThickRoof>
     <isNatural>false</isNatural>

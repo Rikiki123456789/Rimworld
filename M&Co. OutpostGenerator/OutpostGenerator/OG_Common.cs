@@ -59,15 +59,18 @@ namespace OutpostGenerator
             // Generate roof.
             foreach (IntVec3 cell in rect.Cells)
             {
-                // TODO: add ironed roof as an option.
-                Find.RoofGrid.SetRoof(cell, RoofDefOf.RoofConstructed);
+                Find.RoofGrid.SetRoof(cell, OG_Util.IronedRoofDef);
             }
             // Generate room default floor.
             if (defaultFloorDef != null)
             {
                 foreach (IntVec3 cell in rect.ExpandedBy(1).Cells)
                 {
-                    Find.TerrainGrid.SetTerrain(cell, defaultFloorDef);
+                    TerrainDef terrain = Find.TerrainGrid.TerrainAt(cell);
+                    if (terrain != TerrainDef.Named("PavedTile")) // Don't recover already spawned paved tile.
+                    {
+                        Find.TerrainGrid.SetTerrain(cell, defaultFloorDef);
+                    }
                 }
             }
             // Generate room interior floor.
@@ -169,7 +172,7 @@ namespace OutpostGenerator
             }
             Thing thing = ThingMaker.MakeThing(thingDef, stuffDef);
             outpostData.outpostThingList.Add(thing);
-            thing.SetFaction(outpostData.faction);
+            thing.SetFaction(OG_Util.FactionOfMAndCo);
             if (rotated && thingDef.rotatable)
             {
                 return GenSpawn.Spawn(thing, position, rotation);
@@ -239,7 +242,7 @@ namespace OutpostGenerator
         public static void SpawnFireproofPowerConduitAt(IntVec3 position, ref OG_OutpostData outpostData)
         {
             Thing fireproofPowerConduit = ThingMaker.MakeThing(OG_Util.FireproofPowerConduitDef);
-            fireproofPowerConduit.SetFaction(outpostData.faction);
+            fireproofPowerConduit.SetFaction(OG_Util.FactionOfMAndCo);
             foreach (Thing thing in position.GetThingList())
             {
                 if (thing.def == OG_Util.FireproofPowerConduitDef)

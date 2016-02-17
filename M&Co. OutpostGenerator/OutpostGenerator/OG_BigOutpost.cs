@@ -11,9 +11,12 @@ using Verse.AI;      // Needed when you do something with the AI
 
 namespace OutpostGenerator
 {
-    // TODO: add lazer/vulcan turret.
-    // TODO: add SAM site.
+    // TODO: add radar dome.
     // TODO: add landing light (random tick offset to turn comp glower on and off).
+    // TODO: add automated supply ship landing.
+    // TODO: add tale: droppod destroyed in-flight.
+    // TODO: add blue glower to compact autonomous generator.
+    // TODO: add trigger intrusion.
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -26,7 +29,6 @@ namespace OutpostGenerator
         public const int horizontalZonesNumber = 7;
         public const int verticalZonesNumber = 7;
         public const int areaSideLength = 7 * Genstep_GenerateOutpost.zoneSideSize;
-        static int smallRoomWallOffset = 2; // Empty space in every direction of the room in the zone.
 
         private static Rot4 mainEntranceDirection;
         private static ZoneProperties[,] zoneMap = new ZoneProperties[verticalZonesNumber, horizontalZonesNumber];
@@ -160,7 +162,7 @@ namespace OutpostGenerator
             Log.Message("mainEntranceDirection = " + mainEntranceDirection.ToString());
 
             GenerateOutpostLayoutCentralRoom();
-            GenerateOutpostLayoutRadarDome();
+            GenerateOutpostLayoutOrbitalRelay();
             GenerateOutpostLayoutPowerSupply();
             GenerateOutpostLayoutCommandRoom();
             GenerateOutpostLayoutBarracks();
@@ -169,6 +171,7 @@ namespace OutpostGenerator
 
             GenerateOutpostLayoutAroundPlaza();
             GenerateOutpostLayoutEntranchedZones();
+            GenerateOutpostLayoutSamSites();
 
             /*GenerateOutpostLayoutSecondaryRooms();*/
         }
@@ -185,19 +188,20 @@ namespace OutpostGenerator
             zoneMap[mainRoom4ZoneOrd, mainRoom4ZoneAbs] = new ZoneProperties(ZoneType.BigRoomWarehouse, Rot4.Random, Rot4.Invalid); // TODO: debug. ZoneType.BigRoomRefectory
         }
 
-        static void GenerateOutpostLayoutRadarDome()
+        static void GenerateOutpostLayoutOrbitalRelay()
         {
             int mainRoom4ZoneAbs = 0;
             int mainRoom4ZoneOrd = 0;
-            int radarDomeZoneAbs = 0;
-            int radarDomeZoneOrd = 0;
+            int straightAlleyZoneAbs = 0;
+            int straightAlleyZoneOrd = 0;
+            int orbitalRelayZoneAbs = 0;
+            int orbitalRelayZoneOrd = 0;
 
             GetMainRoomZone(4, mainEntranceDirection, out mainRoom4ZoneAbs, out mainRoom4ZoneOrd);
-            Zone.GetAdjacentZone(mainRoom4ZoneAbs, mainRoom4ZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), out radarDomeZoneAbs, out radarDomeZoneOrd);
-            Zone.GetAdjacentZone(mainRoom4ZoneAbs, mainRoom4ZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), out radarDomeZoneAbs, out radarDomeZoneOrd);
-            zoneMap[radarDomeZoneOrd, radarDomeZoneAbs] = new ZoneProperties(ZoneType.RadarDome, mainEntranceDirection, Rot4.Invalid);
-
-            zoneMap[mainRoom4ZoneOrd, mainRoom4ZoneAbs] = new ZoneProperties(ZoneType.BigRoomWarehouse, Rot4.Random, Rot4.Invalid); // TODO: debug. ZoneType.BigRoomRefectory
+            Zone.GetAdjacentZone(mainRoom4ZoneAbs, mainRoom4ZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), out straightAlleyZoneAbs, out straightAlleyZoneOrd);
+            zoneMap[straightAlleyZoneOrd, straightAlleyZoneAbs] = new ZoneProperties(ZoneType.StraightAlley, mainEntranceDirection, Rot4.Invalid);
+            Zone.GetAdjacentZone(straightAlleyZoneAbs, straightAlleyZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), out orbitalRelayZoneAbs, out orbitalRelayZoneOrd);
+            zoneMap[orbitalRelayZoneOrd, orbitalRelayZoneAbs] = new ZoneProperties(ZoneType.RadarDome, mainEntranceDirection, Rot4.Invalid);
         }
 
         static void GenerateOutpostLayoutPowerSupply()
@@ -339,21 +343,21 @@ namespace OutpostGenerator
             // Sas north from main room 0.
             GetMainRoomZone(0, mainEntranceDirection, out mainRoomZoneAbs, out mainRoomZoneOrd);
             Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), out bigSasZoneAbs, out bigSasZoneOrd);
-            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
+            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), Rot4.West);
             Zone.GetAdjacentZone(bigSasZoneAbs, bigSasZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), out secondaryEntranceZoneAbs, out secondaryEntranceZoneOrd);
             zoneMap[secondaryEntranceZoneOrd, secondaryEntranceZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
             // Sas north from main room 3.
             GetMainRoomZone(3, mainEntranceDirection, out mainRoomZoneAbs, out mainRoomZoneOrd);
             Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), out bigSasZoneAbs, out bigSasZoneOrd);
-            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
+            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), Rot4.East);
             Zone.GetAdjacentZone(bigSasZoneAbs, bigSasZoneOrd, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), out secondaryEntranceZoneAbs, out secondaryEntranceZoneOrd);
             zoneMap[secondaryEntranceZoneOrd, secondaryEntranceZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
             // Sas west and east from main room 4.
             GetMainRoomZone(4, mainEntranceDirection, out mainRoomZoneAbs, out mainRoomZoneOrd);
             Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), out bigSasZoneAbs, out bigSasZoneOrd);
-            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
+            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), Rot4.West);
             Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), out bigSasZoneAbs, out bigSasZoneOrd);
-            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
+            zoneMap[bigSasZoneOrd, bigSasZoneAbs] = new ZoneProperties(ZoneType.BigSas, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), Rot4.East);
         }
 
         /// <summary>
@@ -377,7 +381,7 @@ namespace OutpostGenerator
             zoneMap[straightAlleyZoneOrd, straightAlleyZoneAbs] = new ZoneProperties(ZoneType.StraightAlley, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
             // Plaza.
             Zone.GetAdjacentZone(straightAlleyZoneAbs, straightAlleyZoneOrd, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), out plazaZoneAbs, out plazaZoneOrd);
-            zoneMap[plazaZoneOrd, plazaZoneAbs] = new ZoneProperties(ZoneType.SolarPanelZone, Rot4.North, Rot4.Invalid); // TODO: debug. ZoneType.Plaza
+            zoneMap[plazaZoneOrd, plazaZoneAbs] = new ZoneProperties(ZoneType.Plaza, Rot4.North, Rot4.Invalid); // TODO: debug. ZoneType.Plaza
             // West alley.
             Zone.GetAdjacentZone(plazaZoneAbs, plazaZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), out straightAlleyZoneAbs, out straightAlleyZoneOrd);
             zoneMap[straightAlleyZoneOrd, straightAlleyZoneAbs] = new ZoneProperties(ZoneType.StraightAlley, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
@@ -389,7 +393,7 @@ namespace OutpostGenerator
             zoneMap[straightAlleyZoneOrd, straightAlleyZoneAbs] = new ZoneProperties(ZoneType.StraightAlley, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
             // Main entrance.
             Zone.GetAdjacentZone(straightAlleyZoneAbs, straightAlleyZoneOrd, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), out mainEntranceZoneAbs, out mainEntranceZoneOrd);
-            zoneMap[mainEntranceZoneOrd, mainEntranceZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid); // TODO: debug. ZoneType.MainEntrance
+            zoneMap[mainEntranceZoneOrd, mainEntranceZoneAbs] = new ZoneProperties(ZoneType.MainEntrance, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
 
             // Generate exterior zones in diagonal directions.
             for (int xOffset = -1; xOffset <= 1; xOffset += 2)
@@ -407,17 +411,17 @@ namespace OutpostGenerator
             if ((mainEntranceDirection == Rot4.North)
                 || (mainEntranceDirection == Rot4.South))
             {
-                zoneMap[0, 1] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
-                zoneMap[0, horizontalZonesNumber - 2] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
-                zoneMap[verticalZonesNumber - 1, 1] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
-                zoneMap[verticalZonesNumber - 1, horizontalZonesNumber - 2] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
+                zoneMap[0, 1] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.South, Rot4.Invalid);
+                zoneMap[0, horizontalZonesNumber - 2] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.South, Rot4.Invalid);
+                zoneMap[verticalZonesNumber - 1, 1] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.North, Rot4.Invalid);
+                zoneMap[verticalZonesNumber - 1, horizontalZonesNumber - 2] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.North, Rot4.Invalid);
             }
             else
             {
-                zoneMap[1, 0] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
-                zoneMap[verticalZonesNumber - 2, 0] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
-                zoneMap[1, horizontalZonesNumber - 1] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
-                zoneMap[verticalZonesNumber - 2, horizontalZonesNumber - 1] = new ZoneProperties(ZoneType.EntranchedZone, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), Rot4.Invalid);
+                zoneMap[1, 0] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.West, Rot4.Invalid);
+                zoneMap[verticalZonesNumber - 2, 0] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.West, Rot4.Invalid);
+                zoneMap[1, horizontalZonesNumber - 1] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.East, Rot4.Invalid);
+                zoneMap[verticalZonesNumber - 2, horizontalZonesNumber - 1] = new ZoneProperties(ZoneType.EntranchedZone, Rot4.East, Rot4.Invalid);
             }
         }
 
@@ -438,74 +442,7 @@ namespace OutpostGenerator
                 zoneMap[verticalZonesNumber - 1, horizontalZonesNumber - 1] = new ZoneProperties(ZoneType.Empty, Rot4.North, Rot4.Invalid);
             }
         }
-
-        /*static void GenerateOutpostLayoutCommandRoom()
-        {
-            Rot4 commandRoomCardinal;
-            bool freeZoneIsFound = Zone.GetRandomFreeCardinalZoneAdjacentTo(mainRoomZoneAbs, mainRoomZoneOrd, out commandRoomCardinal, zoneMap, horizontalZonesNumber, verticalZonesNumber);
-            if (freeZoneIsFound == false)
-            {
-                Log.Warning("M&Co. OutpostGenerator: failed to find a free zone for the command room.");
-                return;
-            }
-            int commandRoomZoneAbs = 0;
-            int commandRoomZoneOrd = 0;
-            Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, commandRoomCardinal, out commandRoomZoneAbs, out commandRoomZoneOrd);
-
-            float dropZoneSideSelector = Rand.Value;
-            Rot4 relativeRotation = Rot4.North;
-            Rot4 absoluteRotation = Rot4.North;
-            if (dropZoneSideSelector < 0.5f)
-            {
-                // Drop zone is "on the west" of command room.
-                relativeRotation = Rot4.West;
-                absoluteRotation = new Rot4((commandRoomCardinal.AsInt + relativeRotation.AsInt) % 4);
-            }
-            else
-            {
-                // Drop zone is "on the east" of command room.
-                relativeRotation = Rot4.East;
-                absoluteRotation = new Rot4((commandRoomCardinal.AsInt + relativeRotation.AsInt) % 4);
-            }
-            int dropZoneAbs = 0;
-            int dropZoneOrd = 0;
-            Zone.GetAdjacentZone(commandRoomZoneAbs, commandRoomZoneOrd, absoluteRotation, out dropZoneAbs, out dropZoneOrd);
-            if ((Zone.ZoneIsInArea(dropZoneAbs, dropZoneOrd, horizontalZonesNumber, verticalZonesNumber) == false)
-                || (zoneMap[dropZoneOrd, dropZoneAbs].zoneType != ZoneType.NotYetGenerated))
-            {
-                // Get the opposite side.
-                relativeRotation = new Rot4((relativeRotation.AsInt + 2) % 4);
-                absoluteRotation = new Rot4((absoluteRotation.AsInt + 2) % 4);
-                Zone.GetAdjacentZone(commandRoomZoneAbs, commandRoomZoneOrd, absoluteRotation, out dropZoneAbs, out dropZoneOrd);
-                if ((Zone.ZoneIsInArea(dropZoneAbs, dropZoneOrd, horizontalZonesNumber, verticalZonesNumber) == false)
-                    || (zoneMap[dropZoneOrd, dropZoneAbs].zoneType != ZoneType.NotYetGenerated))
-                {
-                    Log.Warning("M&Co. OutpostGenerator: failed to find a free zone for the drop zone.");
-                    return;
-                }
-            }
-            zoneMap[commandRoomZoneOrd, commandRoomZoneAbs] = new ZoneProperties(ZoneType.SmallRoomCommandRoom, commandRoomCardinal, relativeRotation);
-            relativeRotation.Rotate(RotationDirection.Clockwise); // Rotate 2 times to get the opposite direction.
-            relativeRotation.Rotate(RotationDirection.Clockwise);
-            zoneMap[dropZoneOrd, dropZoneAbs] = new ZoneProperties(ZoneType.DropZone, commandRoomCardinal, relativeRotation);
-        }*/
-
-        /*static void GenerateOutpostLayoutSecondaryRooms()
-        {
-            for (int rotationAsInt = 0; rotationAsInt < 4; rotationAsInt++)
-            {
-                int zoneAbs = 0;
-                int zoneOrd = 0;
-                Rot4 rotation = new Rot4(rotationAsInt);
-                Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, rotation, out zoneAbs, out zoneOrd);
-                if (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.NotYetGenerated)
-                {
-                    ZoneType secondaryRoomType = GetRandomZoneTypeSmallRoom();
-                    zoneMap[zoneOrd, zoneAbs] = new ZoneProperties(secondaryRoomType, rotation, Rot4.North);
-                }
-            }
-        }*/
-
+        
         /// <summary>
         /// Get the coordinates of one of the main rooms.
         /// </summary>
@@ -789,42 +726,44 @@ namespace OutpostGenerator
                             OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
                             break;
 
+                        // Exterior zones.
+                        case ZoneType.Farm:
+                            OG_ZoneExterior.GenerateFarmZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.Cemetery:
+                            OG_ZoneExterior.GenerateCemeteryZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+
                         // Other zones.
                         case ZoneType.Empty:
                             OG_ZoneOther.GenerateEmptyZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation);
                             break;
+                        case ZoneType.MainEntrance:
+                            OG_ZoneOther.GenerateMainEntranceZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
                         case ZoneType.SecondaryEntrance:
                             OG_ZoneOther.GenerateSecondaryEntranceZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.EntranchedZone:
+                            OG_ZoneOther.GenerateEntranchedZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.SamSite:
+                            OG_ZoneOther.GenerateSamSiteZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.BigSas:
+                            OG_ZoneOther.GenerateBigSasZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, zone.linkedZoneRelativeRotation != Rot4.Invalid, ref outpostData);
+                            break;
+                        case ZoneType.Plaza:
+                            OG_ZoneOther.GeneratePlazaZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.StraightAlley:
+                            OG_ZoneOther.GenerateStraightAlleyZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                     }
                 }
             }
         }
-
-        // ######## Sas functions ######## //
-
-        static void GenerateSas(IntVec3 origin, Rot4 rotation)
-        {
-            int sasWidth = 1; // Distance of the wall from the central alley.
-            int sasHeight = smallRoomWallOffset * 2;
-
-            OG_Common.GenerateEmptyRoomAt(origin + new IntVec3(-sasWidth, 0, 0).RotatedBy(rotation), 1 + 2 * sasWidth, sasHeight, rotation, null, null, ref outpostData);
-            OG_Common.SpawnDoorAt(origin, ref outpostData);
-            OG_Common.SpawnDoorAt(origin + new IntVec3(0, 0, sasHeight - 1).RotatedBy(rotation), ref outpostData);
-            // Generate floor.
-            for (int xOffset = -sasWidth - 1; xOffset <= sasWidth + 1; xOffset++)
-            {
-                for (int zOffset = 0; zOffset < sasHeight; zOffset++)
-                {
-                    Find.TerrainGrid.SetTerrain(origin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDefOf.Concrete);
-                }
-            }
-            for (int zOffset = 0; zOffset < sasHeight; zOffset++)
-            {
-                Find.TerrainGrid.SetTerrain(origin + new IntVec3(0, 0, zOffset).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
-            }
-        }
-
+        
         // ######## Warfield effects functions ######## //
 
         static void GenerateWarfieldEffects(OG_OutpostData outpostData)
