@@ -285,12 +285,13 @@ namespace CaveworldFlora
         }
 
         /// <summary>
-        /// Check if the terrain is valid.
+        /// Check if the terrain is valid. Require a rough terrain not constructible by player.
         /// </summary>
         public static bool IsTerrainConditionOk(IntVec3 cavePlantPosition)
         {
             TerrainDef terrain = Find.TerrainGrid.TerrainAt(cavePlantPosition);
-            if (terrain.defName.Contains("Rough"))
+            if ((terrain.layerable == false)
+                && terrain.defName.Contains("Rough"))
             {
                 return true;
             }
