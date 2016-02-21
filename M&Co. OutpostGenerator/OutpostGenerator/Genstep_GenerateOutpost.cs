@@ -205,19 +205,20 @@ namespace OutpostGenerator
             if (outpostTypeSelector < 0.25f)
             {
                 outpostData.isMilitary = true;
-                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = true;
                 OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
+                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = true;
+                Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = true;
             }
             else
             {
                 outpostData.isMilitary = false;
-                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = false;
                 float goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.RandomInRange;
                 OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = goodwill;
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = goodwill;
+                OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = false;
+                Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = false;
             }
-            Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = false;
             Log.Message("Colony.RelationWithMAndCo goodwill/hostile = " + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill + "/" + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile);
             Log.Message("MAndCo.RelationWithColony goodwill/hostile = " + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill + "/" + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile);
         }

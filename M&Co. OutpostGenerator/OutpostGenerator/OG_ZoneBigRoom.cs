@@ -27,11 +27,11 @@ namespace OutpostGenerator
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin, Genstep_GenerateOutpost.zoneSideSize, Genstep_GenerateOutpost.zoneSideSize, rotation, TerrainDefOf.Concrete, null, ref outpostData);
 
             // Spawn table and stools.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(3, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(2, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(3, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("TableShort"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(3, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(3, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("TableShort"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             // Spawn NPD, hoppers and lamp.
             OG_Common.TrySpawnThingAt(ThingDefOf.NutrientPasteDispenser, null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(2, 0, 6).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
@@ -41,10 +41,10 @@ namespace OutpostGenerator
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), Color.white, ref outpostData);
             // Spawn TV and dining chairs.
             OG_Common.TrySpawnThingAt(ThingDef.Named("Television"), null, rotatedOrigin + new IntVec3(8, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(7, 0, 6).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(9, 0, 6).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(7, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(9, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 6).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(9, 0, 6).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(9, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             // Spawn lamp and temperature control.
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(6, 0, 4).RotatedBy(rotation), Color.white, ref outpostData);
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(9, 0, 3).RotatedBy(rotation), ref outpostData);
@@ -87,9 +87,9 @@ namespace OutpostGenerator
 
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin, Genstep_GenerateOutpost.zoneSideSize, Genstep_GenerateOutpost.zoneSideSize, rotation, TerrainDefOf.Concrete, null, ref outpostData);
             // Spawn table and stools.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(3, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("TableShort"), outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(3, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("TableShort"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             // Spawn lamp and temperature control.
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(6, 0, 6).RotatedBy(rotation), Color.white, ref outpostData);
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(7, 0, 9).RotatedBy(rotation), ref outpostData);

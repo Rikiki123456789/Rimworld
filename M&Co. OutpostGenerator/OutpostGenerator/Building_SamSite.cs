@@ -156,7 +156,7 @@ namespace OutpostGenerator
             int predictedTicksToImpact = dropPodTicksToLanding - ticksToImpactOffset;
             landingDistanceCoefficient = (float)(ticksToImpactOffset * ticksToImpactOffset) * 0.01f;
             Vector3 predictedImpactPosition = dropPod.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FlyingItem) + new Vector3(-landingDistanceCoefficient * 0.4f, 0, +landingDistanceCoefficient * 0.6f) + missPositionOffset;
-            Projectile_Sam sam = ThingMaker.MakeThing(ThingDef.Named("SamMissile")) as Projectile_Sam;
+            Projectile_Sam sam = ThingMaker.MakeThing(ThingDef.Named("Sam")) as Projectile_Sam;
             sam.InitializeMissileData(this, dropPod, this.Position.ToVector3Shifted(), predictedImpactPosition, predictedTicksToImpact, targetWillBeHit);
             GenSpawn.Spawn(sam, this.Position);
             this.missilesLoadedNumber--;

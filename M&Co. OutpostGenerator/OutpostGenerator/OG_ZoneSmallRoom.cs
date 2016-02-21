@@ -82,13 +82,13 @@ namespace OutpostGenerator
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(smallRoomWallOffset, 0, smallRoomWallOffset).RotatedBy(rotation), Genstep_GenerateOutpost.zoneSideSize - 2 * smallRoomWallOffset, Genstep_GenerateOutpost.zoneSideSize - 2 * smallRoomWallOffset, rotation, TerrainDefOf.Concrete, TerrainDef.Named("MetalTile"), ref outpostData);
 
             // Spawn weapon racks, weapons and lamps.
-            Thing rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            Thing rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(smallRoomWallOffset + 4, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(smallRoomWallOffset + 4, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(smallRoomWallOffset + 2, 0, smallRoomWallOffset + 5).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(smallRoomWallOffset + 2, 0, smallRoomWallOffset + 5).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, outpostData.furnitureStuffDef, rotatedOrigin + new IntVec3(smallRoomWallOffset + 5, 0, smallRoomWallOffset + 5).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(smallRoomWallOffset + 5, 0, smallRoomWallOffset + 5).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             TrySpawnWeaponOnRack(rack);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 3).RotatedBy(rotation), Color.white, ref outpostData);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(smallRoomWallOffset + 5, 0, smallRoomWallOffset + 3).RotatedBy(rotation), Color.white, ref outpostData);

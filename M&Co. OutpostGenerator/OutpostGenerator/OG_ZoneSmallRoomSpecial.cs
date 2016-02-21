@@ -29,7 +29,7 @@ namespace OutpostGenerator
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(smallRoomWallOffset, 0, smallRoomWallOffset).RotatedBy(rotation), Genstep_GenerateOutpost.zoneSideSize - 2 * smallRoomWallOffset, Genstep_GenerateOutpost.zoneSideSize - 2 * smallRoomWallOffset, rotation, TerrainDefOf.Concrete, null, ref outpostData);
 
             // Generate batteries.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("CompactAutonomousGenerator"), null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(OG_Util.CompactAutonomousGeneratorDef, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 4, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 5, 0, smallRoomWallOffset + 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(smallRoomWallOffset + 1, 0, smallRoomWallOffset + 5).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
@@ -80,7 +80,7 @@ namespace OutpostGenerator
 
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(smallRoomWallOffset, 0, smallRoomWallOffset).RotatedBy(cardinal), Genstep_GenerateOutpost.zoneSideSize - 2 * smallRoomWallOffset, Genstep_GenerateOutpost.zoneSideSize - 2 * smallRoomWallOffset, cardinal, TerrainDefOf.Concrete, null, ref outpostData);
             // Spawn command console.
-            commandConsole = OG_Common.TrySpawnThingAt(ThingDef.Named("OutpostCommandConsole"), null, rotatedOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset + 2).RotatedBy(cardinal), true, new Rot4(Rot4.South.AsInt + cardinal.AsInt), ref outpostData) as Building_OutpostCommandConsole;
+            commandConsole = OG_Common.TrySpawnThingAt(OG_Util.OutpostCommandConsoleDef, null, rotatedOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset + 2).RotatedBy(cardinal), true, new Rot4(Rot4.South.AsInt + cardinal.AsInt), ref outpostData) as Building_OutpostCommandConsole;
             // Generate vertical alley.
             for (int zOffset = smallRoomWallOffset; zOffset < Genstep_GenerateOutpost.zoneSideCenterOffset; zOffset++)
             {

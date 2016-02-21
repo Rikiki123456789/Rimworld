@@ -50,7 +50,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_OutpostCommandConsole.cs" />
+    <Compile Include="OG_ZoneBigRoomSpecial.cs" />
     <Compile Include="OG_ZoneExterior.cs" />
+    <Compile Include="OG_ZoneMediumRoom.cs" />
     <Compile Include="Projectile_Sam.cs" />
     <Compile Include="Building_SamSite.cs" />
     <Compile Include="Building_WarfieldGenerator.cs" />
@@ -93,12 +95,16 @@
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FireproofAutoDoor.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FireproofPowerConduit.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_VulcanTurret.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Weapon_VulcanGun.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Sounds\MissileLaunch\MissileLaunch.wav" />
+    <Content Include="M&amp;Co. OutpostGenerator\Textures\Terrain\Surfaces\DirtFloor.png" />
+    <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OutpostCommandConsole.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSiteUiIcon.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite_Top.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite.png" />
@@ -116,6 +122,7 @@
     <Folder Include="M&amp;Co. OutpostGenerator\Assemblies\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OutpostCommandConsole.pdn" />
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite_Top.pdn" />
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite.pdn" />
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\VulcanTurret_Top.pdn" />

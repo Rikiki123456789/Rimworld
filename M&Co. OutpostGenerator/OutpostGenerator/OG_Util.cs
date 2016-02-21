@@ -32,6 +32,14 @@ namespace OutpostGenerator
             }
         }
 
+        public static ThingDef FireproofAutodoorDef
+        {
+            get
+            {
+                return ThingDef.Named("FireproofAutodoor");
+            }
+        }
+
         public static ThingDef SamSiteDef
         {
             get
@@ -56,6 +64,32 @@ namespace OutpostGenerator
             }
         }
 
+        public static ThingDef CompactAutonomousGeneratorDef
+        {
+            get
+            {
+                return ThingDef.Named("CompactAutonomousGenerator");
+            }
+        }
+
+        public static ThingDef OutpostCommandConsoleDef
+        {
+            get
+            {
+                return ThingDef.Named("OutpostCommandConsole");
+            }
+        }
+
+        // Terrain def.
+        public static TerrainDef DirtFloorDef
+        {
+            get
+            {
+                return TerrainDef.Named("DirtFloor");
+            }
+        }
+
+
         // Roof def.
         // TODO: add corresponding designator (check console has been captured/destroyed to allow removing it) OR get rid of it :/
         public static RoofDef IronedRoofDef
@@ -66,6 +100,7 @@ namespace OutpostGenerator
             }
         }
 
+        // Faction def.
         public static Faction FactionOfMAndCo
         {
             get

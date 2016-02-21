@@ -40,8 +40,6 @@ namespace OutpostGenerator
         public static void GenerateOutpost(OG_OutpostData outpostDataParameter)
         {
             outpostData = outpostDataParameter;
-            outpostData.structureStuffDef = ThingDef.Named("BlocksGranite");
-            outpostData.furnitureStuffDef = ThingDefOf.Steel;
             outpostData.triggerIntrusion = null;
             outpostData.outpostThingList = new List<Thing>();
 
@@ -99,15 +97,15 @@ namespace OutpostGenerator
             // Damage outpost to reflect its history.
             GenerateRuinEffects(ref outpostData);
             // Generate some inhabitants.
-            //GenerateInhabitants(outpostData); // TODO: will be hard!
+            //GenerateInhabitants(outpostData); // TODO: will be hard!*/
             
             // Initialize command console data.
             outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
             commandConsole.outpostThingList = outpostData.outpostThingList.ListFullCopy<Thing>();
             commandConsole.dropZoneCenter = outpostData.dropZoneCenter;
             // Initialize intrusion trigger data.
-            outpostData.triggerIntrusion.commandConsole = commandConsole;
-            */
+            outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick).
+            
             SendWelcomeLetter(outpostData);
         }
         
@@ -159,7 +157,6 @@ namespace OutpostGenerator
             }
 
             mainEntranceDirection = Rot4.Random;
-            Log.Message("mainEntranceDirection = " + mainEntranceDirection.ToString());
 
             GenerateOutpostLayoutCentralRoom();
             GenerateOutpostLayoutOrbitalRelay();
@@ -173,7 +170,7 @@ namespace OutpostGenerator
             GenerateOutpostLayoutEntranchedZones();
             GenerateOutpostLayoutSamSites();
 
-            /*GenerateOutpostLayoutSecondaryRooms();*/
+            GenerateOutpostLayoutSecondaryRooms();
         }
 
         /// <summary>
@@ -185,7 +182,7 @@ namespace OutpostGenerator
             int mainRoom4ZoneOrd = 0;
 
             GetMainRoomZone(4, mainEntranceDirection, out mainRoom4ZoneAbs, out mainRoom4ZoneOrd);
-            zoneMap[mainRoom4ZoneOrd, mainRoom4ZoneAbs] = new ZoneProperties(ZoneType.BigRoomWarehouse, Rot4.Random, Rot4.Invalid); // TODO: debug. ZoneType.BigRoomRefectory
+            zoneMap[mainRoom4ZoneOrd, mainRoom4ZoneAbs] = new ZoneProperties(ZoneType.BigRoomRefectory, Rot4.Random, Rot4.Invalid);
         }
 
         static void GenerateOutpostLayoutOrbitalRelay()
@@ -217,7 +214,7 @@ namespace OutpostGenerator
             Log.Message("batteryRoom mainRoomIndex = " + mainRoomIndex);
             // Set battery room zone.
             Rot4 batteryRoomRotation = new Rot4(Rot4.West.AsInt + mainRoomIndex); // Battery room is facing west for main room 0, north for main room 1, ...
-            zoneMap[batteryRoomZoneOrd, batteryRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomWarehouse, batteryRoomRotation, Rot4.Invalid); // TODO: debug. ZoneType.BigRoomBatteryRoom
+            zoneMap[batteryRoomZoneOrd, batteryRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomBatteryRoom, batteryRoomRotation, Rot4.Invalid);
 
             // Set solar panel zones around relative south-west corner.
             Zone.GetAdjacentZone(batteryRoomZoneAbs, batteryRoomZoneOrd, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out solarPanelZoneAbs, out solarPanelZoneOrd);
@@ -243,7 +240,7 @@ namespace OutpostGenerator
             GetFreeMainRoomZone(out commandRoomZoneAbs, out commandRoomZoneOrd, out mainRoomIndex);
 
             Log.Message("commandRoom mainRoomIndex = " + mainRoomIndex);
-            zoneMap[commandRoomZoneOrd, commandRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomWarehouse, Rot4.Random, Rot4.Invalid); // TODO: debug. ZoneType.BigRoomCommandRoom
+            zoneMap[commandRoomZoneOrd, commandRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomCommandRoom, Rot4.Random, Rot4.Invalid);
 
             // Set drop-zone and landing pad zones around relative south-west corner.
             if (Rand.Value < 0.5f)
@@ -303,7 +300,7 @@ namespace OutpostGenerator
             GetFreeMainRoomZone(out barracksZoneAbs, out barracksZoneOrd, out mainRoomIndex);
 
             Log.Message("barracks mainRoomIndex = " + mainRoomIndex);
-            zoneMap[barracksZoneOrd, barracksZoneAbs] = new ZoneProperties(ZoneType.BigRoomWarehouse, Rot4.Random, Rot4.Invalid); // TODO: debug. ZoneType.BigRoomBarracks
+            zoneMap[barracksZoneOrd, barracksZoneAbs] = new ZoneProperties(ZoneType.BigRoomBarracks, Rot4.Random, Rot4.Invalid);
         }
 
         static void GenerateOutpostLayoutHydroponicRoom()
@@ -315,7 +312,7 @@ namespace OutpostGenerator
             GetFreeMainRoomZone(out hydroponicRoomZoneAbs, out hydroponicRoomZoneOrd, out mainRoomIndex);
 
             Log.Message("hydroponic room mainRoomIndex = " + mainRoomIndex);
-            zoneMap[hydroponicRoomZoneOrd, hydroponicRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomWarehouse, Rot4.Random, Rot4.Invalid); // TODO: debug. ZoneType.BigRoomHydroponics
+            zoneMap[hydroponicRoomZoneOrd, hydroponicRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomHydroponics, Rot4.Random, Rot4.Invalid);
         }
 
         /// <summary>
@@ -442,7 +439,90 @@ namespace OutpostGenerator
                 zoneMap[verticalZonesNumber - 1, horizontalZonesNumber - 1] = new ZoneProperties(ZoneType.Empty, Rot4.North, Rot4.Invalid);
             }
         }
-        
+
+        static void GenerateOutpostLayoutSecondaryRooms()
+        {
+            int mainRoomZoneAbs = 0;
+            int mainRoomZoneOrd = 0;
+            int adjacentZoneAbs = 0;
+            int adjacentZoneOrd = 0;
+            int mediumRoomZoneAbs = 0;
+            int mediumRoomZoneOrd = 0;
+
+            // Generate secondary rooms north west and east from central room.
+            GetMainRoom4Zone(mainEntranceDirection, out mainRoomZoneAbs, out mainRoomZoneOrd);
+            // North alley.
+            Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt), out adjacentZoneAbs, out adjacentZoneOrd);
+            // West medium room.
+            Zone.GetAdjacentZone(adjacentZoneAbs, adjacentZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt), out mediumRoomZoneAbs, out mediumRoomZoneOrd);
+            ZoneType zoneType = OG_Common.GetRandomZoneTypeMediumRoom(outpostData);
+            Rot4 roomRotation = Rot4.Invalid;
+            Log.Message("Medium zone abs/ord " + mediumRoomZoneAbs + "/" + mediumRoomZoneOrd);
+            if (Rand.Value < 0.5f)
+            {
+                Log.Message("<0.5");
+                roomRotation = new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt);
+            }
+            else
+            {
+                Log.Message(">0.5");
+                roomRotation = new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt);
+            }
+            Log.Message("mainEntranceDirection " + mainEntranceDirection);
+            Log.Message("roomRotation " + roomRotation);
+            zoneMap[mediumRoomZoneOrd, mediumRoomZoneAbs] = new ZoneProperties(zoneType, roomRotation, Rot4.Invalid);
+            // East medium room.
+            Zone.GetAdjacentZone(adjacentZoneAbs, adjacentZoneOrd, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt), out mediumRoomZoneAbs, out mediumRoomZoneOrd);
+            zoneType = OG_Common.GetRandomZoneTypeMediumRoom(outpostData);
+            if (Rand.Value < 0.5f)
+            {
+                roomRotation = new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt);
+            }
+            else
+            {
+                roomRotation = new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt);
+            }
+            zoneMap[mediumRoomZoneOrd, mediumRoomZoneAbs] = new ZoneProperties(zoneType, roomRotation, Rot4.Invalid);
+
+            // TODO debug it!
+            for (int mainRoomIndex = 0; mainRoomIndex < 4; mainRoomIndex++)
+            {
+                GetMainRoomZone(mainRoomIndex, mainEntranceDirection, out mainRoomZoneAbs, out mainRoomZoneOrd);
+                for (int rotationAsInt = 0; rotationAsInt < 4; rotationAsInt++)
+                {
+                    Zone.GetAdjacentZone(mainRoomZoneAbs, mainRoomZoneOrd, new Rot4(rotationAsInt + mainEntranceDirection.AsInt), out adjacentZoneAbs, out adjacentZoneOrd);
+                    if (zoneMap[adjacentZoneOrd, adjacentZoneAbs].zoneType == ZoneType.NotYetGenerated)
+                    {
+                        zoneType = OG_Common.GetRandomZoneTypeMediumRoom(outpostData);
+                        if ((rotationAsInt == 0)
+                            || (rotationAsInt == 2))
+                        {
+                            if (Rand.Value < 0.5f)
+                            {
+                                roomRotation = new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt);
+                            }
+                            else
+                            {
+                                roomRotation = new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt);
+                            }
+                        }
+                        else
+                        {
+                            if (Rand.Value < 0.5f)
+                            {
+                                roomRotation = new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt);
+                            }
+                            else
+                            {
+                                roomRotation = new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt);
+                            }
+                        }
+                        zoneMap[mediumRoomZoneOrd, mediumRoomZoneAbs] = new ZoneProperties(zoneType, roomRotation, Rot4.Invalid);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Get the coordinates of one of the main rooms.
         /// </summary>
@@ -610,73 +690,7 @@ namespace OutpostGenerator
                 mainRoom4ZoneOrd = 3;
             }
         }
-
-        static ZoneType GetRandomZoneTypeBigRoom()
-        {
-            List<ZoneTypeWithWeight> bigRoomsList = new List<ZoneTypeWithWeight>();
-            if (outpostData.isMilitary)
-            {
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomLivingRoom, 2f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomWarehouse, 2f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomPrison, 6f));
-            }
-            else
-            {
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomLivingRoom, 4f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomWarehouse, 4f));
-                bigRoomsList.Add(new ZoneTypeWithWeight(ZoneType.BigRoomPrison, 2f));
-            }
-
-            ZoneType bigRoomType = GetRandomZoneTypeByWeight(bigRoomsList);
-            return bigRoomType;
-        }
-
-        static ZoneType GetRandomZoneTypeSmallRoom()
-        {
-            List<ZoneTypeWithWeight> smallRoomsList = new List<ZoneTypeWithWeight>();
-            if (outpostData.isMilitary)
-            {
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomBarracks, 2f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomMedibay, 1f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomWeaponRoom, 5f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SecondaryEntrance, 6f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
-            }
-            else
-            {
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomBarracks, 4f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomMedibay, 3f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SmallRoomWeaponRoom, 1f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.SecondaryEntrance, 2f));
-                smallRoomsList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
-            }
-
-            ZoneType smallRoomType = GetRandomZoneTypeByWeight(smallRoomsList);
-            return smallRoomType;
-        }
-
-        static ZoneType GetRandomZoneTypeByWeight(List<ZoneTypeWithWeight> list)
-        {
-            float weightTotalSum = 0;
-            foreach (ZoneTypeWithWeight element in list)
-            {
-                weightTotalSum += element.weight;
-            }
-            float elementSelector = Rand.Range(0f, weightTotalSum);
-
-            float weightSum = 0;
-            foreach (ZoneTypeWithWeight element in list)
-            {
-                weightSum += element.weight;
-                if (elementSelector <= weightSum)
-                {
-                    return element.zoneType;
-                }
-            }
-
-            return ZoneType.Empty;
-        }
-
+        
         // ######## Zone generation functions ######## //
 
         static void GenerateOutpostZones(IntVec3 areaSouthWestOrigin)
@@ -688,16 +702,31 @@ namespace OutpostGenerator
                     ZoneProperties zone = zoneMap[zoneOrd, zoneAbs];
                     switch (zone.zoneType)
                     {
-                        // Standard big rooms.
-                        case ZoneType.BigRoomLivingRoom:
-                            OG_ZoneBigRoom.GenerateBigRoomLivingRoom(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                        // Special big rooms.
+                        case ZoneType.BigRoomRefectory:
+                            OG_ZoneBigRoomSpecial.GenerateBigRoomRefectory(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
-                        case ZoneType.BigRoomWarehouse:
-                            OG_ZoneBigRoom.GenerateBigRoomWherehouse(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                        case ZoneType.BigRoomBatteryRoom:
+                            OG_ZoneBigRoomSpecial.GenerateBigRoomBatteryRoom(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, zoneMap, ref outpostData);
                             break;
-                        case ZoneType.BigRoomPrison:
-                            OG_ZoneBigRoom.GenerateBigRoomPrison(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                        case ZoneType.BigRoomCommandRoom:
+                            commandConsole = OG_ZoneBigRoomSpecial.GenerateBigRoomCommandRoom(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
+                        case ZoneType.BigRoomBarracks:
+                            OG_ZoneBigRoomSpecial.GenerateBigRoomBarracks(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.BigRoomHydroponics:
+                            OG_ZoneBigRoomSpecial.GenerateBigRoomHydroponics(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+
+                        // Standard medium rooms.
+                        case ZoneType.MediumRoomMedibay:
+                            OG_ZoneMediumRoom.GenerateMediumRoomMedibay(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.MediumRoomPrison:
+                            OG_ZoneMediumRoom.GenerateMediumRoomPrison(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                            // TODO: continue it.
 
                         // Standard small rooms.
                         case ZoneType.SmallRoomBarracks:
@@ -709,15 +738,7 @@ namespace OutpostGenerator
                         case ZoneType.SmallRoomWeaponRoom:
                             OG_ZoneSmallRoom.GenerateSmallRoomWeaponRoom(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
-
-                        // Special small rooms.
-                        case ZoneType.SmallRoomBatteryRoom:
-                            OG_ZoneSmallRoomSpecial.GenerateBatteryRoomZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, zone.linkedZoneRelativeRotation, ref outpostData);
-                            break;
-                        case ZoneType.SmallRoomCommandRoom:
-                            commandConsole = OG_ZoneSmallRoomSpecial.GenerateCommandRoomZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, zone.linkedZoneRelativeRotation, ref outpostData);
-                            break;
-
+                            
                         // Special zones.
                         case ZoneType.SolarPanelZone:
                             OG_ZoneSpecial.GenerateSolarPanelZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
@@ -732,6 +753,18 @@ namespace OutpostGenerator
                             break;
                         case ZoneType.Cemetery:
                             OG_ZoneExterior.GenerateCemeteryZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.ExteriorRecRoom:
+                            OG_ZoneExterior.GenerateExteriorRecZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.WaterPool:
+                            OG_ZoneExterior.GenerateWaterPoolZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.ShootingRange:
+                            OG_ZoneExterior.GenerateShootingRangeZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            break;
+                        case ZoneType.MortarBay:
+                            OG_ZoneExterior.GenerateMortarZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
 
                         // Other zones.

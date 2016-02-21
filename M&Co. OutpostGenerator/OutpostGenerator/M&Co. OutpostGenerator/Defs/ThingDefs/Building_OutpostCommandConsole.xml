@@ -17,7 +17,7 @@
     <label>outpost command console</label>
     <thingClass>OutpostGenerator.Building_OutpostCommandConsole</thingClass>
     <graphicData>
-      <texPath>Things/Building/Misc/CommsConsole</texPath>
+      <texPath>Things/Building/Misc/OutpostCommandConsole</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(5,4)</drawSize>
     </graphicData>

@@ -179,8 +179,9 @@ namespace OutpostGenerator
             }
             else
             {
-                // TODO: improve this special case treatment.
-                if (thingDef == ThingDef.Named("TableShort"))
+                // TODO: improve these special case treatment.
+                if ((thingDef == ThingDef.Named("TableShort"))
+                    || (thingDef == ThingDef.Named("MultiAnalyzer")))
                 {
                     if (rotation == Rot4.East)
                     {
@@ -236,7 +237,7 @@ namespace OutpostGenerator
         public static void TrySpawnWallAt(IntVec3 position, ref OG_OutpostData outpostData)
         {
             ThingDef wallDef = ThingDefOf.Wall;
-            OG_Common.TrySpawnThingAt(wallDef, outpostData.structureStuffDef, position, false, Rot4.North, ref outpostData);
+            OG_Common.TrySpawnThingAt(wallDef, ThingDef.Named("BlocksGranite"), position, false, Rot4.North, ref outpostData);
         }
 
         public static void SpawnFireproofPowerConduitAt(IntVec3 position, ref OG_OutpostData outpostData)
@@ -256,8 +257,15 @@ namespace OutpostGenerator
 
         public static void SpawnDoorAt(IntVec3 position, ref OG_OutpostData outpostData)
         {
-            ThingDef autodoorDef = ThingDef.Named("Autodoor");
-            OG_Common.TrySpawnThingAt(autodoorDef, outpostData.structureStuffDef, position, false, Rot4.North, ref outpostData, false, true);
+            ThingDef autodoorDef = OG_Util.FireproofAutodoorDef;
+            Building edifice = position.GetEdifice();
+            if ((edifice != null)
+                && (edifice.def == autodoorDef))
+            {
+                // Avoid spawning another door on the same spot. This creates troubles with region links...
+                return;
+            }
+            OG_Common.TrySpawnThingAt(autodoorDef, ThingDefOf.Steel, position, false, Rot4.North, ref outpostData, false, true);
         }
 
         public static void SpawnCoolerAt(IntVec3 position, Rot4 rotation, ref OG_OutpostData outpostData)
@@ -298,6 +306,36 @@ namespace OutpostGenerator
             return bigRoomType;
         }
 
+        public static ZoneType GetRandomZoneTypeMediumRoom(OG_OutpostData outpostData)
+        {
+            List<ZoneTypeWithWeight> exteriorZonesList = new List<ZoneTypeWithWeight>();
+            if (outpostData.isMilitary)
+            {
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomMedibay, 7f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomPrison, 5f));
+                /*exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKitchen, 3f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWarehouse, 2f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKenel, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomLaboratory, 2f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomRecRoom, 4f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));*/ // TODO: debug.
+            }
+            else
+            {
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomMedibay, 3f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomPrison, 1f));
+                /*exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKitchen, 4f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWarehouse, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKenel, 2f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomLaboratory, 7f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomRecRoom, 7f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));*/
+            }
+
+            ZoneType exteriorZoneType = GetRandomZoneTypeByWeight(exteriorZonesList);
+            return exteriorZoneType;
+        }
+
         public static ZoneType GetRandomZoneTypeSmallRoom(OG_OutpostData outpostData)
         {
             List<ZoneTypeWithWeight> smallRoomsList = new List<ZoneTypeWithWeight>();
@@ -328,18 +366,20 @@ namespace OutpostGenerator
             if (outpostData.isMilitary)
             {
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.WaterPool, 5f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ShootingRange, 7f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Cemetery, 4f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ExteriorRecRoom, 2f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 3f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ShootingRange, 7f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MortarBay, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 2f));
             }
             else
             {
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.WaterPool, 5f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Farm, 5f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ShootingRange, 1f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Cemetery, 3f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ExteriorRecRoom, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ShootingRange, 1f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MortarBay, 1f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
             }
 

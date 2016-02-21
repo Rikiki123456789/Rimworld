@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TerrainDefs>
+
+  <TerrainDef Name="FloorBase" Abstract="True">
+    <layerable>true</layerable>
+    <affordances>
+      <li>Light</li>
+      <li>Heavy</li>
+      <li>SmoothHard</li>
+    </affordances>
+    <statBases>
+      <WorkToMake>135</WorkToMake>
+    </statBases>
+    <designationCategory>Floors</designationCategory>
+    <Fertility>0</Fertility>
+    <constructEffect>ConstructDirt</constructEffect>
+    <AcceptTerrainSourceFilth>True</AcceptTerrainSourceFilth>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </TerrainDef>
+
+  <TerrainDef ParentName="FloorBase">
+    <DefName>DirtFloor</DefName>
+    <label>dirt floor</label>
+    <Description>Metal tiles, for that spaceship look. Pretty, but labor and material-intensive.</Description>
+    <layerable>true</layerable>
+    <designationCategory>Floors</designationCategory>
+    <Fertility>0</Fertility>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <affordances>
+      <li>Light</li>
+      <li>Heavy</li>
+      <li>Diggable</li>
+    </affordances>
+    <texturePath>Terrain/Surfaces/DirtFloor</texturePath>
+    <RenderPrecedence>60</RenderPrecedence>
+    <EdgeType>FadeRough</EdgeType>
+    <ScatterType>Rocky</ScatterType>
+    <PathCost>1</PathCost>
+    <statBases>
+      <Beauty>-1</Beauty>
+      <Cleanliness>-1</Cleanliness>
+      <WorkToMake>1000</WorkToMake>
+    </statBases>
+    <constructEffect>ConstructDirt</constructEffect>
+    <AcceptTerrainSourceFilth>False</AcceptTerrainSourceFilth>
+    <TerrainFilthDef>FilthDirt</TerrainFilthDef>
+    <TakeFootprints>True</TakeFootprints>
+  </TerrainDef>
+  
+</TerrainDefs>

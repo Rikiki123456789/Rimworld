@@ -36,9 +36,9 @@ namespace OutpostGenerator
             IntVec3 cell = rotatedOrigin;
 
             // Spawn concrete floor.
-            for (int xOffset = -1; xOffset < 12; xOffset++)
+            for (int xOffset = -1; xOffset <= 11; xOffset++)
             {
-                for (int zOffset = -1; zOffset < 6; zOffset++)
+                for (int zOffset = -1; zOffset <= 5; zOffset++)
                 {
                     cell = rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation);
                     Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Concrete);
@@ -48,12 +48,12 @@ namespace OutpostGenerator
             // Generate central paved alley.
             for (int xOffset = 4; xOffset <= 6; xOffset++)
             {
-                for (int zOffset = 0; zOffset < Genstep_GenerateOutpost.zoneSideSize; zOffset++)
+                for (int zOffset = 0; zOffset <= 10; zOffset++)
                 {
                     Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDefOf.Concrete);
                 }
             }
-            for (int zOffset = 0; zOffset < Genstep_GenerateOutpost.zoneSideSize; zOffset++)
+            for (int zOffset = -1; zOffset <= 10; zOffset++)
             {
                 Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(5, 0, zOffset).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
             }

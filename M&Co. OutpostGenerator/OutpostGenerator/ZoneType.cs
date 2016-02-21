@@ -35,11 +35,19 @@ namespace OutpostGenerator
         BigRoomHydroponics,
 
         // Medium rooms.
-            // Standard: used in random selector.
+        // Standard: used in random selector.
+        MediumRoomMedibay,
+        MediumRoomPrison,
+        MediumRoomKitchen,
+        MediumRoomWarehouse,
+        MediumRoomWeaponRoom,
+        MediumRoomKenel,
+        MediumRoomLaboratory,
+        MediumRoomRecRoom,
 
 
         // Small rooms.
-            // Standard: used in random selector.
+        // Standard: used in random selector.
         SmallRoomBarracks,
         SmallRoomMedibay,
         SmallRoomWeaponRoom,
@@ -60,6 +68,7 @@ namespace OutpostGenerator
         ExteriorRecRoom,
         ShootingRange,
         Cemetery,
+        MortarBay,
 
         // Other zones.
         Empty, // Zone is empty.

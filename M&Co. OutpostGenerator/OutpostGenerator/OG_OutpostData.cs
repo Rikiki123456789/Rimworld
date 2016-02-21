@@ -28,8 +28,6 @@ namespace OutpostGenerator
         public IntVec3 dropZoneCenter;
 
         // Parameters only used during generation.
-        public ThingDef structureStuffDef;
-        public ThingDef furnitureStuffDef;
         public TriggerIntrusion triggerIntrusion;
         public List<Thing> outpostThingList;
     }

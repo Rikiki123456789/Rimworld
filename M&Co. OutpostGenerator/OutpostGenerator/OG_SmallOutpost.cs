@@ -34,8 +34,6 @@ namespace OutpostGenerator
         public static void GenerateOutpost(OG_OutpostData outpostDataParameter)
         {
             outpostData = outpostDataParameter;
-            outpostData.structureStuffDef = ThingDef.Named("Granite");
-            outpostData.furnitureStuffDef = ThingDefOf.Steel;
             outpostData.triggerIntrusion = null;
             outpostData.outpostThingList = new List<Thing>();
 
