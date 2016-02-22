@@ -55,7 +55,7 @@ namespace OutpostGenerator
             OG_Common.GenerateHorizontalAndVerticalPavedAlleys(origin);
         }
 
-        public static void GenerateBigRoomWherehouse(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)
+        public static void GenerateBigRoomWarehouse(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)
         {
             const int stockWidth = 4;
             const int stockHeight = 4;

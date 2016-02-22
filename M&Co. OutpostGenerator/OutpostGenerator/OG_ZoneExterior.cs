@@ -226,11 +226,11 @@ namespace OutpostGenerator
             IntVec3 thirdPatchCenter = rotatedOrigin + new IntVec3(6, 0, 6).RotatedBy(rotation);
 
             // Generate water patches.
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(firstPatchCenter, 4f, true))
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(firstPatchCenter, 4.2f, true))
             {
                 Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Soil);
             }
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(secondPatchCenter, 3f, true))
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(secondPatchCenter, 3.2f, true))
             {
                 Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Soil);
             }
@@ -312,7 +312,7 @@ namespace OutpostGenerator
             {
                 for (int zOffset = 0; zOffset <= 10; zOffset++)
                 {
-                    Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
+                    Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDefOf.Concrete);
                 }
             }
             OG_Common.GenerateHorizontalAndVerticalPavedAlleys(origin);
@@ -336,7 +336,7 @@ namespace OutpostGenerator
             }
             for (int xOffset = 6; xOffset <= 10; xOffset++)
             {
-                OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, rotatedOrigin + new IntVec3(xOffset, 0, 0).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
+                OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, rotatedOrigin + new IntVec3(xOffset, 0, 10).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
             }
             for (int zOffset = 0; zOffset <= 4; zOffset++)
             {
@@ -349,7 +349,7 @@ namespace OutpostGenerator
             }
 
             // Spawn mortars.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Turret_MortarBomb"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("Turret_MortarBomb"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(3, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Turret_MortarBomb"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Turret_MortarBomb"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
 
@@ -380,6 +380,8 @@ namespace OutpostGenerator
                 shell = OG_Common.TrySpawnThingAt(ThingDef.Named("ArtilleryShell"), null, rotatedOrigin + new IntVec3(xOffset, 0, 3).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
                 shell.stackCount = ThingDef.Named("ArtilleryShell").stackLimit;
             }
+
+            OG_Common.GenerateHorizontalAndVerticalPavedAlleys(origin);
         }
     }
 }

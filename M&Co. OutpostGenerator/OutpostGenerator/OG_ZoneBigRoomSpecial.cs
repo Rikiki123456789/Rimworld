@@ -189,8 +189,10 @@ namespace OutpostGenerator
             OG_Common.SpawnDoorAt(rotatedOrigin + new IntVec3(0, 0, 5).RotatedBy(rotation), ref outpostData);
             
             // Spawn weapon racks.
-            OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(1, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            Thing rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnWeaponOnRack(rack);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(1, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnWeaponOnRack(rack);
 
             // Spawn lamps.
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(1, 0, 1).RotatedBy(rotation), Color.white, ref outpostData);

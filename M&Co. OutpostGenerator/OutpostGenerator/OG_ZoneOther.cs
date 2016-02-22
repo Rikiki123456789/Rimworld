@@ -102,10 +102,8 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, southEastOrigin + new IntVec3(9, 0, 4).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
             OG_Common.TrySpawnThingAt(OG_Util.VulcanTurretDef, ThingDefOf.Steel, southEastOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
 
-            // Generate central door.
-            cell = rotatedOrigin + new IntVec3(5, 0, 0).RotatedBy(rotation);
-            OG_Common.SpawnDoorAt(cell, ref outpostData);
-            OG_Common.SpawnFireproofPowerConduitAt(cell, ref outpostData);
+            // Generate central door power conduit. Don't close with a door as it would cause the entire base to be roofed.
+            OG_Common.SpawnFireproofPowerConduitAt(rotatedOrigin + new IntVec3(5, 0, 0).RotatedBy(rotation), ref outpostData);
 
 
             // Generate ironed roof.
@@ -381,9 +379,16 @@ namespace OutpostGenerator
             // Spawn secondary sas.
             if (generateSecondarySas)
             {
-                OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(3, 0, 4).RotatedBy(rotation), 3, 6, new Rot4(rotation.AsInt + Rot4.West.AsInt), TerrainDefOf.Concrete, null, ref outpostData);
-                
-                // Spawn paved alley.
+                OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(3, 0, 4).RotatedBy(rotation), 3, 6, new Rot4(rotation.AsInt + Rot4.West.AsInt), null, null, ref outpostData);
+
+                // Spawn concrete and paved alley (don't use standard default floor as it may overlap existing medium room floor).
+                for (int xOffset = -2; xOffset <= 4; xOffset++)
+                {
+                    for (int zOffset = 3; zOffset <= 7; zOffset++)
+                    {
+                        Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDefOf.Concrete);
+                    }
+                }
                 for (int xOffset = -2; xOffset <= 4; xOffset++)
                 {
                     Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, 5).RotatedBy(rotation), TerrainDef.Named("PavedTile"));

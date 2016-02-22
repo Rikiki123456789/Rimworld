@@ -43,7 +43,7 @@
     <comps>
       <li>
         <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>-5000</basePowerConsumption>
+        <basePowerConsumption>-7500</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
         <powerToggleable>false</powerToggleable>
       </li>

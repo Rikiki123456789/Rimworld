@@ -29,12 +29,19 @@ namespace OutpostGenerator
             {
                 horizontalZonesNumber = OG_SmallOutpost.horizontalZonesNumber;
                 verticalZonesNumber = OG_SmallOutpost.verticalZonesNumber;
+
+                GenerateLaseFenceForSmallOutpost(zoneMap, horizontalZonesNumber, verticalZonesNumber, ref outpostData);
             }
             else
             {
-                Log.Warning("M&Co. OutpostGenerator: GenerateLaserFence not implemented.");
+                horizontalZonesNumber = OG_BigOutpost.horizontalZonesNumber;
+                verticalZonesNumber = OG_BigOutpost.verticalZonesNumber;
+                GenerateLaseFenceForBigOutpost(zoneMap, horizontalZonesNumber, verticalZonesNumber, ref outpostData);
             }
+        }
 
+        private static void GenerateLaseFenceForSmallOutpost(ZoneProperties[,] zoneMap, int horizontalZonesNumber, int verticalZonesNumber, ref OG_OutpostData outpostData)
+        {
             for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
             {
                 for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
@@ -131,6 +138,77 @@ namespace OutpostGenerator
                         }
                     }
                 }
+            }
+        }
+
+        private static void GenerateLaseFenceForBigOutpost(ZoneProperties[,] zoneMap, int horizontalZonesNumber, int verticalZonesNumber, ref OG_OutpostData outpostData)
+        {
+            for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
+            {
+                for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
+                {
+                    ZoneProperties zone = zoneMap[zoneOrd, zoneAbs];
+                    IntVec3 zoneOrigin = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, zoneAbs, zoneOrd);
+                    IntVec3 zoneRotatedOrigin = Zone.GetZoneRotatedOrigin(outpostData.areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation);
+                    if (zone.zoneType == ZoneType.MainEntrance)
+                    {
+                        SpawnLaserFenceTwoPylons(zoneRotatedOrigin + new IntVec3(0, 0, 5).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
+                        SpawnLaserFenceTwoPylons(zoneRotatedOrigin + new IntVec3(10, 0, 5).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
+                    }
+                    else if (zone.zoneType == ZoneType.SecondaryEntrance)
+                    {
+                        SpawnLaserFenceThreePylons(zoneRotatedOrigin, new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
+                        SpawnLaserFenceThreePylons(zoneRotatedOrigin + new IntVec3(10, 0, 0).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
+                        OG_Common.SpawnFireproofPowerConduitAt(zoneRotatedOrigin + new IntVec3(0, 0, -1).RotatedBy(zone.rotation), ref outpostData);
+                        OG_Common.SpawnFireproofPowerConduitAt(zoneRotatedOrigin + new IntVec3(10, 0, -1).RotatedBy(zone.rotation), ref outpostData);
+                    }
+                    else
+                    {
+                        if (zoneOrd == 0)
+                        {
+                            SpawnLaserFenceThreePylons(zoneOrigin, Rot4.East, ref outpostData);
+                        }
+                        if (zoneOrd == verticalZonesNumber - 1)
+                        {
+                            SpawnLaserFenceThreePylons(zoneOrigin + new IntVec3(0, 0, 10), Rot4.East, ref outpostData);
+                        }
+                        if (zoneAbs == 0)
+                        {
+                            SpawnLaserFenceThreePylons(zoneOrigin, Rot4.North, ref outpostData);
+                        }
+                        if (zoneAbs == horizontalZonesNumber - 1)
+                        {
+                            SpawnLaserFenceThreePylons(zoneOrigin + new IntVec3(10, 0, 0), Rot4.North, ref outpostData);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void SpawnLaserFenceTwoPylons(IntVec3 laserFenceLeftOrigin, Rot4 rotation, ref OG_OutpostData outpostData)
+        {
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin, ref outpostData);
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, 5).RotatedBy(rotation), ref outpostData);
+
+            for (int zOffset = 0; zOffset <= 5; zOffset++)
+            {
+                IntVec3 position = laserFenceLeftOrigin + new IntVec3(0, 0, zOffset).RotatedBy(rotation);
+                OG_Common.SpawnFireproofPowerConduitAt(position, ref outpostData);
+                Find.TerrainGrid.SetTerrain(position, TerrainDefOf.Concrete);
+            }
+        }
+
+        private static void SpawnLaserFenceThreePylons(IntVec3 laserFenceLeftOrigin, Rot4 rotation, ref OG_OutpostData outpostData)
+        {
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin, ref outpostData);
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, 5).RotatedBy(rotation), ref outpostData);
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, 10).RotatedBy(rotation), ref outpostData);
+
+            for (int zOffset = 0; zOffset <= 10; zOffset++)
+            {
+                IntVec3 position = laserFenceLeftOrigin + new IntVec3(0, 0, zOffset).RotatedBy(rotation);
+                OG_Common.SpawnFireproofPowerConduitAt(position, ref outpostData);
+                Find.TerrainGrid.SetTerrain(position, TerrainDefOf.Concrete);
             }
         }
 

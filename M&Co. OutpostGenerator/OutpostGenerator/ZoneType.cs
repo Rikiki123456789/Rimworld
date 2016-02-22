@@ -41,7 +41,7 @@ namespace OutpostGenerator
         MediumRoomKitchen,
         MediumRoomWarehouse,
         MediumRoomWeaponRoom,
-        MediumRoomKenel,
+        MediumRoomBarn,
         MediumRoomLaboratory,
         MediumRoomRecRoom,
 
@@ -58,9 +58,9 @@ namespace OutpostGenerator
         // Special zones: used during small/big outpost generation.
         SolarPanelZone,
         DropZone,
-        LandingPadTop,
         LandingPadBottom,
-        RadarDome,
+        LandingPadTop,
+        OrbitalRelay,
 
         // Exterior zones: used in random selector.
         WaterPool,

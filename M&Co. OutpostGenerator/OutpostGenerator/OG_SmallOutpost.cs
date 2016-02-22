@@ -75,14 +75,13 @@ namespace OutpostGenerator
                     Log.Message("Layout: zoneMap[" + zoneOrd + "," + zoneAbs + "] => " + zone.zoneType.ToString() + "," + zone.rotation.ToString() + "," + zone.linkedZoneRelativeRotation.ToString());
                 }
             }*/
-            //GenerateOutpostZones(outpostData.areaSouthWestOrigin);
-
-            // TODO: improve sas generation (should be more generic).
+            GenerateOutpostZones(outpostData.areaSouthWestOrigin);
+            
             IntVec3 mainRoomZoneOrigin = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, mainRoomZoneAbs, mainRoomZoneOrd);
-            GenerateSas(mainRoomZoneOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideSize - 1), Rot4.North);
-            GenerateSas(mainRoomZoneOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideSize - 1, 0, Genstep_GenerateOutpost.zoneSideCenterOffset), Rot4.East);
-            GenerateSas(mainRoomZoneOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, 0), Rot4.South);
-            GenerateSas(mainRoomZoneOrigin + new IntVec3(0, 0, Genstep_GenerateOutpost.zoneSideCenterOffset), Rot4.West);
+            OG_Common.GenerateSas(mainRoomZoneOrigin + new IntVec3(5, 0, 10), Rot4.North, 3, smallRoomWallOffset * 2, ref outpostData);
+            OG_Common.GenerateSas(mainRoomZoneOrigin + new IntVec3(10, 0, 5), Rot4.East, 3, smallRoomWallOffset * 2, ref outpostData);
+            OG_Common.GenerateSas(mainRoomZoneOrigin + new IntVec3(5, 0, 0), Rot4.South, 3, smallRoomWallOffset * 2, ref outpostData);
+            OG_Common.GenerateSas(mainRoomZoneOrigin + new IntVec3(0, 0, 5), Rot4.West, 3, smallRoomWallOffset * 2, ref outpostData);
             
             // Generate laser fences.
             GenerateLaserFence(ref outpostData);
@@ -288,7 +287,7 @@ namespace OutpostGenerator
                             OG_ZoneBigRoom.GenerateBigRoomLivingRoom(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.BigRoomWarehouse:
-                            OG_ZoneBigRoom.GenerateBigRoomWherehouse(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            OG_ZoneBigRoom.GenerateBigRoomWarehouse(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.BigRoomPrison:
                             OG_ZoneBigRoom.GenerateBigRoomPrison(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
@@ -330,30 +329,6 @@ namespace OutpostGenerator
                             break;
                     }
                 }
-            }
-        }
-
-        // ######## Sas functions ######## //
-
-        static void GenerateSas(IntVec3 origin, Rot4 rotation)
-        {
-            int sasWidth = 1; // Distance of the wall from the central alley.
-            int sasHeight = smallRoomWallOffset * 2;
-
-            OG_Common.GenerateEmptyRoomAt(origin + new IntVec3(-sasWidth, 0, 0).RotatedBy(rotation), 1 + 2 * sasWidth, sasHeight, rotation, null, null, ref outpostData);
-            OG_Common.SpawnDoorAt(origin, ref outpostData);
-            OG_Common.SpawnDoorAt(origin + new IntVec3(0, 0, sasHeight - 1).RotatedBy(rotation), ref outpostData);
-            // Generate floor.
-            for (int xOffset = -sasWidth - 1; xOffset <= sasWidth + 1; xOffset++)
-            {
-                for (int zOffset = 0; zOffset < sasHeight; zOffset++)
-                {
-                    Find.TerrainGrid.SetTerrain(origin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDefOf.Concrete);
-                }
-            }
-            for (int zOffset = 0; zOffset < sasHeight; zOffset++)
-            {
-                Find.TerrainGrid.SetTerrain(origin + new IntVec3(0, 0, zOffset).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
             }
         }
 

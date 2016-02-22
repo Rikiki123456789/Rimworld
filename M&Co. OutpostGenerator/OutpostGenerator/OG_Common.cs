@@ -268,10 +268,11 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(autodoorDef, ThingDefOf.Steel, position, false, Rot4.North, ref outpostData, false, true);
         }
 
-        public static void SpawnCoolerAt(IntVec3 position, Rot4 rotation, ref OG_OutpostData outpostData)
+        public static Building_Cooler SpawnCoolerAt(IntVec3 position, Rot4 rotation, ref OG_OutpostData outpostData)
         {
             ThingDef coolerDef = ThingDef.Named("Cooler");
-            OG_Common.TrySpawnThingAt(coolerDef, null, position, true, rotation, ref outpostData, false, true);
+            Building_Cooler cooler = OG_Common.TrySpawnThingAt(coolerDef, null, position, true, rotation, ref outpostData, false, true) as Building_Cooler;
+            return cooler;
         }
 
         public static void SpawnVentAt(IntVec3 position, Rot4 rotation, ref OG_OutpostData outpostData)
@@ -284,6 +285,77 @@ namespace OutpostGenerator
         {
             ThingDef laserFencePylonDef = ThingDef.Named("LaserFencePylon");
             return (OG_Common.TrySpawnThingAt(laserFencePylonDef, null, position, false, Rot4.North, ref outpostData) as LaserFence.Building_LaserFencePylon);
+        }
+
+        public static void GenerateSas(IntVec3 origin, Rot4 rotation, int width, int height, ref OG_OutpostData outpostData)
+        {
+            int sideWidth = (width - 1) / 2; // Distance of the wall from the central alley.
+
+            OG_Common.GenerateEmptyRoomAt(origin + new IntVec3(-sideWidth, 0, 0).RotatedBy(rotation), 1 + 2 * sideWidth, height, rotation, null, null, ref outpostData);
+            OG_Common.SpawnDoorAt(origin, ref outpostData);
+            OG_Common.SpawnDoorAt(origin + new IntVec3(0, 0, height - 1).RotatedBy(rotation), ref outpostData);
+            // Generate floor.
+            for (int xOffset = -sideWidth - 1; xOffset <= sideWidth + 1; xOffset++)
+            {
+                for (int zOffset = 0; zOffset < height; zOffset++)
+                {
+                    Find.TerrainGrid.SetTerrain(origin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDefOf.Concrete);
+                }
+            }
+            for (int zOffset = 0; zOffset < height; zOffset++)
+            {
+                Find.TerrainGrid.SetTerrain(origin + new IntVec3(0, 0, zOffset).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
+            }
+        }
+
+        public static void TrySpawnWeaponOnRack(Thing rack)
+        {
+            foreach (IntVec3 cell in rack.OccupiedRect())
+            {
+                if (Rand.Value < 0.33f)
+                {
+                    float weaponSelector = Rand.Value;
+                    ThingDef thingDef = ThingDefOf.Gun_Pistol;
+                    const float weaponsRatio = 1f / 7f;
+                    if (weaponSelector < weaponsRatio * 1f)
+                    {
+                        thingDef = ThingDef.Named("Gun_PumpShotgun");
+                    }
+                    else if (weaponSelector < weaponsRatio * 2f)
+                    {
+                        thingDef = ThingDef.Named("Gun_AssaultRifle");
+                    }
+                    else if (weaponSelector < weaponsRatio * 3f)
+                    {
+                        thingDef = ThingDef.Named("Gun_SniperRifle");
+                    }
+                    else if (weaponSelector < weaponsRatio * 4f)
+                    {
+                        thingDef = ThingDef.Named("Gun_IncendiaryLauncher");
+                    }
+                    else if (weaponSelector < weaponsRatio * 5f)
+                    {
+                        thingDef = ThingDef.Named("Gun_LMG");
+                    }
+                    else if (weaponSelector < weaponsRatio * 6f)
+                    {
+                        thingDef = ThingDef.Named("Gun_ChargeRifle");
+                    }
+                    else
+                    {
+                        thingDef = ThingDefOf.Gun_Pistol;
+                    }
+
+                    Thing weapon = ThingMaker.MakeThing(thingDef);
+                    CompQuality qualityComp = weapon.TryGetComp<CompQuality>();
+                    if (qualityComp != null)
+                    {
+                        QualityCategory quality = (QualityCategory)Rand.RangeInclusive((int)QualityCategory.Normal, (int)QualityCategory.Excellent);
+                        qualityComp.SetQuality(quality, ArtGenerationSource.Outsider);
+                    }
+                    GenSpawn.Spawn(weapon, cell);
+                }
+            }
         }
 
         public static ZoneType GetRandomZoneTypeBigRoom(OG_OutpostData outpostData)
@@ -308,31 +380,33 @@ namespace OutpostGenerator
 
         public static ZoneType GetRandomZoneTypeMediumRoom(OG_OutpostData outpostData)
         {
-            List<ZoneTypeWithWeight> exteriorZonesList = new List<ZoneTypeWithWeight>();
+            List<ZoneTypeWithWeight> mediumRoomZonesList = new List<ZoneTypeWithWeight>();
             if (outpostData.isMilitary)
             {
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomMedibay, 7f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomPrison, 5f));
-                /*exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKitchen, 3f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWarehouse, 2f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKenel, 5f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomLaboratory, 2f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomRecRoom, 4f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));*/ // TODO: debug.
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomMedibay, 7f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomPrison, 5f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKitchen, 3f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWarehouse, 2f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWeaponRoom, 7f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomBarn, 5f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomLaboratory, 2f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomRecRoom, 4f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
             }
             else
             {
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomMedibay, 3f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomPrison, 1f));
-                /*exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKitchen, 4f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWarehouse, 5f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKenel, 2f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomLaboratory, 7f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomRecRoom, 7f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));*/
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomMedibay, 3f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomPrison, 1f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomKitchen, 4f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWarehouse, 5f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomWeaponRoom, 2f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomBarn, 2f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomLaboratory, 7f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.MediumRoomRecRoom, 7f));
+                mediumRoomZonesList.Add(new ZoneTypeWithWeight(ZoneType.Empty, 1f));
             }
 
-            ZoneType exteriorZoneType = GetRandomZoneTypeByWeight(exteriorZonesList);
+            ZoneType exteriorZoneType = GetRandomZoneTypeByWeight(mediumRoomZonesList);
             return exteriorZoneType;
         }
 
@@ -374,7 +448,7 @@ namespace OutpostGenerator
             }
             else
             {
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.WaterPool, 5f));
+                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.WaterPool, 4f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Farm, 5f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Cemetery, 3f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ExteriorRecRoom, 5f));
