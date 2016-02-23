@@ -111,5 +111,17 @@ namespace OutpostGenerator
             }
             return zoneRotatedOrigin;
         }
+
+        public static bool IsZoneMediumRoom(ZoneType zoneType)
+        {
+            return ((zoneType == ZoneType.MediumRoomMedibay)
+                || (zoneType == ZoneType.MediumRoomPrison)
+                || (zoneType == ZoneType.MediumRoomKitchen)
+                || (zoneType == ZoneType.MediumRoomWarehouse)
+                || (zoneType == ZoneType.MediumRoomWeaponRoom)
+                || (zoneType == ZoneType.MediumRoomBarn)
+                || (zoneType == ZoneType.MediumRoomLaboratory)
+                || (zoneType == ZoneType.MediumRoomRecRoom));
+        }
     }
 }

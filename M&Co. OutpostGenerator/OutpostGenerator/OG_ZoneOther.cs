@@ -19,17 +19,6 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public static class OG_ZoneOther
     {
-        public static void GenerateEmptyZone(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation)
-        {
-            // TODO: this is a door step of a little sas, not an empty zone!!! ;-)
-            IntVec3 rotatedOrigin = Zone.GetZoneRotatedOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd, rotation);
-            for (int xOffset = Genstep_GenerateOutpost.zoneSideCenterOffset - 2; xOffset <= Genstep_GenerateOutpost.zoneSideCenterOffset + 2; xOffset++)
-            {
-                Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, 3).RotatedBy(rotation), TerrainDefOf.Concrete);
-            }
-            Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, 3).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
-        }
-
         public static void GenerateMainEntranceZone(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)
         {
             IntVec3 rotatedOrigin = Zone.GetZoneRotatedOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd, rotation);
@@ -514,17 +503,15 @@ namespace OutpostGenerator
             }
 
             // Generate concrete border and power conduit.
-            for (int zOffset = 0; zOffset < Genstep_GenerateOutpost.zoneSideSize; zOffset++)
+            for (int zOffset = 0; zOffset <= 10; zOffset++)
             {
                 IntVec3 cell = rotatedOrigin + new IntVec3(4, 0, zOffset).RotatedBy(rotation);
-                Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Concrete);
                 OG_Common.SpawnFireproofPowerConduitAt(cell, ref outpostData);
-            }
-            for (int zOffset = 0; zOffset < Genstep_GenerateOutpost.zoneSideSize; zOffset++)
-            {
-                IntVec3 cell = rotatedOrigin + new IntVec3(6, 0, zOffset).RotatedBy(rotation);
                 Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Concrete);
+
+                cell = rotatedOrigin + new IntVec3(6, 0, zOffset).RotatedBy(rotation);
                 OG_Common.SpawnFireproofPowerConduitAt(cell, ref outpostData);
+                Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Concrete);
             }
         }
     }

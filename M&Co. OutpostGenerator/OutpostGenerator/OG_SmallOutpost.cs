@@ -322,7 +322,7 @@ namespace OutpostGenerator
 
                         // Other zones.
                         case ZoneType.Empty:
-                            OG_ZoneOther.GenerateEmptyZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation);
+                            // Nothing to do;
                             break;
                         case ZoneType.SecondaryEntrance:
                             OG_ZoneOther.GenerateSecondaryEntranceZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);

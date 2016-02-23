@@ -152,13 +152,13 @@ namespace OutpostGenerator
                     IntVec3 zoneRotatedOrigin = Zone.GetZoneRotatedOrigin(outpostData.areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation);
                     if (zone.zoneType == ZoneType.MainEntrance)
                     {
-                        SpawnLaserFenceTwoPylons(zoneRotatedOrigin + new IntVec3(0, 0, 5).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
-                        SpawnLaserFenceTwoPylons(zoneRotatedOrigin + new IntVec3(10, 0, 5).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
+                        SpawnLaserFenceTwoPylons(zoneRotatedOrigin + new IntVec3(0, 0, 5).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), 4, ref outpostData);
+                        SpawnLaserFenceTwoPylons(zoneRotatedOrigin + new IntVec3(10, 0, 5).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), 4, ref outpostData);
                     }
                     else if (zone.zoneType == ZoneType.SecondaryEntrance)
                     {
-                        SpawnLaserFenceThreePylons(zoneRotatedOrigin, new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
-                        SpawnLaserFenceThreePylons(zoneRotatedOrigin + new IntVec3(10, 0, 0).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), ref outpostData);
+                        SpawnLaserFenceThreePylons(zoneRotatedOrigin, new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), 4, ref outpostData);
+                        SpawnLaserFenceThreePylons(zoneRotatedOrigin + new IntVec3(10, 0, 0).RotatedBy(zone.rotation), new Rot4(Rot4.North.AsInt + zone.rotation.AsInt), 4, ref outpostData);
                         OG_Common.SpawnFireproofPowerConduitAt(zoneRotatedOrigin + new IntVec3(0, 0, -1).RotatedBy(zone.rotation), ref outpostData);
                         OG_Common.SpawnFireproofPowerConduitAt(zoneRotatedOrigin + new IntVec3(10, 0, -1).RotatedBy(zone.rotation), ref outpostData);
                     }
@@ -166,29 +166,61 @@ namespace OutpostGenerator
                     {
                         if (zoneOrd == 0)
                         {
-                            SpawnLaserFenceThreePylons(zoneOrigin, Rot4.East, ref outpostData);
+                            if (Zone.IsZoneMediumRoom(zone.zoneType))
+                            {
+                                SpawnLaserFenceTwoPylons(zoneOrigin, Rot4.East, 2, ref outpostData);
+                                SpawnLaserFenceTwoPylons(zoneOrigin + new IntVec3(7, 0, 0), Rot4.East, 2, ref outpostData);
+                            }
+                            else
+                            {
+                                SpawnLaserFenceThreePylons(zoneOrigin, Rot4.East, 4, ref outpostData);
+                            }
                         }
                         if (zoneOrd == verticalZonesNumber - 1)
                         {
-                            SpawnLaserFenceThreePylons(zoneOrigin + new IntVec3(0, 0, 10), Rot4.East, ref outpostData);
+                            if (Zone.IsZoneMediumRoom(zone.zoneType))
+                            {
+                                SpawnLaserFenceTwoPylons(zoneOrigin + new IntVec3(0, 0, 10), Rot4.East, 2, ref outpostData);
+                                SpawnLaserFenceTwoPylons(zoneOrigin + new IntVec3(7, 0, 10), Rot4.East, 2, ref outpostData);
+                            }
+                            else
+                            {
+                                SpawnLaserFenceThreePylons(zoneOrigin + new IntVec3(0, 0, 10), Rot4.East, 4, ref outpostData);
+                            }
                         }
                         if (zoneAbs == 0)
                         {
-                            SpawnLaserFenceThreePylons(zoneOrigin, Rot4.North, ref outpostData);
+                            if (Zone.IsZoneMediumRoom(zone.zoneType))
+                            {
+                                SpawnLaserFenceTwoPylons(zoneOrigin, Rot4.North, 2, ref outpostData);
+                                SpawnLaserFenceTwoPylons(zoneOrigin + new IntVec3(0, 0, 7), Rot4.North, 2, ref outpostData);
+                            }
+                            else
+                            {
+                                SpawnLaserFenceThreePylons(zoneOrigin, Rot4.North, 4, ref outpostData);
+                            }
                         }
                         if (zoneAbs == horizontalZonesNumber - 1)
                         {
-                            SpawnLaserFenceThreePylons(zoneOrigin + new IntVec3(10, 0, 0), Rot4.North, ref outpostData);
+                            if (Zone.IsZoneMediumRoom(zone.zoneType))
+                            {
+                                SpawnLaserFenceTwoPylons(zoneOrigin + new IntVec3(10, 0, 0), Rot4.North, 2, ref outpostData);
+                                SpawnLaserFenceTwoPylons(zoneOrigin + new IntVec3(10, 0, 7), Rot4.North, 2, ref outpostData);
+                            }
+                            else
+                            {
+                                SpawnLaserFenceThreePylons(zoneOrigin + new IntVec3(10, 0, 0), Rot4.North, 4, ref outpostData);
+                            }
                         }
                     }
                 }
             }
         }
-
-        private static void SpawnLaserFenceTwoPylons(IntVec3 laserFenceLeftOrigin, Rot4 rotation, ref OG_OutpostData outpostData)
+        
+        private static void SpawnLaserFenceTwoPylons(IntVec3 laserFenceLeftOrigin, Rot4 rotation, int distanceBetweenPylons, ref OG_OutpostData outpostData)
         {
             OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin, ref outpostData);
-            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, 5).RotatedBy(rotation), ref outpostData);
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, distanceBetweenPylons + 1).RotatedBy(rotation), ref outpostData);
 
             for (int zOffset = 0; zOffset <= 5; zOffset++)
             {
@@ -198,11 +230,11 @@ namespace OutpostGenerator
             }
         }
 
-        private static void SpawnLaserFenceThreePylons(IntVec3 laserFenceLeftOrigin, Rot4 rotation, ref OG_OutpostData outpostData)
+        private static void SpawnLaserFenceThreePylons(IntVec3 laserFenceLeftOrigin, Rot4 rotation, int distanceBetweenPylons, ref OG_OutpostData outpostData)
         {
             OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin, ref outpostData);
-            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, 5).RotatedBy(rotation), ref outpostData);
-            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, 10).RotatedBy(rotation), ref outpostData);
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, distanceBetweenPylons + 1).RotatedBy(rotation), ref outpostData);
+            OG_Common.TrySpawnLaserFencePylonAt(laserFenceLeftOrigin + new IntVec3(0, 0, 2 * (distanceBetweenPylons + 1)).RotatedBy(rotation), ref outpostData);
 
             for (int zOffset = 0; zOffset <= 10; zOffset++)
             {

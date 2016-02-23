@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+
+
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <thingClass>Building</thingClass>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+  
+  <ThingDef Abstract="True" Name="StandingLampBase" ParentName="BuildingBase">
+    <thingClass>Building</thingClass>
+    <category>Building</category>
+    <minifiedDef>MinifiedFurniture</minifiedDef>
+    <altitudeLayer>Waist</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <selectable>true</selectable>
+    <fillPercent>0.20</fillPercent>
+    <costList>
+      <Steel>5</Steel>
+    </costList>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <designationCategory>Furniture</designationCategory>
+    <rotatable>false</rotatable>
+    <graphicData>
+      <texPath>Things/Building/Furniture/LampStanding</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shadowData>
+        <volume>(0.1, 0.3, 0.1)</volume>
+        <offset>(0,0,-0.1)</offset>
+      </shadowData>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <WorkToMake>250</WorkToMake>
+      <Flammability>0.0</Flammability>
+    </statBases>
+  </ThingDef>
+    
+  <ThingDef ParentName="StandingLampBase">
+    <defName>LandingPadBeacon</defName>
+    <label>landing pad beacon</label>
+    <description>Beacon used by ships to land on.</description>
+    <thingClass>OutpostGenerator.Building_LandingPadBeacon</thingClass>
+    <TickerType>Normal</TickerType>
+    <comps>
+      <li>
+        <compClass>CompGlower</compClass>
+        <glowRadius>3</glowRadius>
+        <overlightRadius>2.9</overlightRadius>
+        <glowColor>(217,0,0,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Buildings>

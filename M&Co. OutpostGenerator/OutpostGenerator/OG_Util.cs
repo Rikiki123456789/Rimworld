@@ -80,6 +80,14 @@ namespace OutpostGenerator
             }
         }
 
+        public static ThingDef LandingPadBeaconDef
+        {
+            get
+            {
+                return ThingDef.Named("LandingPadBeacon");
+            }
+        }
+
         // Terrain def.
         public static TerrainDef DirtFloorDef
         {

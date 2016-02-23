@@ -249,13 +249,13 @@ namespace OutpostGenerator
                     Zone.GetAdjacentZone(dropZoneZoneAbs, dropZoneZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
                     zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
                     Zone.GetAdjacentZone(landingPadTopZoneAbs, landingPadTopZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
-                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.SolarPanelZone, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                 }
                 else
                 {
                     // Landing pad bottom first.
                     Zone.GetAdjacentZone(dropZoneZoneAbs, dropZoneZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
-                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.SolarPanelZone, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                     Zone.GetAdjacentZone(landingPadBottomZoneAbs, landingPadBottomZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
                     zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
                 }
@@ -269,7 +269,7 @@ namespace OutpostGenerator
                     Zone.GetAdjacentZone(commandRoomZoneAbs, commandRoomZoneOrd, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
                     zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
                     Zone.GetAdjacentZone(landingPadTopZoneAbs, landingPadTopZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
-                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.SolarPanelZone, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                     Zone.GetAdjacentZone(landingPadBottomZoneAbs, landingPadBottomZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out dropZoneZoneAbs, out dropZoneZoneOrd);
                     zoneMap[dropZoneZoneOrd, dropZoneZoneAbs] = new ZoneProperties(ZoneType.DropZone, Rot4.North, Rot4.Invalid);
                 }
@@ -277,7 +277,7 @@ namespace OutpostGenerator
                 {
                     // Landing pad bottom first.
                     Zone.GetAdjacentZone(commandRoomZoneAbs, commandRoomZoneOrd, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
-                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.SolarPanelZone, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                     Zone.GetAdjacentZone(landingPadBottomZoneAbs, landingPadBottomZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
                     zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
                     Zone.GetAdjacentZone(landingPadTopZoneAbs, landingPadTopZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out dropZoneZoneAbs, out dropZoneZoneOrd);
@@ -754,7 +754,7 @@ namespace OutpostGenerator
                             OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
                             break;
                         case ZoneType.LandingPadBottom:
-                            OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
+                            OG_ZoneSpecial.GenerateLandingPadBottom(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.LandingPadTop:
                             OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
@@ -785,7 +785,7 @@ namespace OutpostGenerator
 
                         // Other zones.
                         case ZoneType.Empty:
-                            OG_ZoneOther.GenerateEmptyZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation);
+                            // Nothing to do;
                             break;
                         case ZoneType.MainEntrance:
                             OG_ZoneOther.GenerateMainEntranceZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);

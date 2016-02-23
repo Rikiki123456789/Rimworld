@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_OutpostCommandConsole.cs" />
+    <Compile Include="Building_LandingPadBeacon.cs" />
     <Compile Include="OG_ZoneBigRoomSpecial.cs" />
     <Compile Include="OG_ZoneExterior.cs" />
     <Compile Include="OG_ZoneMediumRoom.cs" />
@@ -96,6 +97,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_LandingPadBeacon.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FireproofAutoDoor.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FireproofPowerConduit.xml">
       <SubType>Designer</SubType>
