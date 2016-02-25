@@ -20,9 +20,9 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_LandingPadBeacon : Building
     {
-        public const int flashPeriodInTicks = 300;
+        public const int flashPeriodInTicks = 15 * (int)GenTicks.TicksPerRealtimeSecond;
         private int flashStartInTicks = flashPeriodInTicks;
-        public const int flashDurationInTicks = 15;
+        public const int flashDurationInTicks = 10;
         private int flashStopInTicks = 0;
 
         private CompGlower glower;

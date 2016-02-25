@@ -134,8 +134,10 @@ namespace OutpostGenerator
         
         public void TreatIntrusion(IntVec3 intrusionCell)
         {
-            this.outpostThingList = OG_Util.RefreshThingList(this.outpostThingList);
-            ChangeOutpostThingsFaction(Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile));
+            OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
+            Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
+            OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = true;
+            Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = true;
 
             // TODO: treat inhabitants response to intrusion.
 

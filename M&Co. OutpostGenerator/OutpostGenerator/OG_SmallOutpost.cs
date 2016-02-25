@@ -84,13 +84,12 @@ namespace OutpostGenerator
             OG_Common.GenerateSas(mainRoomZoneOrigin + new IntVec3(0, 0, 5), Rot4.West, 3, smallRoomWallOffset * 2, ref outpostData);
             
             // Generate laser fences.
-            GenerateLaserFence(ref outpostData);
+            OG_LaserFence.GenerateLaserFence(zoneMap, ref outpostData);
             // Generate battle remains.
-            GenerateWarfieldEffects(outpostData);
+            OG_WarfieldEffects.GenerateWarfieldEffects(zoneMap, horizontalZonesNumber, verticalZonesNumber, outpostData);
             // Damage outpost to reflect its history.
-            GenerateRuinEffects(ref outpostData);
-            // Generate some inhabitants.
-            //GenerateInhabitants(outpostData); // TODO: will be hard!
+            OG_RuinEffects.GenerateRuinEffects(ref outpostData);
+            // Don't generate permanent inhabitants for small outposts. Those are just used as a shack by exploration teams.
 
             // Initialize command console data.
             outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
@@ -330,154 +329,6 @@ namespace OutpostGenerator
                     }
                 }
             }
-        }
-
-        // ######## Warfield effects functions ######## //
-
-        static void GenerateWarfieldEffects(OG_OutpostData outpostData)
-        {
-            bool battleZoneIsFound = false;
-            int battleZoneAbs = 0;
-            int battleZoneOrd = 0;
-
-            if (outpostData.battleOccured == false)
-            {
-                return;
-            }
-            battleZoneIsFound = GetBattleZoneAbsAndOrd(out battleZoneAbs, out battleZoneOrd);
-            if (battleZoneIsFound == false)
-            {
-                Log.Warning("M&Co. OutpostGenerator: failed to find an appropriate zone to generate warfield.");
-                return;
-            }
-
-            Building_WarfieldGenerator warfieldGenerator = ThingMaker.MakeThing(ThingDef.Named("WarfieldGenerator")) as Building_WarfieldGenerator;
-            warfieldGenerator.battleZoneAbs = battleZoneAbs;
-            warfieldGenerator.battleZoneOrd = battleZoneOrd;
-            warfieldGenerator.outpostData = outpostData;
-            IntVec3 warfieldCenter = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, battleZoneAbs, battleZoneOrd) + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset);
-            GenSpawn.Spawn(warfieldGenerator, warfieldCenter);
-        }
-
-        static bool GetBattleZoneAbsAndOrd(out int battleZoneAbs, out int battleZoneOrd)
-        {
-            battleZoneAbs = 0;
-            battleZoneOrd = 0;
-
-            // Look for an entranched zone.
-            for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
-            {
-                for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
-                {
-                    if (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.SecondaryEntrance)
-                    {
-                        battleZoneAbs = zoneAbs;
-                        battleZoneOrd = zoneOrd;
-                        return true;
-                    }
-                }
-            }
-            // Else, look for an empty zone.
-            for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
-            {
-                for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
-                {
-                    if ((zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.NotYetGenerated)
-                        || (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.Empty))
-                    {
-                        battleZoneAbs = zoneAbs;
-                        battleZoneOrd = zoneOrd;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        // ######## Ruin effects functions ######## //
-
-        static void GenerateRuinEffects(ref OG_OutpostData outpostData)
-        {
-            GenerateRuinDamage(ref outpostData);
-            GenerateRuinFilth(ref outpostData);
-        }
-
-        static void GenerateRuinDamage(ref OG_OutpostData outpostData)
-        {
-            float minHitPointsFactor = 0.10f;
-            float maxHitPointsFactor = 1.0f;
-            float damageDensity = 0.5f;
-            if (outpostData.isRuined)
-            {
-                // Ruined outpost.
-                minHitPointsFactor = 0.2f;
-                maxHitPointsFactor = 0.6f;
-                damageDensity = 0.3f;
-            }
-            else
-            {
-                // Only rusty outpost.
-                minHitPointsFactor = 0.8f;
-                maxHitPointsFactor = 1f;
-                damageDensity = 0.05f;
-            }
-            foreach (Thing thing in outpostData.outpostThingList)
-            {
-                if (Rand.Value < damageDensity)
-                {
-                    thing.HitPoints = (int)((float)thing.MaxHitPoints * Rand.Range(minHitPointsFactor, maxHitPointsFactor));
-                }
-            }
-        }
-
-        static void GenerateRuinFilth(ref OG_OutpostData outpostData)
-        {
-            const float dustDensity = 0.3f;
-            const float slagDensity = 0.1f;
-            if (outpostData.isRuined)
-            {
-                CellRect areaRect = new CellRect(outpostData.areaSouthWestOrigin.x, outpostData.areaSouthWestOrigin.z, areaSideLength, areaSideLength);
-                foreach (IntVec3 cell in areaRect)
-                {
-                    if (cell.GetEdifice() != null)
-                    {
-                        continue;
-                    }
-
-                    if (Rand.Value < dustDensity)
-                    {
-                        GenSpawn.Spawn(ThingDefOf.FilthDirt, cell);
-                    }
-                    if (Rand.Value < slagDensity)
-                    {
-                        float slagSelector = Rand.Value;
-                        if (slagSelector < 0.33f)
-                        {
-                            GenSpawn.Spawn(ThingDef.Named("RockRubble"), cell);
-                        }
-                        else if (slagSelector < 0.66f)
-                        {
-                            GenSpawn.Spawn(ThingDef.Named("BuildingRubble"), cell);
-                        }
-                        else
-                        {
-                            GenSpawn.Spawn(ThingDef.Named("SandbagRubble"), cell);
-                        }
-                    }
-                }
-            }
-        }
-
-        // ######## Laser fences functions ######## //
-        
-        static void GenerateLaserFence(ref OG_OutpostData outpostData)
-        {
-            if (ModsConfig.IsActive("M&Co. LaserFence") == false)
-            {
-                Log.Warning("M&Co. OutpostGenerator: M&Co. LaserFence mod is not active. Cannot generate laser fences.");
-                return;
-            }
-            OG_LaserFence.GenerateLaserFence(zoneMap, ref outpostData);
         }
     }
 }

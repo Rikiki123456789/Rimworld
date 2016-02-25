@@ -16,7 +16,7 @@ namespace OutpostGenerator
     // TODO: add automated supply ship landing.
     // TODO: add tale: droppod destroyed in-flight.
     // TODO: add blue glower to compact autonomous generator.
-    // TODO: add trigger intrusion.
+    // TODO: remove alert speaker to avoid strange faction effects?
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -30,7 +30,7 @@ namespace OutpostGenerator
         public const int verticalZonesNumber = 7;
         public const int areaSideLength = 7 * Genstep_GenerateOutpost.zoneSideSize;
 
-        private static Rot4 mainEntranceDirection;
+        private static Rot4 mainEntranceDirection = Rot4.Random;
         private static ZoneProperties[,] zoneMap = new ZoneProperties[verticalZonesNumber, horizontalZonesNumber];
         private const int mainRoomsNumber = 5;
 
@@ -39,11 +39,58 @@ namespace OutpostGenerator
         
         public static void GenerateOutpost(OG_OutpostData outpostDataParameter)
         {
+            int mainRoomZoneAbs = 0;
+            int mainRoomZoneOrd = 0;
+
             outpostData = outpostDataParameter;
             outpostData.triggerIntrusion = null;
             outpostData.outpostThingList = new List<Thing>();
 
             // Clear the whole area, remove any roof and water.
+            ClearAnythingInOutpostArea();
+            
+            // Create the intrusion trigger.
+            outpostData.triggerIntrusion = (TriggerIntrusion)ThingMaker.MakeThing(ThingDef.Named("TriggerIntrusion"));
+            GetMainRoom4Zone(mainEntranceDirection, out mainRoomZoneAbs, out mainRoomZoneOrd);
+            IntVec3 triggerINtrussionPosition = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, mainRoomZoneAbs, mainRoomZoneOrd) + new IntVec3(5, 0, 5);
+            GenSpawn.Spawn(outpostData.triggerIntrusion, triggerINtrussionPosition);
+
+            GenerateOutpostLayout();
+            
+            // TODO: debug. Display the generated layout.
+            for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
+            {
+                for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
+                {
+                    ZoneProperties zone = zoneMap[zoneOrd, zoneAbs];
+                    Log.Message("Layout: zoneMap[" + zoneOrd + "," + zoneAbs + "] => " + zone.zoneType.ToString() + "," + zone.rotation.ToString() + "," + zone.linkedZoneRelativeRotation.ToString());
+                }
+            }
+
+            GenerateOutpostZones(outpostData.areaSouthWestOrigin);
+            GenerateSasToLinkMediumAndMainRooms(outpostData.areaSouthWestOrigin);
+
+            // Generate laser fences.
+            OG_LaserFence.GenerateLaserFence(zoneMap, ref outpostData);
+            // Generate battle remains.
+            OG_WarfieldEffects.GenerateWarfieldEffects(zoneMap, horizontalZonesNumber, verticalZonesNumber, outpostData);
+            // Damage outpost to reflect its history.
+            OG_RuinEffects.GenerateRuinEffects(ref outpostData);
+            // Generate some inhabitants.
+            //GenerateInhabitants(outpostData); // TODO: will be hard!*/
+
+            // Initialize command console data.
+            outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
+            commandConsole.outpostThingList = outpostData.outpostThingList.ListFullCopy<Thing>();
+            commandConsole.dropZoneCenter = outpostData.dropZoneCenter;
+            // Initialize intrusion trigger data.
+            outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick).
+            
+            SendWelcomeLetter(outpostData);
+        }
+
+        static void ClearAnythingInOutpostArea()
+        {
             CellRect rect = new CellRect(outpostData.areaSouthWestOrigin.x - 1, outpostData.areaSouthWestOrigin.z - 1, areaSideLength + 2, areaSideLength + 2);
             foreach (IntVec3 cell in rect.Cells)
             {
@@ -65,45 +112,8 @@ namespace OutpostGenerator
                     Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Soil);
                 }
             }
-
-            // Create the intrusion trigger.
-            outpostData.triggerIntrusion = (TriggerIntrusion)ThingMaker.MakeThing(ThingDef.Named("TriggerIntrusion"));
-            GenSpawn.Spawn(outpostData.triggerIntrusion, rect.Center);
-
-            GenerateOutpostLayout();
-            
-            // TODO: debug. Display the generated layout.
-            for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
-            {
-                for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
-                {
-                    ZoneProperties zone = zoneMap[zoneOrd, zoneAbs];
-                    Log.Message("Layout: zoneMap[" + zoneOrd + "," + zoneAbs + "] => " + zone.zoneType.ToString() + "," + zone.rotation.ToString() + "," + zone.linkedZoneRelativeRotation.ToString());
-                }
-            }
-
-            GenerateOutpostZones(outpostData.areaSouthWestOrigin);
-            GenerateSasToLinkMediumAndMainRooms(outpostData.areaSouthWestOrigin);
-            
-            // Generate laser fences.
-            GenerateLaserFence(ref outpostData);
-            // Generate battle remains.
-            /*GenerateWarfieldEffects(outpostData);
-            // Damage outpost to reflect its history.
-            GenerateRuinEffects(ref outpostData);
-            // Generate some inhabitants.
-            //GenerateInhabitants(outpostData); // TODO: will be hard!*/
-
-            // Initialize command console data.
-            outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
-            commandConsole.outpostThingList = outpostData.outpostThingList.ListFullCopy<Thing>();
-            commandConsole.dropZoneCenter = outpostData.dropZoneCenter;
-            // Initialize intrusion trigger data.
-            outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick).
-            
-            SendWelcomeLetter(outpostData);
         }
-        
+
         static void SendWelcomeLetter(OG_OutpostData outpostData)
         {
             string eventTitle = "";
@@ -150,8 +160,6 @@ namespace OutpostGenerator
                     zoneMap[zoneOrd, zoneAbs] = new ZoneProperties(ZoneType.NotYetGenerated, Rot4.North, Rot4.North);
                 }
             }
-
-            mainEntranceDirection = Rot4.Random;
 
             GenerateOutpostLayoutCentralRoom();
             GenerateOutpostLayoutNorthMainEntrance();
@@ -247,7 +255,7 @@ namespace OutpostGenerator
                 {
                     // Landing pad top first.
                     Zone.GetAdjacentZone(dropZoneZoneAbs, dropZoneZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
-                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.LandingPadTop, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South);
                     Zone.GetAdjacentZone(landingPadTopZoneAbs, landingPadTopZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
                     zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                 }
@@ -257,7 +265,7 @@ namespace OutpostGenerator
                     Zone.GetAdjacentZone(dropZoneZoneAbs, dropZoneZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
                     zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                     Zone.GetAdjacentZone(landingPadBottomZoneAbs, landingPadBottomZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
-                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.LandingPadTop, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South);
                 }
             }
             else
@@ -267,7 +275,7 @@ namespace OutpostGenerator
                 {
                     // Landing pad top first.
                     Zone.GetAdjacentZone(commandRoomZoneAbs, commandRoomZoneOrd, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
-                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.LandingPadTop, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South);
                     Zone.GetAdjacentZone(landingPadTopZoneAbs, landingPadTopZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
                     zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.East.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                     Zone.GetAdjacentZone(landingPadBottomZoneAbs, landingPadBottomZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out dropZoneZoneAbs, out dropZoneZoneOrd);
@@ -279,7 +287,7 @@ namespace OutpostGenerator
                     Zone.GetAdjacentZone(commandRoomZoneAbs, commandRoomZoneOrd, new Rot4(Rot4.South.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadBottomZoneAbs, out landingPadBottomZoneOrd);
                     zoneMap[landingPadBottomZoneOrd, landingPadBottomZoneAbs] = new ZoneProperties(ZoneType.LandingPadBottom, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.North);
                     Zone.GetAdjacentZone(landingPadBottomZoneAbs, landingPadBottomZoneOrd, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out landingPadTopZoneAbs, out landingPadTopZoneOrd);
-                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.SecondaryEntrance, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South); // TODO: debug. ZoneType.LandingPadTop
+                    zoneMap[landingPadTopZoneOrd, landingPadTopZoneAbs] = new ZoneProperties(ZoneType.LandingPadTop, new Rot4(Rot4.West.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), Rot4.South);
                     Zone.GetAdjacentZone(landingPadTopZoneAbs, landingPadTopZoneOrd, new Rot4(Rot4.North.AsInt + mainEntranceDirection.AsInt + mainRoomIndex), out dropZoneZoneAbs, out dropZoneZoneOrd);
                     zoneMap[dropZoneZoneOrd, dropZoneZoneAbs] = new ZoneProperties(ZoneType.DropZone, Rot4.North, Rot4.Invalid);
                 }
@@ -757,7 +765,7 @@ namespace OutpostGenerator
                             OG_ZoneSpecial.GenerateLandingPadBottom(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.LandingPadTop:
-                            OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
+                            OG_ZoneSpecial.GenerateLandingPadTop(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.OrbitalRelay:
                             OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
@@ -860,155 +868,6 @@ namespace OutpostGenerator
                     }
                 }
             }
-        }
-
-
-        // ######## Warfield effects functions ######## //
-
-        static void GenerateWarfieldEffects(OG_OutpostData outpostData)
-        {
-            bool battleZoneIsFound = false;
-            int battleZoneAbs = 0;
-            int battleZoneOrd = 0;
-
-            if (outpostData.battleOccured == false)
-            {
-                return;
-            }
-            battleZoneIsFound = GetBattleZoneAbsAndOrd(out battleZoneAbs, out battleZoneOrd);
-            if (battleZoneIsFound == false)
-            {
-                Log.Warning("M&Co. OutpostGenerator: failed to find an appropriate zone to generate warfield.");
-                return;
-            }
-
-            Building_WarfieldGenerator warfieldGenerator = ThingMaker.MakeThing(ThingDef.Named("WarfieldGenerator")) as Building_WarfieldGenerator;
-            warfieldGenerator.battleZoneAbs = battleZoneAbs;
-            warfieldGenerator.battleZoneOrd = battleZoneOrd;
-            warfieldGenerator.outpostData = outpostData;
-            IntVec3 warfieldCenter = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, battleZoneAbs, battleZoneOrd) + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset);
-            GenSpawn.Spawn(warfieldGenerator, warfieldCenter);
-        }
-
-        static bool GetBattleZoneAbsAndOrd(out int battleZoneAbs, out int battleZoneOrd)
-        {
-            battleZoneAbs = 0;
-            battleZoneOrd = 0;
-
-            // Look for an entranched zone.
-            for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
-            {
-                for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
-                {
-                    if (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.SecondaryEntrance)
-                    {
-                        battleZoneAbs = zoneAbs;
-                        battleZoneOrd = zoneOrd;
-                        return true;
-                    }
-                }
-            }
-            // Else, look for an empty zone.
-            for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
-            {
-                for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
-                {
-                    if ((zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.NotYetGenerated)
-                        || (zoneMap[zoneOrd, zoneAbs].zoneType == ZoneType.Empty))
-                    {
-                        battleZoneAbs = zoneAbs;
-                        battleZoneOrd = zoneOrd;
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        // ######## Ruin effects functions ######## //
-
-        static void GenerateRuinEffects(ref OG_OutpostData outpostData)
-        {
-            GenerateRuinDamage(ref outpostData);
-            GenerateRuinFilth(ref outpostData);
-        }
-
-        static void GenerateRuinDamage(ref OG_OutpostData outpostData)
-        {
-            float minHitPointsFactor = 0.10f;
-            float maxHitPointsFactor = 1.0f;
-            float damageDensity = 0.5f;
-            if (outpostData.isRuined)
-            {
-                // Ruined outpost.
-                minHitPointsFactor = 0.2f;
-                maxHitPointsFactor = 0.6f;
-                damageDensity = 0.3f;
-            }
-            else
-            {
-                // Only rusty outpost.
-                minHitPointsFactor = 0.8f;
-                maxHitPointsFactor = 1f;
-                damageDensity = 0.05f;
-            }
-            foreach (Thing thing in outpostData.outpostThingList)
-            {
-                if (Rand.Value < damageDensity)
-                {
-                    thing.HitPoints = (int)((float)thing.MaxHitPoints * Rand.Range(minHitPointsFactor, maxHitPointsFactor));
-                }
-            }
-        }
-
-        static void GenerateRuinFilth(ref OG_OutpostData outpostData)
-        {
-            const float dustDensity = 0.3f;
-            const float slagDensity = 0.1f;
-            if (outpostData.isRuined)
-            {
-                CellRect areaRect = new CellRect(outpostData.areaSouthWestOrigin.x, outpostData.areaSouthWestOrigin.z, areaSideLength, areaSideLength);
-                foreach (IntVec3 cell in areaRect)
-                {
-                    if (cell.GetEdifice() != null)
-                    {
-                        continue;
-                    }
-
-                    if (Rand.Value < dustDensity)
-                    {
-                        GenSpawn.Spawn(ThingDefOf.FilthDirt, cell);
-                    }
-                    if (Rand.Value < slagDensity)
-                    {
-                        float slagSelector = Rand.Value;
-                        if (slagSelector < 0.33f)
-                        {
-                            GenSpawn.Spawn(ThingDef.Named("RockRubble"), cell);
-                        }
-                        else if (slagSelector < 0.66f)
-                        {
-                            GenSpawn.Spawn(ThingDef.Named("BuildingRubble"), cell);
-                        }
-                        else
-                        {
-                            GenSpawn.Spawn(ThingDef.Named("SandbagRubble"), cell);
-                        }
-                    }
-                }
-            }
-        }
-
-        // ######## Laser fences functions ######## //
-        
-        static void GenerateLaserFence(ref OG_OutpostData outpostData)
-        {
-            if (ModsConfig.IsActive("M&Co. LaserFence") == false)
-            {
-                Log.Warning("M&Co. OutpostGenerator: M&Co. LaserFence mod is not active. Cannot generate laser fences.");
-                return;
-            }
-            OG_LaserFence.GenerateLaserFence(zoneMap, ref outpostData);
         }
     }
 }

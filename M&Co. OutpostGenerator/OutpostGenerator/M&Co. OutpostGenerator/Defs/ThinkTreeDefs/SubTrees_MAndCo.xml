@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThinkTrees>
+
+  <ThinkTreeDef>
+    <defName>MAndCoPostDuty</defName>
+    <insertTag>Humanlike_PostDuty</insertTag>
+    <insertPriority>100</insertPriority>
+    <thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
+          <subNodes>
+            <!--  Take direct orders when drafted  -->
+            <li Class="JobGiver_Orders"/>
+            <!--  Queue for forced work  -->
+            <li Class="JobGiver_JobQueue"/>
+            <!--  Seek allowed area  -->
+            <li Class="JobGiver_SeekAllowedArea"/>
+            <!--  Seek safe temperatures  -->
+            <li Class="JobGiver_SeekSafeTemperature"/>
+            <!--  Drop unnused inventory  -->
+            <li Class="JobGiver_DropUnusedInventory"/>
+            <!--  Get food (only if starving)  -->
+            <li Class="ThinkNode_ConditionalStarving">
+              <subNodes>
+                <li Class="JobGiver_GetFood"/>
+              </subNodes>
+            </li>
+            <!--  Emergency work  -->
+            <li Class="JobGiver_Work">
+              <emergency>true</emergency>
+            </li>
+            <!--  Optimize apparel  -->
+            <li Class="JobGiver_OptimizeApparel"/>
+            <!--  Pack food if not hungry -->
+            <li Class="ThinkNode_ConditionalNeedAbove">
+              <need>Food</need>
+              <threshold>0.6</threshold>
+              <subNodes>
+                <li Class="JobGiver_PackFood"/>
+              </subNodes>
+            </li>
+          </subNodes>
+        </li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  
+</ThinkTrees>

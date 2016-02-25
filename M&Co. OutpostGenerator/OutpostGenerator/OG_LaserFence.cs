@@ -22,6 +22,12 @@ namespace OutpostGenerator
     {
         public static void GenerateLaserFence(ZoneProperties[,] zoneMap, ref OG_OutpostData outpostData)
         {
+            if (ModsConfig.IsActive("M&Co. LaserFence") == false)
+            {
+                Log.Warning("M&Co. OutpostGenerator: M&Co. LaserFence mod is not active. Cannot generate laser fences.");
+                return;
+            }
+
             int horizontalZonesNumber = 0;
             int verticalZonesNumber = 0;
 
@@ -39,7 +45,7 @@ namespace OutpostGenerator
                 GenerateLaseFenceForBigOutpost(zoneMap, horizontalZonesNumber, verticalZonesNumber, ref outpostData);
             }
         }
-
+        
         private static void GenerateLaseFenceForSmallOutpost(ZoneProperties[,] zoneMap, int horizontalZonesNumber, int verticalZonesNumber, ref OG_OutpostData outpostData)
         {
             for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)

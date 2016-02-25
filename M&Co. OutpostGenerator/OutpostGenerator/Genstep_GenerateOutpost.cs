@@ -33,7 +33,7 @@ namespace OutpostGenerator
             }
 
             //// TODO: debug, remove it.
-            /*outpostData.battleOccured = true;
+            //outpostData.battleOccured = true;
             Log.Message("outpostData:");
             Log.Message(" - size: " + outpostData.size.ToString());
             Log.Message(" - isMilitary: " + outpostData.isMilitary.ToString());
@@ -41,7 +41,7 @@ namespace OutpostGenerator
             Log.Message(" - isRuined: " + outpostData.isRuined.ToString());
             Log.Message(" - isInhabited: " + outpostData.isInhabited.ToString());
 
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, 70);
+            /*outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, 70);
             OG_BigOutpost.GenerateOutpost(outpostData);
             outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(70, 0, 70);
             OG_BigOutpost.GenerateOutpost(outpostData);
@@ -219,8 +219,10 @@ namespace OutpostGenerator
                 OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = false;
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = false;
             }
+            /*Log.Message("After GetOutpostType");
             Log.Message("Colony.RelationWithMAndCo goodwill/hostile = " + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill + "/" + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile);
             Log.Message("MAndCo.RelationWithColony goodwill/hostile = " + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill + "/" + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile);
+            */ // TODO. debugm re;ove it<
         }
 
         protected void GetBattleOccured(ref OG_OutpostData outpostData)

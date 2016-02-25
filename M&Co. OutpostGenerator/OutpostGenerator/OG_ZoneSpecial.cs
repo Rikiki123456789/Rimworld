@@ -70,16 +70,16 @@ namespace OutpostGenerator
             TerrainDef[,] landingPadBottomPattern = new TerrainDef[11, 11]
             {
                 {null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, mt,   mt,   mt,   mt,   mt,   mt,   mt,   null, null},
-                {null, null, mt,   c,    c,    c,    c,    c,    mt,   null, null},
-                {null, mt,   mt,   c,    c,    c,    c,    c,    mt,   mt,   null},
-                {null, mt,   c,    c,    c,    c,    c,    c,    c,    mt,   null},
-                {pt,   pt,   c,    c,    c,    c,    c,    c,    c,    pt,   pt},
-                {null, mt,   c,    mt,   c,    c,    c,    mt,   c,    mt,   null},
-                {mt,   mt,   c,    c,    c,    c,    c,    c,    c,    mt,   mt},
-                {mt,   c,    c,    c,    c,    c,    c,    c,    c,    c,    mt},
-                {mt,   c,    c,    c,    c,    c,    c,    c,    c,    c,    mt},
-                {mt,   c,    c,    c,    c,    c,    c,    c,    c,    c,    mt}
+                {null, null, c,    c,    c,    c,    c,    c,    c,    null, null},
+                {null, null, c,    mt,   mt,   mt,   mt,   mt,   c,    null, null},
+                {null, c,    c,    mt,   c,    c,    c,    mt,   c,    c,    null},
+                {null, c,    mt,   mt,   c,    c,    c,    mt,   mt,   c,    null},
+                {pt,   pt,   mt,   c,    c,    c,    c,    c,    mt,   pt,   pt},
+                {null, c,    mt,   mt,   c,    c,    c,    mt,   mt,   c,    null},
+                {c,    c,    mt,   c,    c,    c,    c,    c,    mt,   c,    c},
+                {c,    mt,   mt,   c,    c,    c,    c,    c,    mt,   mt,   c},
+                {c,    mt,   c,    c,    c,    c,    c,    c,    c,    mt,   c},
+                {c,    mt,   c,    c,    c,    c,    c,    c,    c,    mt,   c}
             };
 
             IntVec3 rotatedOrigin = Zone.GetZoneRotatedOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd, rotation);
@@ -96,22 +96,10 @@ namespace OutpostGenerator
                     }
                 }
             }
-
-            // Spawn power conduits.
-            for (int xOffset = 0; xOffset <= 10; xOffset++)
-            {
-                OG_Common.SpawnFireproofPowerConduitAt(rotatedOrigin + new IntVec3(xOffset, 0, 0).RotatedBy(rotation), ref outpostData);
-            }
-            for (int zOffset = 0; zOffset <= 10; zOffset++)
-            {
-                OG_Common.SpawnFireproofPowerConduitAt(rotatedOrigin + new IntVec3(0, 0, zOffset).RotatedBy(rotation), ref outpostData);
-                OG_Common.SpawnFireproofPowerConduitAt(rotatedOrigin + new IntVec3(10, 0, zOffset).RotatedBy(rotation), ref outpostData);
-            }
-
-            // Spawn landing pad lamps.
-            Building_LandingPadBeacon beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(1, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
-            beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(9, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
-
+            
+            // Spawn landing pad beacons.
+            Building_LandingPadBeacon beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
+            beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(8, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
             beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(1, 0, 4).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
             beacon.SetFlashStartOffset(Building_LandingPadBeacon.flashDurationInTicks);
             beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(9, 0, 4).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
@@ -124,6 +112,57 @@ namespace OutpostGenerator
             beacon.SetFlashStartOffset(3 * Building_LandingPadBeacon.flashDurationInTicks);
             beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(9, 0, 10).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
             beacon.SetFlashStartOffset(3 * Building_LandingPadBeacon.flashDurationInTicks);
+        }
+
+        public static void GenerateLandingPadTop(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)
+        {
+            TerrainDef c = TerrainDefOf.Concrete;
+            TerrainDef mt = TerrainDef.Named("MetalTile");
+            TerrainDef pt = TerrainDef.Named("PavedTile");
+
+            TerrainDef[,] landingPadBottomPattern = new TerrainDef[11, 11]
+            {
+                {c,    mt,   c,    c,    c,    c,    c,    c,    c,    mt,   c},
+                {c,    mt,   mt,   c,    c,    c,    c,    c,    mt,   mt,   c},
+                {c,    c,    mt,   c,    c,    c,    c,    c,    mt,   c,    c},
+                {null, c,    mt,   c,    c,    c,    c,    c,    mt,   c,    null},
+                {null, c,    mt,   mt,   c,    c,    c,    mt,   mt,   c,    null},
+                {pt,   pt,   pt,   mt,   c,    c,    c,    mt,   pt,   pt,   pt},
+                {null, null, c,    mt,   c,    mt,   c,    mt,   c,    null, null},
+                {null, null, c,    mt,   mt,   c,    mt,   mt,   c,    null, null},
+                {null, null, c,    c,    mt,   mt,   mt,   c,    c,    null, null},
+                {null, null, null, c,    c,    c,    c,    c,    null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null}
+            };
+
+            IntVec3 rotatedOrigin = Zone.GetZoneRotatedOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd, rotation);
+
+            // Spawn floor.
+            for (int xOffset = 0; xOffset <= 10; xOffset++)
+            {
+                for (int zOffset = 0; zOffset <= 10; zOffset++)
+                {
+                    TerrainDef terrain = landingPadBottomPattern[zOffset, xOffset];
+                    if (terrain != null)
+                    {
+                        Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), terrain);
+                    }
+                }
+            }
+            
+            // Spawn landing pad lamps.
+            Building_LandingPadBeacon beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(1, 0, 2).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
+            beacon.SetFlashStartOffset(4 * Building_LandingPadBeacon.flashDurationInTicks);
+            beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(9, 0, 2).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
+            beacon.SetFlashStartOffset(4 * Building_LandingPadBeacon.flashDurationInTicks);
+            beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
+            beacon.SetFlashStartOffset(5 * Building_LandingPadBeacon.flashDurationInTicks);
+            beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
+            beacon.SetFlashStartOffset(5 * Building_LandingPadBeacon.flashDurationInTicks);
+            beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(3, 0, 8).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
+            beacon.SetFlashStartOffset(6 * Building_LandingPadBeacon.flashDurationInTicks);
+            beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
+            beacon.SetFlashStartOffset(6 * Building_LandingPadBeacon.flashDurationInTicks);
         }
     }
 }
