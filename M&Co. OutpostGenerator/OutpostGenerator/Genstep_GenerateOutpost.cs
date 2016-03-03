@@ -33,7 +33,9 @@ namespace OutpostGenerator
             }
 
             //// TODO: debug, remove it.
-            //outpostData.battleOccured = true;
+            outpostData.battleOccured = true;
+            outpostData.isInhabited = true;
+
             Log.Message("outpostData:");
             Log.Message(" - size: " + outpostData.size.ToString());
             Log.Message(" - isMilitary: " + outpostData.isMilitary.ToString());

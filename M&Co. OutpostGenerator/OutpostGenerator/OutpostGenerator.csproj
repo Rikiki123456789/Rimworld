@@ -51,6 +51,10 @@
   <ItemGroup>
     <Compile Include="Building_OutpostCommandConsole.cs" />
     <Compile Include="Building_LandingPadBeacon.cs" />
+    <Compile Include="Designator_AreaAllowedExpandExceptedOutpost.cs" />
+    <Compile Include="Designator_AreaAllowedClearExceptedOutpost.cs" />
+    <Compile Include="WorkGiver_GrowerOutpost.cs" />
+    <Compile Include="OG_Inhabitants.cs" />
     <Compile Include="ThinkNode_ConditionalMAndCoEmployee.cs" />
     <Compile Include="OG_RuinEffects.cs" />
     <Compile Include="OG_WarfieldEffects.cs" />
@@ -90,6 +94,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\DamageDefs\Damages_Conflagration.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\DesignationCategoryDefs\DesignationCategories.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\FactionDefs\Factions.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -112,6 +117,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThinkTreeDefs\SubTrees_MAndCo.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\WorkGiverDefs\WorkGivers.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Sounds\MissileLaunch\MissileLaunch.wav" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Terrain\Surfaces\DirtFloor.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OutpostCommandConsole.png" />

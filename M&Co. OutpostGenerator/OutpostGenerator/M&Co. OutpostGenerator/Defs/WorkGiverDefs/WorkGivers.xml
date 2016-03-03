@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<WorkGivers>
+
+  <!--<WorkGiverDef>
+    <defName>GrowerSowOutpost</defName>
+    <giverClass>OutpostGenerator.WorkGiver_GrowerSowOutpost</giverClass>
+    <workType>Growing</workType>
+    <priorityInType>40</priorityInType>
+    <verb>sow</verb>
+    <gerund>sowing</gerund>
+    <scanThings>false</scanThings>
+    <scanCells>true</scanCells>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>-->
+
+</WorkGivers>

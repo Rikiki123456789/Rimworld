@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DesignationCategoryDef>
+    <DefName>Zone</DefName>
+    <label>zone/Area</label>
+    <description>Designate zones and areas where colonists will do certain activities.</description>
+    <order>800</order>
+    <specialDesignatorClasses>
+      <li>Designator_Cancel</li>
+      <li>Designator_Deconstruct</li> 
+      <li>Designator_ZoneAddStockpile_Resources</li>
+      <li>Designator_ZoneAddStockpile_Dumping</li>
+      <li>Designator_ZoneAdd_Growing</li>
+      <li>Designator_ZoneDelete</li>
+      <li>Designator_AreaHomeExpand</li>
+      <li>Designator_AreaHomeClear</li>
+      <li>Designator_AreaNoRoofExpand</li>
+      <li>Designator_AreaNoRoofClear</li>
+      <li>Designator_AreaSnowClearExpand</li>
+      <li>Designator_AreaSnowClearClear</li>
+      <li>OutpostGenerator.Designator_AreaAllowedExpandExceptedOutpost</li>
+      <li>OutpostGenerator.Designator_AreaAllowedClearExceptedOutpost</li>
+    </specialDesignatorClasses>
+  </DesignationCategoryDef>
+
+</Defs>

@@ -109,11 +109,18 @@ namespace OutpostGenerator
         }
 
         // Faction def.
+        public static FactionDef FactionDefOfMAndCo
+        {
+            get
+            {
+                return FactionDef.Named("MAndCo");
+            }
+        }
         public static Faction FactionOfMAndCo
         {
             get
             {
-                return Find.FactionManager.FirstFactionOfDef(FactionDef.Named("MAndCo"));
+                return Find.FactionManager.FirstFactionOfDef(FactionDefOfMAndCo);
             }
         }
 
@@ -122,6 +129,15 @@ namespace OutpostGenerator
             get
             {
                 return DefDatabase<SoundDef>.GetNamed("MissileLaunch");
+            }
+        }
+
+        // Label.
+        public static string OutpostAreaLabel
+        {
+            get
+            {
+                return "M&Co. outpost";
             }
         }
 

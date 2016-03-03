@@ -13,21 +13,22 @@ using Verse;         // RimWorld universal objects are here
 namespace OutpostGenerator
 {
     /// <summary>
-    /// ThinkNode_ConditionalMAndCoEmployee class.
+    /// OG_Inhabitants class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class ThinkNode_ConditionalMAndCoEmployee : ThinkNode_Conditional
+    public class Designator_AreaAllowedClearExceptedOutpost : Designator_AreaAllowedClear
     {
-        protected override bool Satisfied(Pawn pawn)
+        public override AcceptanceReport CanDesignateCell(IntVec3 c)
         {
-            if ((pawn.Faction != null)
-                && (pawn.Faction.def == OG_Util.FactionDefOfMAndCo))
+            bool designationIsValid = (Designator_AreaAllowed.SelectedArea != null)
+                && (Designator_AreaAllowed.SelectedArea.Label != OG_Util.OutpostAreaLabel);
+            if (designationIsValid)
             {
-                return true;
+                return base.CanDesignateCell(c).Accepted;
             }
-            return false;
+            return "You cannot clear M&Co.Outpost area.";
         }
     }
 }

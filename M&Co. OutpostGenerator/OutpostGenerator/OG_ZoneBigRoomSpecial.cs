@@ -53,6 +53,7 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(9, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("TableShort"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             // Spawn NPD, hoppers and lamp.
+            // TODO: extend freezer to NPD?
             OG_Common.TrySpawnThingAt(ThingDefOf.NutrientPasteDispenser, null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);

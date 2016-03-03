@@ -9,10 +9,6 @@
       <subNodes>
         <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
           <subNodes>
-            <!--  Take direct orders when drafted  -->
-            <li Class="JobGiver_Orders"/>
-            <!--  Queue for forced work  -->
-            <li Class="JobGiver_JobQueue"/>
             <!--  Seek allowed area  -->
             <li Class="JobGiver_SeekAllowedArea"/>
             <!--  Seek safe temperatures  -->
@@ -29,8 +25,6 @@
             <li Class="JobGiver_Work">
               <emergency>true</emergency>
             </li>
-            <!--  Optimize apparel  -->
-            <li Class="JobGiver_OptimizeApparel"/>
             <!--  Pack food if not hungry -->
             <li Class="ThinkNode_ConditionalNeedAbove">
               <need>Food</need>
@@ -39,6 +33,46 @@
                 <li Class="JobGiver_PackFood"/>
               </subNodes>
             </li>
+          </subNodes>
+        </li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  
+  <ThinkTreeDef>
+    <defName>MAndCoPreMain</defName>
+    <insertTag>Humanlike_PreMain</insertTag>
+    <insertPriority>100</insertPriority>
+    <thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
+          <subNodes>
+            <li Class="ThinkNode_PrioritySorter">
+              <subNodes>
+                <li Class="JobGiver_GetFood"/>
+                <li Class="JobGiver_GetRest"/>
+                <li Class="JobGiver_GetJoy"/>
+                <li Class="JobGiver_Work"/>
+              </subNodes>
+            </li>
+          </subNodes>
+        </li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  
+  <ThinkTreeDef>
+    <defName>MAndCoPostMain</defName>
+    <insertTag>Humanlike_PostMain</insertTag>
+    <insertPriority>100</insertPriority>
+    <thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
+          <subNodes>
+            <li Class="JobGiver_WanderAnywhere">
+              <maxDanger>Deadly</maxDanger>
+            </li>
+            <li Class="JobGiver_IdleError"/>
           </subNodes>
         </li>
       </subNodes>

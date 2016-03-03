@@ -12,11 +12,14 @@ using Verse.AI;      // Needed when you do something with the AI
 namespace OutpostGenerator
 {
     // TODO: add radar dome.
-    // TODO: add landing light (random tick offset to turn comp glower on and off).
     // TODO: add automated supply ship landing.
     // TODO: add tale: droppod destroyed in-flight.
     // TODO: add blue glower to compact autonomous generator.
     // TODO: remove alert speaker to avoid strange faction effects?
+    // TODO: add kitchen bills.
+    // TODO: add JobGiver_FightFiresNearPoint if necessary.
+    // TODO: create M&Co. backgrounds.
+    // TODO: remove area on capture.
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -77,7 +80,7 @@ namespace OutpostGenerator
             // Damage outpost to reflect its history.
             OG_RuinEffects.GenerateRuinEffects(ref outpostData);
             // Generate some inhabitants.
-            //GenerateInhabitants(outpostData); // TODO: will be hard!*/
+            OG_Inhabitants.GenerateInhabitants(ref outpostData);
 
             // Initialize command console data.
             outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
