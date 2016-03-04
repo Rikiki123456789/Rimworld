@@ -38,7 +38,8 @@ namespace OutpostGenerator
                     outpostArea.Set(outpostData.areaSouthWestOrigin + new IntVec3(xOffset, 0, zOffset));
                 }
             }
-            for (int pawnIndex = 0; pawnIndex < 12; pawnIndex++)
+            // Generate technicians.
+            for (int pawnIndex = 0; pawnIndex < 4; pawnIndex++)
             {
                 // TODO: generate M&Co. pawns: mercenary and technicians.
                 Pawn pawn = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceSoldier, OG_Util.FactionOfMAndCo);

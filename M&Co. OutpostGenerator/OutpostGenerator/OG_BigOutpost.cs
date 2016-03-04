@@ -20,6 +20,7 @@ namespace OutpostGenerator
     // TODO: add JobGiver_FightFiresNearPoint if necessary.
     // TODO: create M&Co. backgrounds.
     // TODO: remove area on capture.
+    // TODO: periodically check inhabitants restricted area.
 
     /// <summary>
     /// OG_BigOutpost class.

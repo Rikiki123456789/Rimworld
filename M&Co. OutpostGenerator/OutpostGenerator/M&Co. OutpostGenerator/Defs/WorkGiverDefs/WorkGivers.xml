@@ -1,7 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <WorkGivers>
 
-  <!--<WorkGiverDef>
+  <WorkGiverDef>
+    <defName>GrowerHarvestOutpost</defName>
+    <giverClass>OutpostGenerator.WorkGiver_GrowerHarvestOutpost</giverClass>
+    <workType>Growing</workType>
+    <priorityInType>90</priorityInType>
+    <verb>harvest</verb>
+    <gerund>harvesting</gerund>
+    <scanThings>false</scanThings>
+    <scanCells>true</scanCells>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
     <defName>GrowerSowOutpost</defName>
     <giverClass>OutpostGenerator.WorkGiver_GrowerSowOutpost</giverClass>
     <workType>Growing</workType>
@@ -13,6 +27,6 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
-  </WorkGiverDef>-->
+  </WorkGiverDef>
 
 </WorkGivers>

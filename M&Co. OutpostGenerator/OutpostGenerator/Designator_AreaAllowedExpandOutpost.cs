@@ -13,24 +13,22 @@ using Verse;         // RimWorld universal objects are here
 namespace OutpostGenerator
 {
     /// <summary>
-    /// OG_Inhabitants class.
+    /// Designator_AreaAllowedExpandOutpost class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class Designator_AreaAllowedExpandExceptedOutpost : Designator_AreaAllowedExpand
+    public class Designator_AreaAllowedExpandOutpost : Designator_AreaAllowedExpand
     {
         public override AcceptanceReport CanDesignateCell(IntVec3 c)
         {
-            Log.Message("Designator_AreaAllowed.SelectedArea.Label = " + Designator_AreaAllowed.SelectedArea.Label);
             bool designationIsValid = (Designator_AreaAllowed.SelectedArea != null)
                 && (Designator_AreaAllowed.SelectedArea.Label != OG_Util.OutpostAreaLabel);
             if (designationIsValid)
             {
                 return base.CanDesignateCell(c).Accepted;
             }
-            Messages.Message("You cannot expand M&Co. Outpost area.", MessageSound.RejectInput);
-            return AcceptanceReport.WasRejected;
+            return "You cannot expand M&Co. Outpost area. This area does not belong to your colony.";
         }
     }
 }

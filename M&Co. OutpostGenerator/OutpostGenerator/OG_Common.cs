@@ -265,7 +265,12 @@ namespace OutpostGenerator
                 // Avoid spawning another door on the same spot. This creates troubles with region links...
                 return;
             }
-            OG_Common.TrySpawnThingAt(autodoorDef, ThingDefOf.Steel, position, false, Rot4.North, ref outpostData, false, true);
+            Thing door = OG_Common.TrySpawnThingAt(autodoorDef, ThingDefOf.Steel, position, false, Rot4.North, ref outpostData, false, true);
+            CompForbiddable compForbiddable = door.TryGetComp<CompForbiddable>();
+            if (compForbiddable != null)
+            {
+                compForbiddable.Forbidden = true; // Avoid colonists going into outpost at start-up.
+            }
         }
 
         public static Building_Cooler SpawnCoolerAt(IntVec3 position, Rot4 rotation, ref OG_OutpostData outpostData)

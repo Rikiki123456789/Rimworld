@@ -136,8 +136,8 @@ namespace OutpostGenerator
             }
 
             // Spawn lamps, heater and coolers.
-            OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), Color.blue, ref outpostData);
-            OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation), Color.blue, ref outpostData);
+            OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), Color.white, ref outpostData);
+            OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation), Color.white, ref outpostData);
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), ref outpostData);
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(9, 0, 4).RotatedBy(rotation), new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(9, 0, 6).RotatedBy(rotation), new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);

@@ -51,9 +51,11 @@
   <ItemGroup>
     <Compile Include="Building_OutpostCommandConsole.cs" />
     <Compile Include="Building_LandingPadBeacon.cs" />
-    <Compile Include="Designator_AreaAllowedExpandExceptedOutpost.cs" />
-    <Compile Include="Designator_AreaAllowedClearExceptedOutpost.cs" />
-    <Compile Include="WorkGiver_GrowerOutpost.cs" />
+    <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
+    <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
+    <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
+    <Compile Include="WorkGiver_GrowerHarvestOutpost.cs" />
+    <Compile Include="WorkGiver_GrowerSowOutpost.cs" />
     <Compile Include="OG_Inhabitants.cs" />
     <Compile Include="ThinkNode_ConditionalMAndCoEmployee.cs" />
     <Compile Include="OG_RuinEffects.cs" />
@@ -94,7 +96,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\DamageDefs\Damages_Conflagration.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\DesignationCategoryDefs\DesignationCategories.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\DesignationCategoryDefs\DesignationCategories.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\FactionDefs\Factions.xml">
       <SubType>Designer</SubType>
     </Content>

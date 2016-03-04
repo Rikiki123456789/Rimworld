@@ -15,12 +15,12 @@
       <li>Designator_ZoneDelete</li>
       <li>Designator_AreaHomeExpand</li>
       <li>Designator_AreaHomeClear</li>
-      <li>Designator_AreaNoRoofExpand</li>
+      <li>OutpostGenerator.Designator_AreaNoRoofExpandOutpost</li>
       <li>Designator_AreaNoRoofClear</li>
       <li>Designator_AreaSnowClearExpand</li>
       <li>Designator_AreaSnowClearClear</li>
-      <li>OutpostGenerator.Designator_AreaAllowedExpandExceptedOutpost</li>
-      <li>OutpostGenerator.Designator_AreaAllowedClearExceptedOutpost</li>
+      <li>OutpostGenerator.Designator_AreaAllowedExpandOutpost</li>
+      <li>OutpostGenerator.Designator_AreaAllowedClearOutpost</li>
     </specialDesignatorClasses>
   </DesignationCategoryDef>
 
