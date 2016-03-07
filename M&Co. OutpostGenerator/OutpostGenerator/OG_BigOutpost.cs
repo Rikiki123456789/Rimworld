@@ -11,16 +11,15 @@ using Verse.AI;      // Needed when you do something with the AI
 
 namespace OutpostGenerator
 {
-    // TODO: add radar dome.
+    // TODO: add orbital relay.
     // TODO: add automated supply ship landing.
     // TODO: add tale: droppod destroyed in-flight.
     // TODO: add blue glower to compact autonomous generator.
-    // TODO: remove alert speaker to avoid strange faction effects?
     // TODO: add kitchen bills.
-    // TODO: add JobGiver_FightFiresNearPoint if necessary.
     // TODO: create M&Co. backgrounds.
     // TODO: remove area on capture.
-    // TODO: periodically check inhabitants restricted area.
+    // TODO: add M&Co. employee mood bonus.
+    // TODO: periodically check M&Co. employee affecter area.
 
     /// <summary>
     /// OG_BigOutpost class.

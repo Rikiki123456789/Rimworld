@@ -25,7 +25,7 @@
     <altitudeLayer>Waist</altitudeLayer>
     <statBases>
       <MaxHitPoints>400</MaxHitPoints>
-      <Flammability>0.2</Flammability>
+      <Flammability>0</Flammability>
       <WorkToMake>25000</WorkToMake>
       <Beauty>-20</Beauty>
     </statBases>

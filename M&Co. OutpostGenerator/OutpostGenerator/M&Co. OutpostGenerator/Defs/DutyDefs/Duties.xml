@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DutyDef>
+    <defName>DefendOutpost</defName>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="JobGiver_AIDefendPoint">
+          <targetAcquireRadius>65</targetAcquireRadius>
+          <targetKeepRadius>72</targetKeepRadius>
+        </li>
+        <li Class="JobGiver_FightFiresNearPoint">
+          <maxDistFromPoint>85</maxDistFromPoint>
+        </li>
+        <li Class="ThinkNode_FilterFlagDistance">
+          <maxDistToSquadFlag>75</maxDistToSquadFlag>
+          <subNodes>
+            <li Class="ThinkNode_PrioritySorter">
+              <subNodes>
+                <li Class="JobGiver_GetFood"/>
+                <li Class="JobGiver_GetRest"/>
+              </subNodes>
+            </li>
+          </subNodes>
+        </li>
+        <li Class="JobGiver_WanderNearDutyLocation">
+          <wanderRadius>10</wanderRadius>
+        </li>
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+
+</Defs>

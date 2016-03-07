@@ -56,8 +56,11 @@ namespace OutpostGenerator
             // TODO: extend freezer to NPD?
             OG_Common.TrySpawnThingAt(ThingDefOf.NutrientPasteDispenser, null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.SpawnResourceAt(ThingDefOf.RawPotatoes, 75, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.SpawnResourceAt(ThingDef.Named("RawCorn"), 75, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.SpawnResourceAt(ThingDef.Named("RawBerries"), 75, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(4, 0, 6).RotatedBy(rotation), Color.white, ref outpostData);
             for (int xOffset = 1; xOffset <= 4; xOffset++)
             {
@@ -334,12 +337,18 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDef.Named("SunLamp"), null, rotatedOrigin + new IntVec3(5, 0, 5).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
 
             // Spawn hydroponics basins.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(1, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(3, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(4, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(6, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(9, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData);
+            Building_PlantGrower hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(1, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
+            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantStrawberry"));
+            hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(3, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
+            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantCorn"));
+            hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(4, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
+            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantCorn"));
+            hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(6, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
+            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantCorn"));
+            hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
+            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantCorn"));
+            hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(9, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
+            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantHops"));
 
             OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(1, 0, 7).RotatedBy(rotation), true, rotation, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(3, 0, 7).RotatedBy(rotation), true, rotation, ref outpostData);
@@ -348,7 +357,7 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(7, 0, 7).RotatedBy(rotation), true, rotation, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(9, 0, 7).RotatedBy(rotation), true, rotation, ref outpostData);
 
-            // SPawn heaters and coolers.
+            // Spawn heaters and coolers.
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), ref outpostData);
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(8, 0, 1).RotatedBy(rotation), ref outpostData);
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(2, 0, 9).RotatedBy(rotation), ref outpostData);

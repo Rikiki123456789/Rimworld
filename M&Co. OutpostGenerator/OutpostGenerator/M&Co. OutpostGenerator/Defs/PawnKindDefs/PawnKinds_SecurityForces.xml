@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<PawnKindDefs>
+
+  <PawnKindDef>
+    <defName>OutpostGuard</defName>
+    <label>outpost guard</label>
+    <race>Human</race>
+    <combatPower>200</combatPower>
+    <baseRecruitDifficulty>70</baseRecruitDifficulty>
+    <backstoryCategory>Civil</backstoryCategory>
+    <defaultFactionType>SpacerHostile</defaultFactionType>
+    <backstoryCryptosleepCommonality>1</backstoryCryptosleepCommonality>
+    <minGenerationAge>22</minGenerationAge>
+    <maxGenerationAge>45</maxGenerationAge>
+    <itemQuality>Superior</itemQuality>
+    <techHediffsMoney>
+      <min>1000</min>
+      <max>5000</max>
+    </techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+    <techHediffsChance>0.3</techHediffsChance>
+  </PawnKindDef>
+
+  <PawnKindDef>
+    <defName>OutpostOfficer</defName>
+    <label>outpost officer</label>
+    <race>Human</race>
+    <combatPower>250</combatPower>
+    <baseRecruitDifficulty>80</baseRecruitDifficulty>
+    <backstoryCategory>Civil</backstoryCategory>
+    <defaultFactionType>SpacerHostile</defaultFactionType>
+    <backstoryCryptosleepCommonality>1</backstoryCryptosleepCommonality>
+    <minGenerationAge>35</minGenerationAge>
+    <maxGenerationAge>55</maxGenerationAge>
+    <itemQuality>Excellent</itemQuality>
+    <techHediffsMoney>
+      <min>3000</min>
+      <max>5000</max>
+    </techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+    <techHediffsChance>0.3</techHediffsChance>
+  </PawnKindDef>
+
+</PawnKindDefs>

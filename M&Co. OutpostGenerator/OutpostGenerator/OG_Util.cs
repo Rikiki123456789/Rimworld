@@ -7,7 +7,7 @@ using UnityEngine;   // Always needed
 //using VerseBase;   // Material/Graphics handling functions are found here
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
-//using Verse.AI;    // Needed when you do something with the AI
+using Verse.AI;      // Needed when you do something with the AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
 namespace OutpostGenerator
@@ -99,7 +99,6 @@ namespace OutpostGenerator
 
 
         // Roof def.
-        // TODO: add corresponding designator (check console has been captured/destroyed to allow removing it) OR get rid of it :/
         public static RoofDef IronedRoofDef
         {
             get
@@ -129,6 +128,32 @@ namespace OutpostGenerator
             get
             {
                 return DefDatabase<SoundDef>.GetNamed("MissileLaunch");
+            }
+        }
+
+        // Duty def.
+        public static DutyDef DefendOutpostDutyDef
+        {
+            get
+            {
+                return DefDatabase<DutyDef>.GetNamed("DefendOutpost");
+            }
+        }
+
+        // PawnKind def.
+        public static PawnKindDef OutpostGuardDef
+        {
+            get
+            {
+                return PawnKindDef.Named("OutpostGuard");
+            }
+        }
+
+        public static PawnKindDef OutpostOfficerDef
+        {
+            get
+            {
+                return PawnKindDef.Named("OutpostOfficer");
             }
         }
 

@@ -437,16 +437,8 @@ namespace OutpostGenerator
                 Find.TerrainGrid.SetTerrain(cell, TerrainDef.Named("PavedTile"));
             }
 
-            // Generate pylon and alert speakers.
+            // Generate pylon.
             OG_Common.TrySpawnWallAt(centralPylonPosition, ref outpostData);
-            if (ModsConfig.IsActive("M&Co. AlertSpeaker"))
-            {
-                for (int rotationAsInt = 0; rotationAsInt < 4; rotationAsInt++)
-                {
-                    Rot4 alertSpeakerRotation = new Rot4(rotationAsInt);
-                    OG_Common.TrySpawnThingAt(ThingDef.Named("AlertSpeaker"), null, centralPylonPosition + new IntVec3(0, 0, 1).RotatedBy(alertSpeakerRotation), true, alertSpeakerRotation, ref outpostData);
-                }
-            }
 
             // Generate sandbags and power conduit.
             for (int rotationAsInt = 0; rotationAsInt < 4; rotationAsInt++)

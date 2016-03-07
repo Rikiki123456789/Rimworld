@@ -54,6 +54,7 @@
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
+    <Compile Include="State_DefendOutpost.cs" />
     <Compile Include="WorkGiver_GrowerHarvestOutpost.cs" />
     <Compile Include="WorkGiver_GrowerSowOutpost.cs" />
     <Compile Include="OG_Inhabitants.cs" />
@@ -99,6 +100,9 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\DesignationCategoryDefs\DesignationCategories.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\DutyDefs\Duties.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\FactionDefs\Factions.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -106,6 +110,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\MapGeneratorDefs\MapGenerators.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\PawnKindDefs\PawnKinds_SecurityForces.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
@@ -116,7 +121,9 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FireproofPowerConduit.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_VulcanTurret.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_VulcanTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Weapon_VulcanGun.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThinkTreeDefs\SubTrees_MAndCo.xml">
       <SubType>Designer</SubType>

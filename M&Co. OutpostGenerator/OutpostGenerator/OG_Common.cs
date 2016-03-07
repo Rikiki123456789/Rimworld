@@ -119,15 +119,16 @@ namespace OutpostGenerator
                 {
                     if (Rand.Value < spawnStockChance)
                     {
-                        TrySpawnResourceAt(resourceDef, Rand.RangeInclusive(minQuantity, maxQuantity), rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation));
+                        SpawnResourceAt(resourceDef, Rand.RangeInclusive(minQuantity, maxQuantity), rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation));
                     }
                 }
             }
         }
 
-        public static void TrySpawnResourceAt(ThingDef resourceDef, int quantity, IntVec3 position)
+        public static void SpawnResourceAt(ThingDef resourceDef, int quantity, IntVec3 position, bool forceSpawn = false)
         {
-            if (position.GetEdifice() != null)
+            if ((position.GetEdifice() != null)
+                && (forceSpawn == false))
             {
                 return;
             }

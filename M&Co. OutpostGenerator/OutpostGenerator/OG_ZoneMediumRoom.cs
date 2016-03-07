@@ -27,22 +27,18 @@ namespace OutpostGenerator
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(1, 0, 1).RotatedBy(rotation), 9, 9, rotation, TerrainDefOf.Concrete, TerrainDef.Named("SterileTile"), ref outpostData);
 
             // Spawn medbeds and vitals monitors.
-            Building_Bed bed = OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Bed;
-            bed.Medical = false; // Set as non medical or pawns may want to use it even if it is not owned by colony.
+            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
-            bed = OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Bed;
-            bed.Medical = false;
+            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
 
-            bed = OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Bed;
-            bed.Medical = false;
+            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(8, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            bed = OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Bed;
-            bed.Medical = false;
+            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(8, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
 
             // Spawn medicine and lamp.
-            OG_Common.TrySpawnResourceAt(ThingDefOf.Medicine, Rand.RangeInclusive(14, 48), rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation));
+            OG_Common.SpawnResourceAt(ThingDefOf.Medicine, Rand.RangeInclusive(14, 48), rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation));
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), Color.blue, ref outpostData);
 
             // Spawn heaters and coolers.

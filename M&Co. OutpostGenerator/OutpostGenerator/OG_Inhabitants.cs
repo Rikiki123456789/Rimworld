@@ -7,7 +7,8 @@ using UnityEngine;   // Always needed
 //using VerseBase;   // Material/Graphics handling functions are found here
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
-//using Verse.AI;    // Needed when you do something with the AI
+using Verse.AI;      // Needed when you do something with the AI
+using RimWorld.SquadAI; // Needed when you do something with the squad AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
 namespace OutpostGenerator
@@ -42,12 +43,46 @@ namespace OutpostGenerator
             for (int pawnIndex = 0; pawnIndex < 4; pawnIndex++)
             {
                 // TODO: generate M&Co. pawns: mercenary and technicians.
-                Pawn pawn = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceSoldier, OG_Util.FactionOfMAndCo);
+                Pawn pawn = PawnGenerator.GeneratePawn(PawnKindDefOf.Slave, OG_Util.FactionOfMAndCo);
                 pawn.workSettings.EnableAndInitialize();
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
                 pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                 pawn.playerSettings.AreaRestriction = outpostArea;
             }
+
+            // Generate outpost guards.
+            List<Pawn> guardsList = new List<Pawn>();
+            for (int pawnIndex = 0; pawnIndex < 8; pawnIndex++)
+            {
+                Pawn pawn = null;
+                Color armyGreen = new Color(80f/255f, 130f/255f, 0);
+
+                if (pawnIndex == 0)
+                {
+                    // Generate officer.
+                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostOfficerDef, OG_Util.FactionOfMAndCo);
+                    Apparel pant = ThingMaker.MakeThing(ThingDef.Named("Apparel_Pants"), ThingDef.Named("Hyperweave")) as Apparel;
+                    pant.SetColor(armyGreen);
+                    pawn.apparel.Wear(pant);
+                    Apparel shirt = ThingMaker.MakeThing(ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Hyperweave")) as Apparel;
+                    shirt.SetColor(armyGreen);
+                    pawn.apparel.Wear(shirt);
+                }
+                else
+                {
+                    // Generate guard.
+                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostOfficerDef, OG_Util.FactionOfMAndCo);
+                }
+                pawn.workSettings.EnableAndInitialize();
+                GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
+                pawn.playerSettings = new Pawn_PlayerSettings(pawn);
+                pawn.playerSettings.AreaRestriction = outpostArea;
+                guardsList.Add(pawn);
+            }
+            // Affect squad brain to outpost guards.
+            State_DefendOutpost stateDefend = new State_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), OG_BigOutpost.areaSideLength * (3 / 4));
+            StateGraph stateGraph = GraphMaker.SingleStateGraph(stateDefend);
+            BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);
         }
     }
 }

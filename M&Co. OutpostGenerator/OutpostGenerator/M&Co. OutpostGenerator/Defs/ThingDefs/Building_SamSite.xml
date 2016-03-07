@@ -27,7 +27,7 @@
     <altitudeLayer>BuildingTall</altitudeLayer>
     <statBases>
       <MaxHitPoints>500</MaxHitPoints>
-      <Flammability>0.2</Flammability>
+      <Flammability>0</Flammability>
       <WorkToMake>45000</WorkToMake>
       <Beauty>-20</Beauty>
     </statBases>

@@ -71,16 +71,20 @@ namespace OutpostGenerator
                         {
                             workCells.Add(cell);
                         }
-                        WorkGiver_Grower.wantedPlantDef = null;
                     }
                 }
-
                 return workCells;
             }
             else
             {
-                return base.PotentialWorkCellsGlobal(pawn);
+                return new List<IntVec3>();
             }
+        }
+        
+        public override Job JobOnCell(Pawn pawn, IntVec3 c)
+        {
+            WorkGiver_Grower.wantedPlantDef = null;
+            return base.JobOnCell(pawn, c);
         }
     }
 }
