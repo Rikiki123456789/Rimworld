@@ -16,6 +16,7 @@
     <defName>OutpostCommandConsole</defName>
     <label>outpost command console</label>
     <thingClass>OutpostGenerator.Building_OutpostCommandConsole</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Things/Building/Misc/OutpostCommandConsole</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -34,7 +35,6 @@
     <size>(3,2)</size>
     <costList>
       <Steel>120</Steel>
-      <AIPersonaCore>1</AIPersonaCore>
     </costList>
     <interactionCellOffset>(0,0,2)</interactionCellOffset>
     <hasInteractionCell>true</hasInteractionCell>

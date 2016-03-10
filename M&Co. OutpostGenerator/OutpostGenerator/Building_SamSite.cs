@@ -84,6 +84,12 @@ namespace OutpostGenerator
 
         private void LookForIncomingDropPod()
         {
+            if (Find.TickManager.TicksGame < GenTicks.TickLongInterval)
+            {
+                // To prevent shooting down initial 3 drop pods.
+                return;
+            }
+
             if (this.missilesTicksUntilNextLaunch > 0)
             {
                 // Ensure a minimum delay between each missile launch.

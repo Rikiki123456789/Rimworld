@@ -20,9 +20,25 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_OutpostCommandConsole : Building_CommsConsole
     {
-        //public OutpostData outpostData = new OutpostData();
         public List<Thing> outpostThingList = null;
         public IntVec3 dropZoneCenter = Find.Map.Center;
+        protected int ticksSinceMealsDrop = 0;
+
+        // TODO: remove this. Just a patch until ship is designed.
+        public override void Tick()
+        {
+            ticksSinceMealsDrop++;
+            if (ticksSinceMealsDrop >= 200)
+            {
+                ticksSinceMealsDrop = 0;
+                DropPodInfo info = new DropPodInfo();
+                Thing meals = ThingMaker.MakeThing(ThingDefOf.MealSurvivalPack);
+                meals.stackCount = ThingDefOf.MealSurvivalPack.stackLimit;
+                meals.SetForbidden(true);
+                info.SingleContainedThing = meals;
+                DropPodUtility.MakeDropPodAt(this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-2, 2), 0, Rand.RangeInclusive(-2, 2)), info);
+            }
+        }
 
         public void TryToCaptureOutpost(string eventTitle, string eventText, LetterType letterType, Faction turretsNewFaction, bool deactivateTurrets,
             Faction doorsNewFaction, bool deactivateDoors, int dropPodsNumber, PawnKindDef securityForcesDef)
@@ -32,6 +48,11 @@ namespace OutpostGenerator
             ChangeOutpostTurretsFaction(turretsNewFaction, deactivateTurrets);
             ChangeOutpostDoorsFaction(doorsNewFaction, deactivateDoors);
             LaunchSecurityDropPods(dropPodsNumber, securityForcesDef, true);
+            Area outpostArea = Find.AreaManager.GetLabeled(OG_Util.OutpostAreaLabel);
+            if (outpostArea != null)
+            {
+                outpostArea.Delete();
+            }
             Find.LetterStack.ReceiveLetter(eventTitle, eventText, letterType, new TargetInfo(this.Position));
         }
 
@@ -138,9 +159,7 @@ namespace OutpostGenerator
             Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
             OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = true;
             Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = true;
-
-            // TODO: treat inhabitants response to intrusion.
-
+            
             string text = "   M&Co. security message broadcast\n\n" +
                 "Coralie here!\n" +
                 "I have detected an intrusion in sub-sector " + intrusionCell.ToString() + ".\n\n" +
@@ -189,7 +208,8 @@ namespace OutpostGenerator
 
             this.outpostThingList = OG_Util.RefreshThingList(this.outpostThingList);
             Scribe_Collections.LookList<Thing>(ref this.outpostThingList, "outpostThingList", LookMode.MapReference);
-            Scribe_Values.LookValue<IntVec3>(ref dropZoneCenter, "dropZoneCenter");
+            Scribe_Values.LookValue<IntVec3>(ref this.dropZoneCenter, "dropZoneCenter");
+            Scribe_Values.LookValue<int>(ref this.ticksSinceMealsDrop, "ticksUntilMealsDrop");
         }
 
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn myPawn)

@@ -87,7 +87,15 @@ namespace OutpostGenerator
                 return ThingDef.Named("LandingPadBeacon");
             }
         }
-
+        
+        public static ThingDef FoodRackDef
+        {
+            get
+            {
+                return ThingDef.Named("FoodRack");
+            }
+        }
+        
         // Terrain def.
         public static TerrainDef DirtFloorDef
         {
@@ -140,7 +148,24 @@ namespace OutpostGenerator
             }
         }
 
+        // Thought def.
+        public static ThoughtDef MAndCoEmployeeThoughtDef
+        {
+            get
+            {
+                return ThoughtDef.Named("MAndCoEmployee");
+            }
+        }
+
         // PawnKind def.
+        public static PawnKindDef OutpostTechnicianDef
+        {
+            get
+            {
+                return PawnKindDef.Named("OutpostTechnician");
+            }
+        }
+
         public static PawnKindDef OutpostGuardDef
         {
             get

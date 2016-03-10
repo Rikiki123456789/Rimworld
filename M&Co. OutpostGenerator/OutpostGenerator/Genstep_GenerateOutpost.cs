@@ -27,13 +27,9 @@ namespace OutpostGenerator
         public override void Generate()
         {
             GenerateOutpostProperties(ref outpostData);
-            if (outpostData.size == OG_OutpostSize.NoOutpost)
-            {
-                return;
-            }
 
             //// TODO: debug, remove it.
-            outpostData.battleOccured = true;
+            outpostData.size = OG_OutpostSize.BigOutpost;
             outpostData.isInhabited = true;
 
             Log.Message("outpostData:");
@@ -52,6 +48,12 @@ namespace OutpostGenerator
             outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, -70);
             OG_BigOutpost.GenerateOutpost(outpostData);*/
             ////
+
+            if (outpostData.size == OG_OutpostSize.NoOutpost)
+            {
+                return;
+            }
+
 
             // Check this outpost can be spawned somewhere on the map.
             bool validSpawnPointIsFound = false;
@@ -181,7 +183,7 @@ namespace OutpostGenerator
         protected void GetOutpostSize(ref OG_OutpostData outpostData)
         {
             // Get outpost size.
-            /*float outpostSizeSelector = Rand.Value;
+            float outpostSizeSelector = Rand.Value;
             if (outpostSizeSelector < 0.2f)
             {
                 // No outpost.
@@ -196,9 +198,7 @@ namespace OutpostGenerator
             {
                 // Generate a small outpost.
                 outpostData.size = OG_OutpostSize.SmallOutpost;
-            }*/
-            // TODO: debug
-            outpostData.size = OG_OutpostSize.BigOutpost;
+            }
         }
 
         protected void GetOutpostType(ref OG_OutpostData outpostData)
@@ -221,10 +221,6 @@ namespace OutpostGenerator
                 OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = false;
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = false;
             }
-            /*Log.Message("After GetOutpostType");
-            Log.Message("Colony.RelationWithMAndCo goodwill/hostile = " + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill + "/" + Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile);
-            Log.Message("MAndCo.RelationWithColony goodwill/hostile = " + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill + "/" + OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile);
-            */ // TODO. debugm re;ove it<
         }
 
         protected void GetBattleOccured(ref OG_OutpostData outpostData)

@@ -114,6 +114,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FoodRack.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_LandingPadBeacon.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -128,6 +129,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThinkTreeDefs\SubTrees_MAndCo.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThoughtDefs\Thought_MAndCoEmployee.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\WorkGiverDefs\WorkGivers.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Sounds\MissileLaunch\MissileLaunch.wav" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Terrain\Surfaces\DirtFloor.png" />

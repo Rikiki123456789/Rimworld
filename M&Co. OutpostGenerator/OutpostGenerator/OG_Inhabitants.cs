@@ -23,6 +23,18 @@ namespace OutpostGenerator
     {
         public static void GenerateInhabitants(ref OG_OutpostData outpostData)
         {
+            Color colorArmyGreenBright = new Color(50f / 255f, 100f / 255f, 0);
+            Color colorArmyGreenDark = new Color(30f / 255f, 80f / 255f, 0);
+            Color colorArmyBrown = new Color(120f / 255f, 70f / 255f, 0);
+
+            Color colorArmyWhite = new Color(220f / 255f, 220f / 255f, 220f / 255f);
+            Color colorArmyGrey = new Color(200f / 255f, 200f / 255f, 200f / 255f);
+
+            Color colorArmyPaleSand = new Color(220f / 255f, 210f / 255f, 150f / 255f);
+            Color colorArmyBrownSand = new Color(215f / 255f, 180f / 255f, 120f / 255f);
+            
+            Color colorCivilGrey = new Color(160f / 255f, 160f / 255f, 160f / 255f);
+
             if (outpostData.isInhabited == false)
             {
                 return;
@@ -39,50 +51,139 @@ namespace OutpostGenerator
                     outpostArea.Set(outpostData.areaSouthWestOrigin + new IntVec3(xOffset, 0, zOffset));
                 }
             }
+
+            // Set uniforms color according to biome.
+            Color pantColor;
+            Color shirtColor;
+            Color armorColor;
+            Color helmetColor;
+            bool needParka = false;
+            string biomeDefName = Find.Map.Biome.defName;
+            if ((biomeDefName == "IceSheet")
+                || (biomeDefName == "Tundra")
+                || (biomeDefName == "BorealForest"))
+            {
+                pantColor = colorArmyGrey;
+                shirtColor = colorArmyWhite;
+                armorColor = colorArmyWhite;
+                helmetColor = colorArmyGrey;
+                needParka = true;
+            }
+            else if ((biomeDefName == "AridShrubland")
+                || (biomeDefName == "Desert"))
+            {
+                pantColor = colorArmyBrownSand;
+                shirtColor = colorArmyPaleSand;
+                armorColor = colorArmyPaleSand;
+                helmetColor = colorArmyBrownSand;
+            }
+            else // TemperateForest and TropicalRainforest.
+            {
+                pantColor = colorArmyBrown;
+                shirtColor = colorArmyGreenBright;
+                armorColor = colorArmyGreenBright;
+                helmetColor = colorArmyGreenDark;
+            }
+
             // Generate technicians.
             for (int pawnIndex = 0; pawnIndex < 4; pawnIndex++)
             {
-                // TODO: generate M&Co. pawns: mercenary and technicians.
-                Pawn pawn = PawnGenerator.GeneratePawn(PawnKindDefOf.Slave, OG_Util.FactionOfMAndCo);
+                Pawn pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostTechnicianDef, OG_Util.FactionOfMAndCo);
+                GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), colorCivilGrey);
+                GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Synthread"), colorCivilGrey);
+                GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_Tuque"), ThingDef.Named("Synthread"), colorCivilGrey);
+                GeneratePawnWeapon(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Gun_Pistol"));
+                if (needParka)
+                {
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_Parka"), ThingDef.Named("Synthread"), colorCivilGrey);
+                }
                 pawn.workSettings.EnableAndInitialize();
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
                 pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                 pawn.playerSettings.AreaRestriction = outpostArea;
+                pawn.needs.mood.thoughts.TryGainThought(OG_Util.MAndCoEmployeeThoughtDef);
             }
 
             // Generate outpost guards.
             List<Pawn> guardsList = new List<Pawn>();
-            for (int pawnIndex = 0; pawnIndex < 8; pawnIndex++)
+            for (int pawnIndex = 1; pawnIndex <= 8; pawnIndex++)
             {
                 Pawn pawn = null;
-                Color armyGreen = new Color(80f/255f, 130f/255f, 0);
 
-                if (pawnIndex == 0)
+                if (pawnIndex == 1)
                 {
                     // Generate officer.
                     pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostOfficerDef, OG_Util.FactionOfMAndCo);
-                    Apparel pant = ThingMaker.MakeThing(ThingDef.Named("Apparel_Pants"), ThingDef.Named("Hyperweave")) as Apparel;
-                    pant.SetColor(armyGreen);
-                    pawn.apparel.Wear(pant);
-                    Apparel shirt = ThingMaker.MakeThing(ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Hyperweave")) as Apparel;
-                    shirt.SetColor(armyGreen);
-                    pawn.apparel.Wear(shirt);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Hyperweave"), pantColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Hyperweave"), shirtColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Duster"), ThingDef.Named("Hyperweave"), armorColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_CowboyHat"), ThingDef.Named("Hyperweave"), helmetColor);
+                    GeneratePawnWeapon(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Gun_SniperRifle"));
                 }
-                else
+                else if (pawnIndex == 2)
                 {
-                    // Generate guard.
-                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostOfficerDef, OG_Util.FactionOfMAndCo);
+                    // Generate minigun guard.
+                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmorHelmet"), null, helmetColor);
+                    GeneratePawnWeapon(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Gun_Minigun"));
+                }
+                else if (pawnIndex <= 4)
+                {
+                    // Generate assault rifle guard.
+                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_KevlarHelmet"), null, helmetColor);
+                    GeneratePawnWeapon(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Gun_AssaultRifle"));
+                    if (needParka)
+                    {
+                        GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_Parka"), ThingDef.Named("Synthread"), armorColor);
+                    }
+                }
+                else if (pawnIndex <= 8)
+                {
+                    // Generate charge rifle guard.
+                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
+                    GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmorHelmet"), null, helmetColor);
+                    GeneratePawnWeapon(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Gun_ChargeRifle"));
                 }
                 pawn.workSettings.EnableAndInitialize();
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
                 pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                 pawn.playerSettings.AreaRestriction = outpostArea;
+                pawn.needs.mood.thoughts.TryGainThought(OG_Util.MAndCoEmployeeThoughtDef);
                 guardsList.Add(pawn);
             }
             // Affect squad brain to outpost guards.
             State_DefendOutpost stateDefend = new State_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), OG_BigOutpost.areaSideLength * (3 / 4));
             StateGraph stateGraph = GraphMaker.SingleStateGraph(stateDefend);
             BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);
+        }
+
+        private static void GeneratePawnApparel(ref Pawn pawn, QualityCategory apparelQuality, ThingDef apparelDef, ThingDef apparelStuff, Color apparelColor, bool applyColor = true)
+        {
+            Apparel apparel = ThingMaker.MakeThing(apparelDef, apparelStuff) as Apparel;
+            if (applyColor)
+            {
+                apparel.SetColor(apparelColor);
+            }
+            apparel.TryGetComp<CompQuality>().SetQuality(apparelQuality, ArtGenerationSource.Outsider);
+            pawn.apparel.Wear(apparel);
+        }
+
+        private static void GeneratePawnWeapon(ref Pawn pawn, QualityCategory weaponQuality, ThingDef weaponDef)
+        {
+            ThingWithComps weapon = ThingMaker.MakeThing(weaponDef) as ThingWithComps;
+            weapon.TryGetComp<CompQuality>().SetQuality(weaponQuality, ArtGenerationSource.Outsider);
+            pawn.equipment.AddEquipment(weapon);
         }
     }
 }

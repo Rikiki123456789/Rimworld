@@ -11,10 +11,10 @@
           <targetKeepRadius>72</targetKeepRadius>
         </li>
         <li Class="JobGiver_FightFiresNearPoint">
-          <maxDistFromPoint>85</maxDistFromPoint>
+          <maxDistFromPoint>55</maxDistFromPoint>
         </li>
         <li Class="ThinkNode_FilterFlagDistance">
-          <maxDistToSquadFlag>75</maxDistToSquadFlag>
+          <maxDistToSquadFlag>55</maxDistToSquadFlag>
           <subNodes>
             <li Class="ThinkNode_PrioritySorter">
               <subNodes>

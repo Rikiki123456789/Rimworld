@@ -83,7 +83,11 @@ namespace OutpostGenerator
                 return;
             }
 
-            this.Position = this.DrawPos.ToIntVec3();
+            if (this.DrawPos.ToIntVec3().InBounds())
+            {
+                // Mind the case where a pod is landing near the left map border so the missile will impact outside of the map.
+                this.Position = this.DrawPos.ToIntVec3();
+            }
             this.ticksToImpact--;
             if (this.ticksToImpact == 0)
             {

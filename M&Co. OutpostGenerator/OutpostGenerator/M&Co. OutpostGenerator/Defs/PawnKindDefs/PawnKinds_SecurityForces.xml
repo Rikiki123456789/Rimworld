@@ -2,12 +2,34 @@
 <PawnKindDefs>
 
   <PawnKindDef>
+    <defName>OutpostTechnician</defName>
+    <label>outpost technician</label>
+    <race>Human</race>
+    <combatPower>80</combatPower>
+    <baseRecruitDifficulty>40</baseRecruitDifficulty>
+    <backstoryCategory>Civil</backstoryCategory>
+    <defaultFactionType>Spacer</defaultFactionType>
+    <backstoryCryptosleepCommonality>1</backstoryCryptosleepCommonality>
+    <minGenerationAge>18</minGenerationAge>
+    <maxGenerationAge>57</maxGenerationAge>
+    <itemQuality>Good</itemQuality>
+    <techHediffsMoney>
+      <min>1000</min>
+      <max>3000</max>
+    </techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+    <techHediffsChance>0.1</techHediffsChance>
+  </PawnKindDef>
+
+  <PawnKindDef>
     <defName>OutpostGuard</defName>
     <label>outpost guard</label>
     <race>Human</race>
     <combatPower>200</combatPower>
     <baseRecruitDifficulty>70</baseRecruitDifficulty>
-    <backstoryCategory>Civil</backstoryCategory>
+    <backstoryCategory>Raider</backstoryCategory>
     <defaultFactionType>SpacerHostile</defaultFactionType>
     <backstoryCryptosleepCommonality>1</backstoryCryptosleepCommonality>
     <minGenerationAge>22</minGenerationAge>
@@ -29,7 +51,7 @@
     <race>Human</race>
     <combatPower>250</combatPower>
     <baseRecruitDifficulty>80</baseRecruitDifficulty>
-    <backstoryCategory>Civil</backstoryCategory>
+    <backstoryCategory>Raider</backstoryCategory>
     <defaultFactionType>SpacerHostile</defaultFactionType>
     <backstoryCryptosleepCommonality>1</backstoryCryptosleepCommonality>
     <minGenerationAge>35</minGenerationAge>
@@ -37,7 +59,7 @@
     <itemQuality>Excellent</itemQuality>
     <techHediffsMoney>
       <min>3000</min>
-      <max>5000</max>
+      <max>7000</max>
     </techHediffsMoney>
     <techHediffsTags>
       <li>Advanced</li>

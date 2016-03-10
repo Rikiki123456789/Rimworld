@@ -17,9 +17,9 @@ namespace OutpostGenerator
     // TODO: add blue glower to compact autonomous generator.
     // TODO: add kitchen bills.
     // TODO: create M&Co. backgrounds.
-    // TODO: remove area on capture.
     // TODO: add M&Co. employee mood bonus.
-    // TODO: periodically check M&Co. employee affecter area.
+    // TODO: periodically check M&Co. employee affected area.
+    // TODO: add cleaning job inside outpost area.
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -61,14 +61,14 @@ namespace OutpostGenerator
             GenerateOutpostLayout();
             
             // TODO: debug. Display the generated layout.
-            for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
+            /*for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
             {
                 for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
                 {
                     ZoneProperties zone = zoneMap[zoneOrd, zoneAbs];
                     Log.Message("Layout: zoneMap[" + zoneOrd + "," + zoneAbs + "] => " + zone.zoneType.ToString() + "," + zone.rotation.ToString() + "," + zone.linkedZoneRelativeRotation.ToString());
                 }
-            }
+            }*/
 
             GenerateOutpostZones(outpostData.areaSouthWestOrigin);
             GenerateSasToLinkMediumAndMainRooms(outpostData.areaSouthWestOrigin);
@@ -216,8 +216,7 @@ namespace OutpostGenerator
             int mainRoomIndex = 0;
             
             GetFreeMainRoomZone(out batteryRoomZoneAbs, out batteryRoomZoneOrd, out mainRoomIndex);
-
-            Log.Message("batteryRoom mainRoomIndex = " + mainRoomIndex);
+            
             // Set battery room zone.
             Rot4 batteryRoomRotation = new Rot4(Rot4.West.AsInt + mainRoomIndex); // Battery room is facing west for main room 0, north for main room 1, ...
             zoneMap[batteryRoomZoneOrd, batteryRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomBatteryRoom, batteryRoomRotation, Rot4.Invalid);
@@ -244,8 +243,6 @@ namespace OutpostGenerator
             int mainRoomIndex = 0;
 
             GetFreeMainRoomZone(out commandRoomZoneAbs, out commandRoomZoneOrd, out mainRoomIndex);
-
-            Log.Message("commandRoom mainRoomIndex = " + mainRoomIndex);
             zoneMap[commandRoomZoneOrd, commandRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomCommandRoom, Rot4.Random, Rot4.Invalid);
 
             // Set drop-zone and landing pad zones around relative south-west corner.
@@ -304,8 +301,6 @@ namespace OutpostGenerator
             int mainRoomIndex = 0;
 
             GetFreeMainRoomZone(out barracksZoneAbs, out barracksZoneOrd, out mainRoomIndex);
-
-            Log.Message("barracks mainRoomIndex = " + mainRoomIndex);
             zoneMap[barracksZoneOrd, barracksZoneAbs] = new ZoneProperties(ZoneType.BigRoomBarracks, Rot4.Random, Rot4.Invalid);
         }
 
@@ -316,8 +311,6 @@ namespace OutpostGenerator
             int mainRoomIndex = 0;
 
             GetFreeMainRoomZone(out hydroponicRoomZoneAbs, out hydroponicRoomZoneOrd, out mainRoomIndex);
-
-            Log.Message("hydroponic room mainRoomIndex = " + mainRoomIndex);
             zoneMap[hydroponicRoomZoneOrd, hydroponicRoomZoneAbs] = new ZoneProperties(ZoneType.BigRoomHydroponics, Rot4.Random, Rot4.Invalid);
         }
 

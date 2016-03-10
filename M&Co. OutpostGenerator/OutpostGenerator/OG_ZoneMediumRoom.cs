@@ -295,9 +295,7 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDef.Named("ToolCabinet"), null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             IntVec3 studyObjectPosition = rotatedOrigin + new IntVec3(3, 0, 5).RotatedBy(rotation);
             Find.TerrainGrid.SetTerrain(studyObjectPosition, TerrainDef.Named("SterileTile"));
-            Thing uraniumStack = ThingMaker.MakeThing(ThingDef.Named("Uranium"));
-            uraniumStack.stackCount = Rand.RangeInclusive(5, 18); ;
-            GenSpawn.Spawn(uraniumStack, studyObjectPosition);
+            OG_Common.SpawnResourceAt(ThingDef.Named("Uranium"), Rand.RangeInclusive(5, 18), studyObjectPosition, true);
 
             // Spawn lamps, heater and coolers.
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(3, 0, 3).RotatedBy(rotation), Color.blue, ref outpostData);

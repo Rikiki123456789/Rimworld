@@ -52,15 +52,16 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(9, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("DiningChair"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(9, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("TableShort"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            
             // Spawn NPD, hoppers and lamp.
             // TODO: extend freezer to NPD?
             OG_Common.TrySpawnThingAt(ThingDefOf.NutrientPasteDispenser, null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.SpawnResourceAt(ThingDefOf.RawPotatoes, 75, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true);
+            OG_Common.SpawnResourceAt(ThingDefOf.RawPotatoes, ThingDefOf.RawPotatoes.stackLimit, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.SpawnResourceAt(ThingDef.Named("RawCorn"), 75, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true);
+            OG_Common.SpawnResourceAt(ThingDef.Named("RawCorn"), ThingDef.Named("RawCorn").stackLimit, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true);
             OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.SpawnResourceAt(ThingDef.Named("RawBerries"), 75, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true);
+            OG_Common.SpawnResourceAt(ThingDef.Named("RawBerries"), ThingDef.Named("RawBerries").stackLimit, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(4, 0, 6).RotatedBy(rotation), Color.white, ref outpostData);
             for (int xOffset = 1; xOffset <= 4; xOffset++)
             {
@@ -69,6 +70,7 @@ namespace OutpostGenerator
                     Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), TerrainDef.Named("SterileTile"));
                 }
             }
+            
             // Generate beer cool room.
             for (int zOffset = 7; zOffset <= 9; zOffset++)
             {
@@ -83,17 +85,21 @@ namespace OutpostGenerator
             {
                 Find.TerrainGrid.SetTerrain(rotatedOrigin + new IntVec3(8, 0, zOffset).RotatedBy(rotation), TerrainDef.Named("PavedTile"));
             }
+            OG_Common.TrySpawnThingAt(OG_Util.FoodRackDef, ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(OG_Util.FoodRackDef, ThingDefOf.Steel, rotatedOrigin + new IntVec3(9, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             for (int xOffset = 7; xOffset <= 9; xOffset++)
             {
                 for (int zOffset = 8; zOffset <= 9; zOffset++)
                 {
                     IntVec3 fridgeCell = rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation);
                     Find.TerrainGrid.SetTerrain(fridgeCell, TerrainDef.Named("SterileTile"));
-                    if ((xOffset == 7) || (xOffset == 9))
+                    if (xOffset == 7)
                     {
-                        Thing beerStack = ThingMaker.MakeThing(ThingDefOf.Beer);
-                        beerStack.stackCount = ThingDefOf.Beer.stackLimit;
-                        GenSpawn.Spawn(beerStack, fridgeCell);
+                        OG_Common.SpawnResourceAt(ThingDefOf.MealSurvivalPack, ThingDefOf.MealSurvivalPack.stackLimit, fridgeCell, true);
+                    }
+                    if (xOffset == 9)
+                    {
+                        OG_Common.SpawnResourceAt(ThingDefOf.Beer, ThingDefOf.Beer.stackLimit, fridgeCell, true);
                     }
                 }
             }
@@ -105,7 +111,8 @@ namespace OutpostGenerator
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(9, 0, 6).RotatedBy(rotation), ref outpostData);
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(0, 0, 1).RotatedBy(rotation), new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(0, 0, 2).RotatedBy(rotation), new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(8, 0, 10).RotatedBy(rotation), new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            Building_Cooler cooler = OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(8, 0, 10).RotatedBy(rotation), new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            cooler.compTempControl.targetTemperature = 2;
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(10, 0, 1).RotatedBy(rotation), new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(10, 0, 2).RotatedBy(rotation), new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
 
@@ -348,7 +355,7 @@ namespace OutpostGenerator
             hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
             hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantCorn"));
             hydroponics = OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(9, 0, 2).RotatedBy(rotation), true, rotation, ref outpostData) as Building_PlantGrower;
-            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantHops"));
+            hydroponics.SetPlantDefToGrow(ThingDef.Named("PlantStrawberry"));
 
             OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(1, 0, 7).RotatedBy(rotation), true, rotation, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("HydroponicsBasin"), null, rotatedOrigin + new IntVec3(3, 0, 7).RotatedBy(rotation), true, rotation, ref outpostData);
