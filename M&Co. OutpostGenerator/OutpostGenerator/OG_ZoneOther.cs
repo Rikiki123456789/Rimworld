@@ -91,14 +91,14 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, southEastOrigin + new IntVec3(9, 0, 4).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
             OG_Common.TrySpawnThingAt(OG_Util.VulcanTurretDef, ThingDefOf.Steel, southEastOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
 
-            // Generate central door power conduit. Don't close with a door as it would cause the entire base to be roofed.
+            // Generate central door and power conduit.
+            OG_Common.SpawnDoorAt(rotatedOrigin + new IntVec3(5, 0, 0).RotatedBy(rotation), ref outpostData);
             OG_Common.SpawnFireproofPowerConduitAt(rotatedOrigin + new IntVec3(5, 0, 0).RotatedBy(rotation), ref outpostData);
-
-
+            
             // Generate ironed roof.
-            for (int xOffset = 0; xOffset < 11; xOffset++)
+            for (int xOffset = 0; xOffset <= 10; xOffset++)
             {
-                for (int zOffset = 0; zOffset < 5; zOffset++)
+                for (int zOffset = 0; zOffset <= 4; zOffset++)
                 {
                     Find.RoofGrid.SetRoof(rotatedOrigin + new IntVec3(xOffset, 0, zOffset).RotatedBy(rotation), OG_Util.IronedRoofDef);
                 }

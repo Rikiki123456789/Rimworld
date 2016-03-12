@@ -13,13 +13,15 @@ namespace OutpostGenerator
 {
     // TODO: add orbital relay.
     // TODO: add automated supply ship landing.
-    // TODO: add tale: droppod destroyed in-flight.
+    // TODO: add tale: drop-pod destroyed in-flight.
     // TODO: add blue glower to compact autonomous generator.
-    // TODO: add kitchen bills.
     // TODO: create M&Co. backgrounds.
-    // TODO: add M&Co. employee mood bonus.
     // TODO: periodically check M&Co. employee affected area.
-    // TODO: add cleaning job inside outpost area.
+    // TODO: add cleaning job inside outpost area. Add a map component which periodically check for existing filth and update a list.
+    // TODO: if pawn has no apparel or weapon, leave with next ship.
+    // TODO: carry raw food to ship.
+    // TODO: carry wounded people to ship? Easiest way maybe.
+    // TODO: add animals? Might be tricky, especially for wounded animals.
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -59,8 +61,7 @@ namespace OutpostGenerator
             GenSpawn.Spawn(outpostData.triggerIntrusion, triggerINtrussionPosition);
 
             GenerateOutpostLayout();
-            
-            // TODO: debug. Display the generated layout.
+            // Display the generated layout.
             /*for (int zoneOrd = 0; zoneOrd < verticalZonesNumber; zoneOrd++)
             {
                 for (int zoneAbs = 0; zoneAbs < horizontalZonesNumber; zoneAbs++)
@@ -69,10 +70,8 @@ namespace OutpostGenerator
                     Log.Message("Layout: zoneMap[" + zoneOrd + "," + zoneAbs + "] => " + zone.zoneType.ToString() + "," + zone.rotation.ToString() + "," + zone.linkedZoneRelativeRotation.ToString());
                 }
             }*/
-
             GenerateOutpostZones(outpostData.areaSouthWestOrigin);
             GenerateSasToLinkMediumAndMainRooms(outpostData.areaSouthWestOrigin);
-
             // Generate laser fences.
             OG_LaserFence.GenerateLaserFence(zoneMap, ref outpostData);
             // Generate battle remains.
@@ -81,13 +80,15 @@ namespace OutpostGenerator
             OG_RuinEffects.GenerateRuinEffects(ref outpostData);
             // Generate some inhabitants.
             OG_Inhabitants.GenerateInhabitants(ref outpostData);
+            // Spawn the no-roof area generator.
+            SpawnNoRoofAreaGenerator(outpostData.areaSouthWestOrigin);
 
             // Initialize command console data.
             outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
             commandConsole.outpostThingList = outpostData.outpostThingList.ListFullCopy<Thing>();
             commandConsole.dropZoneCenter = outpostData.dropZoneCenter;
             // Initialize intrusion trigger data.
-            outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick).
+            outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick)?
             
             SendWelcomeLetter(outpostData);
         }
@@ -177,6 +178,7 @@ namespace OutpostGenerator
             GenerateOutpostLayoutSamSitesAndOrbitalRelay();
 
             GenerateOutpostLayoutSecondaryRooms();
+            EnsureAtLeastOneMedibayInOutpost();
         }
 
         /// <summary>
@@ -517,10 +519,49 @@ namespace OutpostGenerator
             }
         }
 
+        static void EnsureAtLeastOneMedibayInOutpost()
+        {
+            List<IntVec2> mediumRoomsList = new List<IntVec2>();
+
+            for (int zoneAbs = 0; zoneAbs < OG_BigOutpost.horizontalZonesNumber; zoneAbs++)
+            {
+                for (int zoneOrd = 0; zoneOrd < OG_BigOutpost.verticalZonesNumber; zoneOrd++)
+                {
+                    ZoneType zoneType = zoneMap[zoneOrd, zoneAbs].zoneType;
+                    if (zoneType == ZoneType.MediumRoomMedibay)
+                    {
+                        // Medibay is found.
+                        // TODO: debug.
+                        Log.Message("EnsureAtLeastOneMedibayInOutpost: Medibay is found at " + new IntVec2(zoneAbs, zoneOrd).ToString());
+                        return;
+                    }
+                    if ((zoneType == ZoneType.MediumRoomBarn)
+                        || (zoneType == ZoneType.MediumRoomKitchen)
+                        || (zoneType == ZoneType.MediumRoomLaboratory)
+                        || (zoneType == ZoneType.MediumRoomPrison)
+                        || (zoneType == ZoneType.MediumRoomRecRoom)
+                        || (zoneType == ZoneType.MediumRoomWarehouse)
+                        || (zoneType == ZoneType.MediumRoomWeaponRoom))
+                    {
+                        mediumRoomsList.Add(new IntVec2(zoneAbs, zoneOrd));
+                    }
+                }
+            }
+            if (mediumRoomsList.NullOrEmpty())
+            {
+                Log.Warning("M&Co. Outpost generator: EnsureAtLeastOneMedibayInOutpost did not found any medium room.");
+                return;
+            }
+            IntVec2 roomCoord = mediumRoomsList.RandomElement();
+            // TODO: debug.
+            Log.Message("EnsureAtLeastOneMedibayInOutpost: setting zoneMap at " + roomCoord.ToString());
+            zoneMap[roomCoord.z, roomCoord.x].zoneType = ZoneType.MediumRoomMedibay;
+        }
+
         /// <summary>
         /// Get the coordinates of one of the main rooms.
         /// </summary>
-            static void GetMainRoomZone(int roomIndex, Rot4 mainEntranceDirection, out int mainRoomZoneAbs, out int mainRoomZoneOrd)
+        static void GetMainRoomZone(int roomIndex, Rot4 mainEntranceDirection, out int mainRoomZoneAbs, out int mainRoomZoneOrd)
         {
             mainRoomZoneAbs = 0;
             mainRoomZoneOrd = 0;
@@ -764,7 +805,8 @@ namespace OutpostGenerator
                             OG_ZoneSpecial.GenerateLandingPadTop(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.OrbitalRelay:
-                            OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
+                            // TODO: generate orbital relay zone.
+                            //OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
                             break;
 
                         // Exterior zones.
@@ -864,6 +906,13 @@ namespace OutpostGenerator
                     }
                 }
             }
+        }
+
+        private static void SpawnNoRoofAreaGenerator(IntVec3 areaSouthWestOrigin)
+        {
+            Building_NoRoofAreaGenerator noRoofAreaGenerator = ThingMaker.MakeThing(ThingDef.Named("NoRoofAreaGenerator")) as Building_NoRoofAreaGenerator;
+            noRoofAreaGenerator.areaSouthWestOrigin = areaSouthWestOrigin;
+            GenSpawn.Spawn(noRoofAreaGenerator, areaSouthWestOrigin + new IntVec3(-1, 0, -1));
         }
     }
 }

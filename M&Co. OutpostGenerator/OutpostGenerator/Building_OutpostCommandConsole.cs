@@ -28,15 +28,15 @@ namespace OutpostGenerator
         public override void Tick()
         {
             ticksSinceMealsDrop++;
-            if (ticksSinceMealsDrop >= 200)
+            if (ticksSinceMealsDrop >= 30000)
             {
                 ticksSinceMealsDrop = 0;
                 DropPodInfo info = new DropPodInfo();
                 Thing meals = ThingMaker.MakeThing(ThingDefOf.MealSurvivalPack);
-                meals.stackCount = ThingDefOf.MealSurvivalPack.stackLimit;
+                meals.stackCount = Find.ListerPawns.PawnsInFaction(OG_Util.FactionOfMAndCo).Count;
                 meals.SetForbidden(true);
                 info.SingleContainedThing = meals;
-                DropPodUtility.MakeDropPodAt(this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-2, 2), 0, Rand.RangeInclusive(-2, 2)), info);
+                DropPodUtility.MakeDropPodAt(this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-4, 4), 0, Rand.RangeInclusive(-4, 4)), info);
             }
         }
 
@@ -155,11 +155,22 @@ namespace OutpostGenerator
         
         public void TreatIntrusion(IntVec3 intrusionCell)
         {
-            OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
-            Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
+            OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = -80;
+            Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = -80;
             OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = true;
             Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = true;
-            
+            // The following section is needed so existing pawns will be treated as ennemies.
+            if (Game.Mode == GameMode.MapPlaying)
+            {
+                List<Pawn> list = (from pa in Find.ListerPawns.AllPawns
+                                   where pa.Faction == Faction.OfColony || pa.Faction == OG_Util.FactionOfMAndCo
+                                   select pa).ToList<Pawn>();
+                foreach (Pawn pawn in list)
+                {
+                    Find.ListerPawns.UpdateRegistryForPawn(pawn);
+                }
+            }
+
             string text = "   M&Co. security message broadcast\n\n" +
                 "Coralie here!\n" +
                 "I have detected an intrusion in sub-sector " + intrusionCell.ToString() + ".\n\n" +

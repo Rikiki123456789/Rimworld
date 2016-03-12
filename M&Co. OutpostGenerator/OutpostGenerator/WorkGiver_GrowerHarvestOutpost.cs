@@ -34,7 +34,7 @@ namespace OutpostGenerator
                 {
                     Thing potentialHydroponics = hydroponicsList[hydroponicsIndex];
                     if ((potentialHydroponics.Faction != null)
-                        && (pawn.Faction == OG_Util.FactionOfMAndCo))
+                        && (potentialHydroponics.Faction == pawn.Faction))
                     {
                         Building_PlantGrower hydroponics = potentialHydroponics as Building_PlantGrower;
                         if (hydroponics == null)

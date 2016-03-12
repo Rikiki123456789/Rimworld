@@ -51,9 +51,11 @@
   <ItemGroup>
     <Compile Include="Building_OutpostCommandConsole.cs" />
     <Compile Include="Building_LandingPadBeacon.cs" />
+    <Compile Include="Building_NoRoofAreaGenerator.cs" />
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
+    <Compile Include="WorkGiver_RescueDownedMAndCoEmployee.cs" />
     <Compile Include="State_DefendOutpost.cs" />
     <Compile Include="WorkGiver_GrowerHarvestOutpost.cs" />
     <Compile Include="WorkGiver_GrowerSowOutpost.cs" />
@@ -122,6 +124,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FireproofPowerConduit.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_Special_NoRoofAreaGenerator.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_VulcanTurret.xml">
       <SubType>Designer</SubType>
     </Content>

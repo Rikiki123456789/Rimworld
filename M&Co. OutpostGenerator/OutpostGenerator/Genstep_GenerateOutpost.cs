@@ -31,6 +31,7 @@ namespace OutpostGenerator
             //// TODO: debug, remove it.
             outpostData.size = OG_OutpostSize.BigOutpost;
             outpostData.isInhabited = true;
+            outpostData.isMilitary = false;
 
             Log.Message("outpostData:");
             Log.Message(" - size: " + outpostData.size.ToString());
@@ -38,6 +39,7 @@ namespace OutpostGenerator
             Log.Message(" - battleOccured: " + outpostData.battleOccured.ToString());
             Log.Message(" - isRuined: " + outpostData.isRuined.ToString());
             Log.Message(" - isInhabited: " + outpostData.isInhabited.ToString());
+
 
             /*outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, 70);
             OG_BigOutpost.GenerateOutpost(outpostData);

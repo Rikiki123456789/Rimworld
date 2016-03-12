@@ -113,7 +113,13 @@ namespace OutpostGenerator
                 if (pawnIndex == 1)
                 {
                     // Generate officer.
-                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostOfficerDef, OG_Util.FactionOfMAndCo);
+                    do
+                    {
+                        pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostOfficerDef, OG_Util.FactionOfMAndCo);
+                    }
+                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
+
+                    // TODO: regenerate if pawn cannot be violent.
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Hyperweave"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Hyperweave"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
@@ -124,7 +130,11 @@ namespace OutpostGenerator
                 else if (pawnIndex == 2)
                 {
                     // Generate minigun guard.
-                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    do
+                    {
+                        pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    }
+                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
@@ -134,7 +144,11 @@ namespace OutpostGenerator
                 else if (pawnIndex <= 4)
                 {
                     // Generate assault rifle guard.
-                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    do
+                    {
+                        pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    }
+                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
@@ -148,7 +162,11 @@ namespace OutpostGenerator
                 else if (pawnIndex <= 8)
                 {
                     // Generate charge rifle guard.
-                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    do
+                    {
+                        pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
+                    }
+                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
@@ -156,6 +174,23 @@ namespace OutpostGenerator
                     GeneratePawnWeapon(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Gun_ChargeRifle"));
                 }
                 pawn.workSettings.EnableAndInitialize();
+
+                // TODO: change allowed works (firefighting, rescue, ...).
+                /*List<WorkTypeDef> allDefsListForReading = DefDatabase<WorkTypeDef>.AllDefsListForReading;
+                for (int i = 0; i < allDefsListForReading.Count; i++)
+                {
+                    WorkTypeDef workTypeDef = allDefsListForReading[i];
+                    if (workTypeDef == WorkTypeDefOf.Construction)
+                    {
+                        p.workSettings.SetPriority(workTypeDef, 1);
+                    }
+                    else
+                    {
+                        p.workSettings.Disable(workTypeDef);
+                    }
+                }*/
+
+
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
                 pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                 pawn.playerSettings.AreaRestriction = outpostArea;

@@ -145,24 +145,18 @@ namespace OutpostGenerator
 
             // Spawn graves and tombstones.
             OG_Common.TrySpawnWallAt(rotatedOrigin + new IntVec3(1, 0, 2).RotatedBy(rotation), ref outpostData);
-            Building_Grave grave = OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Grave;
-            grave.GetStoreSettings().filter.SetDisallowAll();
+            OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnWallAt(rotatedOrigin + new IntVec3(1, 0, 5).RotatedBy(rotation), ref outpostData);
-            grave = OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Grave;
-            grave.GetStoreSettings().filter.SetDisallowAll();
+            OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnWallAt(rotatedOrigin + new IntVec3(1, 0, 8).RotatedBy(rotation), ref outpostData);
-            grave = OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Grave;
-            grave.GetStoreSettings().filter.SetDisallowAll();
+            OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
 
             OG_Common.TrySpawnWallAt(rotatedOrigin + new IntVec3(9, 0, 2).RotatedBy(rotation), ref outpostData);
-            grave = OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(8, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Grave;
-            grave.GetStoreSettings().filter.SetDisallowAll();
+            OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(8, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnWallAt(rotatedOrigin + new IntVec3(9, 0, 5).RotatedBy(rotation), ref outpostData);
-            grave = OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Grave;
-            grave.GetStoreSettings().filter.SetDisallowAll();
+            OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnWallAt(rotatedOrigin + new IntVec3(9, 0, 8).RotatedBy(rotation), ref outpostData);
-            grave = OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(8, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Grave;
-            grave.GetStoreSettings().filter.SetDisallowAll();
+            OG_Common.TrySpawnThingAt(ThingDefOf.Grave, null, rotatedOrigin + new IntVec3(8, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
 
             // Spawn flower pots.
             OG_Common.TrySpawnThingAt(ThingDef.Named("PlantPot"), ThingDef.Named("BlocksGranite"), rotatedOrigin + new IntVec3(2, 0, 3).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);

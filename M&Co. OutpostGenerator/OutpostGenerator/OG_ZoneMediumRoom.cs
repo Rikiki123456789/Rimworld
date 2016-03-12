@@ -26,16 +26,16 @@ namespace OutpostGenerator
 
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(1, 0, 1).RotatedBy(rotation), 9, 9, rotation, TerrainDefOf.Concrete, TerrainDef.Named("SterileTile"), ref outpostData);
 
-            // Spawn medbeds and vitals monitors.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(2, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            // Spawn cryptosleep caskets and vitals monitors.
+            OG_Common.TrySpawnThingAt(ThingDefOf.CryptosleepCasket, null, rotatedOrigin + new IntVec3(2, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(4, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.CryptosleepCasket, null, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
 
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(8, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("HospitalBed"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(8, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.CryptosleepCasket, null, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(6, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.CryptosleepCasket, null, rotatedOrigin + new IntVec3(8, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("VitalsMonitor"), null, rotatedOrigin + new IntVec3(6, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
 
             // Spawn medicine and lamp.
             OG_Common.SpawnResourceAt(ThingDefOf.Medicine, Rand.RangeInclusive(14, 48), rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation));

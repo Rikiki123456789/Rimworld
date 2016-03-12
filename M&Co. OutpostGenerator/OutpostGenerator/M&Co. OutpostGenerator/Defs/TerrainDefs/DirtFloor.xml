@@ -21,7 +21,7 @@
   <TerrainDef ParentName="FloorBase">
     <DefName>DirtFloor</DefName>
     <label>dirt floor</label>
-    <Description>Metal tiles, for that spaceship look. Pretty, but labor and material-intensive.</Description>
+    <Description>Just a trail cleared from any vegetation. This will not keep your shoes clean though.</Description>
     <layerable>true</layerable>
     <designationCategory>Floors</designationCategory>
     <Fertility>0</Fertility>

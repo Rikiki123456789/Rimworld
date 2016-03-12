@@ -44,7 +44,7 @@ namespace OutpostGenerator
             IntVec3 dropZoneOrigin = Zone.GetZoneOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd);
             IntVec3 sandbagsOrigin = dropZoneOrigin + new IntVec3(1, 0, 1);
 
-            CellRect rect = new CellRect(sandbagsOrigin.x, sandbagsOrigin.z, Genstep_GenerateOutpost.zoneSideSize - smallRoomWallOffset, Genstep_GenerateOutpost.zoneSideSize - smallRoomWallOffset);
+            CellRect rect = new CellRect(sandbagsOrigin.x, sandbagsOrigin.z, 9, 9);
             foreach (IntVec3 cell in rect.Cells)
             {
                 if (((cell.x == rect.minX) || (cell.x == rect.maxX) || (cell.z == rect.minZ) || (cell.z == rect.maxZ))
