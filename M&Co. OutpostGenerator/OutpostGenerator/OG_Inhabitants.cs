@@ -174,23 +174,24 @@ namespace OutpostGenerator
                     GeneratePawnWeapon(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Gun_ChargeRifle"));
                 }
                 pawn.workSettings.EnableAndInitialize();
-
-                // TODO: change allowed works (firefighting, rescue, ...).
-                /*List<WorkTypeDef> allDefsListForReading = DefDatabase<WorkTypeDef>.AllDefsListForReading;
-                for (int i = 0; i < allDefsListForReading.Count; i++)
+                // Change allowed works to only firefighting and doctor (to rescue downed pawns).
+                List<WorkTypeDef> allDefsListForReading = DefDatabase<WorkTypeDef>.AllDefsListForReading;
+                for (int workTypeIndex = 0; workTypeIndex < allDefsListForReading.Count; workTypeIndex++)
                 {
-                    WorkTypeDef workTypeDef = allDefsListForReading[i];
-                    if (workTypeDef == WorkTypeDefOf.Construction)
+                    WorkTypeDef workTypeDef = allDefsListForReading[workTypeIndex];
+                    if ((workTypeDef == WorkTypeDefOf.Firefighter)
+                        || (workTypeDef == WorkTypeDefOf.Doctor))
                     {
-                        p.workSettings.SetPriority(workTypeDef, 1);
+                        if (pawn.story.WorkTypeIsDisabled(workTypeDef) == false)
+                        {
+                            pawn.workSettings.SetPriority(workTypeDef, 1);
+                        }
                     }
                     else
                     {
-                        p.workSettings.Disable(workTypeDef);
+                        pawn.workSettings.Disable(workTypeDef);
                     }
-                }*/
-
-
+                }
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
                 pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                 pawn.playerSettings.AreaRestriction = outpostArea;

@@ -96,6 +96,14 @@ namespace OutpostGenerator
             }
         }
         
+        public static ThingDef SupplyShipCryptosleepBayDef
+        {
+            get
+            {
+                return ThingDef.Named("SupplyShipCryptosleepBay");
+            }
+        }
+        
         // Terrain def.
         public static TerrainDef DirtFloorDef
         {

@@ -28,7 +28,7 @@ namespace OutpostGenerator
         public override void Tick()
         {
             ticksSinceMealsDrop++;
-            if (ticksSinceMealsDrop >= 30000)
+            if (ticksSinceMealsDrop >= 300)
             {
                 ticksSinceMealsDrop = 0;
                 DropPodInfo info = new DropPodInfo();
@@ -37,6 +37,13 @@ namespace OutpostGenerator
                 meals.SetForbidden(true);
                 info.SingleContainedThing = meals;
                 DropPodUtility.MakeDropPodAt(this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-4, 4), 0, Rand.RangeInclusive(-4, 4)), info);
+
+
+
+                Thing supplyShip = ThingMaker.MakeThing(ThingDef.Named("SupplyShipIncoming"));
+                supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
+                GenSpawn.Spawn(supplyShip, this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-40, 40), 0, Rand.RangeInclusive(-40, 40)));
+
             }
         }
 

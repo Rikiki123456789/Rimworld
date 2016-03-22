@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefinitions>
+
+  <ThingDef>
+    <defName>SupplyShipIncoming</defName>
+    <label>supply ship (incoming)</label>
+    <thingClass>OutpostGenerator.SupplyShipIncoming</thingClass>
+    <category>Ethereal</category>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/SupplyShip/SupplyShip</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(20,11)</drawSize>
+      <shaderType>CutoutFlying</shaderType>
+    </graphicData>
+    <size>(18,9)</size>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+  </ThingDef>
+
+</ThingDefinitions>

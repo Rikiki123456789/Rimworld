@@ -42,4 +42,18 @@
     </requiredCapacities>
   </WorkGiverDef>
 
+  <!--
+  <WorkGiverDef>
+    <defName>DoctorCarryDownedMAndCoEmployeeToSupplyShip</defName>
+    <giverClass>OutpostGenerator.WorkGiver_CarryDownedMAndCoEmployeeToSupplyShip</giverClass>
+    <workType>Doctor</workType>
+    <verb>rescue</verb>
+    <gerund>rescuing</gerund>
+    <priorityInType>89</priorityInType>
+    <directOrderable>false</directOrderable>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>-->
+
 </WorkGivers>

@@ -22,6 +22,7 @@ namespace OutpostGenerator
     // TODO: carry raw food to ship.
     // TODO: carry wounded people to ship? Easiest way maybe.
     // TODO: add animals? Might be tricky, especially for wounded animals.
+    // TODO: landing pad beacon texture.
 
     /// <summary>
     /// OG_BigOutpost class.

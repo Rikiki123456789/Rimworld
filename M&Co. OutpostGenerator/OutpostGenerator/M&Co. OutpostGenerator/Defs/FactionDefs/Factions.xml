@@ -12,6 +12,7 @@
     <techLevel>Spacer</techLevel>
     <backstoryCategory>Civil</backstoryCategory>
     <hidden>true</hidden>
+    <canFlee>false</canFlee>
     <hairTags>
       <li>Urban</li>
     </hairTags>

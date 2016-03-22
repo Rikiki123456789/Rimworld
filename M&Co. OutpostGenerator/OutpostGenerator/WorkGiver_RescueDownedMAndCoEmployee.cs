@@ -35,9 +35,10 @@ namespace OutpostGenerator
             {
                 return false;
             }
+            Thing cryptosleepBay = FindFreeSupplyShipCryptosleepBay(pawn);
             Thing cryptosleepCasket = FindFreeCryptosleepCasket(pawn);
-            return ((cryptosleepCasket != null)
-                && downedPawn.CanReserve(cryptosleepCasket, 1));
+            return (((cryptosleepBay != null) && downedPawn.CanReserve(cryptosleepBay, 1))
+                || ((cryptosleepCasket != null) && downedPawn.CanReserve(cryptosleepCasket, 1)));
         }
 
         public static bool EnemyIsNear(Pawn p, float radius)
@@ -51,7 +52,27 @@ namespace OutpostGenerator
             }
             return false;
         }
-        
+
+        public static Thing FindFreeSupplyShipCryptosleepBay(Pawn rescuer)
+        {
+            List<Thing> baysList = Find.ListerThings.ThingsOfDef(OG_Util.SupplyShipCryptosleepBayDef);
+            for (int bayIndex = 0; bayIndex < baysList.Count; bayIndex++)
+            {
+                Thing potentialBay = baysList[bayIndex];
+                if ((potentialBay.Faction != null)
+                    && (potentialBay.Faction == rescuer.Faction))
+                {
+                    Building_SupplyShipCryptosleepBay bay = potentialBay as Building_SupplyShipCryptosleepBay;
+                    if ((bay.GetContainer().Count == 0)
+                        && (rescuer.CanReserveAndReach(bay, PathEndMode.InteractionCell, Danger.Deadly)))
+                    {
+                        return bay;
+                    }
+                }
+            }
+            return null;
+        }
+
         public static Thing FindFreeCryptosleepCasket(Pawn rescuer)
         {
             List<Thing> casketsList = Find.ListerThings.ThingsOfDef(ThingDefOf.CryptosleepCasket);
@@ -75,6 +96,14 @@ namespace OutpostGenerator
         public override Job JobOnThing(Pawn pawn, Thing t)
         {
             Pawn downedPawn = t as Pawn;
+            Thing bay = FindFreeSupplyShipCryptosleepBay(pawn);
+            if (bay != null)
+            {
+                return new Job(JobDefOf.CarryToCryptosleepCasket, downedPawn, bay)
+                {
+                    maxNumToCarry = 1
+                };
+            }
             Thing casket = FindFreeCryptosleepCasket(pawn);
             return new Job(JobDefOf.CarryToCryptosleepCasket, downedPawn, casket)
             {

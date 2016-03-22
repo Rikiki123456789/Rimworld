@@ -52,9 +52,11 @@
     <Compile Include="Building_OutpostCommandConsole.cs" />
     <Compile Include="Building_LandingPadBeacon.cs" />
     <Compile Include="Building_NoRoofAreaGenerator.cs" />
+    <Compile Include="Building_SupplyShipCryptosleepBay.cs" />
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
+    <Compile Include="SupplyShipIncoming.cs" />
     <Compile Include="WorkGiver_RescueDownedMAndCoEmployee.cs" />
     <Compile Include="State_DefendOutpost.cs" />
     <Compile Include="WorkGiver_GrowerHarvestOutpost.cs" />
@@ -115,7 +117,11 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\PawnKindDefs\PawnKinds_SecurityForces.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\SupplyShipLanding.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShipCryptosleepBay.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FoodRack.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_LandingPadBeacon.xml">
       <SubType>Designer</SubType>
@@ -128,6 +134,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_VulcanTurret.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\SupplyShipIncoming.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Weapon_VulcanGun.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThinkTreeDefs\SubTrees_MAndCo.xml">
       <SubType>Designer</SubType>
@@ -135,6 +142,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThoughtDefs\Thought_MAndCoEmployee.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\WorkGiverDefs\WorkGivers.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Sounds\MissileLaunch\MissileLaunch.wav" />
+    <Content Include="M&amp;Co. OutpostGenerator\Sounds\SupplyShipLanding\Landing.wav" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Terrain\Surfaces\DirtFloor.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OutpostCommandConsole.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSiteUiIcon.png" />
@@ -149,6 +157,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Things_Special_Trigger.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Projectile_Sam.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\VulcanTurret_Top.png" />
+    <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\SupplyShip\SupplyShip.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="M&amp;Co. OutpostGenerator\Assemblies\" />
