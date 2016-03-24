@@ -88,6 +88,8 @@ namespace OutpostGenerator
             outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
             commandConsole.outpostThingList = outpostData.outpostThingList.ListFullCopy<Thing>();
             commandConsole.dropZoneCenter = outpostData.dropZoneCenter;
+            commandConsole.landingPadCenter = outpostData.landingPadCenter;
+            commandConsole.landingPadRotation = outpostData.landingPadRotation;
             // Initialize intrusion trigger data.
             outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick)?
             

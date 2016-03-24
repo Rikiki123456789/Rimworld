@@ -19,29 +19,56 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class SupplyShipIncoming : Thing
     {
-        public const int diagonalTrajectoryDurationInTicks = 240;
-        public const int verticalTrajectoryDurationInTicks = 240;
-        public int ticksToLanding = diagonalTrajectoryDurationInTicks + verticalTrajectoryDurationInTicks;
+        private const int horizontalTrajectoryDurationInTicks = 480;
+        private const int rotationDurationInTicks = 240;
+        private const int verticalTrajectoryDurationInTicks = 240;
+        private int ticksToLanding = horizontalTrajectoryDurationInTicks + rotationDurationInTicks + verticalTrajectoryDurationInTicks;
         public Rot4 landingPadRotation = Rot4.North;
-
-        // Thrust effect.
-        public static readonly Material shadowTexture = MaterialPool.MatFrom("Things/Special/DropPodShadow", ShaderDatabase.Transparent);
+        private float relativeRotation = 0f;
+        
+        // Texture.
+        private Matrix4x4 supplyShipMatrix = default(Matrix4x4);
+        private static Material supplyShipTexture = MaterialPool.MatFrom("Things/SupplyShip/SupplyShip");
+        private Vector3 supplyShipScale = new Vector3(20f, 1f, 11f);
 
         // Sound.
-        public static readonly SoundDef preLandingSound = SoundDef.Named("DropPodFall");
-        public static readonly SoundDef landingSound = SoundDef.Named("SupplyShipLanding");
-        public const int soundAnticipationTicks = 60;
+        private static readonly SoundDef preLandingSound = SoundDef.Named("DropPodFall");
+        private static readonly SoundDef landingSound = SoundDef.Named("SupplyShipLanding");
+        private const int soundAnticipationTicks = 60;
+        
+        private float supplyShipRotation
+        {
+            get
+            {
+                if (this.ticksToLanding > rotationDurationInTicks + verticalTrajectoryDurationInTicks)
+                {
+                    return 0f;
+                }
+                else if (this.ticksToLanding > verticalTrajectoryDurationInTicks)
+                {
+                    return this.relativeRotation * ((1f - (float)(this.ticksToLanding - verticalTrajectoryDurationInTicks) / (float)rotationDurationInTicks));
+                }
+                else
+                {
+                    return this.relativeRotation;
+                }
+            }
+        }
 
         public override Vector3 DrawPos
         {
             get
             {
                 Vector3 result = base.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FlyingItem);
-                if (this.ticksToLanding > verticalTrajectoryDurationInTicks)
+                if (this.ticksToLanding > rotationDurationInTicks + verticalTrajectoryDurationInTicks)
                 {
-                    float coefficient = (float)(this.ticksToLanding - verticalTrajectoryDurationInTicks);
+                    float coefficient = (float)(this.ticksToLanding - (rotationDurationInTicks + verticalTrajectoryDurationInTicks));
                     float num = coefficient * coefficient * 0.001f;
-                    result.x -= num * 0.4f;
+                    result.x -= num * 0.8f;
+                    result.z += 3f;
+                }
+                else if (this.ticksToLanding > verticalTrajectoryDurationInTicks)
+                {
                     result.z += 3f;
                 }
                 else
@@ -55,6 +82,22 @@ namespace OutpostGenerator
         public override void SpawnSetup()
         {
             base.SpawnSetup();
+            if (this.landingPadRotation == Rot4.North)
+            {
+                relativeRotation = -90f;
+            }
+            else if (this.landingPadRotation == Rot4.East)
+            {
+                relativeRotation = 0f;
+            }
+            else if (this.landingPadRotation == Rot4.South)
+            {
+                relativeRotation = 90f;
+            }
+            else if (this.landingPadRotation == Rot4.West)
+            {
+                relativeRotation = 180f;
+            }
         }
 
         public override void ExposeData()
@@ -74,6 +117,14 @@ namespace OutpostGenerator
                 GenSpawn.Spawn(mechanoidTerraformer, this.Position);*/
                 this.Destroy();
             }
+            else if (this.ticksToLanding <= rotationDurationInTicks + verticalTrajectoryDurationInTicks)
+            {
+                for (int dustMoteIndex = 0; dustMoteIndex < 2; dustMoteIndex++)
+                {
+                    Vector3 dustMotePosition = base.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.MoteOverhead) + Gen.RandomHorizontalVector(4f);
+                    MoteThrower.ThrowDustPuff(dustMotePosition, 1.2f);
+                }
+            }
             else if (this.ticksToLanding <= verticalTrajectoryDurationInTicks)
             {
                 for (int dustMoteIndex = 0; dustMoteIndex < 2; dustMoteIndex++)
@@ -92,15 +143,12 @@ namespace OutpostGenerator
             }
         }
 
-        public override void DrawAt(Vector3 drawLoc)
+        public override void Draw()
         {
-            base.DrawAt(drawLoc);
-            float num = 5f + (float)this.ticksToLanding / 100f;
-            Vector3 scale = new Vector3(num, 1f, num);
-            Matrix4x4 matrix = default(Matrix4x4);
-            drawLoc.y = Altitudes.AltitudeFor(AltitudeLayer.Shadows);
-            matrix.SetTRS(this.TrueCenter(), base.Rotation.AsQuat, scale);
-            Graphics.DrawMesh(MeshPool.plane10Back, matrix, SupplyShipIncoming.shadowTexture, 0);
+            // TODO: draw over fog!
+            supplyShipMatrix.SetTRS(this.DrawPos + Altitudes.AltIncVect, supplyShipRotation.ToQuat(), supplyShipScale);
+            Graphics.DrawMesh(MeshPool.plane10, supplyShipMatrix, supplyShipTexture, 0);
+            // TODO: dust only at the end!
         }
     }
 }

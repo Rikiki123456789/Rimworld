@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 using UnityEngine;   // Always needed
 //using VerseBase;   // Material/Graphics handling functions are found here
@@ -97,6 +98,7 @@ namespace OutpostGenerator
                 {
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_Parka"), ThingDef.Named("Synthread"), colorCivilGrey);
                 }
+                AddJoyAndComfortNeed(pawn);
                 pawn.workSettings.EnableAndInitialize();
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
                 pawn.playerSettings = new Pawn_PlayerSettings(pawn);
@@ -192,6 +194,7 @@ namespace OutpostGenerator
                         pawn.workSettings.Disable(workTypeDef);
                     }
                 }
+                AddJoyAndComfortNeed(pawn);
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
                 pawn.playerSettings = new Pawn_PlayerSettings(pawn);
                 pawn.playerSettings.AreaRestriction = outpostArea;
@@ -202,6 +205,22 @@ namespace OutpostGenerator
             State_DefendOutpost stateDefend = new State_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), OG_BigOutpost.areaSideLength * (3 / 4));
             StateGraph stateGraph = GraphMaker.SingleStateGraph(stateDefend);
             BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);
+        }
+
+        private static void AddJoyAndComfortNeed(Pawn pawn)
+        {
+            if (pawn.needs.joy == null)
+            {
+                var addNeed = typeof(Pawn_NeedsTracker).GetMethod("AddNeed", BindingFlags.Instance | BindingFlags.NonPublic);
+                addNeed.Invoke(pawn.needs, new object[] { DefDatabase<NeedDef>.GetNamed("Joy") });
+                pawn.needs.joy.CurLevel = Rand.Range(0.5f, 1f);
+            }
+            if (pawn.needs.comfort == null)
+            {
+                var addNeed = typeof(Pawn_NeedsTracker).GetMethod("AddNeed", BindingFlags.Instance | BindingFlags.NonPublic);
+                addNeed.Invoke(pawn.needs, new object[] { DefDatabase<NeedDef>.GetNamed("Comfort") });
+                pawn.needs.comfort.CurLevel = Rand.Range(0.75f, 1f);
+            }
         }
 
         private static void GeneratePawnApparel(ref Pawn pawn, QualityCategory apparelQuality, ThingDef apparelDef, ThingDef apparelStuff, Color apparelColor, bool applyColor = true)

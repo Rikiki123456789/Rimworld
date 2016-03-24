@@ -22,13 +22,15 @@ namespace OutpostGenerator
     {
         public List<Thing> outpostThingList = null;
         public IntVec3 dropZoneCenter = Find.Map.Center;
+        public IntVec3 landingPadCenter = Find.Map.Center;
+        public Rot4 landingPadRotation = Rot4.North;
         protected int ticksSinceMealsDrop = 0;
 
         // TODO: remove this. Just a patch until ship is designed.
         public override void Tick()
         {
             ticksSinceMealsDrop++;
-            if (ticksSinceMealsDrop >= 300)
+            if (ticksSinceMealsDrop >= 1000)
             {
                 ticksSinceMealsDrop = 0;
                 DropPodInfo info = new DropPodInfo();
@@ -40,9 +42,10 @@ namespace OutpostGenerator
 
 
 
-                Thing supplyShip = ThingMaker.MakeThing(ThingDef.Named("SupplyShipIncoming"));
+                SupplyShipIncoming supplyShip = ThingMaker.MakeThing(ThingDef.Named("SupplyShipIncoming")) as SupplyShipIncoming;
+                supplyShip.landingPadRotation = this.landingPadRotation;
                 supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
-                GenSpawn.Spawn(supplyShip, this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-40, 40), 0, Rand.RangeInclusive(-40, 40)));
+                GenSpawn.Spawn(supplyShip, this.landingPadCenter);
 
             }
         }
@@ -227,6 +230,8 @@ namespace OutpostGenerator
             this.outpostThingList = OG_Util.RefreshThingList(this.outpostThingList);
             Scribe_Collections.LookList<Thing>(ref this.outpostThingList, "outpostThingList", LookMode.MapReference);
             Scribe_Values.LookValue<IntVec3>(ref this.dropZoneCenter, "dropZoneCenter");
+            Scribe_Values.LookValue<IntVec3>(ref this.landingPadCenter, "landingPadCenter");
+            Scribe_Values.LookValue<Rot4>(ref this.landingPadRotation, "landingPadRotation");
             Scribe_Values.LookValue<int>(ref this.ticksSinceMealsDrop, "ticksUntilMealsDrop");
         }
 

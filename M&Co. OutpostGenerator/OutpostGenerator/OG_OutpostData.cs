@@ -26,6 +26,8 @@ namespace OutpostGenerator
         public bool isInhabited;
         public IntVec3 areaSouthWestOrigin;
         public IntVec3 dropZoneCenter;
+        public IntVec3 landingPadCenter;
+        public Rot4 landingPadRotation;
 
         // Parameters only used during generation.
         public TriggerIntrusion triggerIntrusion;

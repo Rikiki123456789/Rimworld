@@ -112,6 +112,10 @@ namespace OutpostGenerator
             beacon.SetFlashStartOffset(3 * Building_LandingPadBeacon.flashDurationInTicks);
             beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(9, 0, 10).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
             beacon.SetFlashStartOffset(3 * Building_LandingPadBeacon.flashDurationInTicks);
+
+            outpostData.landingPadCenter = rotatedOrigin + new IntVec3(5, 0, 10).RotatedBy(rotation);
+            outpostData.landingPadRotation = rotation;
+            Log.Message("outpostData.landingPadCenter = " + outpostData.landingPadCenter.ToString());
         }
 
         public static void GenerateLandingPadTop(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)
