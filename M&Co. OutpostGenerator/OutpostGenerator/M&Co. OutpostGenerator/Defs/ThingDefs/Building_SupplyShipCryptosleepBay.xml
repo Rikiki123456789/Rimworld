@@ -26,18 +26,21 @@
   <ThingDef ParentName="BuildingBase">
     <defName>SupplyShipCryptosleepBay</defName>
     <label>supply ship cryptosleep bay</label>
-    <description>TODO! A self-powered sarcophagus designed to keep a person in a state of suspended animation for many years.</description>
+    <description>Supply ship cryptosleep bay. It contains the personnel during transit from or to the orbital ship.</description>
     <thingClass>OutpostGenerator.Building_SupplyShipCryptosleepBay</thingClass>
+    <category>Attachment</category> <!-- Trick so the supply ship does not wipes existing structures when landed. -->
     <graphicData>
-      <texPath>Things/Building/Ship/ShipCryptosleepCasket</texPath>
-      <graphicClass>Graphic_Multi</graphicClass>
-      <drawSize>(4, 3)</drawSize>
+      <texPath>Things/SupplyShip/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
     </graphicData>
     <altitudeLayer>BuildingTall</altitudeLayer>
     <passability>PassThroughOnly</passability>
-    <castEdgeShadows>true</castEdgeShadows>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
     <fillPercent>0.5</fillPercent>
-    <selectable>false</selectable>
+    <selectable>true</selectable>
+    <!-- TODO: not selectable -->
     <useHitPoints>false</useHitPoints>
     <statBases>
       <WorkToMake>3200</WorkToMake>
@@ -50,15 +53,7 @@
       <Steel>180</Steel>
       <Uranium>5</Uranium>
     </costList>
-    <comps>
-      <li>
-        <compClass>CompExplosive</compClass>
-        <explosiveRadius>2.66</explosiveRadius>
-        <explosiveDamageType>Flame</explosiveDamageType>
-      </li>
-    </comps>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
-    <staticSunShadowHeight>1.0</staticSunShadowHeight>
   </ThingDef>
 
 </Buildings>

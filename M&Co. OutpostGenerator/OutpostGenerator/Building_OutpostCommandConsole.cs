@@ -43,7 +43,7 @@ namespace OutpostGenerator
 
 
                 SupplyShipIncoming supplyShip = ThingMaker.MakeThing(ThingDef.Named("SupplyShipIncoming")) as SupplyShipIncoming;
-                supplyShip.landingPadRotation = this.landingPadRotation;
+                supplyShip.InitializeLandingData(this.landingPadCenter, this.landingPadRotation);
                 supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
                 GenSpawn.Spawn(supplyShip, this.landingPadCenter);
 

@@ -96,6 +96,22 @@ namespace OutpostGenerator
             }
         }
         
+        public static ThingDef SupplyShipDef
+        {
+            get
+            {
+                return ThingDef.Named("SupplyShip");
+            }
+        }
+
+        public static ThingDef SupplyShipCargoBayDef
+        {
+            get
+            {
+                return ThingDef.Named("SupplyShipCargoBay");
+            }
+        }
+
         public static ThingDef SupplyShipCryptosleepBayDef
         {
             get

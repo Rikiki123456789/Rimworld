@@ -119,6 +119,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\SupplyShipLanding.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShip.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShipCryptosleepBay.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -157,6 +158,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Things_Special_Trigger.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Projectile_Sam.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\VulcanTurret_Top.png" />
+    <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\SupplyShip\DummyTexture.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\SupplyShip\SupplyShip.png" />
   </ItemGroup>
   <ItemGroup>
