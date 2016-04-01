@@ -96,6 +96,14 @@ namespace OutpostGenerator
             }
         }
         
+        public static ThingDef SupplyShipLandingOnDef
+        {
+            get
+            {
+                return ThingDef.Named("SupplyShipLandingOn");
+            }
+        }
+
         public static ThingDef SupplyShipDef
         {
             get
@@ -104,19 +112,43 @@ namespace OutpostGenerator
             }
         }
 
-        public static ThingDef SupplyShipCargoBayDef
+        public static ThingDef SupplyShipTakingOffDef
         {
             get
             {
-                return ThingDef.Named("SupplyShipCargoBay");
+                return ThingDef.Named("SupplyShipTakingOff");
             }
         }
 
-        public static ThingDef SupplyShipCryptosleepBayDef
+        public static ThingDef SupplyShipCargoBayLeftDef
         {
             get
             {
-                return ThingDef.Named("SupplyShipCryptosleepBay");
+                return ThingDef.Named("SupplyShipCargoBayLeft");
+            }
+        }
+
+        public static ThingDef SupplyShipCargoBayRightDef
+        {
+            get
+            {
+                return ThingDef.Named("SupplyShipCargoBayRight");
+            }
+        }
+
+        public static ThingDef SupplyShipCryptosleepBayLeftDef
+        {
+            get
+            {
+                return ThingDef.Named("SupplyShipCryptosleepBayLeft");
+            }
+        }
+        
+        public static ThingDef SupplyShipCryptosleepBayRightDef
+        {
+            get
+            {
+                return ThingDef.Named("SupplyShipCryptosleepBayRight");
             }
         }
         

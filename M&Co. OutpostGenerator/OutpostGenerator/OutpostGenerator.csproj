@@ -52,11 +52,13 @@
     <Compile Include="Building_OutpostCommandConsole.cs" />
     <Compile Include="Building_LandingPadBeacon.cs" />
     <Compile Include="Building_NoRoofAreaGenerator.cs" />
+    <Compile Include="Building_SupplyShip.cs" />
     <Compile Include="Building_SupplyShipCryptosleepBay.cs" />
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
-    <Compile Include="SupplyShipIncoming.cs" />
+    <Compile Include="SupplyShipTakingOff.cs" />
+    <Compile Include="SupplyShipLandingOn.cs" />
     <Compile Include="WorkGiver_RescueDownedMAndCoEmployee.cs" />
     <Compile Include="State_DefendOutpost.cs" />
     <Compile Include="WorkGiver_GrowerHarvestOutpost.cs" />
@@ -119,7 +121,12 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\SupplyShipLanding.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShip.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShip.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShipCargoBay.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShipCryptosleepBay.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -135,7 +142,12 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_VulcanTurret.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\SupplyShipIncoming.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\SupplyShipTakingOff.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\SupplyShipLandingOn.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Weapon_VulcanGun.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThinkTreeDefs\SubTrees_MAndCo.xml">
       <SubType>Designer</SubType>

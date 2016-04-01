@@ -30,7 +30,7 @@ namespace OutpostGenerator
         public override void Tick()
         {
             ticksSinceMealsDrop++;
-            if (ticksSinceMealsDrop >= 1000)
+            if (ticksSinceMealsDrop >= 1500)
             {
                 ticksSinceMealsDrop = 0;
                 DropPodInfo info = new DropPodInfo();
@@ -42,7 +42,7 @@ namespace OutpostGenerator
 
 
 
-                SupplyShipIncoming supplyShip = ThingMaker.MakeThing(ThingDef.Named("SupplyShipIncoming")) as SupplyShipIncoming;
+                SupplyShipLandingOn supplyShip = ThingMaker.MakeThing(OG_Util.SupplyShipLandingOnDef) as SupplyShipLandingOn;
                 supplyShip.InitializeLandingData(this.landingPadCenter, this.landingPadRotation);
                 supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
                 GenSpawn.Spawn(supplyShip, this.landingPadCenter);

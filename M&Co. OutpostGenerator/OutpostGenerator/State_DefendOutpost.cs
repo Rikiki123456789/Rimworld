@@ -31,7 +31,11 @@ namespace OutpostGenerator
                 return this.defendPoint;
             }
         }
-        
+
+        public State_DefendOutpost()
+        {
+        }
+
         public State_DefendOutpost(IntVec3 defendPoint, float defendRadius)
         {
             this.defendPoint = defendPoint;

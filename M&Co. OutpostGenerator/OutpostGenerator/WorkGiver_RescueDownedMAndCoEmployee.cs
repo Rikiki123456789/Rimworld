@@ -55,10 +55,25 @@ namespace OutpostGenerator
 
         public static Thing FindFreeSupplyShipCryptosleepBay(Pawn rescuer)
         {
-            List<Thing> baysList = Find.ListerThings.ThingsOfDef(OG_Util.SupplyShipCryptosleepBayDef);
-            for (int bayIndex = 0; bayIndex < baysList.Count; bayIndex++)
+            List<Thing> leftBaysList = Find.ListerThings.ThingsOfDef(OG_Util.SupplyShipCryptosleepBayLeftDef);
+            for (int bayIndex = 0; bayIndex < leftBaysList.Count; bayIndex++)
             {
-                Thing potentialBay = baysList[bayIndex];
+                Thing potentialBay = leftBaysList[bayIndex];
+                if ((potentialBay.Faction != null)
+                    && (potentialBay.Faction == rescuer.Faction))
+                {
+                    Building_SupplyShipCryptosleepBay bay = potentialBay as Building_SupplyShipCryptosleepBay;
+                    if ((bay.GetContainer().Count == 0)
+                        && (rescuer.CanReserveAndReach(bay, PathEndMode.InteractionCell, Danger.Deadly)))
+                    {
+                        return bay;
+                    }
+                }
+            }
+            List<Thing> rightBaysList = Find.ListerThings.ThingsOfDef(OG_Util.SupplyShipCryptosleepBayRightDef);
+            for (int bayIndex = 0; bayIndex < rightBaysList.Count; bayIndex++)
+            {
+                Thing potentialBay = rightBaysList[bayIndex];
                 if ((potentialBay.Faction != null)
                     && (potentialBay.Faction == rescuer.Faction))
                 {

@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefinitions>
+
+  <ThingDef>
+    <defName>SupplyShipTakingOff</defName>
+    <label>supply ship (taking off)</label>
+    <thingClass>OutpostGenerator.SupplyShipTakingOff</thingClass>
+    <category>Ethereal</category>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/SupplyShip/SupplyShip</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(11,20)</drawSize>
+      <shaderType>CutoutFlying</shaderType>
+    </graphicData>
+    <size>(9,18)</size>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+  </ThingDef>
+
+</ThingDefinitions>

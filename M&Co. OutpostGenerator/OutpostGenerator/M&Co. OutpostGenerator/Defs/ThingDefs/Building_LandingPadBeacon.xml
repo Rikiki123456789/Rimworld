@@ -50,6 +50,7 @@
     <description>Beacon used by ships to land on.</description>
     <thingClass>OutpostGenerator.Building_LandingPadBeacon</thingClass>
     <TickerType>Normal</TickerType>
+    <passability>Standable</passability>
     <comps>
       <li>
         <compClass>CompGlower</compClass>

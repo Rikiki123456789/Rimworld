@@ -12,23 +12,26 @@
     <filthLeaving>BuildingRubble</filthLeaving>
   </ThingDef>
 
+  <!-- The category=Attachement is a trick so the supply ship does not wipes existing structures when landed. -->
   <ThingDef ParentName="BuildingBase">
     <defName>SupplyShip</defName>
     <label>supply ship</label>
     <description>A supply ship used to transport goods and personnel from and to a ship in orbit around the planet.</description>
-    <thingClass>Building</thingClass>
-    <category>Attachment</category> <!-- Trick so the supply ship does not wipes existing structures when landed. -->
+    <thingClass>OutpostGenerator.Building_SupplyShip</thingClass>
     <graphicData>
       <texPath>Things/SupplyShip/SupplyShip</texPath>
       <graphicClass>Graphic_Single</graphicClass>
-      <drawSize>(20,11)</drawSize>
+      <drawSize>(11,20)</drawSize>
     </graphicData>
     <altitudeLayer>FlyingItem</altitudeLayer>
     <passability>PassThroughOnly</passability>
     <castEdgeShadows>false</castEdgeShadows>
     <staticSunShadowHeight>0</staticSunShadowHeight>
-    <fillPercent>1</fillPercent>
+    <fillPercent>0</fillPercent>
     <blockLight>false</blockLight>
+    <building>
+      <isEdifice>false</isEdifice>
+    </building>
     <useHitPoints>false</useHitPoints>
     <statBases>
       <MaxHitPoints>10000</MaxHitPoints>
@@ -36,7 +39,7 @@
       <Flammability>0</Flammability>
     </statBases>
     <tickerType>Normal</tickerType>
-    <size>(18,9)</size>
+    <size>(9,18)</size>
     <designationCategory>Misc</designationCategory>
     <costList>
       <Steel>50000</Steel>

@@ -12,12 +12,12 @@ using Verse.Sound;   // Needed when you do something with the Sound
 namespace OutpostGenerator
 {
     /// <summary>
-    /// SupplyShipIncoming class.
+    /// SupplyShipTakingOff class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class SupplyShipIncoming : Thing
+    public class SupplyShipTakingOff : Thing
     {
         private const int horizontalTrajectoryDurationInTicks = 480;
         private const int rotationDurationInTicks = 240;
@@ -33,8 +33,7 @@ namespace OutpostGenerator
         private Vector3 supplyShipScale = new Vector3(20f, 1f, 11f);
 
         // Sound.
-        private static readonly SoundDef preLandingSound = SoundDef.Named("DropPodFall");
-        private static readonly SoundDef landingSound = SoundDef.Named("SupplyShipLanding");
+        private static readonly SoundDef takingOffSound = SoundDef.Named("SupplyShipLanding");
         private const int soundAnticipationTicks = 60;
         
         private float supplyShipRotation
@@ -147,6 +146,7 @@ namespace OutpostGenerator
 
         public override void Tick()
         {
+            // Set supply ship position so it is visible above fog of war.
             if (SupplyShipIsInBoundsAndVisible())
             {
                 this.Position = this.DrawPos.ToIntVec3();
@@ -155,8 +155,13 @@ namespace OutpostGenerator
             {
                 this.Position = this.landingPadPosition;
             }
-
+            
             this.ticksToLanding--;
+            if ((this.ticksToLanding == rotationDurationInTicks + verticalTrajectoryDurationInTicks)
+                && this.landingPadRotation == Rot4.East)
+            {
+                this.ticksToLanding -= rotationDurationInTicks;
+            }
             if (this.ticksToLanding <= 0)
             {
                 for (int dustMoteIndex = 0; dustMoteIndex < 40; dustMoteIndex++)
@@ -165,18 +170,13 @@ namespace OutpostGenerator
                     MoteThrower.ThrowDustPuff(dustMotePosition, 1.6f);
                 }
                 Thing supplyShip = ThingMaker.MakeThing(OG_Util.SupplyShipDef);
-                supplyShip.SetFactionDirect(Faction.OfMechanoids);
-                supplyShip.Rotation = this.landingPadRotation;
-                GenSpawn.Spawn(supplyShip, this.landingPadPosition);
+                supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
+                GenSpawn.Spawn(supplyShip, this.landingPadPosition, this.landingPadRotation);
                 this.Destroy();
-            }
-            if (this.ticksToLanding == soundAnticipationTicks + rotationDurationInTicks + verticalTrajectoryDurationInTicks)
-            {
-                SupplyShipIncoming.preLandingSound.PlayOneShot(base.Position);
             }
             if (this.ticksToLanding == verticalTrajectoryDurationInTicks)
             {
-                SupplyShipIncoming.landingSound.PlayOneShot(base.Position);
+                SupplyShipTakingOff.takingOffSound.PlayOneShot(base.Position);
             }
         }
 
