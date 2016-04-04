@@ -8,4 +8,11 @@
     <alwaysShowWeapon>true</alwaysShowWeapon>
   </JobDef>
 
+  <JobDef>
+    <defName>JobDef_TransferInjuredEmployee</defName>
+    <driverClass>OutpostGenerator.JobDriver_TransferInjuredEmployee</driverClass>
+    <reportString>Transfering injured employee.</reportString>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+  </JobDef>
+
 </JobDefs>

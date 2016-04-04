@@ -12,7 +12,6 @@ using Verse.AI;      // Needed when you do something with the AI
 namespace OutpostGenerator
 {
     // TODO: add orbital relay.
-    // TODO: add automated supply ship landing.
     // TODO: add tale: drop-pod destroyed in-flight.
     // TODO: add blue glower to compact autonomous generator.
     // TODO: create M&Co. backgrounds.
@@ -20,9 +19,10 @@ namespace OutpostGenerator
     // TODO: add cleaning job inside outpost area. Add a map component which periodically check for existing filth and update a list.
     // TODO: if pawn has no apparel or weapon, leave with next ship.
     // TODO: carry raw food to ship.
-    // TODO: carry wounded people to ship? Easiest way maybe.
     // TODO: add animals? Might be tricky, especially for wounded animals.
     // TODO: landing pad beacon texture.
+    // TODO: remove crypto bay content.
+    // TODO: add special effect when loading pawn in crypto bay. => SoundDef.Named("CryptosleepCasketAccept").PlayOneShot(base.Position);
 
     /// <summary>
     /// OG_BigOutpost class.

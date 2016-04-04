@@ -35,25 +35,24 @@
     <workType>Doctor</workType>
     <verb>rescue</verb>
     <gerund>rescuing</gerund>
-    <priorityInType>90</priorityInType>
+    <priorityInType>91</priorityInType>
     <directOrderable>false</directOrderable>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
   </WorkGiverDef>
 
-  <!--
   <WorkGiverDef>
-    <defName>DoctorCarryDownedMAndCoEmployeeToSupplyShip</defName>
-    <giverClass>OutpostGenerator.WorkGiver_CarryDownedMAndCoEmployeeToSupplyShip</giverClass>
+    <defName>WorkGiver_TransferInjuredEmployee</defName>
+    <giverClass>OutpostGenerator.WorkGiver_TransferInjuredEmployee</giverClass>
     <workType>Doctor</workType>
-    <verb>rescue</verb>
-    <gerund>rescuing</gerund>
-    <priorityInType>89</priorityInType>
+    <verb>transfer</verb>
+    <gerund>transfering</gerund>
+    <priorityInType>90</priorityInType>
     <directOrderable>false</directOrderable>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
-  </WorkGiverDef>-->
+  </WorkGiverDef>
 
 </WorkGivers>

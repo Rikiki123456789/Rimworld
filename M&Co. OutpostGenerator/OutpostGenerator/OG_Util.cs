@@ -23,6 +23,8 @@ namespace OutpostGenerator
         // Job def.
         public static string JobDefName_TryToCaptureOutpost = "JobDef_TryToCaptureOutpost";
 
+        public static string JobDefName_TransferInjuredEmployeet = "JobDef_TransferInjuredEmployee";
+
         // Thing defs.
         public static ThingDef FireproofPowerConduitDef
         {

@@ -20,7 +20,7 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_SupplyShip : Building
     {
-        private int ticksToTakeOff = 240;
+        private int ticksToTakeOff = 24000;
         private Thing cryptosleepBay1 = null;
         private Thing cryptosleepBay2 = null;
         private Thing cargoBay1 = null;
@@ -29,17 +29,19 @@ namespace OutpostGenerator
         public override void SpawnSetup()
         {
             base.SpawnSetup();
+            // TODO debug: set faction to M&Co.
+            this.SetFaction(OG_Util.FactionOfMAndCo);
             // Spawn cryptosleep bays.
             if (this.cryptosleepBay1 == null)
             {
                 cryptosleepBay1 = ThingMaker.MakeThing(OG_Util.SupplyShipCryptosleepBayLeftDef);
-                cryptosleepBay1.SetFactionDirect(OG_Util.FactionOfMAndCo);
+                cryptosleepBay1.SetFactionDirect(this.Faction);
                 GenSpawn.Spawn(cryptosleepBay1, this.Position + new IntVec3(-4, 0, -2).RotatedBy(this.Rotation), this.Rotation);
             }
             if (this.cryptosleepBay2 == null)
             {
                 cryptosleepBay2 = ThingMaker.MakeThing(OG_Util.SupplyShipCryptosleepBayRightDef);
-                cryptosleepBay2.SetFactionDirect(OG_Util.FactionOfMAndCo);
+                cryptosleepBay2.SetFactionDirect(this.Faction);
                 GenSpawn.Spawn(cryptosleepBay2, this.Position + new IntVec3(3, 0, -2).RotatedBy(this.Rotation), this.Rotation);
             }
 
@@ -47,13 +49,13 @@ namespace OutpostGenerator
             if (this.cargoBay1 == null)
             {
                 cargoBay1 = ThingMaker.MakeThing(OG_Util.SupplyShipCargoBayLeftDef);
-                cargoBay1.SetFactionDirect(OG_Util.FactionOfMAndCo);
+                cargoBay1.SetFactionDirect(this.Faction);
                 GenSpawn.Spawn(cargoBay1, this.Position + new IntVec3(-4, 0, 1).RotatedBy(this.Rotation), this.Rotation);
             }
             if (this.cargoBay2 == null)
             {
                 cargoBay2 = ThingMaker.MakeThing(OG_Util.SupplyShipCargoBayRightDef);
-                cargoBay2.SetFactionDirect(OG_Util.FactionOfMAndCo);
+                cargoBay2.SetFactionDirect(this.Faction);
                 GenSpawn.Spawn(cargoBay2, this.Position + new IntVec3(3, 0, 1).RotatedBy(this.Rotation), this.Rotation);
             }
         }
@@ -66,7 +68,7 @@ namespace OutpostGenerator
             {
                 // TODO: supply ship taking off
                 /*Thing cryptosleepBay = ThingMaker.MakeThing(OG_Util.SupplyShipCryptosleepBayDef);
-                cryptosleepBay.SetFactionDirect(OG_Util.FactionOfMAndCo);
+                cryptosleepBay.SetFactionDirect(this.Faction);
                 cryptosleepBay.Rotation = this.landingPadRotation;
                 GenSpawn.Spawn(cryptosleepBay, this.landingPadPosition);*/
                 this.Destroy();

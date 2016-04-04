@@ -24,13 +24,13 @@ namespace OutpostGenerator
         public IntVec3 dropZoneCenter = Find.Map.Center;
         public IntVec3 landingPadCenter = Find.Map.Center;
         public Rot4 landingPadRotation = Rot4.North;
-        protected int ticksSinceMealsDrop = 0;
+        protected int ticksSinceMealsDrop = 49999;
 
         // TODO: remove this. Just a patch until ship is designed.
         public override void Tick()
         {
-            ticksSinceMealsDrop++;
-            if (ticksSinceMealsDrop >= 1500)
+            /*ticksSinceMealsDrop++;
+            if (ticksSinceMealsDrop >= 50000)
             {
                 ticksSinceMealsDrop = 0;
                 DropPodInfo info = new DropPodInfo();
@@ -47,7 +47,7 @@ namespace OutpostGenerator
                 supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
                 GenSpawn.Spawn(supplyShip, this.landingPadCenter);
 
-            }
+            }*/
         }
 
         public void TryToCaptureOutpost(string eventTitle, string eventText, LetterType letterType, Faction turretsNewFaction, bool deactivateTurrets,

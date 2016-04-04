@@ -57,9 +57,11 @@
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
+    <Compile Include="JobDriver_TransferInjuredEmployee.cs" />
     <Compile Include="SupplyShipTakingOff.cs" />
     <Compile Include="SupplyShipLandingOn.cs" />
     <Compile Include="WorkGiver_RescueDownedMAndCoEmployee.cs" />
+    <Compile Include="WorkGiver_TransferInjuredEmployee.cs" />
     <Compile Include="State_DefendOutpost.cs" />
     <Compile Include="WorkGiver_GrowerHarvestOutpost.cs" />
     <Compile Include="WorkGiver_GrowerSowOutpost.cs" />
@@ -153,7 +155,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThoughtDefs\Thought_MAndCoEmployee.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\WorkGiverDefs\WorkGivers.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\WorkGiverDefs\WorkGivers.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Sounds\MissileLaunch\MissileLaunch.wav" />
     <Content Include="M&amp;Co. OutpostGenerator\Sounds\SupplyShipLanding\Landing.wav" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Terrain\Surfaces\DirtFloor.png" />
