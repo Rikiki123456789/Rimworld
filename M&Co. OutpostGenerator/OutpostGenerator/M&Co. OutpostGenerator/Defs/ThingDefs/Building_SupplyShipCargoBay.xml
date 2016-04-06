@@ -17,47 +17,72 @@
     <defName>SupplyShipCargoBay</defName>
     <label>supply ship cargo bay</label>
     <description>Supply ship cargo bay. It is used to transport any kind of goods from the humble MMS to the deepdriller machine. Combat suits and laser weapons may also have their place when supplying a harsh planet.</description>
-    <thingClass>OutpostGenerator.Building_SupplyShipCryptosleepBay</thingClass>
+    <thingClass>OutpostGenerator.Building_SupplyShipCargoBay</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Things/SupplyShip/DummyTexture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
     <altitudeLayer>BuildingTall</altitudeLayer>
-    <passability>PassThroughOnly</passability>
+    <passability>Standable</passability>
     <castEdgeShadows>false</castEdgeShadows>
     <staticSunShadowHeight>0</staticSunShadowHeight>
     <fillPercent>0</fillPercent>
     <blockLight>false</blockLight>
     <selectable>true</selectable>
-    <!-- TODO: not selectable -->
     <building>
       <isEdifice>false</isEdifice>
+      <fixedStorageSettings>
+        <filter>
+          <categories>
+            <li>FoodRaw</li>
+            <li>Weapons</li>
+            <li>Apparel</li>
+            <li>CorpsesHumanlike</li>
+          </categories>
+          <exceptedThingDefs>
+            <li>Hay</li>
+          </exceptedThingDefs>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Low</priority>
+        <filter>
+          <categories>
+            <li>FoodRaw</li>
+            <li>Weapons</li>
+            <li>Apparel</li>
+            <li>CorpsesHumanlike</li>
+          </categories>
+          <exceptedThingDefs>
+            <li>Hay</li>
+          </exceptedThingDefs>
+        </filter>
+      </defaultStorageSettings>
     </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
     <useHitPoints>false</useHitPoints>
     <statBases>
-      <WorkToMake>3200</WorkToMake>
+      <WorkToMake>5000</WorkToMake>
     </statBases>
-    <tickerType>Normal</tickerType>
-    <size>(2,2)</size>
-    <designationCategory>Misc</designationCategory>
-    <hasInteractionCell>true</hasInteractionCell>
-    <interactionCellOffset>(1,0,-1)</interactionCellOffset>
+    <size>(3,4)</size>
     <costList>
-      <Steel>180</Steel>
-      <Uranium>5</Uranium>
+      <Steel>250</Steel>
     </costList>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
   </ThingDef>
 
   <ThingDef ParentName="Building_SupplyShipCargoBay">
     <defName>SupplyShipCargoBayLeft</defName>
-    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <interactionCellOffset>(-1,0,0)</interactionCellOffset>
   </ThingDef>
 
   <ThingDef ParentName="Building_SupplyShipCargoBay">
     <defName>SupplyShipCargoBayRight</defName>
-    <interactionCellOffset>(1,0,-1)</interactionCellOffset>
+    <interactionCellOffset>(2,0,0)</interactionCellOffset>
   </ThingDef>
   
 </Buildings>

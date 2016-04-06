@@ -82,6 +82,14 @@ namespace OutpostGenerator
             }
         }
 
+        public static ThingDef OrbitalRelayDef
+        {
+            get
+            {
+                return ThingDef.Named("OrbitalRelay");
+            }
+        }
+
         public static ThingDef LandingPadBeaconDef
         {
             get
@@ -247,6 +255,25 @@ namespace OutpostGenerator
             {
                 return "M&Co. outpost";
             }
+        }
+
+        /// <summary>
+        /// Return a copy of the listToRefresh but remove any destroyed item.
+        /// </summary>
+        public static Building_OrbitalRelay FindOrbitalRelay(Faction faction)
+        {
+            List<Thing> orbitalRelayList = Find.ListerThings.ThingsOfDef(OG_Util.OrbitalRelayDef);
+            foreach (Thing potentialOrbitalRelay in orbitalRelayList)
+            {
+                Building_OrbitalRelay orbitalRelay = potentialOrbitalRelay as Building_OrbitalRelay;
+                if ((orbitalRelay != null)
+                    && (orbitalRelay.Faction != null)
+                    && (orbitalRelay.Faction == faction))
+                {
+                    return orbitalRelay;
+                }
+            }
+            return null;
         }
 
         /// <summary>

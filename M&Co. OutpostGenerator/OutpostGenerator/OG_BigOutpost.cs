@@ -23,6 +23,7 @@ namespace OutpostGenerator
     // TODO: landing pad beacon texture.
     // TODO: remove crypto bay content.
     // TODO: add special effect when loading pawn in crypto bay. => SoundDef.Named("CryptosleepCasketAccept").PlayOneShot(base.Position);
+    //    => OR SoundDef.Named("CryptosleepCasketEject").PlayOneShot(SoundInfo.InWorld(base.Position, MaintenanceType.None));
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -42,6 +43,7 @@ namespace OutpostGenerator
 
         private static OG_OutpostData outpostData = new OG_OutpostData();
         private static Building_OutpostCommandConsole commandConsole = null;
+        private static Building_OrbitalRelay orbitalRelay = null;
         
         public static void GenerateOutpost(OG_OutpostData outpostDataParameter)
         {
@@ -88,8 +90,8 @@ namespace OutpostGenerator
             outpostData.outpostThingList = OG_Util.RefreshThingList(outpostData.outpostThingList);
             commandConsole.outpostThingList = outpostData.outpostThingList.ListFullCopy<Thing>();
             commandConsole.dropZoneCenter = outpostData.dropZoneCenter;
-            commandConsole.landingPadCenter = outpostData.landingPadCenter;
-            commandConsole.landingPadRotation = outpostData.landingPadRotation;
+            // Initialize orbital relay data.
+            orbitalRelay.InitializeLandingData(outpostData.landingPadCenter, outpostData.landingPadRotation);
             // Initialize intrusion trigger data.
             outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick)?
             
@@ -808,8 +810,7 @@ namespace OutpostGenerator
                             OG_ZoneSpecial.GenerateLandingPadTop(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.OrbitalRelay:
-                            // TODO: generate orbital relay zone.
-                            //OG_ZoneSpecial.GenerateDropZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
+                            orbitalRelay = OG_ZoneSpecial.GenerateOrbitalRelayZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
                             break;
 
                         // Exterior zones.
@@ -846,7 +847,7 @@ namespace OutpostGenerator
                             OG_ZoneOther.GenerateEntranchedZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
                             break;
                         case ZoneType.SamSite:
-                            OG_ZoneOther.GenerateSamSiteZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, ref outpostData);
+                            OG_ZoneOther.GenerateSamSiteZone(areaSouthWestOrigin, zoneAbs, zoneOrd, ref outpostData);
                             break;
                         case ZoneType.BigSas:
                             OG_ZoneOther.GenerateBigSasZone(areaSouthWestOrigin, zoneAbs, zoneOrd, zone.rotation, zone.linkedZoneRelativeRotation != Rot4.Invalid, ref outpostData);

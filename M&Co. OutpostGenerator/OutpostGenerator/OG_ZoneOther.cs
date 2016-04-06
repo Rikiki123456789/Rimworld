@@ -304,14 +304,14 @@ namespace OutpostGenerator
             }
         }
 
-        public static void GenerateSamSiteZone(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)
+        public static void GenerateSamSiteZone(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, ref OG_OutpostData outpostData)
         {
-            IntVec3 rotatedOrigin = Zone.GetZoneRotatedOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd, rotation);
+            IntVec3 origin = Zone.GetZoneOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd);
 
             // Spawn SAM site surrounded by sandbags.
-            IntVec3 samSitePosition = rotatedOrigin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset);
+            IntVec3 samSitePosition = origin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset);
             OG_Common.TrySpawnThingAt(OG_Util.SamSiteDef, null, samSitePosition, false, Rot4.Invalid, ref outpostData);
-            CellRect sandbagRect = new CellRect(rotatedOrigin.x + 3, rotatedOrigin.z + 3, 5, 5);
+            CellRect sandbagRect = new CellRect(origin.x + 3, origin.z + 3, 5, 5);
             foreach (IntVec3 cell in sandbagRect.Cells)
             {
                 if ((cell.x == sandbagRect.minX) || (cell.x == sandbagRect.maxX) || (cell.z == sandbagRect.minZ) || (cell.z == sandbagRect.maxZ))
@@ -330,7 +330,7 @@ namespace OutpostGenerator
             }
 
             // Generate concrete ground.
-            CellRect concreteRect = new CellRect(rotatedOrigin.x + 2, rotatedOrigin.z + 2, 7, 7);
+            CellRect concreteRect = new CellRect(origin.x + 2, origin.z + 2, 7, 7);
             foreach (IntVec3 cell in concreteRect.Cells)
             {
                 Find.TerrainGrid.SetTerrain(cell, TerrainDefOf.Concrete);

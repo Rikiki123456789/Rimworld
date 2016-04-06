@@ -22,33 +22,6 @@ namespace OutpostGenerator
     {
         public List<Thing> outpostThingList = null;
         public IntVec3 dropZoneCenter = Find.Map.Center;
-        public IntVec3 landingPadCenter = Find.Map.Center;
-        public Rot4 landingPadRotation = Rot4.North;
-        protected int ticksSinceMealsDrop = 49999;
-
-        // TODO: remove this. Just a patch until ship is designed.
-        public override void Tick()
-        {
-            /*ticksSinceMealsDrop++;
-            if (ticksSinceMealsDrop >= 50000)
-            {
-                ticksSinceMealsDrop = 0;
-                DropPodInfo info = new DropPodInfo();
-                Thing meals = ThingMaker.MakeThing(ThingDefOf.MealSurvivalPack);
-                meals.stackCount = Find.ListerPawns.PawnsInFaction(OG_Util.FactionOfMAndCo).Count;
-                meals.SetForbidden(true);
-                info.SingleContainedThing = meals;
-                DropPodUtility.MakeDropPodAt(this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-4, 4), 0, Rand.RangeInclusive(-4, 4)), info);
-
-
-
-                SupplyShipLandingOn supplyShip = ThingMaker.MakeThing(OG_Util.SupplyShipLandingOnDef) as SupplyShipLandingOn;
-                supplyShip.InitializeLandingData(this.landingPadCenter, this.landingPadRotation);
-                supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
-                GenSpawn.Spawn(supplyShip, this.landingPadCenter);
-
-            }*/
-        }
 
         public void TryToCaptureOutpost(string eventTitle, string eventText, LetterType letterType, Faction turretsNewFaction, bool deactivateTurrets,
             Faction doorsNewFaction, bool deactivateDoors, int dropPodsNumber, PawnKindDef securityForcesDef)
@@ -230,9 +203,6 @@ namespace OutpostGenerator
             this.outpostThingList = OG_Util.RefreshThingList(this.outpostThingList);
             Scribe_Collections.LookList<Thing>(ref this.outpostThingList, "outpostThingList", LookMode.MapReference);
             Scribe_Values.LookValue<IntVec3>(ref this.dropZoneCenter, "dropZoneCenter");
-            Scribe_Values.LookValue<IntVec3>(ref this.landingPadCenter, "landingPadCenter");
-            Scribe_Values.LookValue<Rot4>(ref this.landingPadRotation, "landingPadRotation");
-            Scribe_Values.LookValue<int>(ref this.ticksSinceMealsDrop, "ticksUntilMealsDrop");
         }
 
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn myPawn)

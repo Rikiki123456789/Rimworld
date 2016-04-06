@@ -168,5 +168,42 @@ namespace OutpostGenerator
             beacon = OG_Common.TrySpawnThingAt(OG_Util.LandingPadBeaconDef, null, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData) as Building_LandingPadBeacon;
             beacon.SetFlashStartOffset(6 * Building_LandingPadBeacon.flashDurationInTicks);
         }
+
+        public static Building_OrbitalRelay GenerateOrbitalRelayZone(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, ref OG_OutpostData outpostData)
+        {
+            Building_OrbitalRelay orbitalRelay = null;
+
+            IntVec3 origin = Zone.GetZoneOrigin(areaSouthWestOrigin, zoneAbs, zoneOrd);
+            
+            // Spawn orbital relay.
+            IntVec3 orbitalRelayPosition = origin + new IntVec3(Genstep_GenerateOutpost.zoneSideCenterOffset, 0, Genstep_GenerateOutpost.zoneSideCenterOffset);
+            orbitalRelay = OG_Common.TrySpawnThingAt(OG_Util.OrbitalRelayDef, null, orbitalRelayPosition, false, Rot4.Invalid, ref outpostData) as Building_OrbitalRelay;
+
+            // Spawn sandbags.
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(3, 0, 2), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(2, 0, 2), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(2, 0, 3), false, Rot4.Invalid, ref outpostData);
+
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(2, 0, 7), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(2, 0, 8), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(3, 0, 8), false, Rot4.Invalid, ref outpostData);
+
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(7, 0, 8), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(8, 0, 8), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(8, 0, 7), false, Rot4.Invalid, ref outpostData);
+
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(8, 0, 3), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(8, 0, 2), false, Rot4.Invalid, ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, origin + new IntVec3(7, 0, 2), false, Rot4.Invalid, ref outpostData);
+            
+            // Generate concrete ground.
+            foreach (IntVec3 cell in GenRadial.RadialPatternInRadius(2.8f))
+            {
+                Find.TerrainGrid.SetTerrain(orbitalRelayPosition + cell, TerrainDefOf.Concrete);
+            }
+
+            return orbitalRelay;
+        }
+
     }
 }

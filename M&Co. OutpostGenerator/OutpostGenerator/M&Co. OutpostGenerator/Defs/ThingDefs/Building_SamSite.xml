@@ -26,10 +26,10 @@
     <size>(3,3)</size>
     <altitudeLayer>BuildingTall</altitudeLayer>
     <statBases>
-      <MaxHitPoints>500</MaxHitPoints>
+      <MaxHitPoints>750</MaxHitPoints>
       <Flammability>0</Flammability>
       <WorkToMake>45000</WorkToMake>
-      <Beauty>-20</Beauty>
+      <Beauty>-50</Beauty>
     </statBases>
     <tickerType>Normal</tickerType>
     <comps>
@@ -43,6 +43,7 @@
       </li>
       <li>
         <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>500</basePowerConsumption>
       </li>
     </comps>
@@ -52,13 +53,12 @@
     <staticSunShadowHeight>0.50</staticSunShadowHeight>
     <hasTooltip>false</hasTooltip>
     <costList>
-      <Steel>400</Steel>
+      <Steel>500</Steel>
       <Plasteel>200</Plasteel>
       <IntegratedCircuitsBoard>10</IntegratedCircuitsBoard>
     </costList>
     <combatTargetBuilding>true</combatTargetBuilding>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
-    <designationCategory>Security</designationCategory>
     <building>
       <ai_combatDangerous>false</ai_combatDangerous>
       <turretTopgraphicPath>Things/Building/Security/SamSite_Top</turretTopgraphicPath>

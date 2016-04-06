@@ -20,11 +20,42 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_SupplyShipCryptosleepBay : Building_CryptosleepCasket
     {
+        public override void Tick()
+        {
+            base.Tick();
+            // Remove potential open designation.
+            Designation designation = Find.DesignationManager.DesignationOn(this, DesignationDefOf.Open);
+            if (designation != null)
+            {
+                designation.Delete();
+            }
+
+            Thing thing = this.ContainedThing;
+            if (thing != null)
+            {
+                Pawn pawn = thing as Pawn;
+                if (pawn != null)
+                {
+                    SoundDef.Named("CryptosleepCasketEject").PlayOneShot(base.Position);
+                    PawnKindDef pawnType = pawn.kindDef;
+                    Log.Message("Loaded " + pawnType.ToString() + " into crypto bay.");
+                    Building_OrbitalRelay orbitalRelay = OG_Util.FindOrbitalRelay(this.Faction);
+                    if (orbitalRelay != null)
+                    {
+                        orbitalRelay.RequestReinforcement(pawnType);
+                    }
+                }
+                this.container.ClearAndDestroyContents();
+            }
+        }
+        
+        // Disable Gizmos.
         public override IEnumerable<Gizmo> GetGizmos()
         {
             return new List<Gizmo>();
         }
 
+        // Disable float menu options (so colonists cannot be forced to enter the supply ship). Mmmh, clandestine passengers could be cool though...
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn myPawn)
         {
             return new List<FloatMenuOption>();

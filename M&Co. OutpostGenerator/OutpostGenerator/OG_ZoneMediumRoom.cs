@@ -191,22 +191,30 @@ namespace OutpostGenerator
             OG_Common.GenerateEmptyRoomAt(rotatedOrigin + new IntVec3(1, 0, 1).RotatedBy(rotation), 9, 9, rotation, TerrainDefOf.Concrete, null, ref outpostData);
 
             // Spawn weapon racks, weapons and lamps.
-            Thing rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(3, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            Building_Storage rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(3, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(6, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(6, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
-            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 6).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 6).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
+            rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), Color.red, ref outpostData);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation), Color.red, ref outpostData);
 

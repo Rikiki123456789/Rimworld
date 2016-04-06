@@ -7,7 +7,7 @@
     <stackLimit>1</stackLimit>
     <stages>
       <li>
-        <label>M&amp;Co employee</label>
+        <label>M&amp;Co. employee</label>
         <description>I am proud to be part of this great company!</description>
         <baseMoodEffect>30</baseMoodEffect>
       </li>

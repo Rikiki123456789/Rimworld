@@ -2,7 +2,7 @@
 <DefPackage-SoundDef>
   
   <SoundDef>
-    <defName>SupplyShipLanding</defName>
+    <defName>SupplyShipLandingOn</defName>
     <sustain>False</sustain>
     <eventNames />
     <maxVoices>4</maxVoices>
@@ -17,7 +17,7 @@
         <onCamera>False</onCamera>
         <grains>
           <li Class="AudioGrain_Clip">
-            <clipPath>SupplyShipLanding/Landing</clipPath>
+            <clipPath>SupplyShip/LandingOn</clipPath>
           </li>
         </grains>
         <volumeRange>

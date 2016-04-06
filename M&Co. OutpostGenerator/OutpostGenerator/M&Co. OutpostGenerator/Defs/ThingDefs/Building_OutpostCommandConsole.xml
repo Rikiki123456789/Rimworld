@@ -15,8 +15,9 @@
   <ThingDef ParentName="BuildingBase">
     <defName>OutpostCommandConsole</defName>
     <label>outpost command console</label>
+    <description>The outpost command console houses an AI persona core. This AI is in charge of security systems of all the base.</description>
     <thingClass>OutpostGenerator.Building_OutpostCommandConsole</thingClass>
-    <tickerType>Normal</tickerType>
+    <tickerType>Never</tickerType>
     <graphicData>
       <texPath>Things/Building/Misc/OutpostCommandConsole</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -31,7 +32,6 @@
       <WorkToMake>2200</WorkToMake>
       <Flammability>1.0</Flammability>
     </statBases>
-    <description>The outpost command console houses an AI persona core. This AI is in charge of communication with nearby ships and M&amp;Co comms satellite.\nIt also manages security systems of all the base.</description>
     <size>(3,2)</size>
     <costList>
       <Steel>120</Steel>

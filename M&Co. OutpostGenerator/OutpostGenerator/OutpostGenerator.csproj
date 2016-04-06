@@ -52,7 +52,9 @@
     <Compile Include="Building_OutpostCommandConsole.cs" />
     <Compile Include="Building_LandingPadBeacon.cs" />
     <Compile Include="Building_NoRoofAreaGenerator.cs" />
+    <Compile Include="Building_OrbitalRelay.cs" />
     <Compile Include="Building_SupplyShip.cs" />
+    <Compile Include="Building_SupplyShipCargoBay.cs" />
     <Compile Include="Building_SupplyShipCryptosleepBay.cs" />
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
@@ -121,8 +123,11 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\PawnKindDefs\PawnKinds_SecurityForces.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\SupplyShipLanding.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\SupplyShipLandingOn.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_OrbitalRelay.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShip.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -132,7 +137,9 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShipCryptosleepBay.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FoodRack.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FoodRack.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_LandingPadBeacon.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -159,14 +166,18 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Sounds\MissileLaunch\MissileLaunch.wav" />
-    <Content Include="M&amp;Co. OutpostGenerator\Sounds\SupplyShipLanding\Landing.wav" />
+    <Content Include="M&amp;Co. OutpostGenerator\Sounds\SupplyShip\LandingOn.wav" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Terrain\Surfaces\DirtFloor.png" />
+    <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\DummyTexture.png" />
+    <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OrbitalRelay.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OutpostCommandConsole.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSiteUiIcon.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite_Top.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite.png" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_OutpostCommandConsole.xml" />
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SamSite.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SamSite.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_Special_WarfieldGenerator.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_CompactAutonomousGenerator.xml">
       <SubType>Designer</SubType>
@@ -181,6 +192,7 @@
     <Folder Include="M&amp;Co. OutpostGenerator\Assemblies\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OrbitalRelay.pdn" />
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Misc\OutpostCommandConsole.pdn" />
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite_Top.pdn" />
     <None Include="M&amp;Co. OutpostGenerator\Textures\Things\Building\Security\SamSite.pdn" />

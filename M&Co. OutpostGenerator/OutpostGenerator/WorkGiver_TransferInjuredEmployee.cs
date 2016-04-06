@@ -60,26 +60,32 @@ namespace OutpostGenerator
             List<Thing> leftBaysList = Find.ListerThings.ThingsOfDef(OG_Util.SupplyShipCryptosleepBayLeftDef);
             for (int bayIndex = 0; bayIndex < leftBaysList.Count; bayIndex++)
             {
-                Thing bay = leftBaysList[bayIndex];
+                Building_SupplyShipCryptosleepBay bay = leftBaysList[bayIndex] as Building_SupplyShipCryptosleepBay;
                 if ((bay.Faction != null)
                     && (bay.Faction == opener.Faction))
                 {
-                    if (opener.CanReserveAndReach(bay, PathEndMode.InteractionCell, Danger.Deadly))
+                    if (bay.ContainedThing == null)
                     {
-                        return true;
+                        if (opener.CanReserveAndReach(bay, PathEndMode.InteractionCell, Danger.Deadly))
+                        {
+                            return true;
+                        }
                     }
                 }
             }
             List<Thing> rightBaysList = Find.ListerThings.ThingsOfDef(OG_Util.SupplyShipCryptosleepBayRightDef);
             for (int bayIndex = 0; bayIndex < rightBaysList.Count; bayIndex++)
             {
-                Thing bay = rightBaysList[bayIndex];
+                Building_SupplyShipCryptosleepBay bay = rightBaysList[bayIndex] as Building_SupplyShipCryptosleepBay;
                 if ((bay.Faction != null)
                     && (bay.Faction == opener.Faction))
                 {
-                    if (opener.CanReserveAndReach(bay, PathEndMode.InteractionCell, Danger.Deadly))
+                    if (bay.ContainedThing == null)
                     {
-                        return true;
+                        if (opener.CanReserveAndReach(bay, PathEndMode.InteractionCell, Danger.Deadly))
+                        {
+                            return true;
+                        }
                     }
                 }
             }

@@ -12,7 +12,6 @@
     <filthLeaving>BuildingRubble</filthLeaving>
   </ThingDef>
 
-  <!-- The category=Attachement is a trick so the supply ship does not wipes existing structures when landed. -->
   <ThingDef ParentName="BuildingBase">
     <defName>SupplyShip</defName>
     <label>supply ship</label>

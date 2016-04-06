@@ -18,6 +18,7 @@
     <label>supply ship cryptosleep bay</label>
     <description>Supply ship cryptosleep bay. It contains the personnel during transit from or to the orbital ship.</description>
     <thingClass>OutpostGenerator.Building_SupplyShipCryptosleepBay</thingClass>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Things/SupplyShip/DummyTexture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -29,23 +30,20 @@
     <staticSunShadowHeight>0</staticSunShadowHeight>
     <fillPercent>0</fillPercent>
     <blockLight>false</blockLight>
-    <selectable>true</selectable>
-    <!-- TODO: not selectable -->
+    <selectable>false</selectable>
     <building>
       <isEdifice>false</isEdifice>
     </building>
     <useHitPoints>false</useHitPoints>
     <statBases>
-      <WorkToMake>3200</WorkToMake>
+      <WorkToMake>15000</WorkToMake>
     </statBases>
-    <tickerType>Normal</tickerType>
     <size>(2,2)</size>
-    <designationCategory>Misc</designationCategory>
     <hasInteractionCell>true</hasInteractionCell>
     <interactionCellOffset>(1,0,-1)</interactionCellOffset>
     <costList>
-      <Steel>180</Steel>
-      <Uranium>5</Uranium>
+      <Steel>500</Steel>
+      <Uranium>50</Uranium>
     </costList>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
   </ThingDef>

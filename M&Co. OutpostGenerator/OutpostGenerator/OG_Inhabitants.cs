@@ -169,6 +169,7 @@ namespace OutpostGenerator
                         pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
                     }
                     while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
+                    // TODO: avoid brawlers too.
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
@@ -202,7 +203,7 @@ namespace OutpostGenerator
                 guardsList.Add(pawn);
             }
             // Affect squad brain to outpost guards.
-            State_DefendOutpost stateDefend = new State_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), OG_BigOutpost.areaSideLength * (3 / 4));
+            State_DefendOutpost stateDefend = new State_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
             StateGraph stateGraph = GraphMaker.SingleStateGraph(stateDefend);
             BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);
         }

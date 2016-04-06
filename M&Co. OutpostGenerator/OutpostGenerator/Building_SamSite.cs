@@ -24,7 +24,7 @@ namespace OutpostGenerator
         private const float turnRate = 0.12f;
         private const int patrolRotationIntervalMin = 600;
         private const int patrolRotationIntervalMax = 900;
-        private int patrolTicksUntilNextRotation = patrolRotationIntervalMin;
+        private int patrolTicksToNextRotation = patrolRotationIntervalMin;
         private const int patrolRotationDurationMin = 240;
         private const int patrolRotationDurationMax = 360;
         private int patrolTicksUntilRotationEnd = 0;
@@ -168,7 +168,7 @@ namespace OutpostGenerator
             this.missilesLoadedNumber--;
 
             // Update turret rotation.
-            this.patrolTicksUntilNextRotation = patrolRotationIntervalMin;
+            this.patrolTicksToNextRotation = patrolRotationIntervalMin;
             this.turretRotation = (predictedImpactPosition - this.DrawPos).AngleFlat();
             StopRotationSound();
 
@@ -180,10 +180,10 @@ namespace OutpostGenerator
 
         private void UpdateTurretRotation()
         {
-            if (this.patrolTicksUntilNextRotation > 0)
+            if (this.patrolTicksToNextRotation > 0)
             {
-                this.patrolTicksUntilNextRotation--;
-                if (this.patrolTicksUntilNextRotation == 0)
+                this.patrolTicksToNextRotation--;
+                if (this.patrolTicksToNextRotation == 0)
                 {
                     this.patrolTicksUntilRotationEnd = Rand.RangeInclusive(patrolRotationDurationMin, patrolRotationDurationMax);
                     if (Rand.Value < 0.5f)
@@ -210,7 +210,7 @@ namespace OutpostGenerator
                 this.patrolTicksUntilRotationEnd--;
                 if (this.patrolTicksUntilRotationEnd == 0)
                 {
-                    this.patrolTicksUntilNextRotation = Rand.RangeInclusive(patrolRotationIntervalMin, patrolRotationIntervalMax);
+                    this.patrolTicksToNextRotation = Rand.RangeInclusive(patrolRotationIntervalMin, patrolRotationIntervalMax);
                     StopRotationSound();
                 }
             }
@@ -254,7 +254,7 @@ namespace OutpostGenerator
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.patrolTicksUntilNextRotation, "ticksUntilPatrolRotation");
+            Scribe_Values.LookValue<int>(ref this.patrolTicksToNextRotation, "patrolTicksToNextRotation");
             Scribe_Values.LookValue<float>(ref this.turretRotation, "turretRotation");
             Scribe_Values.LookValue<bool>(ref this.patrolClockwiseRotation, "patrolRotationClockwise");
             Scribe_Values.LookValue<int>(ref this.patrolTicksUntilRotationEnd, "ticksUntilPatrolRotationEnd");

@@ -20,7 +20,8 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_SupplyShip : Building
     {
-        private int ticksToTakeOff = 24000;
+        private const int maxTicksToTakeOff = 2500;
+        private int ticksToTakeOff = maxTicksToTakeOff;
         private Thing cryptosleepBay1 = null;
         private Thing cryptosleepBay2 = null;
         private Thing cargoBay1 = null;
@@ -29,8 +30,6 @@ namespace OutpostGenerator
         public override void SpawnSetup()
         {
             base.SpawnSetup();
-            // TODO debug: set faction to M&Co.
-            this.SetFaction(OG_Util.FactionOfMAndCo);
             // Spawn cryptosleep bays.
             if (this.cryptosleepBay1 == null)
             {
@@ -44,7 +43,6 @@ namespace OutpostGenerator
                 cryptosleepBay2.SetFactionDirect(this.Faction);
                 GenSpawn.Spawn(cryptosleepBay2, this.Position + new IntVec3(3, 0, -2).RotatedBy(this.Rotation), this.Rotation);
             }
-
             // Spawn cargo bays.
             if (this.cargoBay1 == null)
             {
@@ -56,15 +54,41 @@ namespace OutpostGenerator
             {
                 cargoBay2 = ThingMaker.MakeThing(OG_Util.SupplyShipCargoBayRightDef);
                 cargoBay2.SetFactionDirect(this.Faction);
-                GenSpawn.Spawn(cargoBay2, this.Position + new IntVec3(3, 0, 1).RotatedBy(this.Rotation), this.Rotation);
+                GenSpawn.Spawn(cargoBay2, this.Position + new IntVec3(4, 0, 1).RotatedBy(this.Rotation), this.Rotation);
             }
         }
 
         public override void Tick()
         {
             base.Tick();
+            
+            if (this.ticksToTakeOff == maxTicksToTakeOff)
+            {
+                // Only spawn reinforcement pawns, packaged meals and beer once.
+                // TODO.
+                /*DropPodInfo info = new DropPodInfo();
+                Thing meals = ThingMaker.MakeThing(ThingDefOf.MealSurvivalPack);
+                meals.stackCount = Find.ListerPawns.PawnsInFaction(OG_Util.FactionOfMAndCo).Count;
+                meals.SetForbidden(true);
+                info.SingleContainedThing = meals;
+                DropPodUtility.MakeDropPodAt(this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-4, 4), 0, Rand.RangeInclusive(-4, 4)), info);*/
+
+                Building_OrbitalRelay orbitalRelay = OG_Util.FindOrbitalRelay(this.Faction);
+                if (orbitalRelay != null)
+                {
+                    List<PawnKindDef> reinforcementRequestsList;
+                    orbitalRelay.GetAndClearReinforcementRequestsList(out reinforcementRequestsList);
+                    foreach (PawnKindDef pawnType in reinforcementRequestsList)
+                    {
+                        // TODO: reuse OG_Inhabitants pawn generation algo.
+                        Pawn pawn = PawnGenerator.GeneratePawn(pawnType, this.Faction);
+                        GenSpawn.Spawn(pawn, this.Position);
+                    }
+                }
+            }
+
             this.ticksToTakeOff--;
-            if (this.ticksToTakeOff == 0)
+            if (this.ticksToTakeOff <= 0)
             {
                 // TODO: supply ship taking off
                 /*Thing cryptosleepBay = ThingMaker.MakeThing(OG_Util.SupplyShipCryptosleepBayDef);
