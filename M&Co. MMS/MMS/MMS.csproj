@@ -1,0 +1,96 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MobileMineralSonar</RootNamespace>
+    <AssemblyName>M&amp;Co. MMS</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_MobileMineralSonar.cs" />
+    <Compile Include="PlaceWorker_MobileMineralSonar.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="M&amp;Co. MMS\About\About.xml" />
+    <Content Include="M&amp;Co. MMS\Defs\ResearchProjectDefs\ResearchProjects_MMS.xml" />
+    <Content Include="M&amp;Co. MMS\Defs\ThingDefs_Buildings\Building_MMS.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. MMS\Textures\Effects\ScanRange10.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Effects\ScanRange20.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Effects\ScanRange30.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Effects\ScanRange40.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Effects\ScanRange50.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Effects\ScanRay50x50.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Effects\ScanSpot.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Things\Building\MobileMineralSonar.png" />
+    <Content Include="M&amp;Co. MMS\Textures\Things\Building\SatelliteDish.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange10.psd" />
+    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange20.psd" />
+    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange30.psd" />
+    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange40.psd" />
+    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange50.psd" />
+    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRay50x50.pdn" />
+    <None Include="M&amp;Co. MMS\Textures\Effects\ScanSpot.pdn" />
+    <None Include="M&amp;Co. MMS\Textures\Things\Building\MobileMineralSonar.psd" />
+    <None Include="M&amp;Co. MMS\Textures\Things\Building\SatelliteDish.psd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="M&amp;Co. MMS\Assemblies\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\M&amp;Co. MMS\Assemblies"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Buildings>
+
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>MobileMineralSonar</defName>
+    <Label>mobile mineral sonar</Label>
+    <Description>   The mobile mineral sonar is used to detect hidden metallic objects in the heart of big mountains.
+
+- It will slowly scan the surrounding rocks autonomously with its embedded battery.
+- Supplying some additional power will speed up the scan rate.
+    </Description>
+    <graphicData>
+      <graphicClass>Graphic_Single</graphicClass>
+      <texPath>Things/Building/MobileMineralSonar</texPath>
+      <drawSize>(3,3)</drawSize>
+    </graphicData>
+    <uiIconPath>Things/Building/MenuIcon_MobileMineralSonar</uiIconPath>
+    <ThingClass>MobileMineralSonar.Building_MobileMineralSonar</ThingClass>
+    <tickerType>Normal</tickerType>
+    <PlaceWorkers>
+      <li>MobileMineralSonar.PlaceWorker_MobileMineralSonar</li>
+    </PlaceWorkers>
+    <minifiedDef>MinifiedFurniture</minifiedDef>
+    <CostList>
+      <Steel>50</Steel>
+      <Components>5</Components>
+    </CostList>
+    <AltitudeLayer>BuildingTall</AltitudeLayer>
+    <statBases>
+      <WorkToMake>200</WorkToMake>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>0.1</Flammability>
+    </statBases>
+    <useHitPoints>True</useHitPoints>
+    <Size>(1,1)</Size>
+    <DesignationCategory>Misc</DesignationCategory>
+    <Passability>Impassable</Passability>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>1000</basePowerConsumption>
+        <soundPowerOn>PowerOnSmall</soundPowerOn>
+        <soundPowerOff>PowerOffSmall</soundPowerOff>
+      </li>
+    </comps>
+    <researchPrerequisites>
+      <li>ResearchMobileMineralSonar</li>
+    </researchPrerequisites>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <tradeTags>
+      <li>Exotic</li>
+    </tradeTags>
+  </ThingDef>
+
+</Buildings>
