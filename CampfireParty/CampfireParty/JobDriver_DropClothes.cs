@@ -53,7 +53,7 @@ namespace CampfireParty
                         },
                         tickAction = () =>
                         {
-                            this.pawn.drawer.rotator.FaceCell(memorizedFacingCell);
+                            this.pawn.Drawer.rotator.FaceCell(memorizedFacingCell);
                         },
                         defaultDuration = 150,
                         defaultCompleteMode = ToilCompleteMode.Delay

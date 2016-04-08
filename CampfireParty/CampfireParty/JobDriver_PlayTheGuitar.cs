@@ -46,7 +46,7 @@ namespace CampfireParty
                     MoteAttached moteAttached = (MoteAttached)ThingMaker.MakeThing(Util_CampfireParty.Mote_Guitar);
                     moteAttached.AttachTo(this.pawn);
                     GenSpawn.Spawn(moteAttached, this.pawn.Position);
-                    this.pawn.drawer.rotator.FaceCell(this.pawn.Position + new IntVec3(0, 0, -1));
+                    this.pawn.Drawer.rotator.FaceCell(this.pawn.Position + new IntVec3(0, 0, -1));
                 },
                 tickAction = () =>
                 {
@@ -58,6 +58,7 @@ namespace CampfireParty
                     }
                     // Gain some joy.
                     this.pawn.needs.joy.GainJoy(this.CurJob.def.joyGainRate * 0.000144f, Util_CampfireParty.JoyKindDefOf_Social);
+                    this.pawn.Drawer.rotator.FaceCell(this.pawn.Position + new IntVec3(0, 0, -1));
                 },
                 defaultDuration = 240,
                 defaultCompleteMode = ToilCompleteMode.Delay

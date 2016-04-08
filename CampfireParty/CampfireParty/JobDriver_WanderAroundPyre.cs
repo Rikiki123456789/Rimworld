@@ -44,7 +44,7 @@ namespace CampfireParty
             {
                 initAction = () =>
                 {
-                    tickCounter = (int)GenTicks.TicksPerRealtimeSecond;
+                    tickCounter = (int)GenTicks.TicksPerRealSecond;
                     GetFacingCell(ref facingPawn, ref facingCell);
                 },
                 tickAction = () =>
@@ -53,7 +53,7 @@ namespace CampfireParty
                     tickCounter--;
                     if (tickCounter <= 0)
                     {
-                        tickCounter = (int)GenTicks.TicksPerRealtimeSecond;
+                        tickCounter = (int)GenTicks.TicksPerRealSecond;
                         if ((facingPawn == null)
                             || (facingPawn.Position.InHorDistOf(this.pawn.Position, 2f) == false))
                         {
@@ -64,11 +64,11 @@ namespace CampfireParty
                     if ((facingPawn != null)
                         && (facingPawn.Destroyed == false))
                     {
-                        this.pawn.drawer.rotator.FaceCell(facingPawn.Position);
+                        this.pawn.Drawer.rotator.FaceCell(facingPawn.Position);
                     }
                     else
                     {
-                        this.pawn.drawer.rotator.FaceCell(facingCell);
+                        this.pawn.Drawer.rotator.FaceCell(facingCell);
                     }
                     // Gain some joy.
                     this.pawn.needs.joy.GainJoy(this.CurJob.def.joyGainRate * 0.000144f, Util_CampfireParty.JoyKindDefOf_Social);
@@ -82,7 +82,7 @@ namespace CampfireParty
         protected void GetFacingCell(ref Pawn facingPawn, ref IntVec3 facingCell)
         {
             List<Pawn> nearbyPawns = new List<Pawn>();
-            foreach (Pawn colonist in Find.ListerPawns.FreeColonists)
+            foreach (Pawn colonist in Find.MapPawns.FreeColonists)
             {
                 if (colonist == this.pawn)
                 {

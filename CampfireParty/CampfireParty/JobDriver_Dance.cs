@@ -63,7 +63,7 @@ namespace CampfireParty
                         }
                         facingCell = this.pawn.Position + new IntVec3(0, 0, 1).RotatedBy(rotation);
                     }
-                    this.pawn.drawer.rotator.FaceCell(facingCell);
+                    this.pawn.Drawer.rotator.FaceCell(facingCell);
                     // Gain some joy.
                     this.pawn.needs.joy.GainJoy(this.CurJob.def.joyGainRate * 0.000144f, Util_CampfireParty.JoyKindDefOf_Social);
                 },

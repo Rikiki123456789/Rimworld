@@ -53,19 +53,12 @@
     </placeWorkers>
     <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <designationCategory>Joy</designationCategory>
-    <comps>
-      <li>
-        <compClass>CompGlower</compClass>
-        <glowRadius>15</glowRadius>
-        <glowColor>(252,187,113,0)</glowColor>
-      </li>
-    </comps>
   </ThingDef>
 
   <ThingDef ParentName="BuildingBase">
     <defName>PyreFire</defName>
     <label>fire</label>
-    <description>Dummy building only spawned for the CompHeatPusher component.</description>
+    <description>Dummy building only spawned to get glower and a heat pusher components.</description>
     <thingClass>Building</thingClass>
     <tickerType>Normal</tickerType>
     <category>Building</category>
@@ -81,12 +74,20 @@
     <building>
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
     </building>
     <comps>
-      <li>
-        <compClass>CompHeatPusher</compClass>
+      <li Class="CompProperties_Glower">
+        <overlightRadius>7.0</overlightRadius>
+        <glowRadius>15</glowRadius>
+        <glowColor>(252,187,113,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
         <heatPerSecond>150</heatPerSecond>
         <heatPushMaxTemperature>60</heatPushMaxTemperature>
+      </li>
+      <li>
+        <compClass>CompGatherSpot</compClass>
       </li>
     </comps>
   </ThingDef>

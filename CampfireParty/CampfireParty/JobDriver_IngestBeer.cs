@@ -17,6 +17,14 @@ namespace CampfireParty
     /// </summary>
     public class JobDriver_IngestBeer : JobDriver_Pyre
     {
+        private Thing Food
+        {
+            get
+            {
+                return base.CurJob.GetTarget(TargetIndex.A).Thing;
+            }
+        }
+
         protected override IEnumerable<Toil> MakeNewToils()
         {
             List<Toil> toilsList = new List<Toil>();
@@ -41,16 +49,17 @@ namespace CampfireParty
                 if (beer != null)
                 {
                     beerIsAvailable = true;
-                    this.CurJob.targetC = beer;
+                    this.CurJob.SetTarget(TargetIndex.A, beer);
+                    //this.CurJob.targetA = beer;
                     this.CurJob.maxNumToCarry = 1;
-                    toilsList.Add(Toils_Goto.GotoThing(TargetIndex.C, PathEndMode.ClosestTouch).FailOnDespawnedOrForbidden(TargetIndex.C));
-                    toilsList.Add(Toils_Ingest.PickupIngestible(TargetIndex.C, this.pawn));
-                    toilsList.Add(Toils_Ingest.CarryIngestibleToChewSpot(this.pawn).FailOnDestroyedOrForbidden(TargetIndex.C));
-                    toilsList.Add(Toils_Ingest.PlaceItemForIngestion(TargetIndex.C));
+                    toilsList.Add(Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(TargetIndex.A));
+                    toilsList.Add(Toils_Ingest.PickupIngestible(TargetIndex.A, this.pawn)); // TargetIndex.A becomes the carried beer.
+                    toilsList.Add(Toils_Ingest.CarryIngestibleToChewSpot(this.pawn));
+                    toilsList.Add(Toils_Ingest.FindAdjacentEatSurface(TargetIndex.B, TargetIndex.A));
                     // float durationMultiplier = 1f / this.pawn.GetStatValue(StatDefOf.EatingSpeed, true); // Don't use it so the job duration is nearly the same for all pawns.
                     float durationMultiplier = 1f;
-                    toilsList.Add(Toils_Ingest.ChewIngestible(this.pawn, durationMultiplier).FailOnDespawned(TargetIndex.C));
-                    toilsList.Add(Toils_Ingest.FinalizeIngest(this.pawn, TargetIndex.C));
+                    toilsList.Add(Toils_Ingest.ChewIngestible(this.pawn, durationMultiplier, TargetIndex.A, TargetIndex.B).FailOn((Toil x) => !this.Food.Spawned && (this.pawn.carrier == null || this.pawn.carrier.CarriedThing != this.Food)));
+                    toilsList.Add(Toils_Ingest.FinalizeIngest(this.pawn, TargetIndex.A));
                 }
             }
             // Draw a mote.

@@ -34,8 +34,9 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp, Version=0.12.5719.23323, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -43,8 +44,9 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -64,15 +66,25 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CampfireParty\About\About.xml" />
+    <Content Include="CampfireParty\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="CampfireParty\About\Preview.png" />
+    <Content Include="CampfireParty\Assemblies\CampfireParty.dll" />
     <Content Include="CampfireParty\Defs\JobDefs\Jobs_CampfireParty.xml" />
-    <Content Include="CampfireParty\Defs\ThingDefs\Buildings_Misc_Pyre.xml" />
+    <Content Include="CampfireParty\Defs\ThingDefs_Buildings\Building_Pyre.xml" />
     <Content Include="CampfireParty\Defs\ThingDefs\Motes.xml" />
     <Content Include="CampfireParty\Defs\ThoughtDefs\Thoughts_Memories.xml" />
     <Content Include="CampfireParty\Textures\Effects\LaserFence.png" />
-    <Content Include="CampfireParty\Textures\Things\Building\Security\DummyTexture.png" />
-    <Content Include="CampfireParty\Textures\Things\Building\Security\LaserFencePylon.png" />
+    <Content Include="CampfireParty\Textures\Things\Building\Joy\DummyTexture.png" />
+    <Content Include="CampfireParty\Textures\Things\Building\Joy\Pyre.png" />
+    <Content Include="CampfireParty\Textures\Things\Mote\BeerAvailable.png" />
+    <Content Include="CampfireParty\Textures\Things\Mote\BeerUnavailable.png" />
+    <Content Include="CampfireParty\Textures\Things\Mote\Guitar.png" />
+    <Content Include="CampfireParty\Textures\Things\Mote\MusicNote.png" />
+    <Content Include="CampfireParty\Textures\Things\Special\FireA.png" />
+    <Content Include="CampfireParty\Textures\Things\Special\FireB.png" />
+    <Content Include="CampfireParty\Textures\Things\Special\FireC.png" />
     <Content Include="CampfireParty\Textures\Ui\Commands\EastFenceActive.png" />
     <Content Include="CampfireParty\Textures\Ui\Commands\EastFenceInactive.png" />
     <Content Include="CampfireParty\Textures\Ui\Commands\NorthFenceActive.png" />
@@ -84,15 +96,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CampfireParty\Textures\Effects\Thumbs.db" />
-    <None Include="CampfireParty\Textures\Things\Building\Security\LaserFencePylon.pdn" />
-    <None Include="CampfireParty\Textures\Things\Building\Security\Thumbs.db" />
+    <None Include="CampfireParty\Textures\Things\Mote\BeerAvailable.pdn" />
+    <None Include="CampfireParty\Textures\Things\Mote\BeerUnavailable.pdn" />
+    <None Include="CampfireParty\Textures\Things\Mote\Guitar.pdn" />
     <None Include="CampfireParty\Textures\Ui\Commands\NorthFence.pdn" />
     <None Include="CampfireParty\Textures\Ui\Thumbs.db" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CampfireParty\Assemblies\" />
-    <Folder Include="CampfireParty\Defs\WorkGiverDefs\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CampfireParty\Assemblies</PostBuildEvent>

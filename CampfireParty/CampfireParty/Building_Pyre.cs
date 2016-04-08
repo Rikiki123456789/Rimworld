@@ -21,7 +21,7 @@ namespace CampfireParty
     public class Building_Pyre : Building
     {
         protected bool campfirePartyIsStarted = false;
-        protected const int maxLifeTickCounter = 5000;
+        protected const int maxLifeTickCounter = 7500;
         protected int lifeTickCounter = 0;
         protected Thing pyreFire = null;
 
@@ -46,14 +46,6 @@ namespace CampfireParty
         {
             base.SpawnSetup();
 
-            if (this.campfirePartyIsStarted == false)
-            {
-                CompGlower glower = this.TryGetComp<CompGlower>();
-                if (glower != null)
-                {
-                    glower.Lit = false;
-                }
-            }
             for (int fireIndex = 0; fireIndex < fireMaxNumber; fireIndex++)
             {
                 this.fireTexture[fireIndex] = null;
@@ -222,7 +214,7 @@ namespace CampfireParty
             // Check there are at least 2 revelers near the pyre.
             int revelersCount = 0;
             List<Pawn> revelers = new List<Pawn>();
-            foreach (Pawn colonist in Find.ListerPawns.FreeColonists)
+            foreach (Pawn colonist in Find.MapPawns.FreeColonists)
             {
                 List<IntVec3> partyAreaCells = GetPartyAreaCells(this.Position);
                 if ((partyAreaCells.Contains(colonist.Position))
@@ -250,14 +242,8 @@ namespace CampfireParty
             }
             // Start music according to the party style.
             Find.MusicManagerMap.ForceStartSong(DefDatabase<SongDef>.GetNamed("Moon_Harvest"), false);
-
-            // Light on the glower.
-            CompGlower glower = this.TryGetComp<CompGlower>();
-            if (glower != null)
-            {
-                glower.Lit = true;
-            }
-            // Spawn the heater.
+            
+            // Spawn the heater/glower.
             this.pyreFire = GenSpawn.Spawn(Util_CampfireParty.Def_PyreFire, this.Position);
         }
     }

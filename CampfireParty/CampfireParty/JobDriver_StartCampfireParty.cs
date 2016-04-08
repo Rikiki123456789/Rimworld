@@ -29,7 +29,7 @@ namespace CampfireParty
 
             bool revelerIsPsychopath = this.pawn.story.traits.HasTrait(TraitDef.Named("Psychopath"));
             bool revelerIsNudist = this.pawn.story.traits.HasTrait(TraitDefOf.Nudist);
-            bool revelerHasTriggerHappyTrait = this.pawn.story.traits.HasTrait(TraitDef.Named("TriggerHappy"));
+            bool revelerHasTriggerHappyTrait = this.pawn.story.traits.DegreeOfTrait(TraitDef.Named("ShootingAccuracy")) == -1;
             int revelerAlcoholAddictionLevel = this.pawn.story.traits.DegreeOfTrait(TraitDefOf.DrugDesire);
             
             // Psychopaths don't like having parties with others... 3:p
@@ -40,7 +40,7 @@ namespace CampfireParty
                 {
                     tickAction = () =>
                     {
-                        this.pawn.drawer.rotator.FaceCell(pyre.Position);
+                        this.pawn.Drawer.rotator.FaceCell(pyre.Position);
                     },
                     defaultDuration = 300,
                     defaultCompleteMode = ToilCompleteMode.Delay
