@@ -3,7 +3,7 @@
 	<name>M&amp;Co. OutpostGenerator</name>
 	<author>Rikiki</author>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153944#msg153944</url>
-	<targetVersion>Alpha 12</targetVersion>
+  <targetVersion>Alpha 13 (0.13.1135)</targetVersion>
 	<description>This mod adds a chance of spawning an M&amp;Co. outpost on map generation.
 See the forum thread for content/changelog and related mods.</description>
 </ModMetaData>
