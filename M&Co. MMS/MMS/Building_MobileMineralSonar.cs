@@ -94,6 +94,7 @@ namespace MobileMineralSonar
             detectedDefList.Add(ThingDef.Named("MineableSilver"));
             detectedDefList.Add(ThingDef.Named("MineableGold"));
             detectedDefList.Add(ThingDef.Named("MineableUranium"));
+            detectedDefList.Add(ThingDef.Named("MineablePlasteel"));
             detectedDefList.Add(ThingDef.Named("MineableComponents"));
             detectedDefList.Add(ThingDefOf.AncientCryptosleepCasket);
 

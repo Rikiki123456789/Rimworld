@@ -2,16 +2,6 @@
 
 <Buildings>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>MobileMineralSonar</defName>
     <Label>mobile mineral sonar</Label>
@@ -51,9 +41,8 @@
         <compClass>CompPowerTrader</compClass>
         <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>1000</basePowerConsumption>
-        <soundPowerOn>PowerOnSmall</soundPowerOn>
-        <soundPowerOff>PowerOffSmall</soundPowerOff>
       </li>
+      <li Class="CompProperties_Flickable"/>
     </comps>
     <researchPrerequisites>
       <li>ResearchMobileMineralSonar</li>
