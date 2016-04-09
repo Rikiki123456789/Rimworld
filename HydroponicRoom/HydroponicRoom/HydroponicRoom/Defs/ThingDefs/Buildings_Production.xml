@@ -1,27 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ThingDefs>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
-  <!-- ========== Hydroponics ==============-->
-
   <ThingDef ParentName="BuildingBase">
     <defName>HydroponicsBasin</defName>
     <label>hydroponics basin</label>
+    <description>Grows plants quickly in an artificial nutrient bath. Requires power to work; plants will die if power is cut.</description>
     <thingClass>HydroponicRoom.Building_PlantGrowerLinked</thingClass>
     <graphicData>
       <texPath>Things/Building/Production/HydroponicsBasin</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,4)</drawSize>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
     </graphicData>
     <altitudeLayer>FloorEmplacement</altitudeLayer>
     <passability>PassThroughOnly</passability>
@@ -35,15 +29,15 @@
       <Flammability>1.0</Flammability>
       <Cleanliness>-3</Cleanliness>
     </statBases>
-    <description>For growing food. Hydroponics basins grow a few plants quickly. The basin requires power to work, and plants will die if power is cut.</description>
     <size>(1,4)</size>
     <costList>
       <Steel>100</Steel>
+      <Components>1</Components>
     </costList>
     <inspectorTabs>
       <li>ITab_Growing</li>
     </inspectorTabs>
-    <fertility>1.7</fertility>
+    <fertility>2.3</fertility>
     <building>
       <defaultPlantToGrow>PlantPotato</defaultPlantToGrow>
       <plantsDestroyWithMe>true</plantsDestroyWithMe>
@@ -51,18 +45,20 @@
     </building>
     <tickerType>Rare</tickerType>
     <comps>
-      <li>
-        <compClass>CompForbiddable</compClass>
-      </li>
-      <li>
+      <li Class="CompProperties_Forbiddable"/>
+      <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <basePowerConsumption>70</basePowerConsumption>
       </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
     </comps>
-    <researchPrerequisite>Hydroponics</researchPrerequisite>
+    <researchPrerequisites>
+      <li>Hydroponics</li>
+    </researchPrerequisites>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <designationCategory>Production</designationCategory>
     <designationHotKey>Y</designationHotKey>
   </ThingDef>
 
-</ThingDefs>
+  </ThingDefs>

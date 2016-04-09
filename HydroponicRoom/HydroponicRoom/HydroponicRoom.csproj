@@ -36,7 +36,7 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=0.12.5719.23323, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,7 +46,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\RimWorld914Win\RimWorld914Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -55,7 +55,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HydroponicRoom\About\About.xml" />
-    <Content Include="HydroponicRoom\Defs\ThingDefs\Buildings_Production.xml" />
+    <Content Include="HydroponicRoom\Defs\ThingDefs\Buildings_Production.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="HydroponicRoom\Assemblies\" />
