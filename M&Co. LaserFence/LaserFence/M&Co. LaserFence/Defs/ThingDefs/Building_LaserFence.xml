@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LaserFencePylon</defName>
+    <label>laser fence pylon</label>
+    <thingClass>LaserFence.Building_LaserFencePylon</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Building/Security/LaserFencePylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <shadowData>
+        <volume>(0.3, 1.0, 0.3)</volume>
+      </shadowData>
+    </graphicData>
+    <castEdgeShadows>false</castEdgeShadows>
+    <placeWorkers>
+      <li>LaserFence.PlaceWorker_LaserFencePylon</li>
+    </placeWorkers>
+    <altitudeLayer>BuildingTall</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.6</fillPercent>
+    <rotatable>true</rotatable>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToMake>2000</WorkToMake>
+      <Flammability>0.0</Flammability>
+    </statBases>
+    <holdsRoof>false</holdsRoof>
+    <description>An advanced laser fence pylon.
+- Will automatically connect to nearby pylons in each cardinal direction.
+- Each fence can be independantly activated or deactivated.
+- Max range of a laser fence: 4 cells.
+
+Warning! Always wear safety glasses before any maintenance operation. Local wildlife/vegetation may catch fire if directly exposed to the laser.</description>
+    <size>(1,1)</size>
+    <costList>
+      <Components>1</Components>
+      <Steel>30</Steel>
+    </costList>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(-1,0,-1)</interactionCellOffset>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <designationCategory>Security</designationCategory>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+    </comps>
+    <researchPrerequisites>
+      <li>ResearchLaserFence</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LaserFence</defName>
+    <label>laser fence</label>
+    <description>An impassable laser fence.</description>
+    <thingClass>LaserFence.Building_LaserFence</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Security/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Waist</altitudeLayer>
+    <passability>Impassable</passability>
+    <tickerType>Normal</tickerType>
+    <selectable>false</selectable>
+    <fillPercent>0.0</fillPercent>
+    <useHitPoints>false</useHitPoints>
+    <statBases>
+      <Flammability>0.0</Flammability>
+    </statBases>
+    <holdsRoof>false</holdsRoof>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+    </building>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  </ThingDef>
+
+</Buildings>

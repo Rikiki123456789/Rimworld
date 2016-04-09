@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>LaserFence</RootNamespace>
+    <AssemblyName>M&amp;Co. LaserFence</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_LaserFencePylon.cs" />
+    <Compile Include="Building_LaserFence.cs" />
+    <Compile Include="JobDriver_SwitchLaserFence.cs" />
+    <Compile Include="PlaceWorker_LaserFencePylon.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WorkGiver_LaserFencePylon.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="M&amp;Co. LaserFence\About\About.xml" />
+    <Content Include="M&amp;Co. LaserFence\Defs\JobDefs\Jobs_LaserFence.xml" />
+    <Content Include="M&amp;Co. LaserFence\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. LaserFence\Defs\ThingDefs\Building_LaserFence.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. LaserFence\Defs\WorkGiverDefs\BaseWorkGivers_LaserFence.xml" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Effects\LaserFence.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\DummyTexture.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\LaserFencePylon.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\EastFenceActive.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\EastFenceInactive.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\NorthFenceActive.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\NorthFenceInactive.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\SouthFenceActive.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\SouthFenceInactive.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\WestFenceActive.png" />
+    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\WestFenceInactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="M&amp;Co. LaserFence\Assemblies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="M&amp;Co. LaserFence\Textures\Effects\Thumbs.db" />
+    <None Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\LaserFencePylon.pdn" />
+    <None Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\Thumbs.db" />
+    <None Include="M&amp;Co. LaserFence\Textures\Ui\Commands\NorthFence.pdn" />
+    <None Include="M&amp;Co. LaserFence\Textures\Ui\Thumbs.db" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\M&amp;Co. LaserFence\Assemblies"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
