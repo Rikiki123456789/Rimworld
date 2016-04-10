@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{714B137A-A3B5-4FB5-8B64-C3FDDC358216}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MiningHelmet</RootNamespace>
+    <AssemblyName>M&amp;Co. MiningHelmet</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="MiningHelmet.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util_MiningHelmet.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="M&amp;Co. MiningHelmet\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. MiningHelmet\About\Preview.png" />
+    <Content Include="M&amp;Co. MiningHelmet\Defs\ThingDefs\Apparel_MiningHelmet.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. MiningHelmet\Defs\ThingDefs\Building_MiningHelmetLight.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. MiningHelmet\Textures\Things\Apparel\MiningHelmet\MiningHelmet.png" />
+    <Content Include="M&amp;Co. MiningHelmet\Textures\Things\Apparel\MiningHelmet\MiningHelmet_back.png" />
+    <Content Include="M&amp;Co. MiningHelmet\Textures\Things\Apparel\MiningHelmet\MiningHelmet_front.png" />
+    <Content Include="M&amp;Co. MiningHelmet\Textures\Things\Apparel\MiningHelmet\MiningHelmet_side.png" />
+    <Content Include="M&amp;Co. MiningHelmet\Textures\Things\Building\DummyTexture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="M&amp;Co. MiningHelmet\Assemblies\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\M&amp;Co. MiningHelmet\Assemblies"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
