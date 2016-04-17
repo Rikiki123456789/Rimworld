@@ -67,10 +67,7 @@ namespace ForceField
         public static readonly Vector2 barSize = new Vector2(0.4f, 0.1f);
         public static readonly Material barFilledColor = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0f, 0.8f, 1f));
         public static readonly Material barUnfilledColor = SolidColorMaterials.SimpleSolidColorMaterial(new Color(0.3f, 0.3f, 0.3f));
-
-        public Texture2D forceFieldEnabledIcon;
-        public Texture2D forceFieldDisabledIcon;
-
+        
         public Vector3 generatorForwardVector
         {
             get
@@ -140,9 +137,6 @@ namespace ForceField
             forceFieldAbsorbtionTexture[3] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion4", ShaderDatabase.Transparent);
             forceFieldAbsorbtionTexture[4] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion5", ShaderDatabase.Transparent);
             forceFieldAbsorbtionMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
-            
-            forceFieldEnabledIcon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_ForceFieldEnabled");
-            forceFieldDisabledIcon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_ForceFieldDisabled");
         }
 
         /// <summary>
