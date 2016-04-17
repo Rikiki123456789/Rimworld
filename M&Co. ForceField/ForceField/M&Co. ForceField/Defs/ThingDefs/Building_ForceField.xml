@@ -41,7 +41,8 @@ When powered down, the generator will send back a part of its energy to the powe
     <size>(1,1)</size>
     <costList>
       <Steel>150</Steel>
-      <Components>5</Components>
+      <Plasteel>50</Plasteel>
+      <Components>10</Components>
     </costList>
     <killedLeavings>
       <ChunkSlagSteel>1</ChunkSlagSteel>
