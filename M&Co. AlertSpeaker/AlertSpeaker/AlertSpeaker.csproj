@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}</ProjectGuid>
+    <ProjectGuid>{714B137A-A3B5-4FB5-8B64-C3FDDC358216}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Common</RootNamespace>
-    <AssemblyName>M&amp;Co. Common</AssemblyName>
+    <RootNamespace>AlertSpeaker</RootNamespace>
+    <AssemblyName>M&amp;Co. AlertSpeaker</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.11.5682.20660, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Jeux\RimWorld906Win\RimWorld906Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,58 +44,52 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Jeux\RimWorld906Win\RimWorld906Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building_ElectronicWorkbench.cs" />
-    <Compile Include="Building_ChargingEnergyPack.cs" />
+    <Compile Include="Building_AlertSpeaker.cs" />
+    <Compile Include="PlaceWorker_AlertSpeaker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util_AlertSpeaker.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="M&amp;Co. AlertSpeaker\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. AlertSpeaker\Defs\SoundDefs\Sounds_AlertSpeaker.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. AlertSpeaker\Defs\ThingDefs\Building_AlertSpeaker.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. AlertSpeaker\Defs\ThingDefs\Apparel_StatBonus.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. AlertSpeaker\Defs\ThingDefs\Mote_AlertSpeaker.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. AlertSpeaker\Defs\ThoughtDefs\Thoughts_Memories.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="M&amp;Co. AlertSpeaker\Textures\Effects\EnergyBall.png" />
+    <Content Include="M&amp;Co. AlertSpeaker\Textures\Things\Building\AlertSpeaker.png" />
+    <Content Include="M&amp;Co. AlertSpeaker\Textures\Things\Item\Equipment\HeavyLasgun.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="M&amp;Co. AlertSpeaker\Textures\Effects\EnergyBall.pdn" />
+    <None Include="M&amp;Co. AlertSpeaker\Textures\Things\Building\AlertSpeaker.psd" />
+    <None Include="M&amp;Co. AlertSpeaker\Textures\Things\Item\Equipment\HeavyLasgun.pdn" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="M&amp;Co. AlertSpeaker\Assemblies\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Content Include="M&amp;Co. Common\About\About.xml" />
-    <Content Include="M&amp;Co. Common\Assemblies\M&amp;Co. Common.dll" />
-    <Content Include="M&amp;Co. Common\Defs\RecipeDefs\Recipes_Common.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="M&amp;Co. Common\Defs\ResearchProjectDefs\ResearchProjects_Common.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="M&amp;Co. Common\Defs\StatDefs\Stats_Pawns_WorkRecipes.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="M&amp;Co. Common\Defs\ThingCategoryDefs\ThingCategories.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="M&amp;Co. Common\Defs\ThingDefs\Buildings_Common.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="M&amp;Co. Common\Defs\ThingDefs\Items_Resources.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="M&amp;Co. Common\Defs\WorkGiverDefs\BaseWorkGivers_Common.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="M&amp;Co. Common\Textures\Things\Building\Production\ElectronicWorkbench.png" />
-    <Content Include="M&amp;Co. Common\Textures\Things\Building\Power\ChargingEnergyPack.png" />
-    <Content Include="M&amp;Co. Common\Textures\Things\Item\Resource\IntegratedCircuitsBoard.png" />
-    <Content Include="M&amp;Co. Common\Textures\Things\Item\Resource\EnergyPack.png" />
-    <Content Include="M&amp;Co. Common\Textures\Ui\Icons\ThingCategories\Electronics.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="M&amp;Co. Common\Textures\Things\Building\Production\ElectronicWorkbench.psd" />
-    <None Include="M&amp;Co. Common\Textures\Things\Item\Resource\IntegratedCircuitsBoard.psd" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="M&amp;Co. Common\Textures\Effects\" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\M&amp;Co. AlertSpeaker\Assemblies"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
