@@ -53,7 +53,7 @@ namespace MiningHelmet
                 && (this.wearer.CurJob.def == JobDefOf.Mine);
             if (colonistIsMining)
             {
-                SwitchOnHeadLight(this.wearer.Position);
+                SwitchOnHeadLight();
                 return;
             }
             
@@ -62,9 +62,10 @@ namespace MiningHelmet
             if (colonistIsUnderARoof)
             {
                 RoofDef roofType = Find.RoofGrid.RoofAt(this.wearer.Position);
-                if (roofType != RoofDefOf.RoofConstructed)
+                if ((roofType == DefDatabase<RoofDef>.GetNamed("RoofRockThin"))
+                    || (roofType == DefDatabase<RoofDef>.GetNamed("RoofRockThick")))
                 {
-                    SwitchOnHeadLight(this.wearer.Position);
+                    SwitchOnHeadLight();
                     return;
                 }
             }
@@ -73,10 +74,10 @@ namespace MiningHelmet
             SwitchOffHeadLight();
         }
 
-        public void SwitchOnHeadLight(IntVec3 newPosition)
+        public void SwitchOnHeadLight()
         {
-            this.lightIsOn = true;
-            if (this.headLight == null)
+            IntVec3 newPosition = this.wearer.DrawPos.ToIntVec3();
+            if (this.headLight.DestroyedOrNull())
             {
                 this.headLight = GenSpawn.Spawn(Util_MiningHelmet.miningHelmetGlowerDef, newPosition);
             }
@@ -87,16 +88,17 @@ namespace MiningHelmet
                 this.headLight = GenSpawn.Spawn(Util_MiningHelmet.miningHelmetGlowerDef, newPosition);
                 this.refreshIsNecessary = false;
             }
+            this.lightIsOn = true;
         }
 
         public void SwitchOffHeadLight()
         {
-            this.lightIsOn = false;
-            if (this.headLight != null)
+            if (this.headLight.DestroyedOrNull() == false)
             {
                 this.headLight.Destroy();
                 this.headLight = null;
             }
+            this.lightIsOn = false;
         }
 
         public override void ExposeData()
