@@ -38,20 +38,19 @@ namespace CaveworldFlora
             if (Find.TickManager.TicksGame == 1)
             {
                 GetCavePlantDefsList();
-                
-                for (int spawnTryIndex = 0; spawnTryIndex < 100; spawnTryIndex++)
+                // Unnecessary as long as there is no natural caves.
+                /*for (int spawnTryIndex = 0; spawnTryIndex < 100; spawnTryIndex++)
                 {
                     TrySpawnNewClusterAtRandomPosition();
-                }
+                }*/
             }
-
 
             // Normal treatment.
             if (randomSpawnPeriodInTicks == 0)
             {
                 // Occurs when loading a savegame.
                 int mapSurfaceCoefficient = Find.Map.Size.x * 2 + Find.Map.Size.z * 2;
-                randomSpawnPeriodInTicks = 50000 / (mapSurfaceCoefficient / 100);
+                randomSpawnPeriodInTicks = 200000 / (mapSurfaceCoefficient / 100);
             }
 	        if (Find.TickManager.TicksGame % randomSpawnPeriodInTicks == 0)
             {

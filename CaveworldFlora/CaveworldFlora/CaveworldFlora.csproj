@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.12.5719.23323, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Jeux\RimWorld914Win\RimWorld914Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\Program Files\Jeux\RimWorld914Win\RimWorld914Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -66,12 +66,18 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="CaveworldFlora\About\Preview.png" />
-    <Content Include="CaveworldFlora\Defs\ResearchProjectDefs\ResearchProjects_Fungiponics.xml" />
-    <Content Include="CaveworldFlora\Defs\ThingDefs\Buildings_CavePlants.xml">
+    <Content Include="CaveworldFlora\Defs\ResearchProjectDefs\ResearchProject_Fungiponics.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveworldFlora\Defs\ThingDefs\Buildings_FungiponicsBasin.xml" />
-    <Content Include="CaveworldFlora\Defs\ThingDefs\Items_Resource_Organic.xml" />
+    <Content Include="CaveworldFlora\Defs\ThingDefs\Building_PlantGlowers.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveworldFlora\Defs\ThingDefs\Building_FungiponicsBasin.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveworldFlora\Defs\ThingDefs\Items_Resource_Organic.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="CaveworldFlora\Defs\ThingDefs\Plants_Wild_CavePlants.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -82,6 +88,7 @@
     <Content Include="CaveworldFlora\Textures\Things\Item\Resource\GleamcapStem.png" />
     <Content Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\RawGlowbulb.png" />
     <Content Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\RawShimmershroom.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\Brightbells\Brightbells.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\Gleamcap\GleamcapA.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\Gleamcap\GleamcapB.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\Glowbulb\GlowbulbA.png" />
@@ -93,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\Thumbs.db" />
+    <None Include="CaveworldFlora\Textures\Things\Plant\Brightbells\Brightbells.psd" />
     <None Include="CaveworldFlora\Textures\Things\Plant\Gleamcap\Thumbs.db" />
     <None Include="CaveworldFlora\Textures\Things\Plant\Glowbulb\Thumbs.db" />
     <None Include="CaveworldFlora\Textures\Things\Plant\Mushies.psd" />

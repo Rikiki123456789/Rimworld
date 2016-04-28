@@ -26,6 +26,7 @@ namespace CaveworldFlora
         public const int maxSporeSpawningDurationInTicks = 3600;
         public int sporeSpawningDurationInTicks = 0;
         public int lifeCounterInTicks = 0;
+        public int ticksToNearPawnCheck = 0;
 
         // ===================== Setup Work =====================
         /// <summary>
@@ -64,13 +65,15 @@ namespace CaveworldFlora
             {
                 MoteThrower.ThrowDustPuff(this.TrueCenter(), Rand.Value);
 
-                if ((this.lifeCounterInTicks % 60) == 0)
+                this.ticksToNearPawnCheck++;
+                if (this.ticksToNearPawnCheck > GenTicks.TicksPerRealSecond)
                 {
-                    foreach (Pawn colonist in Find.ListerPawns.FreeColonists)
+                    this.ticksToNearPawnCheck = 0;
+                    foreach (Pawn pawn in Find.MapPawns.AllPawns)
                     {
-                        if (colonist.Position.InHorDistOf(this.Position, sporeEffectRadius))
+                        if (pawn.Position.InHorDistOf(this.Position, sporeEffectRadius))
                         {
-                            colonist.needs.mood.thoughts.TryGainThought(Util_CavePlant.breathedGleamcapSmokeDef);
+                            pawn.needs.mood.thoughts.TryGainThought(Util_CavePlant.breathedGleamcapSmokeDef);
                         }
                     }
                 }

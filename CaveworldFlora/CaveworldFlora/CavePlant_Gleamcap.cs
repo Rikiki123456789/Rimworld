@@ -41,7 +41,7 @@ namespace CaveworldFlora
         /// </summary>
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            if (this.sporeSpawnerBuilding != null)
+            if (this.sporeSpawnerBuilding.DestroyedOrNull() == false)
             {
                 this.sporeSpawnerBuilding.Destroy();
             }
@@ -71,6 +71,7 @@ namespace CaveworldFlora
 
             if ((this.LifeStage == PlantLifeStage.Mature)
                 && (this.Rotting == false)
+                && (this.isInCryostasis == false)
                 && sporeSpawnOccuredLongAgo
                 && ((Rand.Value < chanceToSpawnSpore)
                 || Find.MapConditionManager.ConditionIsActive(MapConditionDefOf.Eclipse)))

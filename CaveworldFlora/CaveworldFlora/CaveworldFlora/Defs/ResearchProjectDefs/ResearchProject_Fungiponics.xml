@@ -2,10 +2,11 @@
 <ResearchProjectDefs>
 
   <ResearchProjectDef>
-		<defName>Fungiponics</defName>
+		<defName>ResearchFungiponics</defName>
 		<label>fungiponics</label>
 		<description>Research how to adapt the hydroponics tables to grow cave plants.</description>
-		<totalCost>700</totalCost>
+    <descriptionDiscovered>You can now grow your own cave plants in fungiponics basins or use them as decorative plants.</descriptionDiscovered>
+    <totalCost>700</totalCost>
 		<prerequisites>
       <li>Hydroponics</li>
     </prerequisites>

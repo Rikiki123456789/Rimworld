@@ -28,7 +28,7 @@ namespace CaveworldFlora
         public static void TryToReproduce(CavePlant cavePlant)
         {
             // Test if it is growing on a fungiponics.
-            if (CavePlant.IsOnFungiponicsBasin(cavePlant.Position))
+            if (CavePlant.IsOnCavePlantGrower(cavePlant.Position))
             {
                 return;
             }

@@ -60,14 +60,14 @@ namespace CaveworldFlora
                     && IsLightConditionOk(this.Position)
                     && IsTerrainConditionOk(this.Position)
                     && (IsNearNaturalRockBlock(this.Position)
-                    || IsOnFungiponicsBasin(this.Position)));
+                    || IsOnCavePlantGrower(this.Position)));
             }
         }
         public float GrowthPerTick
         {
             get
             {
-                return (1f / (30000f * this.def.plant.growDays));
+                return (1f / (60000f * this.def.plant.growDays));
             }
         }
         public float GrowthPerTickLong
@@ -102,7 +102,7 @@ namespace CaveworldFlora
                     || !IsLightConditionOk(this.Position)
                     || !IsTerrainConditionOk(this.Position)
                     || !(IsNearNaturalRockBlock(this.Position)
-                    || IsOnFungiponicsBasin(this.Position));
+                    || IsOnCavePlantGrower(this.Position));
                 return ((plantIsTooOld || plantIsInHostileConditions)
                     && (this.isInCryostasis == false));
             }
@@ -117,7 +117,7 @@ namespace CaveworldFlora
             base.SpawnSetup();
             // Set the default cluster radius. This should be overriden by the spawner.
             this.clusterSize = Rand.Range(this.def.plant.wildClusterSizeRange.min, this.def.plant.wildClusterSizeRange.max);
-            if ((this.glowerBuilding == null)
+            if ((this.glowerBuilding.DestroyedOrNull())
                 && (this.isInCryostasis == false))
             {
                 this.glowerBuilding = GenSpawn.Spawn(Util_CavePlant.GetGlowerSmallDef(this.def), this.Position);
@@ -196,7 +196,7 @@ namespace CaveworldFlora
             
             if (this.growth < 0.33f)
             {
-                if ((this.glowerBuilding == null)
+                if ((this.glowerBuilding.DestroyedOrNull())
                     || (this.glowerBuilding.def != Util_CavePlant.GetGlowerSmallDef(this.def)))
                 {
                     TryToDestroyGlowerBulding();
@@ -205,7 +205,7 @@ namespace CaveworldFlora
             }
             else if (this.growth < 0.66f)
             {
-                if ((this.glowerBuilding == null)
+                if ((this.glowerBuilding.DestroyedOrNull())
                     || (this.glowerBuilding.def != Util_CavePlant.GetGlowerMediumDef(this.def)))
                 {
                     TryToDestroyGlowerBulding();
@@ -214,7 +214,7 @@ namespace CaveworldFlora
             }
             else
             {
-                if ((this.glowerBuilding == null)
+                if ((this.glowerBuilding.DestroyedOrNull())
                     || (this.glowerBuilding.def != Util_CavePlant.GetGlowerBigDef(this.def)))
                 {
                     TryToDestroyGlowerBulding();
@@ -225,8 +225,7 @@ namespace CaveworldFlora
 
         private void TryToDestroyGlowerBulding()
         {
-            if ((this.glowerBuilding != null)
-                && (this.glowerBuilding.Destroyed == false))
+            if (this.glowerBuilding.DestroyedOrNull() == false)
             {
                 this.glowerBuilding.Destroy();
             }
@@ -265,18 +264,21 @@ namespace CaveworldFlora
         /// </summary>
         public static bool IsNearNaturalRockBlock(IntVec3 cavePlantPosition)
         {
-            IntVec3 checkedPosition = new IntVec3(0, 0, 0);
             for (int xOffset = -2; xOffset <= 2; xOffset++)
             {
                 for (int zOffset = -2; zOffset <= 2; zOffset++)
                 {
-                    checkedPosition = cavePlantPosition + new IntVec3(xOffset, 0, zOffset);
-                    Thing potentialRock = Find.ThingGrid.ThingAt(checkedPosition, ThingCategory.Building);
-                    if (potentialRock != null)
+                    IntVec3 checkedPosition = cavePlantPosition + new IntVec3(xOffset, 0, zOffset);
+                    if (checkedPosition.InBounds())
                     {
-                        if ((potentialRock as Building).def.building.isNaturalRock)
+                        Thing potentialRock = Find.ThingGrid.ThingAt(checkedPosition, ThingCategory.Building);
+                        if ((potentialRock != null)
+                            && ((potentialRock as Building) != null))
                         {
-                            return true;
+                            if ((potentialRock as Building).def.building.isNaturalRock)
+                            {
+                                return true;
+                            }
                         }
                     }
                 }
@@ -299,18 +301,18 @@ namespace CaveworldFlora
         }
 
         /// <summary>
-        /// Check if the plant is on a fungiponics.
+        /// Check if the plant is on a cave plant grower.
         /// </summary>
-        public static bool IsOnFungiponicsBasin(IntVec3 cavePlantPosition)
+        public static bool IsOnCavePlantGrower(IntVec3 cavePlantPosition)
         {
             Building edifice = cavePlantPosition.GetEdifice();
             if ((edifice != null)
-                && (edifice.def == Util_CavePlant.fungiponicsBasinDef))
+                && ((edifice.def == Util_CavePlant.fungiponicsBasinDef)
+                || (edifice.def == ThingDef.Named("PlantPot"))))
             {
                 return true;
             }
             return false;
-
         }
 
         /// <summary>
