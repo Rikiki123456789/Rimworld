@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{714B137A-A3B5-4FB5-8B64-C3FDDC358216}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FishIndustry</RootNamespace>
+    <AssemblyName>FishIndustry</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.12.5719.23323, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_AquacultureBasin.cs" />
+    <Compile Include="Building_FishingPier.cs" />
+    <Compile Include="Building_FishingPierSpawner.cs" />
+    <Compile Include="Bill_Production_AquacultureBasin.cs" />
+    <Compile Include="Alert_AquaponicBasinNeedsAquaponicHopper.cs" />
+    <Compile Include="Building_AquacultureHopper.cs" />
+    <Compile Include="Alert_FrozenFishingSpot.cs" />
+    <Compile Include="Alert_AquaponicBasinNotBreeding.cs" />
+    <Compile Include="Item_Oyster.cs" />
+    <Compile Include="IncidentWorker_MicroFungus.cs" />
+    <Compile Include="WorkGiver_FillAquaponicHopper.cs" />
+    <Compile Include="PlaceWorker_AquacultureHopper.cs" />
+    <Compile Include="JobDriver_HarvestAquacultureBasinProduction.cs" />
+    <Compile Include="WorkGiver_AquaponicBasin.cs" />
+    <Compile Include="ThingDef_FishSpeciesProperties.cs" />
+    <Compile Include="JobDriver_FishAtFishingPier.cs" />
+    <Compile Include="PlaceWorker_FishingPierSpawner.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util_FishIndustry.cs" />
+    <Compile Include="WorkGiver_FishingPier.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="FishIndustry\Assemblies\" />
+    <Folder Include="FishIndustry\Textures\Things\Item\Equipment\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FishIndustry\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\IncidentDefs\Incident MicroFungus.xml" />
+    <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml" />
+    <Content Include="FishIndustry\Defs\SkillDefs\Skills.xml" />
+    <Content Include="FishIndustry\Defs\StatDefs\Stats_Pawns_WorkGeneral_FishIndustry.xml" />
+    <Content Include="FishIndustry\Defs\ThingCategoryDefs\ThingCategories.xml" />
+    <Content Include="FishIndustry\Defs\ThingDefs\Building_AquacultureHopper.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Building_FishingPier.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Items_Seafood.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Item_Pearl.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Item_Oyster.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\JobDefs\Jobs_FishIndustry.xml" />
+    <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_FishIndustry.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchProjects_Aquaculture.xml" />
+    <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishIndustry.xml" />
+    <Content Include="FishIndustry\Defs\ThingDefs\Apparel_FishingRod.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Building_AquacultureBasin.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Items_Fishes.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Mote_FishIndustry.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs\Weapon_Harpoon.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\WorkTypeDefs\WorkTypes_FishIndustry.xml" />
+    <Content Include="FishIndustry\Textures\Things\Building\AquacultureBasin.png" />
+    <Content Include="FishIndustry\Textures\Things\Building\AquacultureHopper.png" />
+    <Content Include="FishIndustry\Textures\Things\Building\FishingPier.png" />
+    <Content Include="FishIndustry\Textures\Things\Building\FishingPierSpawner.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\FishingRod.png" />
+    <Content Include="FishIndustry\Textures\Things\Mote\FishingRodEast.png" />
+    <Content Include="FishIndustry\Textures\Things\Mote\FishingRodNorth.png" />
+    <Content Include="FishIndustry\Textures\Things\Mote\FishingRodSouth.png" />
+    <Content Include="FishIndustry\Textures\Things\Mote\FishingRodWest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FishIndustry\Textures\Things\Building\AquacultureBasin.pdn" />
+    <None Include="FishIndustry\Textures\Things\Mote\FishingRodNorth.pdn" />
+    <None Include="FishIndustry\Textures\Things\Mote\FishingRodSouth.pdn" />
+    <None Include="FishIndustry\Textures\Things\Mote\FishingRodWest.pdn" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\FishIndustry\Assemblies"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

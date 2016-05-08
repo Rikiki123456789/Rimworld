@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingCategoryDefs>
+
+        <ThingCategoryDef>
+          <defName>FreshFish</defName>
+          <label>fresh fish</label>
+          <parent>FoodRaw</parent>
+          <iconPath>Ui/Icons/ThingCategories/FreshFish</iconPath>
+        </ThingCategoryDef>
+
+</ThingCategoryDefs>

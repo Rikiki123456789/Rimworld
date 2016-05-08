@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 
 using UnityEngine;   // Always needed
+//using VerseBase;   // Material/Graphics handling functions are found here
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 //using Verse.AI;    // Needed when you do something with the AI
@@ -12,35 +13,24 @@ using Verse;         // RimWorld universal objects are here
 namespace FishIndustry
 {
     /// <summary>
-    /// Bullet_Rotating class.
+    /// FishingPierSpawner class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class Bullet_Rotating : Bullet
+    class Building_FishingPierSpawner : Building_WorkTable
     {
-        public float angle = 0f;
-
-        public override Quaternion ExactRotation
+        /// <summary>
+        /// Spawns the fishing pier.
+        /// </summary>
+        public override void SpawnSetup()
         {
-            get
-            {
-                return angle.ToQuat();
-            }
-        }
-
-        public override void Tick()
-        {
-            base.Tick();
-
-            angle += 4f;
-        }
-
-        protected override void Impact(Thing hitThing)
-        {
-            base.Impact(hitThing);
-
-            MoteThrower.ThrowLightningGlow(this.ExactPosition, 0.5f);
+            base.SpawnSetup();
+            this.Destroy();
+            Building_FishingPier fishingPier = ThingMaker.MakeThing(Util_FishIndustry.FishingPierDef) as Building_FishingPier;
+            IntVec3 fishingPierPosition = this.Position + new IntVec3(0, 0, -1).RotatedBy(this.Rotation);
+            GenSpawn.Spawn(fishingPier, fishingPierPosition, this.Rotation);
+            fishingPier.SetFactionDirect(Faction.OfColony);
         }
     }
 }
