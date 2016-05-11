@@ -332,11 +332,11 @@ namespace FishIndustry
                                     CompRottable rotComp = thing.TryGetComp<CompRottable>();
                                     if (rotComp != null)
                                     {
-                                        rotComp.rotProgress = 600000f; // 20 days so the corpse is dessicated.
+                                        rotComp.rotProgress = 20f * 60000f; // 20 days so the corpse is dessicated.
                                     }
                                 }
                             }
-                            string eventText = this.pawn.Name.ToStringShort.CapitalizeFirst() + " has cought a dead body while fishing!\n\n 'This is really disgusting but look at his gear! This guy was probably a Mining & Co. security member. I wonder what happend to him...'\n";
+                            string eventText = this.pawn.Name.ToStringShort.CapitalizeFirst() + " has cought a dead body while fishing!\n\n'This is really disgusting but look at his gear! This guy was probably a Mining & Co. security member. I wonder what happend to him...'\n";
                             Find.LetterStack.ReceiveLetter("Dead marine", eventText, LetterType.Good, this.pawn.Position);
                         }
                         else

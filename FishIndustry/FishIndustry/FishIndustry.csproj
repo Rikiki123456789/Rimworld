@@ -81,6 +81,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\IncidentDefs\Incident MicroFungus.xml" />
+    <Content Include="FishIndustry\Defs\JobDefs\Jobs_Joy.xml" />
     <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml" />
     <Content Include="FishIndustry\Defs\SkillDefs\Skills.xml" />
     <Content Include="FishIndustry\Defs\StatDefs\Stats_Pawns_WorkGeneral_FishIndustry.xml" />
@@ -100,7 +101,7 @@
     <Content Include="FishIndustry\Defs\ThingDefs\Item_Oyster.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\JobDefs\Jobs_FishIndustry.xml" />
+    <Content Include="FishIndustry\Defs\JobDefs\Jobs_FishAndHarvest.xml" />
     <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>

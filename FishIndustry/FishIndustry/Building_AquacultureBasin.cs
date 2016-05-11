@@ -333,6 +333,7 @@ namespace FishIndustry
             this.breedingSpeciesDef = null;
             this.breedingIsFinished = false;
             this.breedingProgressInTicks = 0;
+            Messages.Message("Bred fishes have died in an aquaculture basin. You should check its conditions.", this, MessageSound.Negative);
         }
 
         /// <summary>
@@ -457,9 +458,9 @@ namespace FishIndustry
         {
             if (this.microFungusRemainingDurationInTicks > 0)
             {
-                if (this.microFungusRemainingDurationInTicks <= 100)
+                if (this.microFungusRemainingDurationInTicks <= 5000)
                 {
-                    microFungusFadingFactor = (float)this.microFungusRemainingDurationInTicks / 100f;
+                    microFungusFadingFactor = (float)this.microFungusRemainingDurationInTicks / 5000f;
                 }
                 else
                 {

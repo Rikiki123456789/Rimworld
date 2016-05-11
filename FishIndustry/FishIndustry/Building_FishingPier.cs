@@ -31,8 +31,7 @@ namespace FishIndustry
         private const int maxFishStock = 5;
         public int fishStock = maxFishStock;
         private const int fishStockRespawnInterval = 60000 / maxFishStock;
-        private int fishStockRespawnCounter = 0;
-        private int fishStockNextUpdateTick = 0;
+        private int fishStockRespawnTick = 0;
 
         /// <summary>
         /// Convert the cells under the fishing pier into fishing pier cells (technically just water cells with movespeed = 100%).
@@ -91,15 +90,14 @@ namespace FishIndustry
 
             if (this.fishStock < maxFishStock)
             {
-                if (Find.TickManager.TicksGame >= this.fishStockNextUpdateTick)
+                if (this.fishStockRespawnTick == 0)
                 {
-                    this.fishStockNextUpdateTick = Find.TickManager.TicksGame + GenTicks.TickRareInterval;
-                    this.fishStockRespawnCounter += GenTicks.TickRareInterval;
-                    if (this.fishStockRespawnCounter >= fishStockRespawnInterval)
-                    {
-                        this.fishStock++;
-                        this.fishStockRespawnCounter = 0;
-                    }
+                    this.fishStockRespawnTick = Find.TickManager.TicksGame + (int)((float)fishStockRespawnInterval * Rand.Range(0.8f, 1.2f));
+                }
+                if (Find.TickManager.TicksGame >= this.fishStockRespawnTick)
+                {
+                    this.fishStock++;
+                    this.fishStockRespawnTick = 0;
                 }
             }
         }
@@ -127,8 +125,7 @@ namespace FishIndustry
             Scribe_Values.LookValue<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
             Scribe_Values.LookValue<String>(ref this.middleTerrainCellDefAsString, "middleTerrainCellDefAsString");
             Scribe_Values.LookValue<int>(ref this.fishStock, "fishStock", 5);
-            Scribe_Values.LookValue<int>(ref this.fishStockRespawnCounter, "fishStockRespawnCounter", 0);
-            Scribe_Values.LookValue<int>(ref this.fishStockNextUpdateTick, "fishStockNextUpdateTick", 0);
+            Scribe_Values.LookValue<int>(ref this.fishStockRespawnTick, "fishStockRespawnTick", 0);
         }
 
         /// <summary>

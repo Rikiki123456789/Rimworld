@@ -32,11 +32,11 @@ namespace FishIndustry
             foreach (Building building in Find.ListerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef))
             {
                 aquacultureBasin = building as Building_AquacultureBasin;
-                aquacultureBasin.StartMicroFungusInfestation(Rand.Range((int)this.def.durationDays.min, (int)this.def.durationDays.max));
+                aquacultureBasin.StartMicroFungusInfestation((int)(60000f * Rand.Range(this.def.durationDays.min, this.def.durationDays.max)));
             }
             if (aquacultureBasin != null)
             {
-                Find.LetterStack.ReceiveLetter("Micro fungus", "Some of your aquaculture basins have been infected by a strange aquatic fungus.\n It seems to consume all the water's oxygen.\n Let's hope the fishes will survive this deprivation.", LetterType.BadNonUrgent, aquacultureBasin);
+                Find.LetterStack.ReceiveLetter("Micro fungus", "Some of your aquaculture basins have been infected by a strange aquatic fungus.\nIt seems to consume all the water's oxygen.\nLet's hope the fishes will survive this deprivation.", LetterType.BadNonUrgent, aquacultureBasin);
             }
 
             return true;

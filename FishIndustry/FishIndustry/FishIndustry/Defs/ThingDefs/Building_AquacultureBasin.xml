@@ -43,6 +43,7 @@
     </comps>
     <CostList>
       <Steel>200</Steel>
+      <Components>3</Components>
     </CostList>
     <UseHitPoints>True</UseHitPoints>
     <statBases>
