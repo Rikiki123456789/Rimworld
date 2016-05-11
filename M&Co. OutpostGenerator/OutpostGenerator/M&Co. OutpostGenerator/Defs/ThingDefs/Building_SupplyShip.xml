@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <GameData>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>SupplyShip</defName>
     <label>supply ship</label>
@@ -43,6 +32,7 @@
     <costList>
       <Steel>50000</Steel>
       <Plasteel>10000</Plasteel>
+      <Components>100</Components>
     </costList>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
   </ThingDef>

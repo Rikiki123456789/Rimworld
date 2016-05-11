@@ -9,7 +9,6 @@ using Verse.AI;
 using Verse.Sound;
 using RimWorld;
 //using RimWorld.Planet;
-using RimWorld.SquadAI;
 
 
 namespace OutpostGenerator
@@ -33,9 +32,9 @@ namespace OutpostGenerator
         {
             yield return Toils_Reserve.Reserve(outpostCommandConsoleTarget);
 
-            yield return Toils_Goto.GotoCell(outpostCommandConsoleTarget, PathEndMode.InteractionCell).FailOnDestroyed(outpostCommandConsoleTarget);
+            yield return Toils_Goto.GotoCell(outpostCommandConsoleTarget, PathEndMode.InteractionCell).FailOnDestroyedOrNull(outpostCommandConsoleTarget);
 
-            yield return Toils_General.Wait(800).FailOnDestroyed(outpostCommandConsoleTarget);
+            yield return Toils_General.Wait(800).FailOnDestroyedOrNull(outpostCommandConsoleTarget);
 
             Toil outpostCaptureResultToil = new Toil()
             {

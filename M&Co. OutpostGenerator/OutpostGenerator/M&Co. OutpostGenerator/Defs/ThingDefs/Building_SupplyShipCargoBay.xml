@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef Name="Building_SupplyShipCargoBay" ParentName="BuildingBase" Abstract="True">
     <defName>SupplyShipCargoBay</defName>
     <label>supply ship cargo bay</label>
@@ -71,6 +59,7 @@
     <size>(3,4)</size>
     <costList>
       <Steel>250</Steel>
+      <Components>10</Components>
     </costList>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
   </ThingDef>

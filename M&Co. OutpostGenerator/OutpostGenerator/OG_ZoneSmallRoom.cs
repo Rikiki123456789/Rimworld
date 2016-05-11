@@ -143,7 +143,7 @@ namespace OutpostGenerator
                     if (qualityComp != null)
                     {
                         QualityCategory quality = (QualityCategory)Rand.RangeInclusive((int)QualityCategory.Normal, (int)QualityCategory.Superior);
-                        qualityComp.SetQuality(quality, ArtGenerationSource.Outsider);
+                        qualityComp.SetQuality(quality, ArtGenerationContext.Outsider);
                     }
                     GenSpawn.Spawn(weapon, cell);
                 }

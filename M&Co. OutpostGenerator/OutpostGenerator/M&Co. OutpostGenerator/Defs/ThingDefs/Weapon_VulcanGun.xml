@@ -15,7 +15,7 @@
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
       <Flammability>1.0</Flammability>
-      <DeteriorationRate>1</DeteriorationRate>
+      <DeteriorationRate>2</DeteriorationRate>
       <SellPriceFactor>0.5</SellPriceFactor>
     </statBases>
     <altitudeLayer>Item</altitudeLayer>
@@ -29,19 +29,16 @@
       <li>ITab_Art</li>
     </inspectorTabs>
     <comps>
-      <li>
-        <compClass>CompForbiddable</compClass>
-      </li>
+      <li Class="CompProperties_Forbiddable"/>
       <li>
         <compClass>CompEquippable</compClass>
       </li>
       <li>
         <compClass>CompQuality</compClass>
       </li>
-      <li>
-        <compClass>CompArt</compClass>
-        <nameMaker>NamerGun</nameMaker>
-        <descriptionMaker>ArtWeaponGun</descriptionMaker>
+      <li Class="CompProperties_Art">
+        <nameMaker>ArtName_WeaponGun</nameMaker>
+        <descriptionMaker>ArtDescription_WeaponGun</descriptionMaker>
         <minQualityForArtistic>Excellent</minQualityForArtistic>
       </li>
     </comps>

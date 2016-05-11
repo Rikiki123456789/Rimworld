@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>OrbitalRelay</defName>
     <label>orbital relay</label>
@@ -45,11 +34,13 @@
     </costList>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <comps>
-      <li>
+      <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>250</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
       </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
     </comps>
     <building>
       <soundDispense>GeothermalPlant_Ambience</soundDispense>

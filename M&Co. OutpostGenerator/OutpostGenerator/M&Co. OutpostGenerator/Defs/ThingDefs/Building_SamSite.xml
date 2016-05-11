@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ThingDefs>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>SamSite</defName>
     <label>SAM site</label>
@@ -21,6 +10,12 @@
       <texPath>Things/Building/Security/SamSite</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(3,3)</drawSize>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
     </graphicData>
     <uiIconPath>Things/Building/Security/SamSiteUiIcon</uiIconPath>
     <size>(3,3)</size>
@@ -33,19 +28,18 @@
     </statBases>
     <tickerType>Normal</tickerType>
     <comps>
-      <li>
-        <compClass>CompExplosive</compClass>
-        <explosiveRadius>5.9</explosiveRadius>
-        <explosiveDamageType>Bomb</explosiveDamageType>
-      </li>
-      <li>
-        <compClass>CompForbiddable</compClass>
-      </li>
-      <li>
+      <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <startElectricalFires>false</startElectricalFires>
         <basePowerConsumption>500</basePowerConsumption>
       </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>5.9</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+      </li>
+      <li Class="CompProperties_Forbiddable"/>
     </comps>
     <passability>Impassable</passability>
     <fillPercent>0.5</fillPercent>
@@ -55,7 +49,7 @@
     <costList>
       <Steel>500</Steel>
       <Plasteel>200</Plasteel>
-      <IntegratedCircuitsBoard>10</IntegratedCircuitsBoard>
+      <Components>5</Components>
     </costList>
     <combatTargetBuilding>true</combatTargetBuilding>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>

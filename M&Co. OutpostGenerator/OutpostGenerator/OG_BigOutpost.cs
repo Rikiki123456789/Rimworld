@@ -24,6 +24,7 @@ namespace OutpostGenerator
     // TODO: remove crypto bay content.
     // TODO: add special effect when loading pawn in crypto bay. => SoundDef.Named("CryptosleepCasketAccept").PlayOneShot(base.Position);
     //    => OR SoundDef.Named("CryptosleepCasketEject").PlayOneShot(SoundInfo.InWorld(base.Position, MaintenanceType.None));
+    // TODO: add components shipping.
 
     /// <summary>
     /// OG_BigOutpost class.

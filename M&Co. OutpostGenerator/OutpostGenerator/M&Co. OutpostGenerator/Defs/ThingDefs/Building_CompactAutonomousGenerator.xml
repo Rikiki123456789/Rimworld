@@ -3,6 +3,7 @@
 
   <ThingDef Name="BuildingBase" Abstract="True">
     <category>Building</category>
+    <thingClass>Building</thingClass>
     <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
     <selectable>true</selectable>
     <drawerType>MapMeshAndRealTime</drawerType>
@@ -22,6 +23,12 @@
       <texPath>Things/Building/Power/GeothermalPlant</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(2,2)</drawSize>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
     </graphicData>
     <altitudeLayer>BuildingTall</altitudeLayer>
     <passability>Impassable</passability>
@@ -41,21 +48,20 @@
       <Gold>100</Gold>
     </costList>
     <comps>
-      <li>
+      <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <basePowerConsumption>-10000</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
-        <powerToggleable>false</powerToggleable>
+        <shortCircuitInRain>false</shortCircuitInRain>
       </li>
-      <li>
-        <compClass>CompExplosive</compClass>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Explosive">
         <explosiveRadius>15</explosiveRadius>
         <explosiveDamageType>Conflagration</explosiveDamageType>
       </li>
-      <li>
-        <compClass>CompHeatPusher</compClass>
+      <li Class="CompProperties_HeatPusher">
         <heatPerSecond>5</heatPerSecond>
-        <heatPushMaxTemperature>150</heatPushMaxTemperature>
+        <heatPushMaxTemperature>120</heatPushMaxTemperature>
       </li>
     </comps>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>

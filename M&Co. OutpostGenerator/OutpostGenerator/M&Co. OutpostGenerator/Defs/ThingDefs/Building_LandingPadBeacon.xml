@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-  
   <ThingDef Abstract="True" Name="StandingLampBase" ParentName="BuildingBase">
     <thingClass>Building</thingClass>
     <category>Building</category>
@@ -23,7 +10,7 @@
     <selectable>true</selectable>
     <fillPercent>0.20</fillPercent>
     <costList>
-      <Steel>5</Steel>
+      <Steel>15</Steel>
     </costList>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
@@ -33,17 +20,31 @@
       <texPath>Things/Building/Furniture/LampStanding</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shadowData>
-        <volume>(0.1, 0.3, 0.1)</volume>
+        <volume>(0.3, 0.6, 0.3)</volume>
         <offset>(0,0,-0.1)</offset>
       </shadowData>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
     </graphicData>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>50</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
     <statBases>
       <MaxHitPoints>50</MaxHitPoints>
-      <WorkToMake>250</WorkToMake>
-      <Flammability>0.0</Flammability>
+      <WorkToMake>170</WorkToMake>
+      <Flammability>1.0</Flammability>
     </statBases>
   </ThingDef>
-    
+
   <ThingDef ParentName="StandingLampBase">
     <defName>LandingPadBeacon</defName>
     <label>landing pad beacon</label>
@@ -52,8 +53,7 @@
     <TickerType>Normal</TickerType>
     <passability>Standable</passability>
     <comps>
-      <li>
-        <compClass>CompGlower</compClass>
+      <li Class="CompProperties_Glower">
         <glowRadius>3</glowRadius>
         <overlightRadius>2.9</overlightRadius>
         <glowColor>(217,0,0,0)</glowColor>

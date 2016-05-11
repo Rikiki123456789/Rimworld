@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>OutpostCommandConsole</defName>
     <label>outpost command console</label>
@@ -22,6 +11,11 @@
       <texPath>Things/Building/Misc/OutpostCommandConsole</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(5,4)</drawSize>
+      <damageData>
+        <rect>(0,0,3,1.8)</rect>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
     </graphicData>
     <altitudeLayer>BuildingTall</altitudeLayer>
     <passability>Impassable</passability>
@@ -35,18 +29,24 @@
     <size>(3,2)</size>
     <costList>
       <Steel>120</Steel>
+      <Components>4</Components>
     </costList>
     <interactionCellOffset>(0,0,2)</interactionCellOffset>
     <hasInteractionCell>true</hasInteractionCell>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <comps>
-      <li>
+      <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <startElectricalFires>true</startElectricalFires>
         <basePowerConsumption>200</basePowerConsumption>
       </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
     </comps>
     <staticSunShadowHeight>0.5</staticSunShadowHeight>
+    <researchPrerequisites>
+      <li>MicroelectronicsBasics</li>
+    </researchPrerequisites>
   </ThingDef>
 
 </Buildings>

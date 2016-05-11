@@ -1,17 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>FireproofPowerConduit</defName>
     <label>fireproof power conduit</label>
@@ -25,6 +14,9 @@
       <linkFlags>
         <li>PowerConduit</li>
       </linkFlags>
+      <damageData>
+        <rect>(0,0.35,1,0.3)</rect>
+      </damageData>
     </graphicData>
     <blueprintGraphicData>
       <texPath>Things/Building/Linked/PowerConduit_Blueprint_Atlas</texPath>
@@ -49,7 +41,7 @@
       <Steel>3</Steel>
     </costList>
     <comps>
-      <li>
+      <li Class="CompProperties_Power">
         <compClass>CompPowerTransmitter</compClass>
         <transmitsPower>true</transmitsPower>
       </li>

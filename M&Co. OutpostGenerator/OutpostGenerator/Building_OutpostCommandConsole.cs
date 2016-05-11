@@ -6,8 +6,8 @@ using System.Text;
 using UnityEngine;   // Always needed
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
-using Verse.AI;      // Needed when you do something with the AI
-using RimWorld.SquadAI;
+using Verse.AI;         // Needed when you do something with the AI
+using Verse.AI.Group;   // Needed when you do something with group AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
 namespace OutpostGenerator
@@ -59,7 +59,8 @@ namespace OutpostGenerator
             }
             foreach (Thing thing in this.outpostThingList)
             {
-                if (thing is Building_TurretGun)
+                if ((thing.def == ThingDef.Named("TurretGun"))
+                    || (thing.def == OG_Util.VulcanTurretDef))
                 {
                     thing.SetFaction(turretsNewFaction);
                     if (deactivateTurrets)
@@ -67,7 +68,7 @@ namespace OutpostGenerator
                         CompPowerTrader powerComp = thing.TryGetComp<CompPowerTrader>();
                         if (powerComp != null)
                         {
-                            powerComp.DoFlick();
+                            powerComp.PowerOn = false;
                         }
                     }
                 }
@@ -90,7 +91,7 @@ namespace OutpostGenerator
                         CompPowerTrader powerComp = thing.TryGetComp<CompPowerTrader>();
                         if (powerComp != null)
                         {
-                            powerComp.DoFlick();
+                            powerComp.PowerOn = false;
                             (thing as Building_Door).StartManualOpenBy(null);
                         }
                     }
@@ -124,16 +125,18 @@ namespace OutpostGenerator
                     });
                 }
             }
-            StateGraph stateGraph = null;
+
+            Lord lord;
             if (assaultColony)
             {
-                stateGraph = GraphMaker.AssaultColonyGraph(faction, true, true);
+                LordJob_AssaultColony lordJob = new LordJob_AssaultColony(faction, true, true, false);
+                lord = LordMaker.MakeNewLord(faction, lordJob, securityForcesList);
             }
             else
             {
-                stateGraph = GraphMaker.MechanoidsDefendShipGraph(this, 10f);
+                LordJob_MechanoidsDefendShip lordJob_DefendPoint = new LordJob_MechanoidsDefendShip(this, faction, 50f, this.dropZoneCenter);
+                lord = LordMaker.MakeNewLord(faction, lordJob_DefendPoint, securityForcesList);
             }
-            BrainMaker.MakeNewBrain(faction, stateGraph, securityForcesList);
         }
         
         public void TreatIntrusion(IntVec3 intrusionCell)
@@ -145,12 +148,12 @@ namespace OutpostGenerator
             // The following section is needed so existing pawns will be treated as ennemies.
             if (Game.Mode == GameMode.MapPlaying)
             {
-                List<Pawn> list = (from pa in Find.ListerPawns.AllPawns
+                List<Pawn> list = (from pa in Find.MapPawns.AllPawns
                                    where pa.Faction == Faction.OfColony || pa.Faction == OG_Util.FactionOfMAndCo
                                    select pa).ToList<Pawn>();
                 foreach (Pawn pawn in list)
                 {
-                    Find.ListerPawns.UpdateRegistryForPawn(pawn);
+                    Find.MapPawns.UpdateRegistryForPawn(pawn);
                 }
             }
 

@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef Name="SupplyShipCryptosleepBay" ParentName="BuildingBase" Abstract="True">
     <defName>SupplyShipCryptosleepBay</defName>
     <label>supply ship cryptosleep bay</label>
@@ -44,6 +32,7 @@
     <costList>
       <Steel>500</Steel>
       <Uranium>50</Uranium>
+      <Components>10</Components>
     </costList>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
   </ThingDef>

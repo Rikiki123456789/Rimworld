@@ -1,18 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase" Name="DoorBase" Abstract="True">
     <thingClass>Building_Door</thingClass>
     <blueprintClass>Blueprint_Door</blueprintClass>
@@ -38,6 +26,7 @@
     <rotatable>false</rotatable>
     <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Structure</designationCategory>
     <holdsRoof>true</holdsRoof>
     <staticSunShadowHeight>1.0</staticSunShadowHeight>
     <blockLight>true</blockLight>
@@ -51,9 +40,7 @@
       <canPlaceOverWall>true</canPlaceOverWall>
     </building>
     <comps>
-      <li>
-        <compClass>CompForbiddable</compClass>
-      </li>
+      <li Class="CompProperties_Forbiddable"/>
     </comps>
   </ThingDef>
 
@@ -75,10 +62,11 @@
     </costList>
     <costStuffCount>40</costStuffCount>
     <comps>
-      <li>
+      <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <basePowerConsumption>50</basePowerConsumption>
       </li>
+      <li Class="CompProperties_Breakdownable"/>
     </comps>
   </ThingDef>
 

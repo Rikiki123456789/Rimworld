@@ -8,7 +8,6 @@ using UnityEngine;   // Always needed
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
-using RimWorld.SquadAI; // Needed when you do something with the squad AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
 namespace OutpostGenerator
@@ -43,7 +42,7 @@ namespace OutpostGenerator
 
         public static bool EnemyIsNear(Pawn p, float radius)
         {
-            foreach (Pawn current in Find.ListerPawns.AllPawns)
+            foreach (Pawn current in Find.MapPawns.AllPawns)
             {
                 if ((current.HostileTo(p.Faction)) && !current.Downed && (current.Position - p.Position).LengthHorizontalSquared < radius * radius)
                 {

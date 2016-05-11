@@ -9,7 +9,6 @@ using UnityEngine;   // Always needed
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
-using RimWorld.SquadAI; // Needed when you do something with the squad AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
 namespace OutpostGenerator
@@ -203,9 +202,10 @@ namespace OutpostGenerator
                 guardsList.Add(pawn);
             }
             // Affect squad brain to outpost guards.
-            State_DefendOutpost stateDefend = new State_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
+            LordToil_DefendOutpost stateDefend = new LordToil_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
             StateGraph stateGraph = GraphMaker.SingleStateGraph(stateDefend);
             BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);
+            // TODO: Use LordToil_Stage and LordToil_HuntEnemies
         }
 
         private static void AddJoyAndComfortNeed(Pawn pawn)
@@ -231,14 +231,14 @@ namespace OutpostGenerator
             {
                 apparel.SetColor(apparelColor);
             }
-            apparel.TryGetComp<CompQuality>().SetQuality(apparelQuality, ArtGenerationSource.Outsider);
+            apparel.TryGetComp<CompQuality>().SetQuality(apparelQuality, ArtGenerationContext.Outsider);
             pawn.apparel.Wear(apparel);
         }
 
         private static void GeneratePawnWeapon(ref Pawn pawn, QualityCategory weaponQuality, ThingDef weaponDef)
         {
             ThingWithComps weapon = ThingMaker.MakeThing(weaponDef) as ThingWithComps;
-            weapon.TryGetComp<CompQuality>().SetQuality(weaponQuality, ArtGenerationSource.Outsider);
+            weapon.TryGetComp<CompQuality>().SetQuality(weaponQuality, ArtGenerationContext.Outsider);
             pawn.equipment.AddEquipment(weapon);
         }
     }

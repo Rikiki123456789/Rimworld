@@ -7,7 +7,6 @@ using UnityEngine;   // Always needed
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
-using RimWorld.SquadAI;
 using Verse.Sound;   // Needed when you do something with the Sound
 
 namespace OutpostGenerator
@@ -20,7 +19,7 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_LandingPadBeacon : Building
     {
-        public const int flashPeriodInTicks = 15 * (int)GenTicks.TicksPerRealtimeSecond;
+        public const int flashPeriodInTicks = 15 * (int)GenTicks.TicksPerRealSecond;
         private int flashStartInTicks = flashPeriodInTicks;
         public const int flashDurationInTicks = 10;
         private int flashStopInTicks = 0;
@@ -32,7 +31,10 @@ namespace OutpostGenerator
             base.SpawnSetup();
 
             glower = this.TryGetComp<CompGlower>();
-            glower.Lit = false;
+            glower.Props.glowRadius = 0f;
+            glower.Props.overlightRadius = 0f;
+            Find.MapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
+            Find.GlowGrid.MarkGlowGridDirty(this.Position);
         }
 
         public void SetFlashStartOffset(int offsetInTicks)
@@ -49,7 +51,10 @@ namespace OutpostGenerator
                 flashStartInTicks--;
                 if (flashStartInTicks == 0)
                 {
-                    glower.Lit = true;
+                    glower.Props.glowRadius = 3f;
+                    glower.Props.overlightRadius = 2.9f;
+                    Find.MapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
+                    Find.GlowGrid.MarkGlowGridDirty(this.Position);
                     flashStopInTicks = flashDurationInTicks;
                 }
             }
@@ -58,7 +63,10 @@ namespace OutpostGenerator
                 flashStopInTicks--;
                 if (flashStopInTicks == 0)
                 {
-                    glower.Lit = false;
+                    glower.Props.glowRadius = 0f;
+                    glower.Props.overlightRadius = 0f;
+                    Find.MapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
+                    Find.GlowGrid.MarkGlowGridDirty(this.Position);
                     flashStartInTicks = flashPeriodInTicks;
                 }
             }

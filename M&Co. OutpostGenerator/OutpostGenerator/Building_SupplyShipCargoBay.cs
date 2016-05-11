@@ -7,7 +7,6 @@ using UnityEngine;   // Always needed
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
-using RimWorld.SquadAI;
 using Verse.Sound;   // Needed when you do something with the Sound
 
 namespace OutpostGenerator

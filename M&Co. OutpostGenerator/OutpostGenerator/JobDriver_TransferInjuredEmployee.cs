@@ -9,7 +9,6 @@ using Verse.AI;
 using Verse.Sound;
 using RimWorld;
 //using RimWorld.Planet;
-using RimWorld.SquadAI;
 
 
 namespace OutpostGenerator
@@ -25,9 +24,9 @@ namespace OutpostGenerator
         {
             yield return Toils_Reserve.Reserve(casketTarget);
 
-            yield return Toils_Goto.GotoCell(casketTarget, PathEndMode.InteractionCell).FailOnDestroyed(casketTarget);
+            yield return Toils_Goto.GotoCell(casketTarget, PathEndMode.InteractionCell).FailOnDestroyedOrNull(casketTarget);
 
-            yield return Toils_General.Wait(300).FailOnDestroyed(casketTarget);
+            yield return Toils_General.Wait(300).FailOnDestroyedOrNull(casketTarget);
 
             Toil openCasketToil = new Toil()
             {
