@@ -25,6 +25,8 @@ namespace OutpostGenerator
     // TODO: add special effect when loading pawn in crypto bay. => SoundDef.Named("CryptosleepCasketAccept").PlayOneShot(base.Position);
     //    => OR SoundDef.Named("CryptosleepCasketEject").PlayOneShot(SoundInfo.InWorld(base.Position, MaintenanceType.None));
     // TODO: add components shipping.
+    // TODO: don't spawn farm zone in arctic or extreme desert.
+    // TODO: landing pad beacons...
 
     /// <summary>
     /// OG_BigOutpost class.

@@ -213,7 +213,7 @@ namespace OutpostGenerator
 
             // Spawn workbenches.
             OG_Common.TrySpawnThingAt(ThingDef.Named("TableMachining"), null, rotatedOrigin + new IntVec3(7, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("TableSmithing"), null, rotatedOrigin + new IntVec3(9, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("ElectricSmithy"), null, rotatedOrigin + new IntVec3(9, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
 
             // Spawn heaters and coolers.
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(1, 0, 4).RotatedBy(rotation), ref outpostData);

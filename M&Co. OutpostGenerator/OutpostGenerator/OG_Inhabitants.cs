@@ -8,7 +8,8 @@ using UnityEngine;   // Always needed
 //using VerseBase;   // Material/Graphics handling functions are found here
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
-using Verse.AI;      // Needed when you do something with the AI
+using Verse.AI;       // Needed when you do something with the AI
+using Verse.AI.Group; // Needed when you do something with the AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
 namespace OutpostGenerator
@@ -202,9 +203,19 @@ namespace OutpostGenerator
                 guardsList.Add(pawn);
             }
             // Affect squad brain to outpost guards.
-            LordToil_DefendOutpost stateDefend = new LordToil_DefendOutpost(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
+            /*LordToil_DefendOutpost stateDefend = new LordToil_DefendOutpost(
+                outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
             StateGraph stateGraph = GraphMaker.SingleStateGraph(stateDefend);
-            BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);
+            BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);*/
+
+
+            /*StateGraph stateGraph = new StateGraph();
+            LordToil_DefendPoint lordToil_DefendPoint = new LordToil_DefendPoint(
+                outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
+            stateGraph.StartingToil = lordToil_DefendPoint;*/
+            
+            LordJob lordJob = new LordJob_DefendPoint(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2));
+            Lord lord = LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob, guardsList);
             // TODO: Use LordToil_Stage and LordToil_HuntEnemies
         }
 

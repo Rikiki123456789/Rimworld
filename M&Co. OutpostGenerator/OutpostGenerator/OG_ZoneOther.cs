@@ -260,13 +260,19 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, northWestOrigin + new IntVec3(3, 0, 2).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, northWestOrigin + new IntVec3(3, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, northWestOrigin + new IntVec3(4, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
+            for (int zOffset = -3; zOffset <= 3; zOffset++)
+            {
+                if ((zOffset == 1)
+                    && ModsConfig.IsActive("M&Co. ForceField"))
+                {
+                    // Do not spawn power conduit under force field as it generates a warning message.
+                    continue;
+                }
+                OG_Common.SpawnFireproofPowerConduitAt(northWestOrigin + new IntVec3(2, 0, zOffset).RotatedBy(rotation), ref outpostData);
+            }
             if (ModsConfig.IsActive("M&Co. ForceField"))
             {
                 OG_Common.TrySpawnThingAt(ThingDef.Named("ForceFieldGenerator"), null, northWestOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            }
-            for (int zOffset = -3; zOffset <= 3; zOffset++)
-            {
-                OG_Common.SpawnFireproofPowerConduitAt(northWestOrigin + new IntVec3(2, 0, zOffset).RotatedBy(rotation), ref outpostData);
             }
 
             // Generate central sandbag.
@@ -294,13 +300,19 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, northEastOrigin + new IntVec3(3, 0, 2).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, northEastOrigin + new IntVec3(3, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, northEastOrigin + new IntVec3(4, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
+            for (int zOffset = -3; zOffset <= 3; zOffset++)
+            {
+                if ((zOffset == 1)
+                    && ModsConfig.IsActive("M&Co. ForceField"))
+                {
+                    // Do not spawn power conduit under force field as it generates a warning message.
+                    continue;
+                }
+                OG_Common.SpawnFireproofPowerConduitAt(northEastOrigin + new IntVec3(2, 0, zOffset).RotatedBy(rotation), ref outpostData);
+            }
             if (ModsConfig.IsActive("M&Co. ForceField"))
             {
                 OG_Common.TrySpawnThingAt(ThingDef.Named("ForceFieldGenerator"), null, northEastOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
-            }
-            for (int zOffset = -3; zOffset <= 3; zOffset++)
-            {
-                OG_Common.SpawnFireproofPowerConduitAt(northEastOrigin + new IntVec3(2, 0, zOffset).RotatedBy(rotation), ref outpostData);
             }
         }
 

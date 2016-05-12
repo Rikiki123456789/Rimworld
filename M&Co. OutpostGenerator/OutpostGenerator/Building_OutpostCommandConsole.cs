@@ -125,18 +125,17 @@ namespace OutpostGenerator
                     });
                 }
             }
-
-            Lord lord;
+            
+            LordJob lordJob;
             if (assaultColony)
             {
-                LordJob_AssaultColony lordJob = new LordJob_AssaultColony(faction, true, true, false);
-                lord = LordMaker.MakeNewLord(faction, lordJob, securityForcesList);
+                lordJob = new LordJob_AssaultColony(faction, true, true, false);
             }
             else
             {
-                LordJob_MechanoidsDefendShip lordJob_DefendPoint = new LordJob_MechanoidsDefendShip(this, faction, 50f, this.dropZoneCenter);
-                lord = LordMaker.MakeNewLord(faction, lordJob_DefendPoint, securityForcesList);
+                lordJob = new LordJob_MechanoidsDefendShip(this, faction, 50f, this.dropZoneCenter);
             }
+            Lord lord = LordMaker.MakeNewLord(faction, lordJob, securityForcesList);
         }
         
         public void TreatIntrusion(IntVec3 intrusionCell)

@@ -48,7 +48,7 @@ namespace OutpostGenerator
             }
 
             // Generate crops.
-            ThingDef plantDef = ThingDef.Named("PlantXerigium");
+            ThingDef plantDef = ThingDef.Named("PlantHealroot");
             if (Rand.Value < 0.5f)
             {
                 plantDef = ThingDef.Named("PlantDevilstrand");

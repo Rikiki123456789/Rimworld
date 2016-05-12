@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-  <ThingDef Abstract="True" Name="StandingLampBase" ParentName="BuildingBase">
+  <ThingDef Abstract="True" Name="LandingPadBeaconBase" ParentName="BuildingBase">
     <thingClass>Building</thingClass>
     <category>Building</category>
     <minifiedDef>MinifiedFurniture</minifiedDef>
@@ -27,17 +27,6 @@
         <rect>(0.2,0.2,0.6,0.6)</rect>
       </damageData>
     </graphicData>
-    <comps>
-      <li Class="CompProperties_Power">
-        <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>50</basePowerConsumption>
-        <shortCircuitInRain>false</shortCircuitInRain>
-      </li>
-      <li Class="CompProperties_Flickable"/>
-      <li>
-        <compClass>CompQuality</compClass>
-      </li>
-    </comps>
     <statBases>
       <MaxHitPoints>50</MaxHitPoints>
       <WorkToMake>170</WorkToMake>
@@ -45,7 +34,7 @@
     </statBases>
   </ThingDef>
 
-  <ThingDef ParentName="StandingLampBase">
+  <ThingDef ParentName="LandingPadBeaconBase">
     <defName>LandingPadBeacon</defName>
     <label>landing pad beacon</label>
     <description>Beacon used by ships to land on.</description>

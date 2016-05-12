@@ -51,7 +51,6 @@
       <Plasteel>200</Plasteel>
       <Components>5</Components>
     </costList>
-    <combatTargetBuilding>true</combatTargetBuilding>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <building>
       <ai_combatDangerous>false</ai_combatDangerous>

@@ -340,7 +340,7 @@ namespace OutpostGenerator
             }
 
             // Spawn television and armchairs.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("Television"), null, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("FlatscreenTelevision"), null, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Armchair"), ThingDef.Named("Cloth"), rotatedOrigin + new IntVec3(6, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Armchair"), ThingDef.Named("Cloth"), rotatedOrigin + new IntVec3(7, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Armchair"), ThingDef.Named("Cloth"), rotatedOrigin + new IntVec3(8, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);

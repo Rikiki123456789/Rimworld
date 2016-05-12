@@ -30,7 +30,7 @@
     <costList>
       <Steel>350</Steel>
       <Plasteel>100</Plasteel>
-      <IntegratedCircuitsBoard>20</IntegratedCircuitsBoard>
+      <Components>20</Components>
     </costList>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <comps>
