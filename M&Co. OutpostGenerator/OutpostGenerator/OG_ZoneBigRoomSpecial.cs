@@ -207,8 +207,11 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDef.Named("Stool"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("TableShort"), ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
 
-            // Spawn outpost command console and battery.
+            // Spawn outpost command console, battery and spare parts cabinet.
             OG_Common.TrySpawnThingAt(ThingDefOf.Battery, null, rotatedOrigin + new IntVec3(1, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(OG_Util.SparePartsCabinetDef, null, rotatedOrigin + new IntVec3(1, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.SpawnResourceAt(ThingDefOf.Components, 10, rotatedOrigin + new IntVec3(1, 0, 7).RotatedBy(rotation), true);
+            OG_Common.SpawnResourceAt(ThingDefOf.Components, 10, rotatedOrigin + new IntVec3(1, 0, 6).RotatedBy(rotation), true);
             commandConsole = OG_Common.TrySpawnThingAt(OG_Util.OutpostCommandConsoleDef, null, rotatedOrigin + new IntVec3(3, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData) as Building_OutpostCommandConsole;
 
             // Spawn workbenches.
@@ -239,7 +242,7 @@ namespace OutpostGenerator
             {
                 Find.TerrainGrid.SetTerrain(cell, TerrainDef.Named("CarpetRed"));
             }
-            if (ModsConfig.IsActive("Miscellaneous_VanillaEnhanced"))
+            if (ModsConfig.IsActive("Miscellaneous_Incidents"))
             {
                 OG_Common.TrySpawnThingAt(ThingDef.Named("TacticalComputer"), null, rotatedOrigin + new IntVec3(5, 0, 5).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             }

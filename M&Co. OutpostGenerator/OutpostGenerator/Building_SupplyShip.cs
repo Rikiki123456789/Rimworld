@@ -63,7 +63,7 @@ namespace OutpostGenerator
             
             if (this.ticksToTakeOff == maxTicksToTakeOff)
             {
-                // Only spawn reinforcement pawns, packaged meals and beer once.
+                // Only spawn reinforcement pawns, packaged meals, beer and components once.
                 // TODO.
                 /*DropPodInfo info = new DropPodInfo();
                 Thing meals = ThingMaker.MakeThing(ThingDefOf.MealSurvivalPack);
@@ -84,16 +84,19 @@ namespace OutpostGenerator
                         GenSpawn.Spawn(pawn, this.Position);
                     }
                 }
+
+                SpawnNecessarySupply();
+
+                UnforbidItemsToLoadInCargoBay();
             }
 
             this.ticksToTakeOff--;
             if (this.ticksToTakeOff <= 0)
             {
-                // TODO: supply ship taking off
-                /*Thing cryptosleepBay = ThingMaker.MakeThing(OG_Util.SupplyShipCryptosleepBayDef);
-                cryptosleepBay.SetFactionDirect(this.Faction);
-                cryptosleepBay.Rotation = this.landingPadRotation;
-                GenSpawn.Spawn(cryptosleepBay, this.landingPadPosition);*/
+                SupplyShipTakingOff supplyShip = ThingMaker.MakeThing(OG_Util.SupplyShipTakingOffDef) as SupplyShipTakingOff;
+                supplyShip.InitializeLandingData(this.Position, this.Rotation);
+                supplyShip.SetFaction(this.Faction);
+                GenSpawn.Spawn(supplyShip, this.Position);
                 this.Destroy();
             }
         }
@@ -101,19 +104,19 @@ namespace OutpostGenerator
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             base.Destroy(mode);
-            if (this.cryptosleepBay1 != null)
+            if (!this.cryptosleepBay1.DestroyedOrNull())
             {
                 this.cryptosleepBay1.Destroy();
             }
-            if (this.cryptosleepBay2 != null)
+            if (!this.cryptosleepBay2.DestroyedOrNull())
             {
                 this.cryptosleepBay2.Destroy();
             }
-            if (this.cargoBay1 != null)
+            if (!this.cargoBay1.DestroyedOrNull())
             {
                 this.cargoBay1.Destroy();
             }
-            if (this.cargoBay2 != null)
+            if (!this.cargoBay2.DestroyedOrNull())
             {
                 this.cargoBay2.Destroy();
             }
@@ -127,6 +130,73 @@ namespace OutpostGenerator
             Scribe_References.LookReference<Thing>(ref this.cryptosleepBay2, "cryptosleepBay2");
             Scribe_References.LookReference<Thing>(ref this.cargoBay1, "cargoBay1");
             Scribe_References.LookReference<Thing>(ref this.cargoBay2, "cargoBay2");
+        }
+        
+        private static void SpawnNecessarySupply()
+        {
+            const int mealsInStockTarget = 0;
+            const int beersInStockTarget = 0;
+            const int componentsInStockTarget = 0;
+            int mealsInOutpost = 0;
+            int beersInOutpost = 0;
+            int componentsInOutpost = 0;
+            int mealsToSupply = 0;
+            int beersToSupply = 0;
+            int componentsToSupply = 0;
+
+            CountResourcesInOutpost(out mealsInOutpost, out beersInOutpost, out componentsInOutpost);
+
+
+        }
+
+        private static void CountResourcesInOutpost(out int meals, out int beers, out int components)
+        {
+            meals = 0;
+            beers = 0;
+            components = 0;
+            if (OG_Util.OutpostArea != null)
+            {
+                foreach (IntVec3 cell in OG_Util.OutpostArea.ActiveCells)
+                {
+                    foreach (Thing thing in cell.GetThingList())
+                    {
+                        if (thing.def == ThingDefOf.MealSurvivalPack)
+                        {
+                            meals++;
+                        }
+                        if (thing.def == ThingDefOf.Beer)
+                        {
+                            beers++;
+                        }
+                        if (thing.def == ThingDefOf.Components)
+                        {
+                            components++;
+                        }
+                    }
+                }
+            }
+        }
+
+        private static void UnforbidItemsToLoadInCargoBay()
+        {
+            // Unforbid any weapon, apparel, raw food or corpse in the outpost area so it can be carried to a cargo bay.
+            if (OG_Util.OutpostArea != null)
+            {
+                foreach (IntVec3 cell in OG_Util.OutpostArea.ActiveCells)
+                {
+                    foreach (Thing thing in cell.GetThingList())
+                    {
+                        if (thing.def.thingCategories.Contains(ThingCategoryDefOf.Apparel)
+                            || thing.def.thingCategories.Contains(ThingCategoryDefOf.Weapons)
+                            || thing.def.thingCategories.Contains(ThingCategoryDef.Named("CorpsesHumanlike"))
+                            || (thing.def.thingCategories.Contains(ThingCategoryDef.Named("FoodRaw"))
+                                && (thing.def != ThingDef.Named("Hay"))))
+                        {
+                            thing.SetForbidden(false);
+                        }
+                    }
+                }
+            }
         }
     }
 }

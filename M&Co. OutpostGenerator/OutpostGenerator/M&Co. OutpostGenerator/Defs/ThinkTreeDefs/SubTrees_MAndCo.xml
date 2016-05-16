@@ -2,14 +2,15 @@
 <ThinkTrees>
 
   <ThinkTreeDef>
-    <defName>MAndCoPostDuty</defName>
-    <insertTag>Humanlike_PostDuty</insertTag>
+    <defName>MAndCoPreMain</defName>
+    <insertTag>Humanlike_PreMain</insertTag>
     <insertPriority>100</insertPriority>
     <thinkRoot Class="ThinkNode_Priority">
       <subNodes>
+        <!--  If M&Co. employee, do emergency work.  -->
         <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
           <subNodes>
-            <!--  Seek allowed area  -->
+            <!--  Seek allowed area: TODO: use custom jobGiver...  -->
             <li Class="JobGiver_SeekAllowedArea"/>
             <!--  Seek safe temperatures  -->
             <li Class="JobGiver_SeekSafeTemperature"/>
@@ -18,19 +19,37 @@
             <!--  Get food (only if starving)  -->
             <li Class="ThinkNode_ConditionalStarving">
               <subNodes>
-                <li Class="JobGiver_GetFood"/>
+                <li Class="JobGiver_GetFood">
+                  <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
+                </li>
               </subNodes>
             </li>
             <!--  Emergency work  -->
             <li Class="JobGiver_Work">
+              <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
               <emergency>true</emergency>
+            </li>
+            <!--  Lord directives (medium priority)  -->
+            <li Class="ThinkNode_JoinVoluntarilyJoinableLord">
+              <dutyHook>MediumPriority</dutyHook>
+              <subNodes>
+                <li Class="ThinkNode_Subtree">
+                  <treeDef>LordDuty</treeDef>
+                </li>
+              </subNodes>
+            </li>
+            <!--  Optimize apparel  -->
+            <li Class="JobGiver_OptimizeApparel">
+              <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
             </li>
             <!--  Pack food if not hungry -->
             <li Class="ThinkNode_ConditionalNeedPercentageAbove">
               <need>Food</need>
               <threshold>0.6</threshold>
               <subNodes>
-                <li Class="JobGiver_PackFood"/>
+                <li Class="JobGiver_PackFood">
+                  <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
+                </li>
               </subNodes>
             </li>
           </subNodes>
@@ -41,13 +60,14 @@
   
   <ThinkTreeDef>
     <defName>MAndCoPreMain</defName>
-    <insertTag>Humanlike_PreMain</insertTag>
+    <insertTag>Humanlike_PostMain</insertTag>
     <insertPriority>100</insertPriority>
     <thinkRoot Class="ThinkNode_Priority">
       <subNodes>
         <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
           <subNodes>
             <li Class="ThinkNode_PrioritySorter">
+              <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
               <subNodes>
                 <li Class="JobGiver_GetFood"/>
                 <li Class="JobGiver_GetRest"/>
@@ -55,20 +75,6 @@
                 <li Class="JobGiver_Work"/>
               </subNodes>
             </li>
-          </subNodes>
-        </li>
-      </subNodes>
-    </thinkRoot>
-  </ThinkTreeDef>
-  
-  <ThinkTreeDef>
-    <defName>MAndCoPostMain</defName>
-    <insertTag>Humanlike_PostMain</insertTag>
-    <insertPriority>100</insertPriority>
-    <thinkRoot Class="ThinkNode_Priority">
-      <subNodes>
-        <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
-          <subNodes>
             <li Class="JobGiver_WanderAnywhere">
               <maxDanger>Deadly</maxDanger>
             </li>

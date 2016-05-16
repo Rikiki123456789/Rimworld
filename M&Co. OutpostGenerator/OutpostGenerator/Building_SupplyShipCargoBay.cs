@@ -44,6 +44,7 @@ namespace OutpostGenerator
         public override void SpawnSetup()
         {
             base.SpawnSetup();
+            // TODO: unforbid every gun/corpse/apparel in the outpost so it is carried to the cargo bay?
         }
     }
 }

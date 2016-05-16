@@ -20,67 +20,84 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class WorkGiver_GrowerSowOutpost : WorkGiver_GrowerSow
     {
-        // Note: this function must be overriden as the one in WorkGiver_Grower class only takes into account colony's hydroponics basins.
-        // Growing zone are not managed though!
-        public override IEnumerable<IntVec3> PotentialWorkCellsGlobal(Pawn pawn)
+        // This workgiver is specific to M&Co. employees.
+        public override bool ShouldSkip(Pawn pawn)
         {
             if ((pawn.Faction != null)
                 && (pawn.Faction == OG_Util.FactionOfMAndCo))
             {
-                List<IntVec3> workCells = new List<IntVec3>();
+                return base.ShouldSkip(pawn);
+            }
+            return true;
+        }
 
-                List<Thing> hydroponicsList = Find.ListerThings.ThingsOfDef(ThingDef.Named("HydroponicsBasin"));
-                for (int hydroponicsIndex = 0; hydroponicsIndex < hydroponicsList.Count; hydroponicsIndex++)
+        // Note: this function must be overriden as the one in WorkGiver_Grower class only takes into account colony's hydroponics basins.
+        // Growing zone are not managed though!
+        public override IEnumerable<IntVec3> PotentialWorkCellsGlobal(Pawn pawn)
+        {
+            List<IntVec3> workCells = new List<IntVec3>();
+            List<Thing> plantGrowersList = new List<Thing>();
+
+            List<Thing> hydroponicsList = Find.ListerThings.ThingsOfDef(ThingDef.Named("HydroponicsBasin"));
+            Log.Message("hydroponicsList.Count = " + hydroponicsList.Count);
+            List<Thing> plantPotsList = Find.ListerThings.ThingsOfDef(ThingDef.Named("PlantPot"));
+            Log.Message("plantPotsList.Count = " + plantPotsList.Count);
+            foreach (Thing hydroponicsBasin in hydroponicsList)
+            {
+                plantGrowersList.Add(hydroponicsBasin);
+            }
+            foreach (Thing plantPot in plantPotsList)
+            {
+                plantGrowersList.Add(plantPot);
+            }
+            Log.Message("plantGrowersList.Count = " + plantGrowersList.Count);
+
+            for (int plantGrowerIndex = 0; plantGrowerIndex < plantGrowersList.Count; plantGrowerIndex++)
+            {
+                Thing potentialPlantGrower = plantGrowersList[plantGrowerIndex];
+                if ((potentialPlantGrower.Faction != null)
+                    && (potentialPlantGrower.Faction == OG_Util.FactionOfMAndCo))
                 {
-                    Thing potentialHydroponics = hydroponicsList[hydroponicsIndex];
-                    if ((potentialHydroponics.Faction != null)
-                        && (potentialHydroponics.Faction == pawn.Faction))
+                    Building_PlantGrower plantGrower = potentialPlantGrower as Building_PlantGrower;
+                    if (plantGrower == null)
                     {
-                        Building_PlantGrower hydroponics = potentialHydroponics as Building_PlantGrower;
-                        if (hydroponics == null)
-                        {
-                            Log.Warning("WorkGiver_GrowerOutpost: found a thing of def HydroponicsBasin which is not a Building_PlantGrower.");
-                            continue;
-                        }
-                        if (GenPlant.GrowthSeasonNow(hydroponics.Position) == false)
-                        {
-                            continue;
-                        }
-                        if (this.ExtraRequirements(hydroponics) == false)
-                        {
-                            continue;
-                        }
-                        if (hydroponics.IsForbidden(pawn))
-                        {
-                            continue;
-                        }
-                        if (pawn.CanReach(hydroponics, PathEndMode.OnCell, pawn.NormalMaxDanger(), false) == false)
-                        {
-                            continue;
-                        }
-                        if (hydroponics.IsBurning())
-                        {
-                            continue;
-                        }
-                        base.DetermineWantedPlantDef(hydroponics.Position);
-                        if (WorkGiver_Grower.wantedPlantDef == null)
-                        {
-                            continue;
-                        }
-                        foreach (IntVec3 cell in hydroponics.OccupiedRect().Cells)
-                        {
-                            workCells.Add(cell);
-                        }
+                        Log.Warning("WorkGiver_GrowerOutpost: found a thing of def HydroponicsBasin or PlantPot which is not a Building_PlantGrower.");
+                        continue;
+                    }
+                    if (GenPlant.GrowthSeasonNow(plantGrower.Position) == false)
+                    {
+                        continue;
+                    }
+                    if (this.ExtraRequirements(plantGrower) == false)
+                    {
+                        continue;
+                    }
+                    if (plantGrower.IsForbidden(pawn))
+                    {
+                        continue;
+                    }
+                    if (pawn.CanReach(plantGrower, PathEndMode.OnCell, pawn.NormalMaxDanger(), false) == false)
+                    {
+                        continue;
+                    }
+                    if (plantGrower.IsBurning())
+                    {
+                        continue;
+                    }
+                    base.DetermineWantedPlantDef(plantGrower.Position);
+                    if (WorkGiver_Grower.wantedPlantDef == null)
+                    {
+                        continue;
+                    }
+                    foreach (IntVec3 cell in plantGrower.OccupiedRect().Cells)
+                    {
+                        workCells.Add(cell);
                     }
                 }
-                return workCells;
             }
-            else
-            {
-                return new List<IntVec3>();
-            }
+            return workCells;
         }
-        
+
         public override Job JobOnCell(Pawn pawn, IntVec3 c)
         {
             WorkGiver_Grower.wantedPlantDef = null;

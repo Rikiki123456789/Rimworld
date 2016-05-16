@@ -22,35 +22,35 @@ namespace OutpostGenerator
         private const int horizontalTrajectoryDurationInTicks = 480;
         private const int rotationDurationInTicks = 240;
         private const int verticalTrajectoryDurationInTicks = 240;
-        private int ticksToLanding = horizontalTrajectoryDurationInTicks + rotationDurationInTicks + verticalTrajectoryDurationInTicks;
+        private int ticksSinceTakeOff = 0;
         private IntVec3 landingPadPosition = Find.Map.Center;
         private Rot4 landingPadRotation = Rot4.North;
-        private float relativeRotation = 0f;
-        
+        private float relativeRotation = 0f; // Relative rotation of landing pad (supply ship always comes from the west side).
+
         // Texture.
         private Matrix4x4 supplyShipMatrix = default(Matrix4x4);
         private static Material supplyShipTexture = MaterialPool.MatFrom("Things/SupplyShip/SupplyShip");
-        private Vector3 supplyShipScale = new Vector3(20f, 1f, 11f);
+        private Vector3 supplyShipScale = new Vector3(11f, 1f, 20f);
 
         // Sound.
-        private static readonly SoundDef takingOffSound = SoundDef.Named("SupplyShipLanding");
-        private const int soundAnticipationTicks = 60;
+        private static readonly SoundDef takingOffSound = SoundDef.Named("SupplyShipLandingOn");
+        // TODO: revert it!
         
         private float supplyShipRotation
         {
             get
             {
-                if (this.ticksToLanding > rotationDurationInTicks + verticalTrajectoryDurationInTicks)
+                if (this.ticksSinceTakeOff < verticalTrajectoryDurationInTicks)
                 {
-                    return 0f;
+                    return Rot4.East.AsAngle + this.relativeRotation;
                 }
-                else if (this.ticksToLanding > verticalTrajectoryDurationInTicks)
+                else if (this.ticksSinceTakeOff < verticalTrajectoryDurationInTicks + rotationDurationInTicks)
                 {
-                    return this.relativeRotation * ((1f - (float)(this.ticksToLanding - verticalTrajectoryDurationInTicks) / (float)rotationDurationInTicks));
+                    return Rot4.East.AsAngle + this.relativeRotation * ((1f - (float)(this.ticksSinceTakeOff - verticalTrajectoryDurationInTicks) / (float)rotationDurationInTicks));
                 }
                 else
                 {
-                    return this.relativeRotation;
+                    return Rot4.East.AsAngle;
                 }
             }
         }
@@ -79,20 +79,20 @@ namespace OutpostGenerator
                     result += new Vector3(-0.5f, 0, 0f);
                 }
 
-                if (this.ticksToLanding > rotationDurationInTicks + verticalTrajectoryDurationInTicks)
+                if (this.ticksSinceTakeOff < verticalTrajectoryDurationInTicks)
                 {
-                    float coefficient = (float)(this.ticksToLanding - (rotationDurationInTicks + verticalTrajectoryDurationInTicks));
-                    float num = coefficient * coefficient * 0.001f;
-                    result.x -= num * 0.8f;
-                    result.z += 3f;
+                    result.z += 3f * ((float)this.ticksSinceTakeOff / verticalTrajectoryDurationInTicks);
                 }
-                else if (this.ticksToLanding > verticalTrajectoryDurationInTicks)
+                else if (this.ticksSinceTakeOff < verticalTrajectoryDurationInTicks + rotationDurationInTicks)
                 {
                     result.z += 3f;
                 }
                 else
                 {
-                    result.z += 3f * ((float)this.ticksToLanding / verticalTrajectoryDurationInTicks);
+                    float coefficient = (float)(this.ticksSinceTakeOff - (verticalTrajectoryDurationInTicks + rotationDurationInTicks));
+                    float num = coefficient * coefficient * 0.001f;
+                    result.x += num * 0.8f;
+                    result.z += 3f;
                 }
                 return result;
             }
@@ -128,7 +128,7 @@ namespace OutpostGenerator
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.ticksToLanding, "ticksToLanding");
+            Scribe_Values.LookValue<int>(ref this.ticksSinceTakeOff, "ticksSinceTakeOff");
             Scribe_Values.LookValue<IntVec3>(ref this.landingPadPosition, "landingPadPosition");
             Scribe_Values.LookValue<Rot4>(ref this.landingPadRotation, "landingPadRotation");
         }
@@ -156,25 +156,17 @@ namespace OutpostGenerator
                 this.Position = this.landingPadPosition;
             }
             
-            this.ticksToLanding--;
-            if ((this.ticksToLanding == rotationDurationInTicks + verticalTrajectoryDurationInTicks)
+            this.ticksSinceTakeOff++;
+            if ((this.ticksSinceTakeOff == verticalTrajectoryDurationInTicks)
                 && this.landingPadRotation == Rot4.East)
             {
-                this.ticksToLanding -= rotationDurationInTicks;
+                this.ticksSinceTakeOff += rotationDurationInTicks;
             }
-            if (this.ticksToLanding <= 0)
+            if (this.ticksSinceTakeOff >= verticalTrajectoryDurationInTicks + rotationDurationInTicks + horizontalTrajectoryDurationInTicks)
             {
-                for (int dustMoteIndex = 0; dustMoteIndex < 40; dustMoteIndex++)
-                {
-                    Vector3 dustMotePosition = base.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.MoteOverhead) + Gen.RandomHorizontalVector(6f);
-                    MoteThrower.ThrowDustPuff(dustMotePosition, 1.6f);
-                }
-                Thing supplyShip = ThingMaker.MakeThing(OG_Util.SupplyShipDef);
-                supplyShip.SetFactionDirect(OG_Util.FactionOfMAndCo);
-                GenSpawn.Spawn(supplyShip, this.landingPadPosition, this.landingPadRotation);
                 this.Destroy();
             }
-            if (this.ticksToLanding == verticalTrajectoryDurationInTicks)
+            if (this.ticksSinceTakeOff == 1)
             {
                 SupplyShipTakingOff.takingOffSound.PlayOneShot(base.Position);
             }

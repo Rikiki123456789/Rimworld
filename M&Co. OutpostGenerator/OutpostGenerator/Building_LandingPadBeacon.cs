@@ -20,54 +20,37 @@ namespace OutpostGenerator
     public class Building_LandingPadBeacon : Building
     {
         public const int flashPeriodInTicks = 15 * (int)GenTicks.TicksPerRealSecond;
-        private int flashStartInTicks = flashPeriodInTicks;
+        private int flashStartTick = flashPeriodInTicks;
         public const int flashDurationInTicks = 10;
-        private int flashStopInTicks = 0;
-
-        private CompGlower glower;
-
-        public override void SpawnSetup()
-        {
-            base.SpawnSetup();
-
-            glower = this.TryGetComp<CompGlower>();
-            glower.Props.glowRadius = 0f;
-            glower.Props.overlightRadius = 0f;
-            Find.MapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
-            Find.GlowGrid.MarkGlowGridDirty(this.Position);
-        }
-
+        private int flashStopTick = 0;
+        
+        private Thing glower = null;
+        
         public void SetFlashStartOffset(int offsetInTicks)
         {
-            flashStartInTicks += offsetInTicks;
+            flashStartTick += offsetInTicks;
         }
 
         public override void Tick()
         {
             base.Tick();
 
-            if (flashStartInTicks > 0)
+            if (Find.TickManager.TicksGame >= flashStartTick)
             {
-                flashStartInTicks--;
-                if (flashStartInTicks == 0)
+                flashStopTick = Find.TickManager.TicksGame + flashDurationInTicks;
+                flashStartTick = Find.TickManager.TicksGame + flashPeriodInTicks;
+                if (this.glower.DestroyedOrNull())
                 {
-                    glower.Props.glowRadius = 3f;
-                    glower.Props.overlightRadius = 2.9f;
-                    Find.MapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
-                    Find.GlowGrid.MarkGlowGridDirty(this.Position);
-                    flashStopInTicks = flashDurationInTicks;
+                    this.glower = GenSpawn.Spawn(OG_Util.LandingPadBeaconGlowerDef, this.Position);
                 }
+                return;
             }
-            else
+            if (Find.TickManager.TicksGame >= flashStopTick)
             {
-                flashStopInTicks--;
-                if (flashStopInTicks == 0)
+                if (this.glower.DestroyedOrNull() == false)
                 {
-                    glower.Props.glowRadius = 0f;
-                    glower.Props.overlightRadius = 0f;
-                    Find.MapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
-                    Find.GlowGrid.MarkGlowGridDirty(this.Position);
-                    flashStartInTicks = flashPeriodInTicks;
+                    this.glower.Destroy();
+                    this.glower = null;
                 }
             }
         }
@@ -75,8 +58,9 @@ namespace OutpostGenerator
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.flashStartInTicks, "flashStartInTicks");
-            Scribe_Values.LookValue<int>(ref this.flashStopInTicks, "flashStopInTicks");
+            Scribe_Values.LookValue<int>(ref this.flashStartTick, "flashStartTick");
+            Scribe_Values.LookValue<int>(ref this.flashStopTick, "flashStopTick");
+            Scribe_References.LookReference<Thing>(ref this.glower, "glower");
         }
     }
 }

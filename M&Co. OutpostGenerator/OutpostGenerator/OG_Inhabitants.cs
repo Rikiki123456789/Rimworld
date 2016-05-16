@@ -89,9 +89,20 @@ namespace OutpostGenerator
             // Generate technicians.
             for (int pawnIndex = 0; pawnIndex < 4; pawnIndex++)
             {
-                Pawn pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostTechnicianDef, OG_Util.FactionOfMAndCo);
+                Pawn pawn = null;
+                do
+                {
+                    pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostTechnicianDef, OG_Util.FactionOfMAndCo);
+                    if ((pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting))
+                        || (pawn.story.traits.HasTrait(TraitDefOf.Brawler)))
+                    {
+                        pawn.Destroy();
+                        pawn = null;
+                    }
+                } while (pawn == null);
                 GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), colorCivilGrey);
                 GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Synthread"), colorCivilGrey);
+                // TODO: set Mining helmet instead of tuque.
                 GeneratePawnApparel(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Apparel_Tuque"), ThingDef.Named("Synthread"), colorCivilGrey);
                 GeneratePawnWeapon(ref pawn, OG_Util.OutpostTechnicianDef.itemQuality, ThingDef.Named("Gun_Pistol"));
                 if (needParka)
@@ -115,13 +126,18 @@ namespace OutpostGenerator
                 if (pawnIndex == 1)
                 {
                     // Generate officer.
+                    pawn = null;
                     do
                     {
                         pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostOfficerDef, OG_Util.FactionOfMAndCo);
-                    }
-                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
+                        if ((pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting))
+                            || (pawn.story.traits.HasTrait(TraitDefOf.Brawler)))
+                        {
+                            pawn.Destroy();
+                            pawn = null;
+                        }
+                    } while (pawn == null);
 
-                    // TODO: regenerate if pawn cannot be violent.
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Hyperweave"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Hyperweave"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
@@ -132,11 +148,17 @@ namespace OutpostGenerator
                 else if (pawnIndex == 2)
                 {
                     // Generate minigun guard.
+                    pawn = null;
                     do
                     {
                         pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
-                    }
-                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
+                        if ((pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting))
+                            || (pawn.story.traits.HasTrait(TraitDefOf.Brawler)))
+                        {
+                            pawn.Destroy();
+                            pawn = null;
+                        }
+                    } while (pawn == null);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
@@ -146,11 +168,17 @@ namespace OutpostGenerator
                 else if (pawnIndex <= 4)
                 {
                     // Generate assault rifle guard.
+                    pawn = null;
                     do
                     {
                         pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
-                    }
-                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
+                        if ((pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting))
+                            || (pawn.story.traits.HasTrait(TraitDefOf.Brawler)))
+                        {
+                            pawn.Destroy();
+                            pawn = null;
+                        }
+                    } while (pawn == null);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
@@ -164,12 +192,17 @@ namespace OutpostGenerator
                 else if (pawnIndex <= 8)
                 {
                     // Generate charge rifle guard.
+                    pawn = null;
                     do
                     {
                         pawn = PawnGenerator.GeneratePawn(OG_Util.OutpostGuardDef, OG_Util.FactionOfMAndCo);
-                    }
-                    while (pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting));
-                    // TODO: avoid brawlers too.
+                        if ((pawn.story.WorkTypeIsDisabled(WorkTypeDefOf.Hunting))
+                            || (pawn.story.traits.HasTrait(TraitDefOf.Brawler)))
+                        {
+                            pawn.Destroy();
+                            pawn = null;
+                        }
+                    } while (pawn == null);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                     GeneratePawnApparel(ref pawn, OG_Util.OutpostOfficerDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
@@ -221,16 +254,24 @@ namespace OutpostGenerator
 
         private static void AddJoyAndComfortNeed(Pawn pawn)
         {
-            if (pawn.needs.joy == null)
+            // TODO: does not work anymore...
+            Log.Message("Try to add joy to " + pawn.Name.ToStringShort);
+            if (pawn.needs.TryGetNeed(NeedDefOf.Joy) == null)
             {
-                var addNeed = typeof(Pawn_NeedsTracker).GetMethod("AddNeed", BindingFlags.Instance | BindingFlags.NonPublic);
-                addNeed.Invoke(pawn.needs, new object[] { DefDatabase<NeedDef>.GetNamed("Joy") });
+                MethodInfo addNeed = typeof(Pawn_NeedsTracker).GetMethod("AddNeed", BindingFlags.Instance | BindingFlags.NonPublic);
+                addNeed.Invoke(pawn.needs, new object[]
+                {
+                    DefDatabase<NeedDef>.GetNamed("Joy", true)
+                });
                 pawn.needs.joy.CurLevel = Rand.Range(0.5f, 1f);
             }
             if (pawn.needs.comfort == null)
             {
-                var addNeed = typeof(Pawn_NeedsTracker).GetMethod("AddNeed", BindingFlags.Instance | BindingFlags.NonPublic);
-                addNeed.Invoke(pawn.needs, new object[] { DefDatabase<NeedDef>.GetNamed("Comfort") });
+                MethodInfo addNeed = typeof(Pawn_NeedsTracker).GetMethod("AddNeed", BindingFlags.Instance | BindingFlags.NonPublic);
+                addNeed.Invoke(pawn.needs, new object[]
+                {
+                    DefDatabase<NeedDef>.GetNamed("Comfort", true)
+                });
                 pawn.needs.comfort.CurLevel = Rand.Range(0.75f, 1f);
             }
         }

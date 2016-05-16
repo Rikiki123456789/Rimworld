@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <NeedDef>
+    <DefName>Space2</DefName>
+    <needClass>Need_Space</needClass>
+    <label>spaceTest</label>
+    <description>Space reflects a sense of being physically free and able to move around. It is harmed by spending extended periods in cramped rooms.</description>
+    <minIntelligence>Humanlike</minIntelligence>
+    <colonistAndPrisonersOnly>false</colonistAndPrisonersOnly>
+    <seekerRisePerHour>1.8</seekerRisePerHour>
+    <seekerFallPerHour>1.8</seekerFallPerHour>
+    <listPriority>101</listPriority>
+    <freezeWhileSleeping>true</freezeWhileSleeping>
+  </NeedDef>
+
+
+</Defs>

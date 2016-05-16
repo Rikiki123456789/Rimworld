@@ -455,7 +455,11 @@ namespace OutpostGenerator
             else
             {
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.WaterPool, 4f));
-                exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Farm, 5f));
+                if ((Find.Map.Biome != BiomeDef.Named("ExtremeDesert"))
+                    && (Find.Map.Biome != BiomeDef.Named("IceSheet")))
+                {
+                    exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Farm, 5f));
+                }
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.Cemetery, 3f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ExteriorRecRoom, 5f));
                 exteriorZonesList.Add(new ZoneTypeWithWeight(ZoneType.ShootingRange, 1f));

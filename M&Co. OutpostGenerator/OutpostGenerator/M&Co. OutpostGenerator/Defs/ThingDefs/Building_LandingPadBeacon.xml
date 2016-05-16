@@ -17,7 +17,7 @@
     <designationCategory>Furniture</designationCategory>
     <rotatable>false</rotatable>
     <graphicData>
-      <texPath>Things/Building/Furniture/LampStanding</texPath>
+      <texPath>Things/Building/Misc/FirefoamPopper</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <shadowData>
         <volume>(0.3, 0.6, 0.3)</volume>
@@ -41,6 +41,22 @@
     <thingClass>OutpostGenerator.Building_LandingPadBeacon</thingClass>
     <TickerType>Normal</TickerType>
     <passability>Standable</passability>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LandingPadBeaconGlower</defName>
+    <label>landing pad beacon light</label>
+    <Description>Landing pad beacon light.</Description>
+    <graphicData>
+      <texPath>Things/Building/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>false</selectable>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+    </building>
     <comps>
       <li Class="CompProperties_Glower">
         <glowRadius>3</glowRadius>

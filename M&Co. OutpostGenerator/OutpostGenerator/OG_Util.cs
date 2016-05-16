@@ -161,6 +161,22 @@ namespace OutpostGenerator
                 return ThingDef.Named("SupplyShipCryptosleepBayRight");
             }
         }
+
+        public static ThingDef LandingPadBeaconGlowerDef
+        {
+            get
+            {
+                return ThingDef.Named("LandingPadBeaconGlower");
+            }
+        }
+        
+        public static ThingDef SparePartsCabinetDef
+        {
+            get
+            {
+                return ThingDef.Named("SparePartsCabinet");
+            }
+        }
         
         // Terrain def.
         public static TerrainDef DirtFloorDef
@@ -248,12 +264,28 @@ namespace OutpostGenerator
             }
         }
 
-        // Label.
+        // Area.
         public static string OutpostAreaLabel
         {
             get
             {
                 return "M&Co. outpost";
+            }
+        }
+
+        public static Area OutpostArea
+        {
+            get
+            {
+                return Find.AreaManager.GetLabeled(OG_Util.OutpostAreaLabel);
+            }
+        }
+
+        public static void DestroyOutpostArea()
+        {
+            if (OG_Util.OutpostArea != null)
+            {
+                OG_Util.OutpostArea.Delete();
             }
         }
 

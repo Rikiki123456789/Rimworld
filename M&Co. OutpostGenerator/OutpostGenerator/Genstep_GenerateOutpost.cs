@@ -206,20 +206,15 @@ namespace OutpostGenerator
         protected void GetOutpostType(ref OG_OutpostData outpostData)
         {
             float outpostTypeSelector = Rand.Value;
-            //if (outpostTypeSelector < 0.25f)
+            if (outpostTypeSelector < 0.25f)
             {
                 outpostData.isMilitary = true;
-                Log.Message("1");
                 OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
-                Log.Message("2");
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.min;
-                Log.Message("3");
                 OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = true;
-                Log.Message("4");
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = true;
-                Log.Message("5");
             }
-            /*else
+            else
             {
                 outpostData.isMilitary = false;
                 float goodwill = OG_Util.FactionOfMAndCo.def.startingGoodwill.RandomInRange;
@@ -227,7 +222,7 @@ namespace OutpostGenerator
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = goodwill;
                 OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).hostile = false;
                 Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).hostile = false;
-            }*/
+            }
         }
 
         protected void GetBattleOccured(ref OG_OutpostData outpostData)

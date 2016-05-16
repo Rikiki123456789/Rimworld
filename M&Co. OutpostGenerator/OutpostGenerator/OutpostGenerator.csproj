@@ -30,6 +30,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
@@ -59,10 +60,17 @@
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
+    <Compile Include="Detours.cs" />
+    <Compile Include="DetoursOG.cs" />
     <Compile Include="JobDriver_TransferInjuredEmployee.cs" />
     <Compile Include="SupplyShipTakingOff.cs" />
     <Compile Include="SupplyShipLandingOn.cs" />
+    <Compile Include="WorkGiver_RepairOutpost.cs" />
+    <Compile Include="WorkGiver_FixBrokenDownBuildingOutpost.cs" />
+    <Compile Include="WorkGiver_HaulGeneralOutpost.cs" />
+    <Compile Include="WorkGiver_HaulCorpsesOutpost.cs" />
     <Compile Include="WorkGiver_RescueDownedMAndCoEmployee.cs" />
+    <Compile Include="WorkGiver_BuryCorpsesOutpost.cs" />
     <Compile Include="WorkGiver_TransferInjuredEmployee.cs" />
     <Compile Include="LordToil_DefendOutpost.cs" />
     <Compile Include="WorkGiver_GrowerHarvestOutpost.cs" />
@@ -120,6 +128,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\MapGeneratorDefs\MapGenerators.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\NeedDefs\Needs.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\PawnKindDefs\PawnKinds_SecurityForces.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
@@ -137,7 +146,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_SupplyShipCryptosleepBay.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_FoodRack.xml">
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_Storage.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_LandingPadBeacon.xml">

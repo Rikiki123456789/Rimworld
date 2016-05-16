@@ -63,6 +63,10 @@
         <heatPerSecond>5</heatPerSecond>
         <heatPushMaxTemperature>120</heatPushMaxTemperature>
       </li>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3.5</glowRadius>
+        <glowColor>(60,60,255,0)</glowColor>
+      </li>
     </comps>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <staticSunShadowHeight>1.0</staticSunShadowHeight>

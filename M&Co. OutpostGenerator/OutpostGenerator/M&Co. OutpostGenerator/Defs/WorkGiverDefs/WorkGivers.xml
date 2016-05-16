@@ -3,6 +3,7 @@
 
   <WorkGiverDef>
     <defName>GrowerHarvestOutpost</defName>
+    <label>harvest crops</label>
     <giverClass>OutpostGenerator.WorkGiver_GrowerHarvestOutpost</giverClass>
     <workType>Growing</workType>
     <priorityInType>90</priorityInType>
@@ -13,10 +14,12 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
   </WorkGiverDef>
 
   <WorkGiverDef>
     <defName>GrowerSowOutpost</defName>
+    <label>sow crops</label>
     <giverClass>OutpostGenerator.WorkGiver_GrowerSowOutpost</giverClass>
     <workType>Growing</workType>
     <priorityInType>40</priorityInType>
@@ -27,6 +30,7 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
   </WorkGiverDef>
 
   <WorkGiverDef>
@@ -40,10 +44,11 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
   </WorkGiverDef>
 
   <WorkGiverDef>
-    <defName>WorkGiver_TransferInjuredEmployee</defName>
+    <defName>DoctorTransferInjuredEmployee</defName>
     <giverClass>OutpostGenerator.WorkGiver_TransferInjuredEmployee</giverClass>
     <workType>Doctor</workType>
     <verb>transfer</verb>
@@ -53,6 +58,78 @@
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
   </WorkGiverDef>
 
+  <WorkGiverDef>
+    <defName>BuryCorpsesOutpost</defName>
+    <label>bury corpses</label>
+    <giverClass>OutpostGenerator.WorkGiver_BuryCorpsesOutpost</giverClass>
+    <workType>Hauling</workType>
+    <verb>bury</verb>
+    <gerund>burying</gerund>
+    <priorityInType>4</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulCorpsesOutpost</defName>
+    <label>haul corpses</label>
+    <giverClass>OutpostGenerator.WorkGiver_HaulCorpsesOutpost</giverClass>
+    <workType>Hauling</workType>
+    <verb>haul</verb>
+    <gerund>hauling</gerund>
+    <priorityInType>3</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulGeneralOutpost</defName>
+    <label>haul general things</label>
+    <giverClass>OutpostGenerator.WorkGiver_HaulGeneralOutpost</giverClass>
+    <workType>Hauling</workType>
+    <verb>haul</verb>
+    <gerund>hauling</gerund>
+    <priorityInType>2</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+
+  <WorkGiverDef>
+    <defName>FixBrokenDownBuildingOutpost</defName>
+    <label>fix broken-down things</label>
+    <giverClass>OutpostGenerator.WorkGiver_FixBrokenDownBuildingOutpost</giverClass>
+    <workType>Repair</workType>
+    <verb>replace broken components in</verb>
+    <gerund>replacing broken components in</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>RepairOutpost</defName>
+    <label>repair damaged things</label>
+    <giverClass>OutpostGenerator.WorkGiver_RepairOutpost</giverClass>
+    <workType>Repair</workType>
+    <priorityInType>5</priorityInType>
+    <verb>repair</verb>
+    <gerund>repairing</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <!-- TODO: add repair and clean toil-->
 </WorkGivers>

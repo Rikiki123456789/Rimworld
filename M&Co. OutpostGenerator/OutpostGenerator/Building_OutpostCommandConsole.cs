@@ -31,11 +31,7 @@ namespace OutpostGenerator
             ChangeOutpostTurretsFaction(turretsNewFaction, deactivateTurrets);
             ChangeOutpostDoorsFaction(doorsNewFaction, deactivateDoors);
             LaunchSecurityDropPods(dropPodsNumber, securityForcesDef, true);
-            Area outpostArea = Find.AreaManager.GetLabeled(OG_Util.OutpostAreaLabel);
-            if (outpostArea != null)
-            {
-                outpostArea.Delete();
-            }
+            OG_Util.DestroyOutpostArea();
             Find.LetterStack.ReceiveLetter(eventTitle, eventText, letterType, new TargetInfo(this.Position));
         }
 

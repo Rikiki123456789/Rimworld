@@ -11,22 +11,19 @@ using Verse.AI;      // Needed when you do something with the AI
 
 namespace OutpostGenerator
 {
-    // TODO: add orbital relay.
     // TODO: add tale: drop-pod destroyed in-flight.
-    // TODO: add blue glower to compact autonomous generator.
     // TODO: create M&Co. backgrounds.
     // TODO: periodically check M&Co. employee affected area.
     // TODO: add cleaning job inside outpost area. Add a map component which periodically check for existing filth and update a list.
     // TODO: if pawn has no apparel or weapon, leave with next ship.
-    // TODO: carry raw food to ship.
     // TODO: add animals? Might be tricky, especially for wounded animals.
     // TODO: landing pad beacon texture.
-    // TODO: remove crypto bay content.
-    // TODO: add special effect when loading pawn in crypto bay. => SoundDef.Named("CryptosleepCasketAccept").PlayOneShot(base.Position);
-    //    => OR SoundDef.Named("CryptosleepCasketEject").PlayOneShot(SoundInfo.InWorld(base.Position, MaintenanceType.None));
     // TODO: add components shipping.
-    // TODO: don't spawn farm zone in arctic or extreme desert.
-    // TODO: landing pad beacons...
+    // TODO: improve AI with 2 states (standard defense + assault ennemy in outpost perimeter).
+    // TODO: add Haplo's firing stand.
+    // TODO: technician tuque not when in hot conditions.
+    // TODO: sow also in custom plant grower?
+    // TODO: periodically un-forbid packaged survival meals/beer/components/weapons in the area to allow hauling.
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -116,6 +113,7 @@ namespace OutpostGenerator
                         thing.Destroy(DestroyMode.Vanish);
                     }
                 }
+                Find.Map.terrainGrid.RemoveTopLayer(cell);
                 TerrainDef terrain = Find.TerrainGrid.TerrainAt(cell);
                 if ((terrain == TerrainDef.Named("Marsh"))
                     || (terrain == TerrainDef.Named("Mud"))

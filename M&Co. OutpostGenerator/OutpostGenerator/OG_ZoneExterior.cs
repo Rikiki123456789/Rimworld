@@ -292,8 +292,14 @@ namespace OutpostGenerator
             OG_Common.TrySpawnThingAt(ThingDefOf.Sandbags, null, shootingPosition + new IntVec3(1, 0, 0).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
 
             // Spawn target.
-            // TODO: spawn a real target. From Miscellaneous?
-            OG_Common.TrySpawnWallAt(shootingPosition + new IntVec3(0, 0, 8).RotatedBy(rotation), ref outpostData);
+            if (ModsConfig.IsActive("Miscellaneous_TrainingFacility"))
+            {
+                OG_Common.TrySpawnThingAt(ThingDef.Named("ShootingRangeTarget"), null, shootingPosition + new IntVec3(0, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+            }
+            else
+            {
+                OG_Common.TrySpawnWallAt(shootingPosition + new IntVec3(0, 0, 8).RotatedBy(rotation), ref outpostData);
+            }
         }
 
         public static void GenerateMortarZone(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)

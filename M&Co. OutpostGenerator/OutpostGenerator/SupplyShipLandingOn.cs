@@ -35,7 +35,6 @@ namespace OutpostGenerator
         // Sound.
         private static readonly SoundDef preLandingSound = SoundDef.Named("DropPodFall");
         private static readonly SoundDef landingOnSound = SoundDef.Named("SupplyShipLandingOn");
-        private const int soundAnticipationTicks = 60;
         
         private float supplyShipRotation
         {

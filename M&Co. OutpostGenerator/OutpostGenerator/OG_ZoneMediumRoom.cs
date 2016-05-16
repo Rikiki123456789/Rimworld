@@ -112,8 +112,8 @@ namespace OutpostGenerator
             }
 
             // Spawn cook stoves and brewery.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("CookStove"), null, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDef.Named("CookStove"), null, rotatedOrigin + new IntVec3(8, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("ElectricStove"), null, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("ElectricStove"), null, rotatedOrigin + new IntVec3(8, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData);
             for (int xOffset = 7; xOffset <= 8; xOffset++)
             {
                 for (int zOffset = 2; zOffset <= 8; zOffset++)
