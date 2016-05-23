@@ -316,6 +316,11 @@ namespace OutpostGenerator
 
         public static void TrySpawnWeaponOnRack(Thing rack)
         {
+            Building_Storage storage = rack as Building_Storage;
+            QualityRange qualityRange = new QualityRange(QualityCategory.Good, QualityCategory.Legendary);
+            storage.settings.filter.AllowedQualityLevels = qualityRange;
+            FloatRange hitPointsRange = new FloatRange(0.8f, 1f);
+            storage.settings.filter.AllowedHitPointsPercents = hitPointsRange;
             foreach (IntVec3 cell in rack.OccupiedRect())
             {
                 if (Rand.Value < 0.33f)

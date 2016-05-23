@@ -2,6 +2,19 @@
 <WorkGivers>
 
   <WorkGiverDef>
+    <defName>FightFiresOutpost</defName>
+    <label>fight fires</label>
+    <giverClass>OutpostGenerator.WorkGiver_FightFiresOutpost</giverClass>
+    <workType>Firefighter</workType>
+    <verb>extinguish</verb>
+    <gerund>extinguishing</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
     <defName>GrowerHarvestOutpost</defName>
     <label>harvest crops</label>
     <giverClass>OutpostGenerator.WorkGiver_GrowerHarvestOutpost</giverClass>
@@ -103,7 +116,6 @@
     <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
   </WorkGiverDef>
 
-
   <WorkGiverDef>
     <defName>FixBrokenDownBuildingOutpost</defName>
     <label>fix broken-down things</label>
@@ -131,5 +143,33 @@
     <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
   </WorkGiverDef>
 
-  <!-- TODO: add repair and clean toil-->
+  <!-- TODO: add clean toil-->
+  <!--<WorkGiverDef>
+    <defName>CleanClearSnow</defName>
+    <label>clear snow</label>
+    <giverClass>WorkGiver_ClearSnow</giverClass>
+    <workType>Cleaning</workType>
+    <verb>clear snow</verb>
+    <gerund>clearing snow</gerund>
+    <priorityInType>10</priorityInType>
+    <scanThings>false</scanThings>
+    <scanCells>true</scanCells>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>CleanFilth</defName>
+    <label>clean filth</label>
+    <giverClass>WorkGiver_CleanFilth</giverClass>
+    <workType>Cleaning</workType>
+    <verb>clean</verb>
+    <gerund>cleaning</gerund>
+    <priorityInType>5</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>-->
+
 </WorkGivers>

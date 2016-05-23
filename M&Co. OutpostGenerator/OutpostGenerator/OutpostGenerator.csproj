@@ -65,6 +65,7 @@
     <Compile Include="JobDriver_TransferInjuredEmployee.cs" />
     <Compile Include="SupplyShipTakingOff.cs" />
     <Compile Include="SupplyShipLandingOn.cs" />
+    <Compile Include="WorkGiver_FightFiresOutpost.cs" />
     <Compile Include="WorkGiver_RepairOutpost.cs" />
     <Compile Include="WorkGiver_FixBrokenDownBuildingOutpost.cs" />
     <Compile Include="WorkGiver_HaulGeneralOutpost.cs" />
@@ -132,6 +133,7 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\PawnKindDefs\PawnKinds_SecurityForces.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />
+    <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\SupplyShipTakingOff.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\SupplyShipLandingOn.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\TerrainDefs\DirtFloor.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\ThingDefs\Building_OrbitalRelay.xml">

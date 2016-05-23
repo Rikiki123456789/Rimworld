@@ -7,7 +7,6 @@
         <compClass>CompQuality</compClass>
       </li>
     </comps>
-    <DesignationCategory>Furniture</DesignationCategory>
     <minifiedDef>MinifiedFurniture</minifiedDef>
   </ThingDef>
 

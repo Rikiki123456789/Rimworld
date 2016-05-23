@@ -23,12 +23,19 @@ namespace OutpostGenerator
         private IntVec3 landingPadCenter = Find.Map.Center;
         private Rot4 landingPadRotation = Rot4.North;
 
-        // List of reinforcement requests (list of pawn types who should arrive in next supply ship).
-        private List<string> reinforcementRequestsList = new List<string>();
-        private const int supplyShipLandingOnPeriod = 5000; // TODO: adjust it. Every 5 days?
-        private int ticksToNextSupplyShipLandingOn = supplyShipLandingOnPeriod;
-        private const int troopsReviewPeriod = 250; // TODO: adjust it. Every 10 days?
-        private int ticksToNextTroopsReview = troopsReviewPeriod;
+        // Reinforcement data.
+        public const int officersTargetNumber = 1;
+        public const int heavyGuardsTargetNumber = 1;
+        public const int guardsTargetNumber = 4;
+        public const int scoutsTargetNumber = 2;
+        public const int techniciansTargetNumber = 4;
+        public int requestedOfficersNumber = 0;
+        public int requestedHeavyGuardsNumber = 0;
+        public int requestedGuardsNumber = 0;
+        public int requestedScoutsNumber = 0;
+        public int requestedTechniciansNumber = 0;
+        private const int supplyShipLandingPeriod = 5000; // TODO: adjust it. Every 5 days?
+        private int ticksToNextSupplyShipLanding = supplyShipLandingPeriod;
 
         // Dish periodical rotation.
         private const float turnRate = 0.06f;
@@ -67,19 +74,11 @@ namespace OutpostGenerator
             if ((this.Faction != null)
                 && (this.Faction == OG_Util.FactionOfMAndCo))
             {
-                this.ticksToNextSupplyShipLandingOn--;
-                if (this.ticksToNextSupplyShipLandingOn <= 0)
+                this.ticksToNextSupplyShipLanding--;
+                if (this.ticksToNextSupplyShipLanding <= 0)
                 {
-                    this.ticksToNextSupplyShipLandingOn = supplyShipLandingOnPeriod;
+                    this.ticksToNextSupplyShipLanding = supplyShipLandingPeriod;
                     SpawnSupplyShip();
-                    UnforbidAnyWeaponOrApparelInOutpost();
-                }
-
-                this.ticksToNextTroopsReview--;
-                if (ticksToNextTroopsReview <= 0)
-                {
-                    this.ticksToNextTroopsReview = troopsReviewPeriod;
-                    PerformTroopsReview();
                 }
             }
 
@@ -99,22 +98,49 @@ namespace OutpostGenerator
             this.landingPadRotation = rotation;
         }
 
-        public void RequestReinforcement(PawnKindDef pawnType)
+        public void UpdateRequestedReinforcements()
         {
-            Log.Message("Adding reinforcement request " + pawnType.ToString());
-            this.reinforcementRequestsList.Add(pawnType.ToString());
-        }
+            int officersNumber = 0;
+            int heavyGuardsNumber = 0;
+            int guardsNumber = 0;
+            int scoutsNumber = 0;
+            int techniciansNumber = 0;
 
-        public void GetAndClearReinforcementRequestsList(out List<PawnKindDef> reinforcementRequestsList)
-        {
-            reinforcementRequestsList = new List<PawnKindDef>();
-            foreach (string pawnType in this.reinforcementRequestsList)
+            // Get the list of M&Co. pawns in the outpost area.
+            foreach (Pawn pawn in Find.MapPawns.PawnsInFaction(OG_Util.FactionOfMAndCo))
             {
-                reinforcementRequestsList.Add(PawnKindDef.Named(pawnType));
+                if (pawn.kindDef == OG_Util.OutpostOfficerDef)
+                {
+                    officersNumber++;
+                }
+                else if (pawn.kindDef == OG_Util.OutpostHeavyGuardDef)
+                {
+                    heavyGuardsNumber++;
+                }
+                else if (pawn.kindDef == OG_Util.OutpostGuardDef)
+                {
+                    guardsNumber++;
+                }
+                else if (pawn.kindDef == OG_Util.OutpostScoutDef)
+                {
+                    scoutsNumber++;
+                }
+                else if (pawn.kindDef == OG_Util.OutpostTechnicianDef)
+                {
+                    techniciansNumber++;
+                }
             }
-            this.reinforcementRequestsList.Clear();
-        }
 
+            // Compute the number of necessary reinforcements.
+            this.requestedOfficersNumber = officersTargetNumber - officersNumber;
+            this.requestedHeavyGuardsNumber = heavyGuardsTargetNumber - heavyGuardsNumber;
+            this.requestedGuardsNumber = guardsTargetNumber - guardsNumber;
+            this.requestedScoutsNumber = scoutsTargetNumber - scoutsNumber;
+            this.requestedTechniciansNumber = techniciansTargetNumber - techniciansNumber;
+
+            Log.Message("Necessary reinforcements: " + this.requestedOfficersNumber + "/" + this.requestedHeavyGuardsNumber + "/" + this.requestedGuardsNumber + "/" + this.requestedScoutsNumber + "/" + this.requestedTechniciansNumber);
+        }
+        
         private void SpawnSupplyShip()
         {
             SupplyShipLandingOn supplyShip = ThingMaker.MakeThing(OG_Util.SupplyShipLandingOnDef) as SupplyShipLandingOn;
@@ -122,17 +148,7 @@ namespace OutpostGenerator
             supplyShip.SetFaction(this.Faction);
             GenSpawn.Spawn(supplyShip, this.landingPadCenter);
         }
-
-        private void UnforbidAnyWeaponOrApparelInOutpost()
-        {
-            // TODO: unforbid weapon or apparel so it can be carried to supply ship.
-        }
-
-        private void PerformTroopsReview()
-        {
-            // TODO: count alive M&Co. emmployees + the ones stored in cryptosleep sarcophagi. Add missing ones to the reinforcementRequestsList.
-        }
-
+        
         private void UpdateDishRotation()
         {
             if (this.ticksToNextRotation > 0)
@@ -198,13 +214,18 @@ namespace OutpostGenerator
             base.ExposeData();
             Scribe_Values.LookValue<IntVec3>(ref this.landingPadCenter, "landingPadCenter");
             Scribe_Values.LookValue<Rot4>(ref this.landingPadRotation, "landingPadRotation");
-            Scribe_Values.LookValue<int>(ref this.ticksToNextSupplyShipLandingOn, "ticksToNextSupplyShipLandingOn");
-            Scribe_Values.LookValue<int>(ref this.ticksToNextTroopsReview, "ticksToNextTroopsReview");
+           
+            Scribe_Values.LookValue<int>(ref this.requestedOfficersNumber, "requestedOfficersNumber");
+            Scribe_Values.LookValue<int>(ref this.requestedHeavyGuardsNumber, "requestedHeavyGuardsNumber");
+            Scribe_Values.LookValue<int>(ref this.requestedGuardsNumber, "requestedGuardsNumber");
+            Scribe_Values.LookValue<int>(ref this.requestedScoutsNumber, "requestedScoutsNumber");
+            Scribe_Values.LookValue<int>(ref this.requestedTechniciansNumber, "requestedTechniciansNumber");
+            Scribe_Values.LookValue<int>(ref this.ticksToNextSupplyShipLanding, "ticksToNextSupplyShipLandingOn");
+
             Scribe_Values.LookValue<int>(ref this.ticksToNextRotation, "ticksToNextRotation");
             Scribe_Values.LookValue<float>(ref this.dishRotation, "dishRotation");
             Scribe_Values.LookValue<bool>(ref this.clockwiseRotation, "clockwiseRotation");
             Scribe_Values.LookValue<int>(ref this.ticksToRotationEnd, "ticksToRotationEnd");
-            Scribe_Collections.LookList<string>(ref this.reinforcementRequestsList, "requestedReinforcementList", LookMode.Value);
         }
 
         public override void Draw()

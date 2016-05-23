@@ -36,13 +36,6 @@ namespace OutpostGenerator
                 if (pawn != null)
                 {
                     SoundDef.Named("CryptosleepCasketEject").PlayOneShot(base.Position);
-                    PawnKindDef pawnType = pawn.kindDef;
-                    Log.Message("Loaded " + pawnType.ToString() + " into crypto bay.");
-                    Building_OrbitalRelay orbitalRelay = OG_Util.FindOrbitalRelay(this.Faction);
-                    if (orbitalRelay != null)
-                    {
-                        orbitalRelay.RequestReinforcement(pawnType);
-                    }
                 }
                 this.container.ClearAndDestroyContents();
             }

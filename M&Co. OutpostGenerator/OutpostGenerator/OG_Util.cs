@@ -248,11 +248,27 @@ namespace OutpostGenerator
             }
         }
 
+        public static PawnKindDef OutpostScoutDef
+        {
+            get
+            {
+                return PawnKindDef.Named("OutpostScout");
+            }
+        }
+
         public static PawnKindDef OutpostGuardDef
         {
             get
             {
                 return PawnKindDef.Named("OutpostGuard");
+            }
+        }
+
+        public static PawnKindDef OutpostHeavyGuardDef
+        {
+            get
+            {
+                return PawnKindDef.Named("OutpostHeavyGuard");
             }
         }
 

@@ -143,6 +143,11 @@ namespace OutpostGenerator
             // The following section is needed so existing pawns will be treated as ennemies.
             if (Game.Mode == GameMode.MapPlaying)
             {
+                Find.AttackTargetsCache.Notify_FactionHostilityChanged(Faction.OfColony, OG_Util.FactionOfMAndCo);
+            }
+            // TODO: remove it?
+            /*if (Game.Mode == GameMode.MapPlaying)
+            {
                 List<Pawn> list = (from pa in Find.MapPawns.AllPawns
                                    where pa.Faction == Faction.OfColony || pa.Faction == OG_Util.FactionOfMAndCo
                                    select pa).ToList<Pawn>();
@@ -150,7 +155,7 @@ namespace OutpostGenerator
                 {
                     Find.MapPawns.UpdateRegistryForPawn(pawn);
                 }
-            }
+            }*/
 
             string text = "   M&Co. security message broadcast\n\n" +
                 "Coralie here!\n" +

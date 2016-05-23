@@ -63,36 +63,23 @@ namespace OutpostGenerator
             
             if (this.ticksToTakeOff == maxTicksToTakeOff)
             {
-                // Only spawn reinforcement pawns, packaged meals, beer and components once.
-                // TODO.
-                /*DropPodInfo info = new DropPodInfo();
-                Thing meals = ThingMaker.MakeThing(ThingDefOf.MealSurvivalPack);
-                meals.stackCount = Find.ListerPawns.PawnsInFaction(OG_Util.FactionOfMAndCo).Count;
-                meals.SetForbidden(true);
-                info.SingleContainedThing = meals;
-                DropPodUtility.MakeDropPodAt(this.dropZoneCenter + new IntVec3(Rand.RangeInclusive(-4, 4), 0, Rand.RangeInclusive(-4, 4)), info);*/
-
-                Building_OrbitalRelay orbitalRelay = OG_Util.FindOrbitalRelay(this.Faction);
-                if (orbitalRelay != null)
-                {
-                    List<PawnKindDef> reinforcementRequestsList;
-                    orbitalRelay.GetAndClearReinforcementRequestsList(out reinforcementRequestsList);
-                    foreach (PawnKindDef pawnType in reinforcementRequestsList)
-                    {
-                        // TODO: reuse OG_Inhabitants pawn generation algo.
-                        Pawn pawn = PawnGenerator.GeneratePawn(pawnType, this.Faction);
-                        GenSpawn.Spawn(pawn, this.Position);
-                    }
-                }
-
+                // Only spawn reinforcement pawns and supply once.
+                SpawnRequestedReinforcements();
                 SpawnNecessarySupply();
-
                 UnforbidItemsToLoadInCargoBay();
             }
 
             this.ticksToTakeOff--;
             if (this.ticksToTakeOff <= 0)
             {
+                // Update requested reinforcements.
+                Building_OrbitalRelay orbitalRelay = OG_Util.FindOrbitalRelay(OG_Util.FactionOfMAndCo);
+                if (orbitalRelay != null)
+                {
+                    orbitalRelay.UpdateRequestedReinforcements();
+                }
+
+                // Spawn taking off supply ship.
                 SupplyShipTakingOff supplyShip = ThingMaker.MakeThing(OG_Util.SupplyShipTakingOffDef) as SupplyShipTakingOff;
                 supplyShip.InitializeLandingData(this.Position, this.Rotation);
                 supplyShip.SetFaction(this.Faction);
@@ -131,12 +118,46 @@ namespace OutpostGenerator
             Scribe_References.LookReference<Thing>(ref this.cargoBay1, "cargoBay1");
             Scribe_References.LookReference<Thing>(ref this.cargoBay2, "cargoBay2");
         }
-        
-        private static void SpawnNecessarySupply()
+
+        private void
+                SpawnRequestedReinforcements()
         {
-            const int mealsInStockTarget = 0;
-            const int beersInStockTarget = 0;
-            const int componentsInStockTarget = 0;
+            Building_OrbitalRelay orbitalRelay = OG_Util.FindOrbitalRelay(this.Faction);
+            if (orbitalRelay != null)
+            {
+                for (int pawnIndex = 0; pawnIndex < orbitalRelay.requestedOfficersNumber; pawnIndex++)
+                {
+                    Pawn pawn = OG_Inhabitants.GeneratePawn(OG_Util.OutpostOfficerDef);
+                    GenSpawn.Spawn(pawn, this.Position);
+                }
+                for (int pawnIndex = 0; pawnIndex < orbitalRelay.requestedHeavyGuardsNumber; pawnIndex++)
+                {
+                    Pawn pawn = OG_Inhabitants.GeneratePawn(OG_Util.OutpostHeavyGuardDef);
+                    GenSpawn.Spawn(pawn, this.Position);
+                }
+                for (int pawnIndex = 0; pawnIndex < orbitalRelay.requestedGuardsNumber; pawnIndex++)
+                {
+                    Pawn pawn = OG_Inhabitants.GeneratePawn(OG_Util.OutpostGuardDef);
+                    GenSpawn.Spawn(pawn, this.Position);
+                }
+                for (int pawnIndex = 0; pawnIndex < orbitalRelay.requestedScoutsNumber; pawnIndex++)
+                {
+                    Pawn pawn = OG_Inhabitants.GeneratePawn(OG_Util.OutpostScoutDef);
+                    GenSpawn.Spawn(pawn, this.Position);
+                }
+                for (int pawnIndex = 0; pawnIndex < orbitalRelay.requestedTechniciansNumber; pawnIndex++)
+                {
+                    Pawn pawn = OG_Inhabitants.GeneratePawn(OG_Util.OutpostTechnicianDef);
+                    GenSpawn.Spawn(pawn, this.Position);
+                }
+            }
+        }
+
+private void SpawnNecessarySupply()
+        {
+            const int mealsInStockTarget = 80;
+            const int beersInStockTarget = 100;
+            const int componentsInStockTarget = 20;
             int mealsInOutpost = 0;
             int beersInOutpost = 0;
             int componentsInOutpost = 0;
@@ -145,8 +166,12 @@ namespace OutpostGenerator
             int componentsToSupply = 0;
 
             CountResourcesInOutpost(out mealsInOutpost, out beersInOutpost, out componentsInOutpost);
-
-
+            mealsToSupply = mealsInStockTarget - mealsInOutpost;
+            beersToSupply = beersInStockTarget - beersInOutpost;
+            componentsToSupply = componentsInStockTarget - componentsInOutpost;
+            SpawnSupplyNearPosition(ThingDefOf.MealSurvivalPack, mealsToSupply, this.Position);
+            SpawnSupplyNearPosition(ThingDefOf.Beer, beersToSupply, this.Position);
+            SpawnSupplyNearPosition(ThingDefOf.Components, componentsToSupply, this.Position);
         }
 
         private static void CountResourcesInOutpost(out int meals, out int beers, out int components)
@@ -162,18 +187,36 @@ namespace OutpostGenerator
                     {
                         if (thing.def == ThingDefOf.MealSurvivalPack)
                         {
-                            meals++;
+                            meals += thing.stackCount;
                         }
                         if (thing.def == ThingDefOf.Beer)
                         {
-                            beers++;
+                            beers += thing.stackCount;
                         }
                         if (thing.def == ThingDefOf.Components)
                         {
-                            components++;
+                            components += thing.stackCount;
                         }
                     }
                 }
+            }
+        }
+
+        private static void SpawnSupplyNearPosition(ThingDef def, int quantity, IntVec3 center)
+        {
+            while (quantity > 0)
+            {
+                Thing supplyStack = ThingMaker.MakeThing(def);
+                if (quantity >= def.stackLimit)
+                {
+                    supplyStack.stackCount = def.stackLimit;
+                }
+                else
+                {
+                    supplyStack.stackCount = quantity;
+                }
+                quantity -= supplyStack.stackCount;
+                GenPlace.TryPlaceThing(supplyStack, center, ThingPlaceMode.Near);
             }
         }
 
@@ -186,10 +229,18 @@ namespace OutpostGenerator
                 {
                     foreach (Thing thing in cell.GetThingList())
                     {
+                        if (thing.def.thingCategories == null)
+                        {
+                            continue;
+                        }
                         if (thing.def.thingCategories.Contains(ThingCategoryDefOf.Apparel)
-                            || thing.def.thingCategories.Contains(ThingCategoryDefOf.Weapons)
+                            || thing.def.thingCategories.Contains(ThingCategoryDef.Named("Headgear"))
+                            || thing.def.thingCategories.Contains(ThingCategoryDef.Named("WeaponsMelee"))
+                            || thing.def.thingCategories.Contains(ThingCategoryDef.Named("WeaponsRanged"))
                             || thing.def.thingCategories.Contains(ThingCategoryDef.Named("CorpsesHumanlike"))
-                            || (thing.def.thingCategories.Contains(ThingCategoryDef.Named("FoodRaw"))
+                            || thing.def.thingCategories.Contains(ThingCategoryDef.Named("Textiles"))
+                            || (thing.def == ThingDef.Named("RawHops"))
+                            || (thing.def.thingCategories.Contains(ThingCategoryDef.Named("PlantFoodRaw"))
                                 && (thing.def != ThingDef.Named("Hay"))))
                         {
                             thing.SetForbidden(false);

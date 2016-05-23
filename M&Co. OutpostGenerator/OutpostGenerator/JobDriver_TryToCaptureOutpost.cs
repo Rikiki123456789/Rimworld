@@ -34,7 +34,7 @@ namespace OutpostGenerator
 
             yield return Toils_Goto.GotoCell(outpostCommandConsoleTarget, PathEndMode.InteractionCell).FailOnDestroyedOrNull(outpostCommandConsoleTarget);
 
-            yield return Toils_General.Wait(800).FailOnDestroyedOrNull(outpostCommandConsoleTarget);
+            yield return Toils_General.Wait(800).FailOnDestroyedOrNull(outpostCommandConsoleTarget).WithProgressBarToilDelay(outpostCommandConsoleTarget);
 
             Toil outpostCaptureResultToil = new Toil()
             {

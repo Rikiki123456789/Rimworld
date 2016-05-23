@@ -14,7 +14,6 @@
     </costList>
     <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
     <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <designationCategory>Furniture</designationCategory>
     <rotatable>false</rotatable>
     <graphicData>
       <texPath>Things/Building/Misc/FirefoamPopper</texPath>

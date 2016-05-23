@@ -33,8 +33,7 @@ namespace OutpostGenerator
         private Vector3 supplyShipScale = new Vector3(11f, 1f, 20f);
 
         // Sound.
-        private static readonly SoundDef takingOffSound = SoundDef.Named("SupplyShipLandingOn");
-        // TODO: revert it!
+        private static readonly SoundDef takingOffSound = SoundDef.Named("SupplyShipTakingOff");
         
         private float supplyShipRotation
         {

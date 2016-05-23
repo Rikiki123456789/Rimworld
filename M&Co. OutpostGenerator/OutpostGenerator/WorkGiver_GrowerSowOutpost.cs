@@ -39,9 +39,7 @@ namespace OutpostGenerator
             List<Thing> plantGrowersList = new List<Thing>();
 
             List<Thing> hydroponicsList = Find.ListerThings.ThingsOfDef(ThingDef.Named("HydroponicsBasin"));
-            Log.Message("hydroponicsList.Count = " + hydroponicsList.Count);
             List<Thing> plantPotsList = Find.ListerThings.ThingsOfDef(ThingDef.Named("PlantPot"));
-            Log.Message("plantPotsList.Count = " + plantPotsList.Count);
             foreach (Thing hydroponicsBasin in hydroponicsList)
             {
                 plantGrowersList.Add(hydroponicsBasin);
@@ -50,7 +48,6 @@ namespace OutpostGenerator
             {
                 plantGrowersList.Add(plantPot);
             }
-            Log.Message("plantGrowersList.Count = " + plantGrowersList.Count);
 
             for (int plantGrowerIndex = 0; plantGrowerIndex < plantGrowersList.Count; plantGrowerIndex++)
             {

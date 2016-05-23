@@ -13,17 +13,12 @@ namespace OutpostGenerator
 {
     // TODO: add tale: drop-pod destroyed in-flight.
     // TODO: create M&Co. backgrounds.
-    // TODO: periodically check M&Co. employee affected area.
-    // TODO: add cleaning job inside outpost area. Add a map component which periodically check for existing filth and update a list.
+    // TODO: add cleaning job inside outpost area.
     // TODO: if pawn has no apparel or weapon, leave with next ship.
     // TODO: add animals? Might be tricky, especially for wounded animals.
-    // TODO: landing pad beacon texture.
-    // TODO: add components shipping.
     // TODO: improve AI with 2 states (standard defense + assault ennemy in outpost perimeter).
-    // TODO: add Haplo's firing stand.
     // TODO: technician tuque not when in hot conditions.
-    // TODO: sow also in custom plant grower?
-    // TODO: periodically un-forbid packaged survival meals/beer/components/weapons in the area to allow hauling.
+    // TODO: check firefighters do their job!
 
     /// <summary>
     /// OG_BigOutpost class.
