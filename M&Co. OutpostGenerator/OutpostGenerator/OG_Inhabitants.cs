@@ -327,7 +327,11 @@ namespace OutpostGenerator
                 }
                 else
                 {
-                    GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Tuque"), ThingDef.Named("Synthread"), colorCivilGrey);
+                    if (Find.MapWorldSquare.temperature < 20f)
+                    {
+                        // Only give a tuque if temperature is low enough.
+                        GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Tuque"), ThingDef.Named("Synthread"), colorCivilGrey);
+                    }
                 }
                 if (needParka)
                 {

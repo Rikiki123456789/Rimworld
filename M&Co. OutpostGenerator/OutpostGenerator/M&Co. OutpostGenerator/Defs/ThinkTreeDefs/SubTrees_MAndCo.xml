@@ -75,6 +75,10 @@
                 <li Class="JobGiver_Work"/>
               </subNodes>
             </li>
+            <li Class="OutpostGenerator.JobGiver_ExitWithNextShip"/>
+            <li Class="OutpostGenerator.JobGiver_WanderOutpost">
+              <maxDanger>None</maxDanger>
+            </li>
             <li Class="JobGiver_WanderAnywhere">
               <maxDanger>Deadly</maxDanger>
             </li>

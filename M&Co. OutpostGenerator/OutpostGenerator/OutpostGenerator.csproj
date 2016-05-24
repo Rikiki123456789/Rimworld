@@ -62,9 +62,14 @@
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
     <Compile Include="Detours.cs" />
     <Compile Include="DetoursOG.cs" />
+    <Compile Include="JobDriver_BoardSupplyShip.cs" />
+    <Compile Include="JobGiver_ExitWithNextShip.cs" />
+    <Compile Include="JobGiver_WanderOutpost.cs" />
+    <Compile Include="JobDriver_CleanOutpost.cs" />
     <Compile Include="JobDriver_TransferInjuredEmployee.cs" />
     <Compile Include="SupplyShipTakingOff.cs" />
     <Compile Include="SupplyShipLandingOn.cs" />
+    <Compile Include="WorkGiver_CleanFilthOutpost.cs" />
     <Compile Include="WorkGiver_FightFiresOutpost.cs" />
     <Compile Include="WorkGiver_RepairOutpost.cs" />
     <Compile Include="WorkGiver_FixBrokenDownBuildingOutpost.cs" />
@@ -129,7 +134,6 @@
     <Content Include="M&amp;Co. OutpostGenerator\Defs\MapGeneratorDefs\MapGenerators.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. OutpostGenerator\Defs\NeedDefs\Needs.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\PawnKindDefs\PawnKinds_SecurityForces.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\RoofDefs\IronedRoof.xml" />
     <Content Include="M&amp;Co. OutpostGenerator\Defs\SoundDefs\MissileLaunch.xml" />

@@ -134,7 +134,7 @@
     <label>repair damaged things</label>
     <giverClass>OutpostGenerator.WorkGiver_RepairOutpost</giverClass>
     <workType>Repair</workType>
-    <priorityInType>5</priorityInType>
+    <priorityInType>4</priorityInType>
     <verb>repair</verb>
     <gerund>repairing</gerund>
     <requiredCapacities>
@@ -143,33 +143,18 @@
     <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
   </WorkGiverDef>
 
-  <!-- TODO: add clean toil-->
-  <!--<WorkGiverDef>
-    <defName>CleanClearSnow</defName>
-    <label>clear snow</label>
-    <giverClass>WorkGiver_ClearSnow</giverClass>
-    <workType>Cleaning</workType>
-    <verb>clear snow</verb>
-    <gerund>clearing snow</gerund>
-    <priorityInType>10</priorityInType>
-    <scanThings>false</scanThings>
-    <scanCells>true</scanCells>
-    <requiredCapacities>
-      <li>Manipulation</li>
-    </requiredCapacities>
-  </WorkGiverDef>
-
   <WorkGiverDef>
-    <defName>CleanFilth</defName>
+    <defName>CleanFilthOutpost</defName>
     <label>clean filth</label>
-    <giverClass>WorkGiver_CleanFilth</giverClass>
+    <giverClass>OutpostGenerator.WorkGiver_CleanFilthOutpost</giverClass>
     <workType>Cleaning</workType>
     <verb>clean</verb>
     <gerund>cleaning</gerund>
-    <priorityInType>5</priorityInType>
+    <priorityInType>4</priorityInType>
     <requiredCapacities>
       <li>Manipulation</li>
     </requiredCapacities>
-  </WorkGiverDef>-->
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
 
 </WorkGivers>

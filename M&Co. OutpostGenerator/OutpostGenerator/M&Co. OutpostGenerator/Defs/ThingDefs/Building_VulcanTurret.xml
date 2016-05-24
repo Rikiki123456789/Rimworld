@@ -16,7 +16,7 @@
     </graphicData>
     <altitudeLayer>Waist</altitudeLayer>
     <statBases>
-      <MaxHitPoints>400</MaxHitPoints>
+      <MaxHitPoints>800</MaxHitPoints>
       <Flammability>0</Flammability>
       <WorkToMake>25000</WorkToMake>
       <Beauty>-40</Beauty>

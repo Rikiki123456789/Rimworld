@@ -15,4 +15,18 @@
     <alwaysShowWeapon>true</alwaysShowWeapon>
   </JobDef>
 
+  <JobDef>
+    <defName>JobDef_BoardSupplyShip</defName>
+    <driverClass>OutpostGenerator.JobDriver_BoardSupplyShip</driverClass>
+    <reportString>Boarding.</reportString>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+  </JobDef>
+
+  <JobDef>
+    <defName>JobDef_CleanOutpost</defName>
+    <driverClass>OutpostGenerator.JobDriver_CleanOutpost</driverClass>
+    <reportString>Cleaning.</reportString>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+  </JobDef>
+
 </JobDefs>

@@ -25,6 +25,10 @@ namespace OutpostGenerator
 
         public static string JobDefName_TransferInjuredEmployeet = "JobDef_TransferInjuredEmployee";
 
+        public static string JobDefName_BoardSupplyShip = "JobDef_BoardSupplyShip";
+
+        public static string JobDefName_CleanOutpost = "JobDef_CleanOutpost";
+
         // Thing defs.
         public static ThingDef FireproofPowerConduitDef
         {
@@ -306,7 +310,7 @@ namespace OutpostGenerator
         }
 
         /// <summary>
-        /// Return a copy of the listToRefresh but remove any destroyed item.
+        /// Find the orbital relay building if it exists.
         /// </summary>
         public static Building_OrbitalRelay FindOrbitalRelay(Faction faction)
         {
@@ -319,6 +323,25 @@ namespace OutpostGenerator
                     && (orbitalRelay.Faction == faction))
                 {
                     return orbitalRelay;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Find the supply ship if it exists.
+        /// </summary>
+        public static Building_SupplyShip FindSupplyShip(Faction faction)
+        {
+            List<Thing> supplyShipList = Find.ListerThings.ThingsOfDef(OG_Util.SupplyShipDef);
+            foreach (Thing potentialSupplyShip in supplyShipList)
+            {
+                Building_SupplyShip supplyShip = potentialSupplyShip as Building_SupplyShip;
+                if ((supplyShip != null)
+                    && (supplyShip.Faction != null)
+                    && (supplyShip.Faction == faction))
+                {
+                    return supplyShip;
                 }
             }
             return null;

@@ -13,12 +13,8 @@ namespace OutpostGenerator
 {
     // TODO: add tale: drop-pod destroyed in-flight.
     // TODO: create M&Co. backgrounds.
-    // TODO: add cleaning job inside outpost area.
-    // TODO: if pawn has no apparel or weapon, leave with next ship.
-    // TODO: add animals? Might be tricky, especially for wounded animals.
     // TODO: improve AI with 2 states (standard defense + assault ennemy in outpost perimeter).
-    // TODO: technician tuque not when in hot conditions.
-    // TODO: check firefighters do their job!
+    // TODO: add joy and comfort.
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -55,8 +51,8 @@ namespace OutpostGenerator
             // Create the intrusion trigger.
             outpostData.triggerIntrusion = (TriggerIntrusion)ThingMaker.MakeThing(ThingDef.Named("TriggerIntrusion"));
             GetMainRoom4Zone(mainEntranceDirection, out mainRoomZoneAbs, out mainRoomZoneOrd);
-            IntVec3 triggerINtrussionPosition = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, mainRoomZoneAbs, mainRoomZoneOrd) + new IntVec3(5, 0, 5);
-            GenSpawn.Spawn(outpostData.triggerIntrusion, triggerINtrussionPosition);
+            IntVec3 triggerIntrusionPosition = Zone.GetZoneOrigin(outpostData.areaSouthWestOrigin, mainRoomZoneAbs, mainRoomZoneOrd) + new IntVec3(5, 0, 5);
+            GenSpawn.Spawn(outpostData.triggerIntrusion, triggerIntrusionPosition);
 
             GenerateOutpostLayout();
             // Display the generated layout.
