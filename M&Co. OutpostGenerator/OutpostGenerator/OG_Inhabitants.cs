@@ -96,6 +96,7 @@ namespace OutpostGenerator
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
             }
 
+            // TODO: remove it!
             // Affect squad brain to outpost guards.
             /*LordToil_DefendOutpost stateDefend = new LordToil_DefendOutpost(
                 outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
@@ -108,8 +109,8 @@ namespace OutpostGenerator
                 outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
             stateGraph.StartingToil = lordToil_DefendPoint;*/
             
-            LordJob lordJob = new LordJob_DefendPoint(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2));
-            Lord lord = LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob, guardsList);
+            //LordJob lordJob = new LordJob_DefendPoint(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2));
+            //Lord lord = LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob, guardsList);
             // TODO: Generate voluntarily joinable lord toils with orbital relay. USe LordToil_Stage and LordToil_HuntEnemies.
         }
 

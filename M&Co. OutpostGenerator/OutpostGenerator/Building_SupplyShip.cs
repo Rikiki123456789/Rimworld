@@ -119,8 +119,7 @@ namespace OutpostGenerator
             Scribe_References.LookReference<Thing>(ref this.cargoBay2, "cargoBay2");
         }
 
-        private void
-                SpawnRequestedReinforcements()
+        private void SpawnRequestedReinforcements()
         {
             Building_OrbitalRelay orbitalRelay = OG_Util.FindOrbitalRelay(this.Faction);
             if (orbitalRelay != null)
@@ -153,7 +152,7 @@ namespace OutpostGenerator
             }
         }
 
-private void SpawnNecessarySupply()
+        private void SpawnNecessarySupply()
         {
             const int mealsInStockTarget = 80;
             const int beersInStockTarget = 100;

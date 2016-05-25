@@ -71,7 +71,8 @@ namespace CaveworldFlora
                     this.ticksToNearPawnCheck = 0;
                     foreach (Pawn pawn in Find.MapPawns.AllPawns)
                     {
-                        if (pawn.Position.InHorDistOf(this.Position, sporeEffectRadius))
+                        if ((pawn.Position.InHorDistOf(this.Position, sporeEffectRadius))
+                            && (pawn.needs.mood != null))
                         {
                             pawn.needs.mood.thoughts.TryGainThought(Util_CavePlant.breathedGleamcapSmokeDef);
                         }

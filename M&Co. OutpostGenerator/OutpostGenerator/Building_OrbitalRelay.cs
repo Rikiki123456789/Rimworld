@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-using UnityEngine;   // Always needed
-using RimWorld;      // RimWorld specific functions are found here
-using Verse;         // RimWorld universal objects are here
-using Verse.AI;      // Needed when you do something with the AI
-using Verse.Sound;   // Needed when you do something with the Sound
+using UnityEngine;    // Always needed
+using RimWorld;       // RimWorld specific functions are found here
+using Verse;          // RimWorld universal objects are here
+using Verse.AI;       // Needed when you do something with the AI.
+using Verse.AI.Group; // Needed when you do something with squad AI.
+using Verse.Sound;    // Needed when you do something with the Sound
 
 namespace OutpostGenerator
 {
@@ -37,6 +38,11 @@ namespace OutpostGenerator
         private const int supplyShipLandingPeriod = 5000; // TODO: adjust it. Every 5 days?
         private int ticksToNextSupplyShipLanding = supplyShipLandingPeriod;
 
+        // Lord data.
+        private const int lordUpdatePeriodInTicks = GenTicks.TickRareInterval; // TODO: adjust it.
+        private int nextLordUpdateInTicks = lordUpdatePeriodInTicks;
+        private Lord lord = null;
+
         // Dish periodical rotation.
         private const float turnRate = 0.06f;
         private const int rotationIntervalMin = 1200;
@@ -65,6 +71,9 @@ namespace OutpostGenerator
             base.SpawnSetup();
             powerComp = base.GetComp<CompPowerTrader>();
             Building_OrbitalRelay.texture = MaterialPool.MatFrom("Things/Building/Misc/OrbitalRelay");
+
+            // TODO: look for lord in existing ones.
+            //Find.LordManager.lords
         }
 
         public override void Tick()
@@ -81,6 +90,12 @@ namespace OutpostGenerator
                     SpawnSupplyShip();
                 }
             }
+            
+            if (Find.TickManager.TicksGame >= this.nextLordUpdateInTicks)
+            {
+                UpdateLord();
+                this.nextLordUpdateInTicks = Find.TickManager.TicksGame + lordUpdatePeriodInTicks;
+            }
 
             if (powerComp.PowerOn)
             {
@@ -92,6 +107,17 @@ namespace OutpostGenerator
             }
         }
         
+        private void UpdateLord()
+        {
+            Log.Message("UpdateLord");
+            // TODO: look for ennemies in range of outpost.
+            if (this.lord == null)
+            {
+                LordJob_Joinable_DefendOutpost lordJob = new LordJob_Joinable_DefendOutpost(OG_Util.OutpostArea.ActiveCells.RandomElement());
+                this.lord = LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob);
+            }
+        }
+
         public void InitializeLandingData(IntVec3 center, Rot4 rotation)
         {
             this.landingPadCenter = center;
@@ -221,6 +247,8 @@ namespace OutpostGenerator
             Scribe_Values.LookValue<int>(ref this.requestedScoutsNumber, "requestedScoutsNumber");
             Scribe_Values.LookValue<int>(ref this.requestedTechniciansNumber, "requestedTechniciansNumber");
             Scribe_Values.LookValue<int>(ref this.ticksToNextSupplyShipLanding, "ticksToNextSupplyShipLandingOn");
+
+            Scribe_Values.LookValue<int>(ref this.nextLordUpdateInTicks, "nextLordUpdateInTicks");
 
             Scribe_Values.LookValue<int>(ref this.ticksToNextRotation, "ticksToNextRotation");
             Scribe_Values.LookValue<float>(ref this.dishRotation, "dishRotation");

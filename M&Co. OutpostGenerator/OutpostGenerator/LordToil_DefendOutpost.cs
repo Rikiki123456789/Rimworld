@@ -52,7 +52,7 @@ namespace OutpostGenerator
             this.data = new LordToilData_DefendPoint();
         }
 
-        public LordToil_DefendOutpost(IntVec3 defendPoint, float defendRadius = 50f) : this(true)
+        public LordToil_DefendOutpost(IntVec3 defendPoint, float defendRadius = 28f) : this(true)
 		{
             this.Data.defendPoint = defendPoint;
             this.Data.defendRadius = defendRadius;

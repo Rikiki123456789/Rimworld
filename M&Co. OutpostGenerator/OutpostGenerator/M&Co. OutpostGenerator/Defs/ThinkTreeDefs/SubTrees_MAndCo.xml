@@ -10,8 +10,7 @@
         <!--  If M&Co. employee, do emergency work.  -->
         <li Class="OutpostGenerator.ThinkNode_ConditionalMAndCoEmployee">
           <subNodes>
-            <!--  Seek allowed area: TODO: use custom jobGiver...  -->
-            <li Class="JobGiver_SeekAllowedArea"/>
+            <!--  Seek allowed area: performed with JobGiver_WanderOutpost. -->
             <!--  Seek safe temperatures  -->
             <li Class="JobGiver_SeekSafeTemperature"/>
             <!--  Drop unnused inventory  -->
@@ -24,11 +23,6 @@
                 </li>
               </subNodes>
             </li>
-            <!--  Emergency work  -->
-            <li Class="JobGiver_Work">
-              <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
-              <emergency>true</emergency>
-            </li>
             <!--  Lord directives (medium priority)  -->
             <li Class="ThinkNode_JoinVoluntarilyJoinableLord">
               <dutyHook>MediumPriority</dutyHook>
@@ -37,10 +31,6 @@
                   <treeDef>LordDuty</treeDef>
                 </li>
               </subNodes>
-            </li>
-            <!--  Optimize apparel  -->
-            <li Class="JobGiver_OptimizeApparel">
-              <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
             </li>
             <!--  Pack food if not hungry -->
             <li Class="ThinkNode_ConditionalNeedPercentageAbove">
@@ -59,7 +49,7 @@
   </ThinkTreeDef>
   
   <ThinkTreeDef>
-    <defName>MAndCoPreMain</defName>
+    <defName>MAndCoPostMain</defName>
     <insertTag>Humanlike_PostMain</insertTag>
     <insertPriority>100</insertPriority>
     <thinkRoot Class="ThinkNode_Priority">

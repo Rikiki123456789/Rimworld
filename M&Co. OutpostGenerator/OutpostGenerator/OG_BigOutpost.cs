@@ -13,7 +13,7 @@ namespace OutpostGenerator
 {
     // TODO: add tale: drop-pod destroyed in-flight.
     // TODO: create M&Co. backgrounds.
-    // TODO: improve AI with 2 states (standard defense + assault ennemy in outpost perimeter).
+    // TODO: improve AI with joinable Lords (standard defense + assault ennemy in outpost perimeter).
     // TODO: add joy and comfort.
 
     /// <summary>
