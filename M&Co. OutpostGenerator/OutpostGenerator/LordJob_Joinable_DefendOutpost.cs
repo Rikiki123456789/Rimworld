@@ -31,10 +31,9 @@ namespace OutpostGenerator
 
         public override StateGraph CreateGraph()
         {
-            Log.Message("CreateGraph");
             StateGraph stateGraph = new StateGraph();
-            LordToil_Party lordToil_Defend = new LordToil_Party(this.rallyPoint);
-            //LordToil_DefendPoint lordToil_Defend = new LordToil_DefendPoint(this.rallyPoint);
+            //LordToil_Party lordToil_Defend = new LordToil_Party(this.rallyPoint);
+            LordToil_DefendOutpost lordToil_Defend = new LordToil_DefendOutpost(this.rallyPoint);
             stateGraph.AddToil(lordToil_Defend);
             LordToil_End lordToil_End = new LordToil_End();
             stateGraph.AddToil(lordToil_End);
@@ -59,15 +58,13 @@ namespace OutpostGenerator
         
         public override float VoluntaryJoinPriorityFor(Pawn p)
         {
-            Log.Message("VoluntaryJoinPriorityFor for " + p.Name.ToStringShort);
             if ((p.Faction != null)
                 && (p.Faction == OG_Util.FactionOfMAndCo)
                 && (p.kindDef != OG_Util.OutpostTechnicianDef))
             {
-                Log.Message("VoluntaryJoinPriorityFor: joining!");
+                Log.Message("VoluntaryJoinPriorityFor: joining " + p.Name.ToStringShort);
                 return 20f;
             }
-            Log.Message("VoluntaryJoinPriorityFor: NOT joining!");
             return 0f;
         }
 

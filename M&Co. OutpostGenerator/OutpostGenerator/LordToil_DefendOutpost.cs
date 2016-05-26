@@ -19,40 +19,14 @@ namespace OutpostGenerator
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class LordToil_DefendOutpost : LordToil
+    public class LordToil_DefendOutpost : LordToil_DefendPoint
     {
-        private bool allowSatisfyLongNeeds = true;
-
-        protected LordToilData_DefendPoint Data
+        public override ThinkTreeDutyHook VoluntaryJoinDutyHookFor(Pawn p)
         {
-            get
-            {
-                return (LordToilData_DefendPoint)this.data;
-            }
+            return ThinkTreeDutyHook.MediumPriority;
         }
-
-        public override IntVec3 FlagLoc
-        {
-            get
-            {
-                return this.Data.defendPoint;
-            }
-        }
-        public override bool AllowSatisfyLongNeeds
-        {
-            get
-            {
-                return this.allowSatisfyLongNeeds;
-            }
-        }
-
-        public LordToil_DefendOutpost(bool canSatisfyLongNeeds = true)
-        {
-            this.allowSatisfyLongNeeds = canSatisfyLongNeeds;
-            this.data = new LordToilData_DefendPoint();
-        }
-
-        public LordToil_DefendOutpost(IntVec3 defendPoint, float defendRadius = 28f) : this(true)
+        
+        public LordToil_DefendOutpost(IntVec3 defendPoint, float defendRadius = 28f)
 		{
             this.Data.defendPoint = defendPoint;
             this.Data.defendRadius = defendRadius;
@@ -67,11 +41,6 @@ namespace OutpostGenerator
                 this.lord.ownedPawns[i].mindState.duty.focusSecond = this.Data.defendPoint;
                 this.lord.ownedPawns[i].mindState.duty.radius = this.Data.defendRadius;
             }
-        }
-
-        public void SetDefendPoint(IntVec3 defendPoint)
-        {
-            this.Data.defendPoint = defendPoint;
         }
     }
 }

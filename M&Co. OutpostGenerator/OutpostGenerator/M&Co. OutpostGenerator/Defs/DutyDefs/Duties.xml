@@ -3,17 +3,22 @@
 
   <DutyDef>
     <defName>DefendOutpost</defName>
-    <hook>MediumPriority</hook>
     <alwaysShowWeapon>true</alwaysShowWeapon>
     <thinkNode Class="ThinkNode_Priority">
       <subNodes>
-        <!-- TODO: run to rally point! -->
+        <li Class="OutpostGenerator.ThinkNode_AwayFromRallyPoint">
+          <subNodes>
+            <li Class="OutpostGenerator.JobGiver_SprintToRallyPoint">
+              <wanderRadius>8</wanderRadius>
+            </li>
+          </subNodes>
+        </li>
         <li Class="JobGiver_AIDefendPoint">
           <targetAcquireRadius>65</targetAcquireRadius>
           <targetKeepRadius>72</targetKeepRadius>
         </li>
         <li Class="JobGiver_FightFiresNearPoint">
-          <maxDistFromPoint>55</maxDistFromPoint>
+          <maxDistFromPoint>10</maxDistFromPoint>
         </li>
         <li Class="ThinkNode_FilterFlagDistance">
           <maxDistToSquadFlag>10</maxDistToSquadFlag>

@@ -23,6 +23,7 @@ namespace OutpostGenerator
         // Landing pad data.
         private IntVec3 landingPadCenter = Find.Map.Center;
         private Rot4 landingPadRotation = Rot4.North;
+        private IntVec3 outpostCenter = Find.Map.Center;
 
         // Reinforcement data.
         public const int officersTargetNumber = 1;
@@ -110,7 +111,20 @@ namespace OutpostGenerator
         private void UpdateLord()
         {
             Log.Message("UpdateLord");
-            // TODO: look for ennemies in range of outpost.
+            IntVec3 damagedTurretPosition = FindDamagedTurret();
+            if (damagedTurretPosition.IsValid)
+            {
+                Log.Message("Damaged turret at " + damagedTurretPosition);
+                return;
+            }
+            
+            IntVec3 ennemyPosition = FindEnnemyInNoMansLand();
+            if (ennemyPosition.IsValid)
+            {
+                Log.Message("Hostile pawn at " + ennemyPosition);
+                return;
+            }
+
             if (this.lord == null)
             {
                 LordJob_Joinable_DefendOutpost lordJob = new LordJob_Joinable_DefendOutpost(OG_Util.OutpostArea.ActiveCells.RandomElement());
@@ -118,10 +132,53 @@ namespace OutpostGenerator
             }
         }
 
-        public void InitializeLandingData(IntVec3 center, Rot4 rotation)
+        private IntVec3 FindDamagedTurret()
         {
-            this.landingPadCenter = center;
-            this.landingPadRotation = rotation;
+            List<Thing> vulcanTurretsList = Find.ListerThings.ThingsOfDef(OG_Util.VulcanTurretDef);
+            foreach (Thing turret in vulcanTurretsList)
+            {
+                if (turret.HitPoints < turret.MaxHitPoints)
+                {
+                    return turret.Position;
+                }
+            }
+            return IntVec3.Invalid;
+        }
+
+        private IntVec3 FindEnnemyInNoMansLand()
+        {
+            foreach (Pawn pawn in Find.MapPawns.AllPawns)
+            {
+                if ((pawn.Faction != null)
+                    && (pawn.Faction.HostileTo(OG_Util.FactionOfMAndCo)))
+                {
+                    Log.Message("Hostile pawn: " + pawn.Name.ToStringShort + " at " + pawn.Position);
+                    if (IsInNoMansLand(pawn.Position))
+                    {
+                        Log.Message("Pawn is in NoMansLand!");
+                        return pawn.Position;
+                    }
+                }
+            }
+            return IntVec3.Invalid;
+        }
+        private bool IsInNoMansLand(IntVec3 position)
+        {
+            if ((position.x >= this.outpostCenter.x - (OG_BigOutpost.areaSideLength / 2 + 10))
+                && (position.x <= this.outpostCenter.x + (OG_BigOutpost.areaSideLength / 2 + 10))
+                && (position.z >= this.outpostCenter.z - (OG_BigOutpost.areaSideLength / 2 + 10))
+                && (position.z <= this.outpostCenter.z + (OG_BigOutpost.areaSideLength / 2 + 10)))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void InitializeLandingAndOutpostData(IntVec3 landingPadCenter, Rot4 landingPadRotation, IntVec3 outpostCenter)
+        {
+            this.landingPadCenter = landingPadCenter;
+            this.landingPadRotation = landingPadRotation;
+            this.outpostCenter = outpostCenter;
         }
 
         public void UpdateRequestedReinforcements()
@@ -240,6 +297,7 @@ namespace OutpostGenerator
             base.ExposeData();
             Scribe_Values.LookValue<IntVec3>(ref this.landingPadCenter, "landingPadCenter");
             Scribe_Values.LookValue<Rot4>(ref this.landingPadRotation, "landingPadRotation");
+            Scribe_Values.LookValue<IntVec3>(ref this.outpostCenter, "outpostCenter");
            
             Scribe_Values.LookValue<int>(ref this.requestedOfficersNumber, "requestedOfficersNumber");
             Scribe_Values.LookValue<int>(ref this.requestedHeavyGuardsNumber, "requestedHeavyGuardsNumber");

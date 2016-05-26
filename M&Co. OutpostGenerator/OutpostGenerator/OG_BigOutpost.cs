@@ -82,7 +82,7 @@ namespace OutpostGenerator
             commandConsole.outpostThingList = outpostData.outpostThingList.ListFullCopy<Thing>();
             commandConsole.dropZoneCenter = outpostData.dropZoneCenter;
             // Initialize orbital relay data.
-            orbitalRelay.InitializeLandingData(outpostData.landingPadCenter, outpostData.landingPadRotation);
+            orbitalRelay.InitializeLandingAndOutpostData(outpostData.landingPadCenter, outpostData.landingPadRotation, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2));
             // Initialize intrusion trigger data.
             outpostData.triggerIntrusion.commandConsole = commandConsole; // TODO: revert dependency (commandConsole activates trigger intrusion tick)?
             

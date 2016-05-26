@@ -64,12 +64,14 @@
     <Compile Include="DetoursOG.cs" />
     <Compile Include="JobDriver_BoardSupplyShip.cs" />
     <Compile Include="JobGiver_ExitWithNextShip.cs" />
+    <Compile Include="JobGiver_SprintToRallyPoint.cs" />
     <Compile Include="LordJob_Joinable_DefendOutpost.cs" />
     <Compile Include="JobGiver_WanderOutpost.cs" />
     <Compile Include="JobDriver_CleanOutpost.cs" />
     <Compile Include="JobDriver_TransferInjuredEmployee.cs" />
     <Compile Include="SupplyShipTakingOff.cs" />
     <Compile Include="SupplyShipLandingOn.cs" />
+    <Compile Include="ThinkNode_AwayFromRallyPoint.cs" />
     <Compile Include="WorkGiver_CleanFilthOutpost.cs" />
     <Compile Include="WorkGiver_FightFiresOutpost.cs" />
     <Compile Include="WorkGiver_RepairOutpost.cs" />
