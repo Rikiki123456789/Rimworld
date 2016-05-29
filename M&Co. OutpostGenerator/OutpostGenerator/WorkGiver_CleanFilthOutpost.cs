@@ -69,8 +69,8 @@ namespace OutpostGenerator
         {
             Filth filth = t as Filth;
             return filth != null
-                && (OG_Util.OutpostArea != null)
-                && OG_Util.OutpostArea.ActiveCells.Contains(t.Position)
+                && (OG_Util.FindOutpostArea() != null)
+                && OG_Util.FindOutpostArea().ActiveCells.Contains(t.Position)
                 && pawn.CanReserveAndReach(t, PathEndMode.ClosestTouch, pawn.NormalMaxDanger(), 1)
                 && filth.TicksSinceThickened >= this.MinTicksSinceThickened;
         }

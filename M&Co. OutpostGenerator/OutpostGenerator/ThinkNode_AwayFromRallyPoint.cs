@@ -19,12 +19,10 @@ namespace OutpostGenerator
     {
         protected override bool Satisfied(Pawn pawn)
         {
-            if (pawn.Position.InHorDistOf(pawn.mindState.duty.focus.Cell, 10))
+            if (pawn.Position.InHorDistOf(pawn.mindState.duty.focus.Cell, 10f))
             {
-                Log.Message(pawn.Name.ToStringShort + " is close.");
                 return false;
             }
-            Log.Message(pawn.Name.ToStringShort + " is too far away!");
             return true;
         }
     }

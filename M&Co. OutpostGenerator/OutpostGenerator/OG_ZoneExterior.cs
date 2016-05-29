@@ -294,7 +294,7 @@ namespace OutpostGenerator
             // Spawn target.
             if (ModsConfig.IsActive("Miscellaneous_TrainingFacility"))
             {
-                OG_Common.TrySpawnThingAt(ThingDef.Named("ShootingRangeTarget"), null, shootingPosition + new IntVec3(0, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
+                OG_Common.TrySpawnThingAt(ThingDef.Named("ShootingRangeTarget"), null, shootingPosition + new IntVec3(0, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             }
             else
             {
@@ -371,15 +371,23 @@ namespace OutpostGenerator
                     Find.RoofGrid.SetRoof(rotatedOrigin + new IntVec3(10, 0, zOffset).RotatedBy(rotation), OG_Util.IronedRoofDef);
                 }
             }
-
             OG_Common.SpawnDoorAt(rotatedOrigin + new IntVec3(6, 0, 2).RotatedBy(rotation), ref outpostData);
-            for (int xOffset = 7; xOffset <= 9; xOffset++)
+            Building_Storage rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
+            foreach (IntVec3 cell in rack.OccupiedRect().Cells)
             {
-                Thing shell = OG_Common.TrySpawnThingAt(ThingDef.Named("ArtilleryShell"), null, rotatedOrigin + new IntVec3(xOffset, 0, 1).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
-                shell.stackCount = ThingDef.Named("ArtilleryShell").stackLimit;
-                shell = OG_Common.TrySpawnThingAt(ThingDef.Named("ArtilleryShell"), null, rotatedOrigin + new IntVec3(xOffset, 0, 3).RotatedBy(rotation), false, Rot4.Invalid, ref outpostData);
-                shell.stackCount = ThingDef.Named("ArtilleryShell").stackLimit;
+                OG_Common.SpawnResourceAt(ThingDefOf.ArtilleryShell, ThingDefOf.ArtilleryShell.stackLimit, cell, true);
             }
+            rack.GetStoreSettings().filter.SetDisallowAll();
+            rack.GetStoreSettings().filter.SetAllow(ThingDefOf.ArtilleryShell, true);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
+            rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(9, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
+            foreach (IntVec3 cell in rack.OccupiedRect().Cells)
+            {
+                OG_Common.SpawnResourceAt(ThingDefOf.ArtilleryShell, ThingDefOf.ArtilleryShell.stackLimit, cell, true);
+            }
+            rack.GetStoreSettings().filter.SetDisallowAll();
+            rack.GetStoreSettings().filter.SetAllow(ThingDefOf.ArtilleryShell, true);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
 
             OG_Common.GenerateHorizontalAndVerticalPavedAlleys(origin);
         }

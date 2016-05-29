@@ -26,6 +26,7 @@ namespace OutpostGenerator
         public void TryToCaptureOutpost(string eventTitle, string eventText, LetterType letterType, Faction turretsNewFaction, bool deactivateTurrets,
             Faction doorsNewFaction, bool deactivateDoors, int dropPodsNumber, PawnKindDef securityForcesDef)
         {
+            SetOutpostSecurityForcesHostileToColony();
             this.outpostThingList = OG_Util.RefreshThingList(this.outpostThingList);
             ChangeOutpostThingsFaction(null);
             ChangeOutpostTurretsFaction(turretsNewFaction, deactivateTurrets);
@@ -55,20 +56,20 @@ namespace OutpostGenerator
             }
             foreach (Thing thing in this.outpostThingList)
             {
-                if ((thing.def == ThingDef.Named("TurretGun"))
-                    || (thing.def == OG_Util.VulcanTurretDef))
+                if (thing.def == OG_Util.VulcanTurretDef)
                 {
+                    Log.Message("VulcanTurret at " + thing.Position);
                     thing.SetFaction(turretsNewFaction);
                     if (deactivateTurrets)
                     {
-                        CompPowerTrader powerComp = thing.TryGetComp<CompPowerTrader>();
-                        if (powerComp != null)
+                        CompFlickable flickableComp = thing.TryGetComp<CompFlickable>();
+                        if (flickableComp != null)
                         {
-                            powerComp.PowerOn = false;
+                            flickableComp.SwitchIsOn = false;
                         }
                     }
                 }
-            }            
+            }
         }
 
         void ChangeOutpostDoorsFaction(Faction doorsNewFaction, bool deactivateDoors)
@@ -79,7 +80,7 @@ namespace OutpostGenerator
             }
             foreach (Thing thing in this.outpostThingList)
             {
-                if (thing.def == ThingDef.Named("Autodoor"))
+                if (thing.def == OG_Util.FireproofAutodoorDef)
                 {
                     thing.SetFaction(doorsNewFaction);
                     if (deactivateDoors)
@@ -88,8 +89,8 @@ namespace OutpostGenerator
                         if (powerComp != null)
                         {
                             powerComp.PowerOn = false;
-                            (thing as Building_Door).StartManualOpenBy(null);
                         }
+                        (thing as Building_Door).StartManualOpenBy(null);
                     }
                 }
             }
@@ -99,7 +100,6 @@ namespace OutpostGenerator
         {
             IntVec3 dropPodSpot;
             List<Pawn> securityForcesList = new List<Pawn>();
-            Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
 
             if ((dropPodsNumber == 0) || (securityForcesDef == null))
             {
@@ -111,7 +111,7 @@ namespace OutpostGenerator
                 bool validDropPodCellIsFound = DropCellFinder.TryFindDropSpotNear(this.dropZoneCenter, out dropPodSpot, true, false);
                 if (validDropPodCellIsFound)
                 {
-                    Pawn soldier = PawnGenerator.GeneratePawn(securityForcesDef, faction);
+                    Pawn soldier = OG_Inhabitants.GeneratePawn(securityForcesDef);
                     securityForcesList.Add(soldier);
                     DropPodUtility.MakeDropPodAt(dropPodSpot, new DropPodInfo
                     {
@@ -121,20 +121,31 @@ namespace OutpostGenerator
                     });
                 }
             }
-            
+
             LordJob lordJob;
             if (assaultColony)
             {
-                lordJob = new LordJob_AssaultColony(faction, true, true, false);
+                lordJob = new LordJob_AssaultColony(OG_Util.FactionOfMAndCo, true, true, false);
             }
             else
             {
-                lordJob = new LordJob_MechanoidsDefendShip(this, faction, 50f, this.dropZoneCenter);
+                lordJob = new LordJob_DefendPoint(this.dropZoneCenter);
             }
-            Lord lord = LordMaker.MakeNewLord(faction, lordJob, securityForcesList);
+            Lord lord = LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob, securityForcesList);
         }
-        
+
         public void TreatIntrusion(IntVec3 intrusionCell)
+        {
+            SetOutpostSecurityForcesHostileToColony();
+            string text = "   M&Co. security message broadcast\n\n" +
+                "Coralie here!\n" +
+                "I have detected an intrusion in sub-sector " + intrusionCell.ToString() + ".\n\n" +
+                "To all units in the sector, code Red is activated. All intruders are now priority targets.\n\n" +
+                "--- End of transmission ---";
+            Find.LetterStack.ReceiveLetter("Intrusion", text, LetterType.BadUrgent, new TargetInfo(intrusionCell));
+        }
+
+        private void SetOutpostSecurityForcesHostileToColony()
         {
             OG_Util.FactionOfMAndCo.RelationWith(Faction.OfColony).goodwill = -80;
             Faction.OfColony.RelationWith(OG_Util.FactionOfMAndCo).goodwill = -80;
@@ -145,24 +156,6 @@ namespace OutpostGenerator
             {
                 Find.AttackTargetsCache.Notify_FactionHostilityChanged(Faction.OfColony, OG_Util.FactionOfMAndCo);
             }
-            // TODO: remove it?
-            /*if (Game.Mode == GameMode.MapPlaying)
-            {
-                List<Pawn> list = (from pa in Find.MapPawns.AllPawns
-                                   where pa.Faction == Faction.OfColony || pa.Faction == OG_Util.FactionOfMAndCo
-                                   select pa).ToList<Pawn>();
-                foreach (Pawn pawn in list)
-                {
-                    Find.MapPawns.UpdateRegistryForPawn(pawn);
-                }
-            }*/
-
-            string text = "   M&Co. security message broadcast\n\n" +
-                "Coralie here!\n" +
-                "I have detected an intrusion in sub-sector " + intrusionCell.ToString() + ".\n\n" +
-                "To all units in the sector, code Red is activated. All intruders are now priority targets.\n\n" +
-                "--- End of transmission ---";
-            Find.LetterStack.ReceiveLetter("Intrusion", text, LetterType.BadUrgent, new TargetInfo(intrusionCell));
         }
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
@@ -190,7 +183,7 @@ namespace OutpostGenerator
             else
             {
                 ChangeOutpostThingsFaction(null);
-                LaunchSecurityDropPods(4, PawnKindDef.Named("MercenaryGunner"), false);
+                LaunchSecurityDropPods(4, OG_Util.OutpostScoutDef, false);
                 Find.LetterStack.ReceiveLetter(eventTitle, eventText, LetterType.BadNonUrgent);
             }
             ChangeOutpostTurretsFaction(null, true);

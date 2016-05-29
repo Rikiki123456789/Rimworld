@@ -18,7 +18,7 @@
     <staticSunShadowHeight>0</staticSunShadowHeight>
     <fillPercent>0</fillPercent>
     <blockLight>false</blockLight>
-    <selectable>true</selectable>
+    <selectable>false</selectable>
     <building>
       <isEdifice>false</isEdifice>
       <fixedStorageSettings>

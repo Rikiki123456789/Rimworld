@@ -293,20 +293,42 @@ namespace OutpostGenerator
             }
         }
 
-        public static Area OutpostArea
+        /// <summary>
+        /// Find the outpost area if it exists.
+        /// </summary>
+        public static Area FindOutpostArea()
         {
-            get
+            return Find.AreaManager.GetLabeled(OG_Util.OutpostAreaLabel);
+        }
+
+        /// <summary>
+        /// Destroy the outpost area if it exists.
+        /// </summary>
+        public static void DestroyOutpostArea()
+        {
+            if (OG_Util.FindOutpostArea() != null)
             {
-                return Find.AreaManager.GetLabeled(OG_Util.OutpostAreaLabel);
+                OG_Util.FindOutpostArea().Delete();
             }
         }
 
-        public static void DestroyOutpostArea()
+        /// <summary>
+        /// Find the outpost command console building if it exists.
+        /// </summary>
+        public static Building_OutpostCommandConsole FindOutpostCommandConsole(Faction faction)
         {
-            if (OG_Util.OutpostArea != null)
+            List<Thing> commandConsoleList = Find.ListerThings.ThingsOfDef(OG_Util.OutpostCommandConsoleDef);
+            foreach (Thing potentialCommandConsole in commandConsoleList)
             {
-                OG_Util.OutpostArea.Delete();
+                Building_OutpostCommandConsole commandConsole = potentialCommandConsole as Building_OutpostCommandConsole;
+                if ((commandConsole != null)
+                    && (commandConsole.Faction != null)
+                    && (commandConsole.Faction == faction))
+                {
+                    return commandConsole;
+                }
             }
+            return null;
         }
 
         /// <summary>

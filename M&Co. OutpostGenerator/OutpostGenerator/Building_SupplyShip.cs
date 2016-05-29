@@ -164,6 +164,11 @@ namespace OutpostGenerator
             int beersToSupply = 0;
             int componentsToSupply = 0;
 
+            if (OG_Util.FindOutpostArea() == null)
+            {
+                // Outpost has been captured, do not resupply.
+                return;
+            }
             CountResourcesInOutpost(out mealsInOutpost, out beersInOutpost, out componentsInOutpost);
             mealsToSupply = mealsInStockTarget - mealsInOutpost;
             beersToSupply = beersInStockTarget - beersInOutpost;
@@ -178,9 +183,9 @@ namespace OutpostGenerator
             meals = 0;
             beers = 0;
             components = 0;
-            if (OG_Util.OutpostArea != null)
+            if (OG_Util.FindOutpostArea() != null)
             {
-                foreach (IntVec3 cell in OG_Util.OutpostArea.ActiveCells)
+                foreach (IntVec3 cell in OG_Util.FindOutpostArea().ActiveCells)
                 {
                     foreach (Thing thing in cell.GetThingList())
                     {
@@ -222,9 +227,9 @@ namespace OutpostGenerator
         private static void UnforbidItemsToLoadInCargoBay()
         {
             // Unforbid any weapon, apparel, raw food or corpse in the outpost area so it can be carried to a cargo bay.
-            if (OG_Util.OutpostArea != null)
+            if (OG_Util.FindOutpostArea() != null)
             {
-                foreach (IntVec3 cell in OG_Util.OutpostArea.ActiveCells)
+                foreach (IntVec3 cell in OG_Util.FindOutpostArea().ActiveCells)
                 {
                     foreach (Thing thing in cell.GetThingList())
                     {

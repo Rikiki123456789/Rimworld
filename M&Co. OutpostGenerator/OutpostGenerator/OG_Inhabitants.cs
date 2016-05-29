@@ -198,7 +198,7 @@ namespace OutpostGenerator
                         pawn = null;
                         if (tryIndex == 20)
                         {
-                            Log.Message("OutpostGenerator: cannot generate requested technician pawn.");
+                            Log.Message("M&Co. OutpostGenerator: cannot generate requested technician pawn.");
                         }
                     }
                 }
@@ -211,7 +211,7 @@ namespace OutpostGenerator
                         pawn = null;
                         if (tryIndex == 20)
                         {
-                            Log.Message("OutpostGenerator: cannot generate requested soldier pawn.");
+                            Log.Message("M&Co. OutpostGenerator: cannot generate requested soldier pawn.");
                         }
                     }
                 }
@@ -273,7 +273,7 @@ namespace OutpostGenerator
             }
             // Set allowed area.
             pawn.playerSettings = new Pawn_PlayerSettings(pawn);
-            pawn.playerSettings.AreaRestriction = OG_Util.OutpostArea;
+            pawn.playerSettings.AreaRestriction = OG_Util.FindOutpostArea();
             // Add a bonus mood boost.
             pawn.needs.mood.thoughts.TryGainThought(OG_Util.MAndCoEmployeeThoughtDef);
             return pawn;

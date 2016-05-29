@@ -24,34 +24,34 @@ namespace OutpostGenerator
         
         public override void Tick()
         {
-            if (this.IsHashIntervalTick(60))
+            if (this.IsHashIntervalTick(GenTicks.TicksPerRealSecond))
             {
                 if (commandConsole == null)
                 {
                     Log.Warning("M&Co. Outpost generator: triggerIntrusion is ticking with null commandConsole. This should not happen...");
                     if (base.Destroyed == false)
                     {
-                        this.Destroy(DestroyMode.Vanish);
+                        this.Destroy();
                     }
                 }
                 if (commandConsole.Destroyed)
                 {
                     if (base.Destroyed == false)
                     {
-                        this.Destroy(DestroyMode.Vanish);
+                        this.Destroy();
                     }
                 }
                 foreach (IntVec3 cell in this.watchedCells)
                 {
-                    List<Thing> thingList = cell.GetThingList();
-                    for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
+                    foreach (Thing thing in cell.GetThingList())
                     {
-                        if (thingList[thingIndex].def.category == ThingCategory.Pawn && thingList[thingIndex].Faction == Faction.OfColony)
+                        if ((thing.def.category == ThingCategory.Pawn)
+                            && (thing.Faction == Faction.OfColony))
                         {
                             commandConsole.TreatIntrusion(cell);
                             if (base.Destroyed == false)
                             {
-                                this.Destroy(DestroyMode.Vanish);
+                                this.Destroy();
                                 return;
                             }
                         }

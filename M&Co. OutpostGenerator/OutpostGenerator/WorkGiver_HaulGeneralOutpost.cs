@@ -33,8 +33,8 @@ namespace OutpostGenerator
         
         public override Job JobOnThing(Pawn pawn, Thing t)
         {
-            if ((OG_Util.OutpostArea != null)
-                && (OG_Util.OutpostArea.ActiveCells.Contains(t.Position)))
+            if ((OG_Util.FindOutpostArea() != null)
+                && (OG_Util.FindOutpostArea().ActiveCells.Contains(t.Position)))
             {
                 return base.JobOnThing(pawn, t);
             }

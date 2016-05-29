@@ -142,17 +142,21 @@ namespace OutpostGenerator
                 {
                     corpse.equipment.Primary.HitPoints = (int)(Rand.Range(0.05f, 0.30f) * corpse.equipment.Primary.MaxHitPoints);
                 }
-                // "Kill the corpse" and make it rotten.
+                // "Kill the corpse".
                 HealthUtility.GiveInjuriesToKill(corpse);
-                List<Thing> thingsList = corpsePosition.GetThingList();
-                foreach (Thing thing in thingsList)
+                // Make it rotten if outpost is abandonned.
+                if (this.outpostData.isInhabited == false)
                 {
-                    if (thing.def.defName.Contains("Corpse"))
+                    List<Thing> thingsList = corpsePosition.GetThingList();
+                    foreach (Thing thing in thingsList)
                     {
-                        CompRottable rotComp = thing.TryGetComp<CompRottable>();
-                        if (rotComp != null)
+                        if (thing.def.defName.Contains("Corpse"))
                         {
-                            rotComp.rotProgress = 600000f; // 20 days so the corpse is dessicated.
+                            CompRottable rotComp = thing.TryGetComp<CompRottable>();
+                            if (rotComp != null)
+                            {
+                                rotComp.rotProgress = 20f * GenDate.TicksPerDay; // 20 days so the corpse is dessicated.
+                            }
                         }
                     }
                 }

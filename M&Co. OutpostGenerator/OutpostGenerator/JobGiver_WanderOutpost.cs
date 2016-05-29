@@ -22,13 +22,22 @@ namespace OutpostGenerator
             this.locomotionUrgency = LocomotionUrgency.Amble;
             this.wanderDestValidator = delegate (Pawn pawn, IntVec3 loc)
             {
-                if ((OG_Util.OutpostArea != null)
-                && (OG_Util.OutpostArea.ActiveCells.Contains(loc)))
+                if ((OG_Util.FindOutpostArea() != null)
+                && (OG_Util.FindOutpostArea().ActiveCells.Contains(loc)))
                 {
                     return true;
                 }
                 return false;
             };
+        }
+
+        protected override Job TryGiveTerminalJob(Pawn pawn)
+        {
+            if (OG_Util.FindOutpostArea() == null)
+            {
+                return null;
+            }
+            return base.TryGiveTerminalJob(pawn);
         }
 
         protected override IntVec3 GetWanderRoot(Pawn pawn)

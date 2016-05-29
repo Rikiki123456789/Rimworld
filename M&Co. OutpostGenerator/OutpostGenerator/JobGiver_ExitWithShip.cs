@@ -13,7 +13,7 @@ using RimWorld;
 
 namespace OutpostGenerator
 {
-    public class JobGiver_ExitWithNextShip : ThinkNode_JobGiver
+    public class JobGiver_ExitWithShip : ThinkNode_JobGiver
     {
         protected override Job TryGiveTerminalJob(Pawn pawn)
         {
@@ -23,8 +23,9 @@ namespace OutpostGenerator
                 return null;
             }
             
-            // Pawn has no weapon.
-            if (IsLackingWeapon(pawn)
+            // Outpost has been captured or pawn has no weapon or an apparel in bad conditions.
+            if (IsOutpostCaptured()
+                || IsLackingWeapon(pawn)
                 || IsWearingDamagedApparel(pawn)
                 || IsLackingPant(pawn))
             {
@@ -34,6 +35,17 @@ namespace OutpostGenerator
                 }
             }
             return null;
+        }
+
+        private bool IsOutpostCaptured()
+        {
+            Building_OutpostCommandConsole commandConsole = OG_Util.FindOutpostCommandConsole(OG_Util.FactionOfMAndCo);
+            if ((commandConsole == null)
+                || (commandConsole.Faction != OG_Util.FactionOfMAndCo))
+            {
+                return true;
+            }
+            return false;
         }
 
         private bool IsLackingWeapon(Pawn pawn)

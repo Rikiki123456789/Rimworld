@@ -194,9 +194,11 @@ namespace OutpostGenerator
             Building_Storage rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 1).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(1, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
 
             // Spawn lamps.
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(1, 0, 1).RotatedBy(rotation), Color.white, ref outpostData);

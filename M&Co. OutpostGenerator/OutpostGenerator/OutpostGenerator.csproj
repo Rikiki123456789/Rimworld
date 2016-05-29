@@ -63,7 +63,7 @@
     <Compile Include="Detours.cs" />
     <Compile Include="DetoursOG.cs" />
     <Compile Include="JobDriver_BoardSupplyShip.cs" />
-    <Compile Include="JobGiver_ExitWithNextShip.cs" />
+    <Compile Include="JobGiver_ExitWithShip.cs" />
     <Compile Include="JobGiver_SprintToRallyPoint.cs" />
     <Compile Include="LordJob_Joinable_DefendOutpost.cs" />
     <Compile Include="JobGiver_WanderOutpost.cs" />

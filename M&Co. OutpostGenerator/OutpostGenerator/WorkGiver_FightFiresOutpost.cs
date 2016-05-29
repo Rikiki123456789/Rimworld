@@ -71,14 +71,14 @@ namespace OutpostGenerator
                     return false;
                 }
                 if ((pawn2.Faction == pawn.Faction || pawn2.HostFaction == pawn.Faction || pawn2.HostFaction == pawn.HostFaction)
-                    && ((OG_Util.OutpostArea == null) || (OG_Util.OutpostArea.ActiveCells.Contains(t.Position) == false))
+                    && ((OG_Util.FindOutpostArea() == null) || (OG_Util.FindOutpostArea().ActiveCells.Contains(t.Position) == false))
                     && Gen.ManhattanDistanceFlat(pawn.Position, pawn2.Position) > 15)
                 {
                     return false;
                 }
             }
-            else if ((OG_Util.OutpostArea == null)
-                || (OG_Util.OutpostArea.ActiveCells.Contains(t.Position) == false))
+            else if ((OG_Util.FindOutpostArea() == null)
+                || (OG_Util.FindOutpostArea().ActiveCells.Contains(t.Position) == false))
             {
                 return false;
             }

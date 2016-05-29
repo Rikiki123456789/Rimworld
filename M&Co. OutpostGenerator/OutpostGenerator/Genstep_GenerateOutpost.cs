@@ -55,9 +55,8 @@ namespace OutpostGenerator
             {
                 return;
             }
-
-
-            // Check this outpost can be spawned somewhere on the map.
+            
+            // Check the outpost can be spawned somewhere on the map.
             bool validSpawnPointIsFound = false;
             for (int tryIndex = 0; tryIndex < 15; tryIndex++)
             {

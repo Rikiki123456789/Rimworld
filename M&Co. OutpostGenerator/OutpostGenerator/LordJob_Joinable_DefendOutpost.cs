@@ -17,8 +17,7 @@ namespace OutpostGenerator
     public class LordJob_Joinable_DefendOutpost : LordJob_VoluntarilyJoinable
     {
         private IntVec3 rallyPoint;
-
-        private Trigger_TicksPassed timeoutTrigger; // TODO: remove it?
+        private Trigger_TicksPassed timeoutTrigger;
 
         public LordJob_Joinable_DefendOutpost()
         {
@@ -31,27 +30,18 @@ namespace OutpostGenerator
 
         public override StateGraph CreateGraph()
         {
+            Log.Message("CreateGraph");
             StateGraph stateGraph = new StateGraph();
-            //LordToil_Party lordToil_Defend = new LordToil_Party(this.rallyPoint);
             LordToil_DefendOutpost lordToil_Defend = new LordToil_DefendOutpost(this.rallyPoint);
             stateGraph.AddToil(lordToil_Defend);
             LordToil_End lordToil_End = new LordToil_End();
             stateGraph.AddToil(lordToil_End);
 
+            this.timeoutTrigger = new Trigger_TicksPassed(8000);
             Transition transition = new Transition(lordToil_Defend, lordToil_End);
-            transition.AddTrigger(new Trigger_PawnLostViolently());
-            transition.AddAction(new TransitionAction_Message("MessagePartyCalledOff".Translate(), MessageSound.Negative, this.rallyPoint));
+            transition.AddTrigger(this.timeoutTrigger);
+            transition.AddAction(new TransitionAction_Message("Defend lord timeout", MessageSound.Standard, this.rallyPoint));
             stateGraph.AddTransition(transition);
-
-            this.timeoutTrigger = new Trigger_TicksPassed(Rand.RangeInclusive(5000, 5000));
-            Transition transition2 = new Transition(lordToil_Defend, lordToil_End);
-            transition2.AddTrigger(this.timeoutTrigger);
-            transition2.AddAction(new TransitionAction_Message("MessagePartyFinished".Translate(), MessageSound.Negative, this.rallyPoint));
-            /*transition2.AddAction(new TransitionAction_Custom(delegate
-            {
-                this.Finished();
-            }));*/
-            stateGraph.AddTransition(transition2);
 
             return stateGraph;
         }
@@ -62,8 +52,7 @@ namespace OutpostGenerator
                 && (p.Faction == OG_Util.FactionOfMAndCo)
                 && (p.kindDef != OG_Util.OutpostTechnicianDef))
             {
-                Log.Message("VoluntaryJoinPriorityFor: joining " + p.Name.ToStringShort);
-                return 20f;
+                return 25f;
             }
             return 0f;
         }

@@ -46,7 +46,7 @@
         </filter>
       </fixedStorageSettings>
       <defaultStorageSettings>
-        <priority>Important</priority>
+        <priority>Critical</priority>
         <filter>
           <categories>
             <li>FoodMeals</li>
@@ -102,7 +102,7 @@
         </filter>
       </fixedStorageSettings>
       <defaultStorageSettings>
-        <priority>Important</priority>
+        <priority>Critical</priority>
         <filter>
           <thingDefs>
             <li>Components</li>

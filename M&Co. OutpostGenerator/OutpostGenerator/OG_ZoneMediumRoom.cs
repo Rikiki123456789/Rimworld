@@ -194,27 +194,35 @@ namespace OutpostGenerator
             Building_Storage rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(3, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(6, 0, 2).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(2, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.East.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             rack = OG_Common.TrySpawnThingAt(ThingDefOf.EquipmentRack, ThingDefOf.Steel, rotatedOrigin + new IntVec3(8, 0, 6).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
             OG_Common.TrySpawnWeaponOnRack(rack);
             rack.GetStoreSettings().filter.SetAllow(ThingCategoryDef.Named("WeaponsMelee"), false);
+            rack.GetStoreSettings().Priority = StoragePriority.Critical;
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(2, 0, 5).RotatedBy(rotation), Color.red, ref outpostData);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(8, 0, 5).RotatedBy(rotation), Color.red, ref outpostData);
 
@@ -340,7 +348,7 @@ namespace OutpostGenerator
             }
 
             // Spawn television and armchairs.
-            OG_Common.TrySpawnThingAt(ThingDef.Named("FlatscreenTelevision"), null, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
+            OG_Common.TrySpawnThingAt(ThingDef.Named("MegascreenTelevision"), null, rotatedOrigin + new IntVec3(7, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Armchair"), ThingDef.Named("Cloth"), rotatedOrigin + new IntVec3(6, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Armchair"), ThingDef.Named("Cloth"), rotatedOrigin + new IntVec3(7, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.TrySpawnThingAt(ThingDef.Named("Armchair"), ThingDef.Named("Cloth"), rotatedOrigin + new IntVec3(8, 0, 4).RotatedBy(rotation), true, new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
@@ -358,8 +366,8 @@ namespace OutpostGenerator
             // Spawn lamps, heater and coolers.
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), Color.white, ref outpostData);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(8, 0, 2).RotatedBy(rotation), Color.white, ref outpostData);
+            OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(7, 0, 2).RotatedBy(rotation), ref outpostData);
             OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(8, 0, 3).RotatedBy(rotation), ref outpostData);
-            OG_Common.TrySpawnHeaterAt(rotatedOrigin + new IntVec3(8, 0, 8).RotatedBy(rotation), ref outpostData);
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(7, 0, 1).RotatedBy(rotation), new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
             OG_Common.SpawnCoolerAt(rotatedOrigin + new IntVec3(3, 0, 9).RotatedBy(rotation), new Rot4(Rot4.North.AsInt + rotation.AsInt), ref outpostData);
 

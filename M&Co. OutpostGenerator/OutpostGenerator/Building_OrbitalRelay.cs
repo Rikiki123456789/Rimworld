@@ -36,13 +36,13 @@ namespace OutpostGenerator
         public int requestedGuardsNumber = 0;
         public int requestedScoutsNumber = 0;
         public int requestedTechniciansNumber = 0;
-        private const int supplyShipLandingPeriod = 5000; // TODO: adjust it. Every 5 days?
-        private int ticksToNextSupplyShipLanding = supplyShipLandingPeriod;
+        private const int supplyShipLandingPeriodInTicks = 5000; // TODO: adjust it. Every 5 days?
+        private int nextSupplyShipLandingDateInTicks = supplyShipLandingPeriodInTicks;
 
         // Lord data.
-        private const int lordUpdatePeriodInTicks = GenTicks.TickRareInterval; // TODO: adjust it.
-        private int nextLordUpdateInTicks = lordUpdatePeriodInTicks;
-        private Lord lord = null;
+        private const int graceTimeInTicks = 60 * GenTicks.TicksPerRealSecond; // Grace time when game starts. Colonists are given a chance to escape alive!
+        private const int lordUpdatePeriodInTicks = GenTicks.TicksPerRealSecond; // TODO: adjust it.
+        private int nextLordUpdateDateInTicks = lordUpdatePeriodInTicks;
 
         // Dish periodical rotation.
         private const float turnRate = 0.06f;
@@ -72,9 +72,6 @@ namespace OutpostGenerator
             base.SpawnSetup();
             powerComp = base.GetComp<CompPowerTrader>();
             Building_OrbitalRelay.texture = MaterialPool.MatFrom("Things/Building/Misc/OrbitalRelay");
-
-            // TODO: look for lord in existing ones.
-            //Find.LordManager.lords
         }
 
         public override void Tick()
@@ -84,18 +81,18 @@ namespace OutpostGenerator
             if ((this.Faction != null)
                 && (this.Faction == OG_Util.FactionOfMAndCo))
             {
-                this.ticksToNextSupplyShipLanding--;
-                if (this.ticksToNextSupplyShipLanding <= 0)
+                // No supply ship is sent once outpost has been captured.
+                if (Find.TickManager.TicksGame >= this.nextSupplyShipLandingDateInTicks)
                 {
-                    this.ticksToNextSupplyShipLanding = supplyShipLandingPeriod;
+                    this.nextSupplyShipLandingDateInTicks = Find.TickManager.TicksGame + supplyShipLandingPeriodInTicks;
                     SpawnSupplyShip();
                 }
             }
             
-            if (Find.TickManager.TicksGame >= this.nextLordUpdateInTicks)
+            if (Find.TickManager.TicksGame >= this.nextLordUpdateDateInTicks)
             {
+                this.nextLordUpdateDateInTicks = Find.TickManager.TicksGame + lordUpdatePeriodInTicks;
                 UpdateLord();
-                this.nextLordUpdateInTicks = Find.TickManager.TicksGame + lordUpdatePeriodInTicks;
             }
 
             if (powerComp.PowerOn)
@@ -110,52 +107,127 @@ namespace OutpostGenerator
         
         private void UpdateLord()
         {
-            Log.Message("UpdateLord");
-            IntVec3 damagedTurretPosition = FindDamagedTurret();
-            if (damagedTurretPosition.IsValid)
-            {
-                Log.Message("Damaged turret at " + damagedTurretPosition);
-                return;
-            }
+            IntVec3 rallyPoint = IntVec3.Invalid;
             
-            IntVec3 ennemyPosition = FindEnnemyInNoMansLand();
-            if (ennemyPosition.IsValid)
+            // Check there is no already existing defense lord.
+            if (Find.LordManager.lords != null)
             {
-                Log.Message("Hostile pawn at " + ennemyPosition);
-                return;
-            }
-
-            if (this.lord == null)
-            {
-                LordJob_Joinable_DefendOutpost lordJob = new LordJob_Joinable_DefendOutpost(OG_Util.OutpostArea.ActiveCells.RandomElement());
-                this.lord = LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob);
-            }
-        }
-
-        private IntVec3 FindDamagedTurret()
-        {
-            List<Thing> vulcanTurretsList = Find.ListerThings.ThingsOfDef(OG_Util.VulcanTurretDef);
-            foreach (Thing turret in vulcanTurretsList)
-            {
-                if (turret.HitPoints < turret.MaxHitPoints)
+                foreach (Lord lord in Find.LordManager.lords)
                 {
-                    return turret.Position;
+                    if ((lord.faction != null)
+                        && (lord.faction == OG_Util.FactionOfMAndCo))
+                    {
+                        return;
+                    }
                 }
             }
-            return IntVec3.Invalid;
+            // Look for hostile in outpost perimeter.
+            IntVec3 hostilePosition = FindHostileInPerimeter();
+            if (hostilePosition.IsValid)
+            {
+                Log.Message("UpdateLord: hostile at " + hostilePosition);
+                if ((OG_Util.FindOutpostArea() != null)
+                    && (OG_Util.FindOutpostArea().ActiveCells.Contains(hostilePosition)))
+                {
+                    // Ennemy is inside outpost area.
+                    rallyPoint = hostilePosition;
+                }
+                else
+                {
+                    const int sectionsNumber = 100;
+                    Vector3 sectionVector = (this.outpostCenter - hostilePosition).ToVector3();
+                    sectionVector = sectionVector / sectionsNumber;
+                    // Default value if OutpostArea does not exist (should not occur, just a safety...).
+                    rallyPoint = (hostilePosition.ToVector3() + sectionVector * 0.2f * (float)sectionsNumber).ToIntVec3();
+                    for (int i = 1; i <= sectionsNumber; i++)
+                    {
+                        Vector3 potentialRallyPoint = hostilePosition.ToVector3() + sectionVector * i;
+                        if ((OG_Util.FindOutpostArea() != null)
+                            && (OG_Util.FindOutpostArea().ActiveCells.Contains(potentialRallyPoint.ToIntVec3())))
+                        {
+                            // Ensure rallyPoint is completely inside the outpost area.
+                            rallyPoint = (potentialRallyPoint + sectionVector * 0.1f * (float)sectionsNumber).ToIntVec3();
+                            Log.Message("potentialRallyPoint at " + potentialRallyPoint);
+                            Log.Message("rallyPoint at " + rallyPoint);
+                            break;
+                        }
+                    }
+                }
+            }
+            else
+            {
+                // Look for damaged turret to defend.
+                Rot4 turretRotation = Rot4.Invalid;
+                IntVec3 turretPosition = IntVec3.Invalid;
+                FindDamagedTurret(out turretPosition, out turretRotation);
+                if (turretPosition.IsValid)
+                {
+                    Log.Message("Damaged turret at " + turretPosition);
+                    if (ModsConfig.IsActive("M&Co. ForceField"))
+                    {
+                        // Look for nearest force field to cover behind.
+                        foreach (Thing thing in Find.ListerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator")))
+                        {
+                            if (thing.Position.InHorDistOf(turretPosition, 23f))
+                            {
+                                rallyPoint = thing.Position + new IntVec3(0, 0, -2).RotatedBy(thing.Rotation);
+                                Log.Message("rallyPoint behind force field at " + rallyPoint);
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        // Just go near the attacked turret.
+                        rallyPoint = turretPosition + new IntVec3(0, 0, -5).RotatedBy(turretRotation);
+                        Log.Message("rallyPoint behind turret at " + rallyPoint);
+                    }
+                }
+            }
+            
+            if (rallyPoint.IsValid)
+            {
+                // Generate defense lord.
+                // TODO: add a siren like in alert speaker!
+                LordJob_Joinable_DefendOutpost lordJob = new LordJob_Joinable_DefendOutpost(rallyPoint);
+                LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob);
+                SoundDef soundDef = SoundDefOf.MessageSeriousAlert;// SoundDef.Named("LetterArriveBadUrgent");
+                soundDef.PlayOneShot(rallyPoint);
+                // Stop all pawns job.
+                foreach (Pawn pawn in Find.MapPawns.AllPawns)
+                {
+                    if ((pawn.Faction != null)
+                        && (pawn.Faction == OG_Util.FactionOfMAndCo)
+                        && (pawn.kindDef != OG_Util.OutpostTechnicianDef))
+                    {
+                        pawn.ClearMind();
+                    }
+                }
+            }
         }
 
-        private IntVec3 FindEnnemyInNoMansLand()
+        private IntVec3 FindHostileInPerimeter()
         {
             foreach (Pawn pawn in Find.MapPawns.AllPawns)
             {
+                if ((pawn.Position.IsValid == false)
+                    || (pawn.Downed))
+                {
+                    continue;
+                }
+                if ((pawn.Faction != null)
+                    && (pawn.Faction == Faction.OfColony)
+                    && (Find.TickManager.TicksGame < graceTimeInTicks))
+                {
+                    Log.Message("Grace time for " + pawn.Name.ToStringShort);
+                    continue;
+                }
                 if ((pawn.Faction != null)
                     && (pawn.Faction.HostileTo(OG_Util.FactionOfMAndCo)))
                 {
-                    Log.Message("Hostile pawn: " + pawn.Name.ToStringShort + " at " + pawn.Position);
                     if (IsInNoMansLand(pawn.Position))
                     {
-                        Log.Message("Pawn is in NoMansLand!");
+                        Log.Message("Hostile pawn is in perimeter: " + pawn.Name.ToStringShort + " at " + pawn.Position);
                         return pawn.Position;
                     }
                 }
@@ -164,14 +236,29 @@ namespace OutpostGenerator
         }
         private bool IsInNoMansLand(IntVec3 position)
         {
-            if ((position.x >= this.outpostCenter.x - (OG_BigOutpost.areaSideLength / 2 + 10))
-                && (position.x <= this.outpostCenter.x + (OG_BigOutpost.areaSideLength / 2 + 10))
-                && (position.z >= this.outpostCenter.z - (OG_BigOutpost.areaSideLength / 2 + 10))
-                && (position.z <= this.outpostCenter.z + (OG_BigOutpost.areaSideLength / 2 + 10)))
+            if ((position.x >= this.outpostCenter.x - (OG_BigOutpost.areaSideLength / 2 + 20))
+                && (position.x <= this.outpostCenter.x + (OG_BigOutpost.areaSideLength / 2 + 20))
+                && (position.z >= this.outpostCenter.z - (OG_BigOutpost.areaSideLength / 2 + 20))
+                && (position.z <= this.outpostCenter.z + (OG_BigOutpost.areaSideLength / 2 + 20)))
             {
                 return true;
             }
             return false;
+        }
+
+        private void FindDamagedTurret(out IntVec3 turretPosition, out Rot4 turretRotation)
+        {
+            turretPosition = IntVec3.Invalid;
+            turretRotation = Rot4.Invalid;
+            List<Thing> vulcanTurretsList = Find.ListerThings.ThingsOfDef(OG_Util.VulcanTurretDef);
+            foreach (Thing turret in vulcanTurretsList)
+            {
+                if (turret.HitPoints < turret.MaxHitPoints)
+                {
+                    turretPosition = turret.Position;
+                    turretRotation = turret.Rotation;
+                }
+            }
         }
 
         public void InitializeLandingAndOutpostData(IntVec3 landingPadCenter, Rot4 landingPadRotation, IntVec3 outpostCenter)
@@ -220,8 +307,7 @@ namespace OutpostGenerator
             this.requestedGuardsNumber = guardsTargetNumber - guardsNumber;
             this.requestedScoutsNumber = scoutsTargetNumber - scoutsNumber;
             this.requestedTechniciansNumber = techniciansTargetNumber - techniciansNumber;
-
-            Log.Message("Necessary reinforcements: " + this.requestedOfficersNumber + "/" + this.requestedHeavyGuardsNumber + "/" + this.requestedGuardsNumber + "/" + this.requestedScoutsNumber + "/" + this.requestedTechniciansNumber);
+            //Log.Message("Necessary reinforcements: " + this.requestedOfficersNumber + "/" + this.requestedHeavyGuardsNumber + "/" + this.requestedGuardsNumber + "/" + this.requestedScoutsNumber + "/" + this.requestedTechniciansNumber);
         }
         
         private void SpawnSupplyShip()
@@ -304,9 +390,9 @@ namespace OutpostGenerator
             Scribe_Values.LookValue<int>(ref this.requestedGuardsNumber, "requestedGuardsNumber");
             Scribe_Values.LookValue<int>(ref this.requestedScoutsNumber, "requestedScoutsNumber");
             Scribe_Values.LookValue<int>(ref this.requestedTechniciansNumber, "requestedTechniciansNumber");
-            Scribe_Values.LookValue<int>(ref this.ticksToNextSupplyShipLanding, "ticksToNextSupplyShipLandingOn");
+            Scribe_Values.LookValue<int>(ref this.nextSupplyShipLandingDateInTicks, "nextSupplyShipLandingDateInTicks");
 
-            Scribe_Values.LookValue<int>(ref this.nextLordUpdateInTicks, "nextLordUpdateInTicks");
+            Scribe_Values.LookValue<int>(ref this.nextLordUpdateDateInTicks, "nextLordUpdateDateInTicks");
 
             Scribe_Values.LookValue<int>(ref this.ticksToNextRotation, "ticksToNextRotation");
             Scribe_Values.LookValue<float>(ref this.dishRotation, "dishRotation");

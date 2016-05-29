@@ -62,5 +62,19 @@ namespace OutpostGenerator
             Scribe_Values.LookValue<int>(ref this.flashStopTick, "flashStopTick");
             Scribe_References.LookReference<Thing>(ref this.glower, "glower");
         }
+
+        // Disable Gizmos.
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            if (this.Faction != Faction.OfColony)
+            {
+                return new List<Gizmo>();
+            }
+            else
+            {
+                return base.GetGizmos();
+            }
+        }
+
     }
 }

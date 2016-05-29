@@ -57,7 +57,7 @@ namespace OutpostGenerator
                         "Coralie here.\n" +
                         "I have treated your security parameters change request. Here is the result:\n\n";
                     HackingResult hackingresult = ComputeHackResult(this.pawn, SkillDefOf.Research, SkillDefOf.Crafting, chanceToSucceedPerSkillLevel);
-
+                    
                     if (hackingresult == HackingResult.MajorFail)
                     {
                         eventText += "   - defense systems:     ACCESS DENIED => set mode to aggressive.\n" +
@@ -65,15 +65,18 @@ namespace OutpostGenerator
                                      "   - request checksum:    FORMAT ERROR  => Security systems hacking detected...\n" +
                                      "   => Shock support team requested!\n\n" +
                                      "--- End of transmission ---\n\n\n\n";
-                        eventText += "   " + this.pawn.Name.ToStringShort + " failed to hack the outpost command console and triggered the internal securities.\n"
-                        + "Be prepared to welcome the incoming M&Co. shock security forces!";
+                        eventText += this.pawn.Name.ToStringShort + " failed to hack the outpost command console and triggered the internal securities.\n";
                         letterType = LetterType.BadUrgent;
-                        turretsNewFaction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
+                        turretsNewFaction = OG_Util.FactionOfMAndCo;
                         deactivateTurrets = false;
-                        doorsNewFaction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
+                        doorsNewFaction = OG_Util.FactionOfMAndCo;
                         deactivateDoors = false;
-                        securityForcesDef = PawnKindDef.Named("MercenaryElite");
-                        dropPodsNumber = 8;
+                        if (OG_Util.FindOrbitalRelay(OG_Util.FactionOfMAndCo) == null)
+                        {
+                            eventText += "Be prepared to welcome the incoming M&Co. shock security forces!";
+                            securityForcesDef = OG_Util.OutpostGuardDef;
+                            dropPodsNumber = 8;
+                        }
                     }
                     else if (hackingresult == HackingResult.MinorFail)
                     {
@@ -82,15 +85,18 @@ namespace OutpostGenerator
                                      "   - request checksum:    WRONG CRC  => Security systems hacking detected...\n" +
                                      "   => Patrol support team requested!\n\n" +
                                      "--- End of transmission ---\n\n\n\n";
-                        eventText += "   " + this.pawn.Name.ToStringShort + " has some knowledge in the field of security system but did not managed to hack properly the outpost command console.\n\n"
-                            + "Be prepared to welcome the incoming M&Co. patrol security forces.";
+                        eventText += this.pawn.Name.ToStringShort + " has some knowledge in the field of security system but did not managed to hack properly the outpost command console.\n\n";
                         letterType = LetterType.BadUrgent;
-                        turretsNewFaction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
+                        turretsNewFaction = OG_Util.FactionOfMAndCo;
                         deactivateTurrets = false;
                         doorsNewFaction = null;
                         deactivateDoors = true;
-                        securityForcesDef = PawnKindDef.Named("MercenaryGunner");
-                        dropPodsNumber = 4;
+                        if (OG_Util.FindOrbitalRelay(OG_Util.FactionOfMAndCo) == null)
+                        {
+                            eventText += "Be prepared to welcome the incoming M&Co. patrol security forces.";
+                            securityForcesDef = OG_Util.OutpostScoutDef;
+                            dropPodsNumber = 4;
+                        }
                     }
                     else if (hackingresult == HackingResult.MinorSuccess)
                     {
@@ -99,30 +105,37 @@ namespace OutpostGenerator
                                      "   - request checksum:    CRC OK\n" +
                                      "   => Unexpected error, technician team requested.\n\n" +
                                      "--- End of transmission ---\n\n\n\n";
-                        eventText += "   Your colonist managed to bypass most of the command console securities. However, " + this.pawn.Name.ToStringShort + " was not able to avoid the sending of a maintenance status report to the nearby M&Co. comms satellite!\n\n"
-                            + "You will soon have to welcome a technician patrol.";
+                        eventText += "Your colonist managed to bypass most of the command console securities. However, " + this.pawn.Name.ToStringShort + " was not able to avoid the sending of a maintenance status report to the nearby M&Co. comms satellite!\n\n";
                         letterType = LetterType.BadNonUrgent;
                         turretsNewFaction = null;
                         deactivateTurrets = true;
                         doorsNewFaction = Faction.OfColony;
-                        deactivateDoors = false;
-                        securityForcesDef = PawnKindDef.Named("MercenaryGunner");
-                        dropPodsNumber = 2;
+                        deactivateDoors = true;
+                        if (OG_Util.FindOrbitalRelay(OG_Util.FactionOfMAndCo) == null)
+                        {
+                            eventText += "You will soon have to welcome a technician team.";
+                            securityForcesDef = OG_Util.OutpostTechnicianDef;
+                            dropPodsNumber = 2;
+                        }
                     }
                     else if (hackingresult == HackingResult.MajorSuccess)
                     {
                         eventText += "   - defense systems:     ACCESS GRANTED\n" +
                                      "   - door access control: ACCESS GRANTED\n" +
                                      "   - request checksum:    CRC OK\n" +
-                                     "   => All parameters valid.\n\n" +
+                                     "   => All parameters are valid.\n\n" +
                                      "--- End of transmission ---\n\n\n\n";
-                        eventText += "   Hacking the outpost command console was a child's play for " + this.pawn.Name.ToStringShort + ".\n The outpost is now yours!";
+                        eventText += "Hacking the outpost command console was a child's play for " + this.pawn.Name.ToStringShort + ".\n The outpost is now fully under your control!";
                         letterType = LetterType.Good;
                         turretsNewFaction = Faction.OfColony;
                         deactivateTurrets = false;
                         doorsNewFaction = Faction.OfColony;
-                        deactivateDoors = false;
-                        dropPodsNumber = 0;
+                        deactivateDoors = true;
+                        if (OG_Util.FindOrbitalRelay(OG_Util.FactionOfMAndCo) == null)
+                        {
+                            securityForcesDef = null;
+                            dropPodsNumber = 0;
+                        }
                     }
                     outpostCommandConsole.TryToCaptureOutpost(eventTitle, eventText, letterType, turretsNewFaction, deactivateTurrets, doorsNewFaction, deactivateDoors, dropPodsNumber, securityForcesDef);
                     outpostCommandConsole.SetFaction(Faction.OfColony);

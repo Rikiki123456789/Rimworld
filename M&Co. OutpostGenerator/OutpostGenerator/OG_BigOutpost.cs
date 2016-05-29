@@ -13,8 +13,10 @@ namespace OutpostGenerator
 {
     // TODO: add tale: drop-pod destroyed in-flight.
     // TODO: create M&Co. backgrounds.
-    // TODO: improve AI with joinable Lords (standard defense + assault ennemy in outpost perimeter).
     // TODO: add joy and comfort.
+    // TODO: supply ship take off if outpost is captured?
+    // TODO: order to rebuild destroyed turrets?
+    // TODO: add artillery manning and resupply?
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -127,7 +129,7 @@ namespace OutpostGenerator
             {
                 eventTitle = "M&Co. military outpost";
                 eventText = "   M&Co. warning message\n\n" +
-                    "   Hello! I am Coralie, the AI in charge of outpost X" + sectorCoordX + ".Z" + sectorCoordZ + " Mil.\n\n" +
+                    "Hello! I am Coralie, the AI in charge of outpost MIL-X" + sectorCoordX + ".Z" + sectorCoordZ + ".\n\n" +
                     "My scanners detected the signature of your escape pods crashing nearby.\n\n" +
                     "WARNING! You are entering an M&Co. military sector. No activity is authorized here.\n\n" +
                     "Please notice that anyone found in the sector will be shot on sight with regards to the RimLaw RL-" + rimLawNumber + ".\n\n" +
@@ -138,7 +140,7 @@ namespace OutpostGenerator
             {
                 eventTitle = "M&Co. civil outpost";
                 eventText = "   M&Co. information message\n\n" +
-                    "   Hello! I am Coralie, the AI in charge of outpost X" + sectorCoordX + ".Z" + sectorCoordZ + " Civ.\n\n" +
+                    "Hello! I am Coralie, the AI in charge of outpost CIV-X" + sectorCoordX + ".Z" + sectorCoordZ + ".\n\n" +
                     "My scanners detected the signature of your escape pods crashing nearby.\n" +
                     "My emotional analyzer tells me to be sorry for your ship and the people who most probably died within.\n\n" +
                     "I remind you this sector is the legal property of M&Co. However, the company generously grants you the right to pass through this sector.\n\n" +
