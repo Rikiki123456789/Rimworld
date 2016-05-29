@@ -60,8 +60,6 @@
     <Compile Include="Designator_AreaNoRoofExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedExpandOutpost.cs" />
     <Compile Include="Designator_AreaAllowedClearOutpost.cs" />
-    <Compile Include="Detours.cs" />
-    <Compile Include="DetoursOG.cs" />
     <Compile Include="JobDriver_BoardSupplyShip.cs" />
     <Compile Include="JobGiver_ExitWithShip.cs" />
     <Compile Include="JobGiver_SprintToRallyPoint.cs" />

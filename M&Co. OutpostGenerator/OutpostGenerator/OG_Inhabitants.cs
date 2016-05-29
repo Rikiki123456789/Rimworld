@@ -95,23 +95,6 @@ namespace OutpostGenerator
                 Pawn pawn = GeneratePawn(OG_Util.OutpostTechnicianDef);
                 GenSpawn.Spawn(pawn, outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5), 0, OG_BigOutpost.areaSideLength / 2 + Rand.RangeInclusive(-5, 5)));
             }
-
-            // TODO: remove it!
-            // Affect squad brain to outpost guards.
-            /*LordToil_DefendOutpost stateDefend = new LordToil_DefendOutpost(
-                outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
-            StateGraph stateGraph = GraphMaker.SingleStateGraph(stateDefend);
-            BrainMaker.MakeNewBrain(OG_Util.FactionOfMAndCo, stateGraph, guardsList);*/
-
-
-            /*StateGraph stateGraph = new StateGraph();
-            LordToil_DefendPoint lordToil_DefendPoint = new LordToil_DefendPoint(
-                outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2), (int)((float)OG_BigOutpost.areaSideLength * (3f / 4f)));
-            stateGraph.StartingToil = lordToil_DefendPoint;*/
-            
-            //LordJob lordJob = new LordJob_DefendPoint(outpostData.areaSouthWestOrigin + new IntVec3(OG_BigOutpost.areaSideLength / 2, 0, OG_BigOutpost.areaSideLength / 2));
-            //Lord lord = LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob, guardsList);
-            // TODO: Generate voluntarily joinable lord toils with orbital relay. USe LordToil_Stage and LordToil_HuntEnemies.
         }
 
         private static void InitializeUniformColorAccordingToBiome()
@@ -193,7 +176,6 @@ namespace OutpostGenerator
                     || (pawn.story.WorkTagIsDisabled(WorkTags.Firefighting))
                     || (pawn.story.WorkTagIsDisabled(WorkTags.Scary)))
                     {
-                        Log.Message("Re-rolling technician.");
                         pawn.Destroy();
                         pawn = null;
                         if (tryIndex == 20)
@@ -206,7 +188,6 @@ namespace OutpostGenerator
                 {
                     if (pawn.story.WorkTagIsDisabled(WorkTags.Violent))
                     {
-                        Log.Message("Re-rolling soldier.");
                         pawn.Destroy();
                         pawn = null;
                         if (tryIndex == 20)

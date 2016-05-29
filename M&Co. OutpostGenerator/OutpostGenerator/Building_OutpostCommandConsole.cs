@@ -58,7 +58,6 @@ namespace OutpostGenerator
             {
                 if (thing.def == OG_Util.VulcanTurretDef)
                 {
-                    Log.Message("VulcanTurret at " + thing.Position);
                     thing.SetFaction(turretsNewFaction);
                     if (deactivateTurrets)
                     {

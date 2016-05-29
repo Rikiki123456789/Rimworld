@@ -17,6 +17,7 @@ namespace OutpostGenerator
     // TODO: supply ship take off if outpost is captured?
     // TODO: order to rebuild destroyed turrets?
     // TODO: add artillery manning and resupply?
+    // TODO: add strafe-run on siegeing raiders before landing!
 
     /// <summary>
     /// OG_BigOutpost class.
@@ -530,8 +531,6 @@ namespace OutpostGenerator
                     if (zoneType == ZoneType.MediumRoomMedibay)
                     {
                         // Medibay is found.
-                        // TODO: debug.
-                        Log.Message("EnsureAtLeastOneMedibayInOutpost: Medibay is found at " + new IntVec2(zoneAbs, zoneOrd).ToString());
                         return;
                     }
                     if ((zoneType == ZoneType.MediumRoomBarn)
@@ -552,8 +551,6 @@ namespace OutpostGenerator
                 return;
             }
             IntVec2 roomCoord = mediumRoomsList.RandomElement();
-            // TODO: debug.
-            Log.Message("EnsureAtLeastOneMedibayInOutpost: setting zoneMap at " + roomCoord.ToString());
             zoneMap[roomCoord.z, roomCoord.x].zoneType = ZoneType.MediumRoomMedibay;
         }
 

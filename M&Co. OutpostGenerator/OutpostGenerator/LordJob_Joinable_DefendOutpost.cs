@@ -30,7 +30,6 @@ namespace OutpostGenerator
 
         public override StateGraph CreateGraph()
         {
-            Log.Message("CreateGraph");
             StateGraph stateGraph = new StateGraph();
             LordToil_DefendOutpost lordToil_Defend = new LordToil_DefendOutpost(this.rallyPoint);
             stateGraph.AddToil(lordToil_Defend);
@@ -40,7 +39,7 @@ namespace OutpostGenerator
             this.timeoutTrigger = new Trigger_TicksPassed(8000);
             Transition transition = new Transition(lordToil_Defend, lordToil_End);
             transition.AddTrigger(this.timeoutTrigger);
-            transition.AddAction(new TransitionAction_Message("Defend lord timeout", MessageSound.Standard, this.rallyPoint));
+            //transition.AddAction(new TransitionAction_Message("Defend lord timeout.", MessageSound.Standard, this.rallyPoint));
             stateGraph.AddTransition(transition);
 
             return stateGraph;

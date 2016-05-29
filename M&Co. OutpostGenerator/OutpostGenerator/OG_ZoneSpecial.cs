@@ -115,7 +115,6 @@ namespace OutpostGenerator
 
             outpostData.landingPadCenter = rotatedOrigin + new IntVec3(5, 0, 10).RotatedBy(rotation);
             outpostData.landingPadRotation = rotation;
-            Log.Message("outpostData.landingPadCenter = " + outpostData.landingPadCenter.ToString());
         }
 
         public static void GenerateLandingPadTop(IntVec3 areaSouthWestOrigin, int zoneAbs, int zoneOrd, Rot4 rotation, ref OG_OutpostData outpostData)

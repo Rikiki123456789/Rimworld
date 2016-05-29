@@ -125,7 +125,6 @@ namespace OutpostGenerator
             IntVec3 hostilePosition = FindHostileInPerimeter();
             if (hostilePosition.IsValid)
             {
-                Log.Message("UpdateLord: hostile at " + hostilePosition);
                 if ((OG_Util.FindOutpostArea() != null)
                     && (OG_Util.FindOutpostArea().ActiveCells.Contains(hostilePosition)))
                 {
@@ -147,8 +146,6 @@ namespace OutpostGenerator
                         {
                             // Ensure rallyPoint is completely inside the outpost area.
                             rallyPoint = (potentialRallyPoint + sectionVector * 0.1f * (float)sectionsNumber).ToIntVec3();
-                            Log.Message("potentialRallyPoint at " + potentialRallyPoint);
-                            Log.Message("rallyPoint at " + rallyPoint);
                             break;
                         }
                     }
@@ -162,7 +159,6 @@ namespace OutpostGenerator
                 FindDamagedTurret(out turretPosition, out turretRotation);
                 if (turretPosition.IsValid)
                 {
-                    Log.Message("Damaged turret at " + turretPosition);
                     if (ModsConfig.IsActive("M&Co. ForceField"))
                     {
                         // Look for nearest force field to cover behind.
@@ -171,7 +167,6 @@ namespace OutpostGenerator
                             if (thing.Position.InHorDistOf(turretPosition, 23f))
                             {
                                 rallyPoint = thing.Position + new IntVec3(0, 0, -2).RotatedBy(thing.Rotation);
-                                Log.Message("rallyPoint behind force field at " + rallyPoint);
                                 break;
                             }
                         }
@@ -180,7 +175,6 @@ namespace OutpostGenerator
                     {
                         // Just go near the attacked turret.
                         rallyPoint = turretPosition + new IntVec3(0, 0, -5).RotatedBy(turretRotation);
-                        Log.Message("rallyPoint behind turret at " + rallyPoint);
                     }
                 }
             }
@@ -191,7 +185,7 @@ namespace OutpostGenerator
                 // TODO: add a siren like in alert speaker!
                 LordJob_Joinable_DefendOutpost lordJob = new LordJob_Joinable_DefendOutpost(rallyPoint);
                 LordMaker.MakeNewLord(OG_Util.FactionOfMAndCo, lordJob);
-                SoundDef soundDef = SoundDefOf.MessageSeriousAlert;// SoundDef.Named("LetterArriveBadUrgent");
+                SoundDef soundDef = SoundDefOf.MessageSeriousAlert;
                 soundDef.PlayOneShot(rallyPoint);
                 // Stop all pawns job.
                 foreach (Pawn pawn in Find.MapPawns.AllPawns)
@@ -219,7 +213,6 @@ namespace OutpostGenerator
                     && (pawn.Faction == Faction.OfColony)
                     && (Find.TickManager.TicksGame < graceTimeInTicks))
                 {
-                    Log.Message("Grace time for " + pawn.Name.ToStringShort);
                     continue;
                 }
                 if ((pawn.Faction != null)
@@ -227,7 +220,6 @@ namespace OutpostGenerator
                 {
                     if (IsInNoMansLand(pawn.Position))
                     {
-                        Log.Message("Hostile pawn is in perimeter: " + pawn.Name.ToStringShort + " at " + pawn.Position);
                         return pawn.Position;
                     }
                 }
@@ -307,7 +299,6 @@ namespace OutpostGenerator
             this.requestedGuardsNumber = guardsTargetNumber - guardsNumber;
             this.requestedScoutsNumber = scoutsTargetNumber - scoutsNumber;
             this.requestedTechniciansNumber = techniciansTargetNumber - techniciansNumber;
-            //Log.Message("Necessary reinforcements: " + this.requestedOfficersNumber + "/" + this.requestedHeavyGuardsNumber + "/" + this.requestedGuardsNumber + "/" + this.requestedScoutsNumber + "/" + this.requestedTechniciansNumber);
         }
         
         private void SpawnSupplyShip()

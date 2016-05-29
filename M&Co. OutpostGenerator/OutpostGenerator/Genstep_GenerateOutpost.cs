@@ -27,29 +27,13 @@ namespace OutpostGenerator
         public override void Generate()
         {
             GenerateOutpostProperties(ref outpostData);
-
-            //// TODO: debug, remove it.
-            outpostData.size = OG_OutpostSize.BigOutpost;
-            outpostData.isInhabited = true;
-            outpostData.isMilitary = false;
-
-            Log.Message("outpostData:");
+            
+            /*Log.Message("outpostData:");
             Log.Message(" - size: " + outpostData.size.ToString());
             Log.Message(" - isMilitary: " + outpostData.isMilitary.ToString());
             Log.Message(" - battleOccured: " + outpostData.battleOccured.ToString());
             Log.Message(" - isRuined: " + outpostData.isRuined.ToString());
-            Log.Message(" - isInhabited: " + outpostData.isInhabited.ToString());
-
-
-            /*outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, 70);
-            OG_BigOutpost.GenerateOutpost(outpostData);
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(70, 0, 70);
-            OG_BigOutpost.GenerateOutpost(outpostData);
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(70, 0, -70);
-            OG_BigOutpost.GenerateOutpost(outpostData);
-            outpostData.areaSouthWestOrigin = Find.Map.Center + new IntVec3(-70, 0, -70);
-            OG_BigOutpost.GenerateOutpost(outpostData);*/
-            ////
+            Log.Message(" - isInhabited: " + outpostData.isInhabited.ToString());*/
 
             if (outpostData.size == OG_OutpostSize.NoOutpost)
             {
@@ -68,12 +52,12 @@ namespace OutpostGenerator
                 }
                 else
                 {
-                    Log.Message("tryIndex = " + tryIndex); // TODO: debug
+                    //Log.Message("tryIndex = " + tryIndex); // TODO: debug
                 }
             }
             if (validSpawnPointIsFound == false)
             {
-                Log.Message("Scatterer " + this.ToString() + " could not find an area to generate an outpost.");
+                Log.Message("M&Co. outpost generator: could not find an appropriate area to generate an outpost.");
                 return;
             }
             
@@ -125,7 +109,6 @@ namespace OutpostGenerator
                         mountainousBorderCells++;
                         if (mountainousBorderCells > mountainousBorderCellsThreshold)
                         {
-                            //Log.Message("Invalid spawn point. Covering too much mountainous cells (threshold = " + mountainousBorderCellsThreshold + ")."); // TODO. debug
                             return false;
                         }
                     }
@@ -142,7 +125,6 @@ namespace OutpostGenerator
                     aquaticCells++;
                     if (aquaticCells > aquaticCellsThreshold)
                     {
-                        //Log.Message("Invalid spawn point. Covering too much aquatic cells (threshold = " + aquaticCellsThreshold + ")."); // TODO. debug
                         return false;
                     }
                 }
@@ -155,7 +137,7 @@ namespace OutpostGenerator
                     }
                 }
             }
-            Log.Message("Valid spawn point found! Mountainous cells/threshold, aquatic cells/threshold = " + mountainousBorderCells + "/" + mountainousBorderCellsThreshold + ", " + aquaticCells + "/" + aquaticCellsThreshold); // TODO. debug
+            //Log.Message("Valid spawn point found! Mountainous cells/threshold, aquatic cells/threshold = " + mountainousBorderCells + "/" + mountainousBorderCellsThreshold + ", " + aquaticCells + "/" + aquaticCellsThreshold); // TODO. debug
             return true;
         }
 
