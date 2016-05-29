@@ -272,7 +272,7 @@ namespace LaserFence
                     if (thing is Pawn)
                     {
                         Pawn pawn = thing as Pawn;
-                        if (pawn.HostileTo(Faction.OfColony) == false)
+                        if (pawn.HostileTo(this.Faction) == false)
                         {
                             return;
                         }
