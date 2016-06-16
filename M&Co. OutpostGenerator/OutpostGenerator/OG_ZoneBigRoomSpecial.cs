@@ -55,11 +55,14 @@ namespace OutpostGenerator
             
             // Spawn NPD, hoppers and lamp.
             OG_Common.TrySpawnThingAt(ThingDefOf.NutrientPasteDispenser, null, rotatedOrigin + new IntVec3(2, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.South.AsInt + rotation.AsInt), ref outpostData);
-            OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            Building_Storage hopper = OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
+            hopper.GetStoreSettings().Priority = StoragePriority.Critical;
             OG_Common.SpawnResourceAt(ThingDefOf.RawPotatoes, ThingDefOf.RawPotatoes.stackLimit, rotatedOrigin + new IntVec3(4, 0, 9).RotatedBy(rotation), true);
-            OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            hopper = OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
+            hopper.GetStoreSettings().Priority = StoragePriority.Critical;
             OG_Common.SpawnResourceAt(ThingDef.Named("RawCorn"), ThingDef.Named("RawCorn").stackLimit, rotatedOrigin + new IntVec3(4, 0, 8).RotatedBy(rotation), true);
-            OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData);
+            hopper = OG_Common.TrySpawnThingAt(ThingDefOf.Hopper, null, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true, new Rot4(Rot4.West.AsInt + rotation.AsInt), ref outpostData) as Building_Storage;
+            hopper.GetStoreSettings().Priority = StoragePriority.Critical;
             OG_Common.SpawnResourceAt(ThingDef.Named("RawBerries"), ThingDef.Named("RawBerries").stackLimit, rotatedOrigin + new IntVec3(4, 0, 7).RotatedBy(rotation), true);
             OG_Common.TrySpawnLampAt(rotatedOrigin + new IntVec3(4, 0, 6).RotatedBy(rotation), Color.white, ref outpostData);
             for (int xOffset = 1; xOffset <= 4; xOffset++)

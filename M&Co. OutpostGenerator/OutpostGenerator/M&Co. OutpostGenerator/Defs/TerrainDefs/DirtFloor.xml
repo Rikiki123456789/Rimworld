@@ -24,6 +24,9 @@
     <Description>Just a trail cleared from any vegetation. This will not keep your shoes clean though.</Description>
     <layerable>true</layerable>
     <designationCategory>Floors</designationCategory>
+    <placeWorkers>
+      <li>OutpostGenerator.PlaceWorker_OnEarth</li>
+    </placeWorkers>
     <Fertility>0</Fertility>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <affordances>
@@ -39,7 +42,7 @@
     <statBases>
       <Beauty>-1</Beauty>
       <Cleanliness>-1</Cleanliness>
-      <WorkToMake>1000</WorkToMake>
+      <WorkToMake>2000</WorkToMake>
     </statBases>
     <constructEffect>ConstructDirt</constructEffect>
     <AcceptTerrainSourceFilth>False</AcceptTerrainSourceFilth>

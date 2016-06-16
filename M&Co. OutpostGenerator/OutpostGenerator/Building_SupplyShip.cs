@@ -19,7 +19,7 @@ namespace OutpostGenerator
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_SupplyShip : Building
     {
-        private const int maxTicksToTakeOff = 2500;
+        private const int maxTicksToTakeOff = GenDate.TicksPerDay / 2;
         private int ticksToTakeOff = maxTicksToTakeOff;
         private Thing cryptosleepBay1 = null;
         private Thing cryptosleepBay2 = null;
@@ -147,7 +147,7 @@ namespace OutpostGenerator
                 for (int pawnIndex = 0; pawnIndex < orbitalRelay.requestedTechniciansNumber; pawnIndex++)
                 {
                     Pawn pawn = OG_Inhabitants.GeneratePawn(OG_Util.OutpostTechnicianDef);
-                    GenSpawn.Spawn(pawn, this.Position);
+                    GenSpawn.Spawn(pawn, this.Position + Vector3Utility.RandomHorizontalOffset(4f).ToIntVec3());
                 }
             }
         }

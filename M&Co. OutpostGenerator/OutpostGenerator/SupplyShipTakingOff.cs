@@ -30,7 +30,6 @@ namespace OutpostGenerator
         // Texture.
         private Matrix4x4 supplyShipMatrix = default(Matrix4x4);
         private static Material supplyShipTexture = MaterialPool.MatFrom("Things/SupplyShip/SupplyShip");
-        private Vector3 supplyShipScale = new Vector3(11f, 1f, 20f);
 
         // Sound.
         private static readonly SoundDef takingOffSound = SoundDef.Named("SupplyShipTakingOff");
@@ -93,6 +92,25 @@ namespace OutpostGenerator
                     result.x += num * 0.8f;
                     result.z += 3f;
                 }
+                return result;
+            }
+        }
+
+        private Vector3 supplyShipScale
+        {
+            get
+            {
+                Vector3 result = new Vector3(11f, 1f, 20f);
+                float coefficient = 1f;
+                if (this.ticksSinceTakeOff < verticalTrajectoryDurationInTicks)
+                {
+                    coefficient = 1f + 0.2f * ((float)this.ticksSinceTakeOff / verticalTrajectoryDurationInTicks);
+                }
+                else
+                {
+                    coefficient = 1.2f;
+                }
+                result *= coefficient;
                 return result;
             }
         }

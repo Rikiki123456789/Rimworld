@@ -121,6 +121,7 @@
     <label>fix broken-down things</label>
     <giverClass>OutpostGenerator.WorkGiver_FixBrokenDownBuildingOutpost</giverClass>
     <workType>Repair</workType>
+    <priorityInType>5</priorityInType>
     <verb>replace broken components in</verb>
     <gerund>replacing broken components in</gerund>
     <requiredCapacities>

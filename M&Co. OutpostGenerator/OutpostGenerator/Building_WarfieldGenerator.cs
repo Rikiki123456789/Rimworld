@@ -90,7 +90,7 @@ namespace OutpostGenerator
                 Pawn corpse = null;
                 if (corpseIndex < securityForcesCorpseNumber)
                 {
-                    corpse = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceSoldier, OG_Util.FactionOfMAndCo);
+                    corpse = PawnGenerator.GeneratePawn(OG_Util.OutpostScoutDef, OG_Util.FactionOfMAndCo);
                 }
                 else
                 {

@@ -104,7 +104,7 @@ namespace OutpostGenerator
             {
                 return;
             }
-
+            OG_Inhabitants.InitializeUniformColorAccordingToBiome(); // Necessary in case of small outpost (no inhabitants were generated).
             for (int soldierIndex = 0; soldierIndex < dropPodsNumber; soldierIndex++)
             {
                 bool validDropPodCellIsFound = DropCellFinder.TryFindDropSpotNear(this.dropZoneCenter, out dropPodSpot, true, false);

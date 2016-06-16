@@ -36,12 +36,12 @@ namespace OutpostGenerator
         public int requestedGuardsNumber = 0;
         public int requestedScoutsNumber = 0;
         public int requestedTechniciansNumber = 0;
-        private const int supplyShipLandingPeriodInTicks = 5000; // TODO: adjust it. Every 5 days?
+        private const int supplyShipLandingPeriodInTicks = 3 * GenDate.TicksPerDay;
         private int nextSupplyShipLandingDateInTicks = supplyShipLandingPeriodInTicks;
 
         // Lord data.
         private const int graceTimeInTicks = 60 * GenTicks.TicksPerRealSecond; // Grace time when game starts. Colonists are given a chance to escape alive!
-        private const int lordUpdatePeriodInTicks = GenTicks.TicksPerRealSecond; // TODO: adjust it.
+        private const int lordUpdatePeriodInTicks = GenTicks.TicksPerRealSecond;
         private int nextLordUpdateDateInTicks = lordUpdatePeriodInTicks;
 
         // Dish periodical rotation.

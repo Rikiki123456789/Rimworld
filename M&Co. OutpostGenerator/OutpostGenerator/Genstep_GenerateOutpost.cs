@@ -28,12 +28,12 @@ namespace OutpostGenerator
         {
             GenerateOutpostProperties(ref outpostData);
             
-            /*Log.Message("outpostData:");
+            Log.Message("M&Co. outpost properties:");
             Log.Message(" - size: " + outpostData.size.ToString());
             Log.Message(" - isMilitary: " + outpostData.isMilitary.ToString());
             Log.Message(" - battleOccured: " + outpostData.battleOccured.ToString());
             Log.Message(" - isRuined: " + outpostData.isRuined.ToString());
-            Log.Message(" - isInhabited: " + outpostData.isInhabited.ToString());*/
+            Log.Message(" - isInhabited: " + outpostData.isInhabited.ToString());
 
             if (outpostData.size == OG_OutpostSize.NoOutpost)
             {
@@ -52,7 +52,7 @@ namespace OutpostGenerator
                 }
                 else
                 {
-                    //Log.Message("tryIndex = " + tryIndex); // TODO: debug
+                    Log.Message("tryIndex = " + tryIndex); // TODO: debug
                 }
             }
             if (validSpawnPointIsFound == false)
@@ -174,13 +174,13 @@ namespace OutpostGenerator
             }
             else if (outpostSizeSelector < 0.5f)
             {
-                // Generate a big outpost.
-                outpostData.size = OG_OutpostSize.BigOutpost;
+                // Generate a small outpost.
+                outpostData.size = OG_OutpostSize.SmallOutpost;
             }
             else
             {
-                // Generate a small outpost.
-                outpostData.size = OG_OutpostSize.SmallOutpost;
+                // Generate a big outpost.
+                outpostData.size = OG_OutpostSize.BigOutpost;
             }
         }
 
@@ -244,6 +244,11 @@ namespace OutpostGenerator
 
         protected void GetIsInhabited(ref OG_OutpostData outpostData)
         {
+            if (outpostData.size != OG_OutpostSize.BigOutpost)
+            {
+                outpostData.isInhabited = false;
+            }
+
             float inhabitedThreshold = 0.75f;
             if (outpostData.isRuined)
             {

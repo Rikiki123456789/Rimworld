@@ -28,7 +28,6 @@
     </statBases>
     <tickerType>Normal</tickerType>
     <size>(9,18)</size>
-    <designationCategory>Misc</designationCategory>
     <costList>
       <Steel>50000</Steel>
       <Plasteel>10000</Plasteel>

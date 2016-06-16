@@ -20,7 +20,7 @@
     <techHediffsTags>
       <li>Advanced</li>
     </techHediffsTags>
-    <techHediffsChance>0.1</techHediffsChance>
+    <techHediffsChance>0.3</techHediffsChance>
   </PawnKindDef>
 
   <PawnKindDef>
@@ -42,7 +42,7 @@
     <techHediffsTags>
       <li>Advanced</li>
     </techHediffsTags>
-    <techHediffsChance>0.3</techHediffsChance>
+    <techHediffsChance>0.4</techHediffsChance>
   </PawnKindDef>
 
   <PawnKindDef>
@@ -64,7 +64,7 @@
     <techHediffsTags>
       <li>Advanced</li>
     </techHediffsTags>
-    <techHediffsChance>0.3</techHediffsChance>
+    <techHediffsChance>0.7</techHediffsChance>
   </PawnKindDef>
 
   <PawnKindDef>
@@ -86,7 +86,7 @@
     <techHediffsTags>
       <li>Advanced</li>
     </techHediffsTags>
-    <techHediffsChance>0.3</techHediffsChance>
+    <techHediffsChance>0.8</techHediffsChance>
   </PawnKindDef>
 
   <PawnKindDef>
@@ -108,7 +108,7 @@
     <techHediffsTags>
       <li>Advanced</li>
     </techHediffsTags>
-    <techHediffsChance>0.3</techHediffsChance>
+    <techHediffsChance>0.9</techHediffsChance>
   </PawnKindDef>
 
 </PawnKindDefs>

@@ -44,6 +44,7 @@ namespace OutpostGenerator
 
         public static void GenerateInhabitants(ref OG_OutpostData outpostData)
         {
+            InitializeUniformColorAccordingToBiome();
             if (outpostData.isInhabited == false)
             {
                 return;
@@ -60,8 +61,6 @@ namespace OutpostGenerator
                     outpostArea.Set(outpostData.areaSouthWestOrigin + new IntVec3(xOffset, 0, zOffset));
                 }
             }
-
-            InitializeUniformColorAccordingToBiome();
 
             // Generate soldiers.
             List<Pawn> guardsList = new List<Pawn>();
@@ -97,7 +96,7 @@ namespace OutpostGenerator
             }
         }
 
-        private static void InitializeUniformColorAccordingToBiome()
+        public static void InitializeUniformColorAccordingToBiome()
         {
             // Set uniforms color according to biome.
             string biomeDefName = Find.Map.Biome.defName;

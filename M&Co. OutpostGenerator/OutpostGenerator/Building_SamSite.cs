@@ -25,7 +25,7 @@ namespace OutpostGenerator
         private const int patrolRotationIntervalMax = 900;
         private int patrolTicksToNextRotation = patrolRotationIntervalMin;
         private const int patrolRotationDurationMin = 240;
-        private const int patrolRotationDurationMax = 360;
+        private const int patrolRotationDurationMax = 480;
         private int patrolTicksUntilRotationEnd = 0;
         private bool patrolClockwiseRotation = true;
 
