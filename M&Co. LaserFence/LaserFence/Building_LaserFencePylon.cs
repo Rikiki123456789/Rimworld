@@ -271,8 +271,10 @@ namespace LaserFence
                     }
                     if (thing is Pawn)
                     {
+                        // Avoid connecting when an ally is in the path.
                         Pawn pawn = thing as Pawn;
-                        if (pawn.HostileTo(this.Faction) == false)
+                        if ((this.Faction != null)
+                            && (pawn.HostileTo(this.Faction) == false))
                         {
                             return;
                         }
