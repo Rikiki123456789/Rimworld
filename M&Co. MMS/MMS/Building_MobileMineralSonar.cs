@@ -73,7 +73,7 @@ namespace MobileMineralSonar
         // ===================== Static functions =====================
         public static void TryUpdateScanParameters()
         {
-            if (Find.ResearchManager.IsFinished(ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan")) == true)
+            if (Find.ResearchManager.GetProgress(ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan")) == 100)
             {
                 maxScanRange = enhancedMaxScanRange;
                 detectionChance = enhancedDetectionChance;

@@ -1,41 +1,55 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<Buildings>
+<Defs>
 
   <ThingDef ParentName="BuildingBase">
     <defName>MobileMineralSonar</defName>
-    <Label>mobile mineral sonar</Label>
-    <Description>   The mobile mineral sonar is used to detect hidden metallic objects in the heart of big mountains.
+    <label>mobile mineral sonar</label>
+    <description>   The mobile mineral sonar is used to detect hidden metallic objects in the heart of big mountains.
 
 - It will slowly scan the surrounding rocks autonomously with its embedded battery.
 - Supplying some additional power will speed up the scan rate.
-    </Description>
+    </description>
     <graphicData>
       <graphicClass>Graphic_Single</graphicClass>
       <texPath>Things/Building/MobileMineralSonar</texPath>
       <drawSize>(3,3)</drawSize>
+      <drawRotated>false</drawRotated>
+      <allowFlip>false</allowFlip>
+      <damageData>
+        <rect>(0.2,0,0.6,0.1)</rect>
+      </damageData>
     </graphicData>
+    <drawerType>RealtimeOnly</drawerType>
+    <fillPercent>0.25</fillPercent>
+	    <constructEffect>ConstructDirt</constructEffect>
+	    <altitudeLayer>Building</altitudeLayer>
     <uiIconPath>Things/Building/MenuIcon_MobileMineralSonar</uiIconPath>
-    <ThingClass>MobileMineralSonar.Building_MobileMineralSonar</ThingClass>
+    <thingClass>MobileMineralSonar.Building_MobileMineralSonar</thingClass>
     <tickerType>Normal</tickerType>
-    <PlaceWorkers>
+    <placeWorkers>
       <li>MobileMineralSonar.PlaceWorker_MobileMineralSonar</li>
-    </PlaceWorkers>
+    </placeWorkers>
+	<drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
     <minifiedDef>MinifiedFurniture</minifiedDef>
-    <CostList>
+	    <pathCost>50</pathCost>
+    <costList>
       <Steel>50</Steel>
-      <Components>5</Components>
-    </CostList>
-    <AltitudeLayer>BuildingTall</AltitudeLayer>
+      <Component>5</Component>
+    </costList>
     <statBases>
       <WorkToMake>200</WorkToMake>
       <MaxHitPoints>200</MaxHitPoints>
       <Flammability>0.1</Flammability>
     </statBases>
+    <selectable>true</selectable>
     <useHitPoints>True</useHitPoints>
-    <Size>(1,1)</Size>
-    <DesignationCategory>Misc</DesignationCategory>
-    <Passability>Impassable</Passability>
+    <size>(1,1)</size>
+    <category>Building</category>
+	    <designationCategory>Misc</designationCategory>
+    <soundImpactDefault>BulletImpactGround</soundImpactDefault>
+	 <resourcesFractionWhenDeconstructed>50</resourcesFractionWhenDeconstructed>
+    <passability>Impassable</passability>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
@@ -53,4 +67,4 @@
     </tradeTags>
   </ThingDef>
 
-</Buildings>
+</Defs>
