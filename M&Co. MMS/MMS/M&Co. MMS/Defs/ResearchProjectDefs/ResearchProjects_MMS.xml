@@ -15,7 +15,8 @@ You should give them some time to study the MiSoTech* core concept.
 
 - You can now build mobile mineral sonar. With this technology jewel, you will never have to dig galleries blindly!
     </descriptionDiscovered>
-    <totalCost>500</totalCost>
+    <baseCost>500</baseCost>
+	    <techLevel>Industrial</techLevel>
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
@@ -38,7 +39,8 @@ You should give them some time to study the MiSoTech* core concept.
 
 * MiSoTech: Mineral Sonar Technology
     </descriptionDiscovered>
-    <totalCost>500</totalCost>
+    <baseCost>500</baseCost>
+	    <techLevel>Industrial</techLevel>
     <prerequisites>
       <li>ResearchMobileMineralSonar</li>
     </prerequisites>

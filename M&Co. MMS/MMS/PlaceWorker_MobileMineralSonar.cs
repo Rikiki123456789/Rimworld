@@ -35,7 +35,7 @@ namespace MobileMineralSonar
                 }
             }
 
-            if (Find.ResearchManager.IsFinished(ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan")) == false)
+            if (Find.ResearchManager.GetProgress(ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan")) == 100)
             {
                 Material scanRange30 = MaterialPool.MatFrom("Effects/ScanRange30");
                 Vector3 scanRangeScale30 = new Vector3(60f, 1f, 60f);
