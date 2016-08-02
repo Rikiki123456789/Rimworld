@@ -50,7 +50,6 @@
       <Components>5</Components>
     </costList>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <designationCategory>Security</designationCategory>
     <specialDisplayRadius>34.9</specialDisplayRadius>
     <building>
       <ai_combatDangerous>true</ai_combatDangerous>

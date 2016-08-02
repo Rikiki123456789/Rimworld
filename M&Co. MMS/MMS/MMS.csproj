@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.13.5940.24501, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,18 +44,20 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_MobileMineralSonar.cs" />
     <Compile Include="PlaceWorker_MobileMineralSonar.cs" />
+    <Compile Include="ThingDef_MobileMineralSonar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="M&amp;Co. MMS\About\About.xml" />
-    <Content Include="M&amp;Co. MMS\Defs\ResearchProjectDefs\ResearchProjects_MMS.xml" />
-    <Content Include="M&amp;Co. MMS\Defs\ThingDefs_Buildings\Building_MMS.xml">
+    <Content Include="M&amp;Co. MMS\Defs\ThingDefs_Items\Items_MinifiedMobileMineralSonar.xml" />
+    <Content Include="M&amp;Co. MMS\Defs\ResearchProjectDefs\ResearchProjects_MobileMineralSonar.xml" />
+    <Content Include="M&amp;Co. MMS\Defs\ThingDefs_Buildings\Building_MobileMineralSonar.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="M&amp;Co. MMS\Textures\Effects\ScanRange10.png" />

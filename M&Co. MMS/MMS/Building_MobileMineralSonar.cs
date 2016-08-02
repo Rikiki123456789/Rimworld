@@ -17,6 +17,7 @@ namespace MobileMineralSonar
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
+    [StaticConstructorOnStartup]
     class Building_MobileMineralSonar : Building
     {
         // ===================== Variables =====================
@@ -24,14 +25,14 @@ namespace MobileMineralSonar
         public const int enhancedMaxScanRange = 50;
         public static int maxScanRange = baseMaxScanRange;
 
-        public const float baseDetectionChance = 0.3f;
-        public const float enhancedDetectionChance = 0.6f;
+        public const float baseDetectionChance = 0.2f;
+        public const float enhancedDetectionChance = 0.4f;
         public static float detectionChance = baseDetectionChance;
 
-        public const int powerConsumption = 1000;
+        public const int powerConsumption = 3000;
         public int scanRange = 1;
         public int scanProgress = 0;
-        private const int scanProgressThresholdPerCell = 120;
+        private const int scanProgressThresholdPerCell = 240;
         public float satelliteDishRotation = 0;
         private bool isInstalled = false;
 
@@ -42,15 +43,15 @@ namespace MobileMineralSonar
         public CompPowerTrader powerComp;
 
         // Textures.
-        public Material scanRange10;
-        public Material scanRange20;
-        public Material scanRange30;
-        public Material scanRange40;
-        public Material scanRange50;
+        public static Material scanRange10 = MaterialPool.MatFrom("Effects/ScanRange10");
+        public static Material scanRange20 = MaterialPool.MatFrom("Effects/ScanRange20");
+        public static Material scanRange30 = MaterialPool.MatFrom("Effects/ScanRange30");
+        public static Material scanRange40 = MaterialPool.MatFrom("Effects/ScanRange40");
+        public static Material scanRange50 = MaterialPool.MatFrom("Effects/ScanRange50");
+        public static Material satelliteDish = MaterialPool.MatFrom("Things/Building/SatelliteDish");
+        public static Material scanRayDynamic = MaterialPool.MatFrom("Effects/ScanRay50x50", ShaderDatabase.MetaOverlay);
+        public static Material scanSpot = MaterialPool.MatFrom("Effects/ScanSpot", ShaderDatabase.Transparent);
         public Material scanRangeDynamic;
-        public Material scanRayDynamic;
-        public Material satelliteDish;
-        public Material scanSpot;
         public Matrix4x4 scanRangeMatrix10 = default(Matrix4x4);
         public Matrix4x4 scanRangeMatrix20 = default(Matrix4x4);
         public Matrix4x4 scanRangeMatrix30 = default(Matrix4x4);
@@ -73,13 +74,14 @@ namespace MobileMineralSonar
         // ===================== Static functions =====================
         public static void TryUpdateScanParameters()
         {
-            if (Find.ResearchManager.IsFinished(ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan")) == true)
+            ResearchProjectDef mmsResearch = ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan");
+            if (Find.ResearchManager.GetProgress(mmsResearch) >= mmsResearch.baseCost)
             {
                 maxScanRange = enhancedMaxScanRange;
                 detectionChance = enhancedDetectionChance;
             }
         }
-
+        
         // ===================== Setup Work =====================
         /// <summary>
         /// Initialize instance variables.
@@ -88,29 +90,17 @@ namespace MobileMineralSonar
         public override void SpawnSetup()
         {
             base.SpawnSetup();
-
+            
             detectedDefList = new List<ThingDef>();
-            detectedDefList.Add(ThingDef.Named("MineableSteel"));
-            detectedDefList.Add(ThingDef.Named("MineableSilver"));
-            detectedDefList.Add(ThingDef.Named("MineableGold"));
-            detectedDefList.Add(ThingDef.Named("MineableUranium"));
-            detectedDefList.Add(ThingDef.Named("MineablePlasteel"));
-            detectedDefList.Add(ThingDef.Named("MineableComponents"));
-            detectedDefList.Add(ThingDefOf.AncientCryptosleepCasket);
+            foreach (ThingDef metallicDef in ((ThingDef_MobileMineralSonar)this.def).scannedThingDefs)
+            {
+                detectedDefList.Add(metallicDef);
+            }
 
             // Components initialization.
             powerComp = base.GetComp<CompPowerTrader>();
             powerComp.powerOutputInt = 0;
-
-            // Textures initialization.
-            scanRange10 = MaterialPool.MatFrom("Effects/ScanRange10");
-            scanRange20 = MaterialPool.MatFrom("Effects/ScanRange20");
-            scanRange30 = MaterialPool.MatFrom("Effects/ScanRange30");
-            scanRange40 = MaterialPool.MatFrom("Effects/ScanRange40");
-            scanRange50 = MaterialPool.MatFrom("Effects/ScanRange50");
-            scanRayDynamic = MaterialPool.MatFrom("Effects/ScanRay50x50", ShaderDatabase.MetaOverlay);
-            satelliteDish = MaterialPool.MatFrom("Things/Building/SatelliteDish");
-            scanSpot = MaterialPool.MatFrom("Effects/ScanSpot", ShaderDatabase.Transparent);
+            
             // The 10f offset on Y axis is mandatory to be over the fog of war.
             scanRangeMatrix10.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale10);
             scanRangeMatrix20.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale20);
@@ -191,7 +181,7 @@ namespace MobileMineralSonar
             }
             else
             {
-                satelliteDishRotation = (satelliteDishRotation + 0.3f) % 360f;
+                satelliteDishRotation = (satelliteDishRotation + 0.2f) % 360f;
             }
 
             if (scanRange == maxScanRange)
@@ -205,7 +195,7 @@ namespace MobileMineralSonar
                 // Increment the scan progress according to the available power input.
                 if (powerComp.PowerOn)
                 {
-                    scanProgress += 3 * (int)GenTicks.TicksPerRealSecond;
+                    scanProgress += 5 * (int)GenTicks.TicksPerRealSecond;
                 }
                 else
                 {
@@ -240,7 +230,8 @@ namespace MobileMineralSonar
                 foreach (Thing thing in thingsAtScanRange)
                 {
                     // Chance to unfog a thing.
-                    if (Rand.Range(0f, 1f) <= detectionChance)
+                    float detectionThreshold = detectionChance + detectionChance * (1 - (float)scanRange / (float)enhancedMaxScanRange);
+                    if (Rand.Range(0f, 1f) <= detectionThreshold)
                     {
                         Find.FogGrid.Unfog(thing.Position);
                     }

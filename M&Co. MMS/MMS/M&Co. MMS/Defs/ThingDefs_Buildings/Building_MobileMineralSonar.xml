@@ -2,7 +2,19 @@
 
 <Buildings>
 
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <thingClass>Building</thingClass>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase" Class="MobileMineralSonar.ThingDef_MobileMineralSonar" >
     <defName>MobileMineralSonar</defName>
     <Label>mobile mineral sonar</Label>
     <Description>   The mobile mineral sonar is used to detect hidden metallic objects in the heart of big mountains.
@@ -21,12 +33,12 @@
     <PlaceWorkers>
       <li>MobileMineralSonar.PlaceWorker_MobileMineralSonar</li>
     </PlaceWorkers>
-    <minifiedDef>MinifiedFurniture</minifiedDef>
+    <minifiedDef>MinifiedMobileMineralSonar</minifiedDef>
     <CostList>
       <Steel>50</Steel>
-      <Components>5</Components>
+      <Component>5</Component>
     </CostList>
-    <AltitudeLayer>BuildingTall</AltitudeLayer>
+    <AltitudeLayer>Building</AltitudeLayer>
     <statBases>
       <WorkToMake>200</WorkToMake>
       <MaxHitPoints>200</MaxHitPoints>
@@ -40,7 +52,7 @@
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
         <startElectricalFires>false</startElectricalFires>
-        <basePowerConsumption>1000</basePowerConsumption>
+        <basePowerConsumption>3000</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable"/>
     </comps>
@@ -51,6 +63,16 @@
     <tradeTags>
       <li>Exotic</li>
     </tradeTags>
+
+    <scannedThingDefs>
+      <li>MineableSteel</li>
+      <li>MineableSilver</li>
+      <li>MineableGold</li>
+      <li>MineableUranium</li>
+      <li>MineablePlasteel</li>
+      <li>MineableComponents</li>
+      <li>AncientCryptosleepCasket</li>
+    </scannedThingDefs>
   </ThingDef>
 
 </Buildings>
