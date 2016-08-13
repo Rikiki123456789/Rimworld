@@ -1,15 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ThingDefs>
 
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <thingClass>Building</thingClass>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+
   <ThingDef ParentName="BuildingBase">
     <defName>MiningHelmetGlower</defName>
-    <label>Mining helmet light</label>
+    <label>mining helmet light</label>
     <Description>Mining helmet light.</Description>
     <graphicData>
       <texPath>Things/Building/DummyTexture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <TickerType>Normal</TickerType>
     <selectable>false</selectable>
     <building>
       <isInert>true</isInert>
