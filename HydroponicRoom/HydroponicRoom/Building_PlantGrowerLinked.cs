@@ -34,7 +34,7 @@ namespace HydroponicRoom
             {
                 gizmoList.Add(gizmo);
             }
-            if (this.Faction != Faction.OfColony)
+            if (this.Faction != Faction.OfPlayer)
             {
                 return gizmoList;
             }

@@ -44,11 +44,8 @@
     <size>(1,4)</size>
     <costList>
       <Steel>100</Steel>
-      <Components>1</Components>
+      <Component>1</Component>
     </costList>
-    <inspectorTabs>
-      <li>ITab_Growing</li>
-    </inspectorTabs>
     <fertility>2.3</fertility>
     <building>
       <defaultPlantToGrow>PlantPotato</defaultPlantToGrow>
@@ -70,7 +67,6 @@
     </researchPrerequisites>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <designationCategory>Production</designationCategory>
-    <designationHotKey>Y</designationHotKey>
   </ThingDef>
 
-  </ThingDefs>
+</ThingDefs>
