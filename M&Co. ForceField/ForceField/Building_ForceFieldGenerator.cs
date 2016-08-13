@@ -17,6 +17,7 @@ namespace ForceField
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
+    [StaticConstructorOnStartup]
     public class Building_ForceFieldGenerator : Building
     {
         public struct ProjectileWithAngle
@@ -49,10 +50,24 @@ namespace ForceField
         public ThingDef_ForceFieldGeneratorProperties forceFieldProperties = null;
 
         // Drawing.
-        public Material[] forceFieldTexture = new Material[5];
+        public static readonly Material[] forceFieldTexture = new Material[5]
+        {
+            MaterialPool.MatFrom("Effects/ForceField1", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceField2", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceField3", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceField4", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceField5", ShaderDatabase.Transparent)
+        };
         public Matrix4x4 forceFieldMatrix = default(Matrix4x4);
         public Vector3 forceFieldScale = new Vector3(5f, 1f, 2f);
-        public Material[] forceFieldAbsorbtionTexture = new Material[5];
+        public static readonly Material[] forceFieldAbsorbtionTexture = new Material[5]
+        {
+            MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion1", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion2", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion3", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion4", ShaderDatabase.Transparent),
+            MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion5", ShaderDatabase.Transparent)
+        };
         public Matrix4x4 forceFieldAbsorbtionMatrix = default(Matrix4x4);
         
         public const int drawingPeriodInTicks = 120;
@@ -125,17 +140,17 @@ namespace ForceField
             this.forceFieldProperties = this.def as ForceField.ThingDef_ForceFieldGeneratorProperties;
 
             // Textures initialization.
-            forceFieldTexture[0] = MaterialPool.MatFrom("Effects/ForceField1", ShaderDatabase.Transparent);
+            /*forceFieldTexture[0] = MaterialPool.MatFrom("Effects/ForceField1", ShaderDatabase.Transparent);
             forceFieldTexture[1] = MaterialPool.MatFrom("Effects/ForceField2", ShaderDatabase.Transparent);
             forceFieldTexture[2] = MaterialPool.MatFrom("Effects/ForceField3", ShaderDatabase.Transparent);
             forceFieldTexture[3] = MaterialPool.MatFrom("Effects/ForceField4", ShaderDatabase.Transparent);
-            forceFieldTexture[4] = MaterialPool.MatFrom("Effects/ForceField5", ShaderDatabase.Transparent);
+            forceFieldTexture[4] = MaterialPool.MatFrom("Effects/ForceField5", ShaderDatabase.Transparent);*/
             forceFieldMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
-            forceFieldAbsorbtionTexture[0] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion1", ShaderDatabase.Transparent);
+            /*forceFieldAbsorbtionTexture[0] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion1", ShaderDatabase.Transparent);
             forceFieldAbsorbtionTexture[1] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion2", ShaderDatabase.Transparent);
             forceFieldAbsorbtionTexture[2] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion3", ShaderDatabase.Transparent);
             forceFieldAbsorbtionTexture[3] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion4", ShaderDatabase.Transparent);
-            forceFieldAbsorbtionTexture[4] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion5", ShaderDatabase.Transparent);
+            forceFieldAbsorbtionTexture[4] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion5", ShaderDatabase.Transparent);*/
             forceFieldAbsorbtionMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
         }
 

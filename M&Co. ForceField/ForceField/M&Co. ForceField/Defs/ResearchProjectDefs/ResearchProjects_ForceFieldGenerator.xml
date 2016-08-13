@@ -4,17 +4,18 @@
   <ResearchProjectDef>
     <defName>ResearchForceField</defName>
     <label>M&amp;Co.: force field</label>
-    <description>   Local tribes are sometimes not really "cooperative" when an excavation outpost is established in "their" territory.
+    <description>Local tribes are sometimes not really "cooperative" when an excavation outpost is established in "their" territory.
 Force field generators are perfect to protect your security forces under a rain of arrows and pila.
     
 - Develop the force field generator.
     </description>
-    <descriptionDiscovered>  You have developped the force field generator.
+    <descriptionDiscovered>You have developped the force field generator.
 
 - You can now build force field generators to protect your security forces from incoming projectiles.
 - Watch out for heavy rockets though!
     </descriptionDiscovered>
-    <totalCost>3000</totalCost>
+    <techLevel>Industrial</techLevel>
+    <baseCost>3000</baseCost>
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>

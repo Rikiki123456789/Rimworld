@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.12.5719.23323, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.13.5940.24501, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -56,19 +56,19 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="M&amp;Co. ForceField\Assemblies\" />
+    <Folder Include="M&amp;Co. ForceField\Textures\Effects\" />
+    <Folder Include="M&amp;Co. ForceField\Textures\Things\Building\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="M&amp;Co. ForceField\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. ForceField\Defs\ResearchProjectDefs\ResearchProjects_ForceField.xml">
+    <Content Include="M&amp;Co. ForceField\Defs\ResearchProjectDefs\ResearchProjects_ForceFieldGenerator.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. ForceField\Defs\ThingDefs\Building_ForceField.xml">
+    <Content Include="M&amp;Co. ForceField\Defs\ThingDefs\Building_ForceFieldGenerator.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. ForceField\Textures\Effects\ForceField.png" />
-    <Content Include="M&amp;Co. ForceField\Textures\Things\Building\ForceFieldGenerator.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

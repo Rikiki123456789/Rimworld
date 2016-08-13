@@ -1,9 +1,21 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ThingDefs>
 
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <thingClass>Building</thingClass>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+
   <ThingDef Class="ForceField.ThingDef_ForceFieldGeneratorProperties" ParentName="BuildingBase">
     <defName>ForceFieldGenerator</defName>
-    <label>Force field generator</label>
+    <label>force field generator</label>
     <description>This defensive building will charge up and sustain a forward force field.
 It is able to absorb or repel incoming projectiles until it is completely discharged.
 Once discharged, the generator needs some time to reinitialize.
@@ -15,7 +27,8 @@ When powered down, the generator will send back a part of its energy to the powe
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(3,3)</drawSize>
     </graphicData>
-    <altitudeLayer>BuildingTall</altitudeLayer>
+    <uiIconPath>Things/Building/Security/MenuIcon_ForceFieldGenerator</uiIconPath>
+    <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <placeWorkers>
       <li>ForceField.PlaceWorker_ForceFieldGenerator</li>
@@ -25,7 +38,7 @@ When powered down, the generator will send back a part of its energy to the powe
     <UseHitPoints>True</UseHitPoints>
     <statBases>
       <WorkToMake>10000</WorkToMake>
-      <MaxHitPoints>250</MaxHitPoints>
+      <MaxHitPoints>300</MaxHitPoints>
       <Flammability>1.0</Flammability>
     </statBases>
     <comps>
@@ -42,7 +55,7 @@ When powered down, the generator will send back a part of its energy to the powe
     <costList>
       <Steel>150</Steel>
       <Plasteel>50</Plasteel>
-      <Components>10</Components>
+      <Component>10</Component>
     </costList>
     <killedLeavings>
       <ChunkSlagSteel>1</ChunkSlagSteel>
