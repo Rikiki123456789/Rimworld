@@ -14,26 +14,23 @@
     <filthLeaving>BuildingRubble</filthLeaving>
   </ThingDef>
 
-  <ThingDef ParentName="BuildingBase" Class="MobileMineralSonar.ThingDef_MobileMineralSonar" >
+  <ThingDef ParentName="BuildingBase" Name="MobileMineralSonarBase" Class="MobileMineralSonar.ThingDef_MobileMineralSonar">
     <defName>MobileMineralSonar</defName>
     <Label>mobile mineral sonar</Label>
-    <Description>   The mobile mineral sonar is used to detect hidden metallic objects in the heart of big mountains.
-
-- It will slowly scan the surrounding rocks autonomously with its embedded battery.
-- Supplying some additional power will speed up the scan rate.
+    <Description>The mobile mineral sonar is used to detect hidden metallic objects in the heart of big mountains. It will slowly scan the surrounding rocks autonomously with its embedded battery. Supplying some additional power will speed up the scan rate.
     </Description>
+    <ThingClass>MobileMineralSonar.Building_MobileMineralSonar</ThingClass>
     <graphicData>
       <graphicClass>Graphic_Single</graphicClass>
       <texPath>Things/Building/MobileMineralSonar</texPath>
       <drawSize>(3,3)</drawSize>
     </graphicData>
     <uiIconPath>Things/Building/MenuIcon_MobileMineralSonar</uiIconPath>
-    <ThingClass>MobileMineralSonar.Building_MobileMineralSonar</ThingClass>
+    <minifiedDef>MinifiedMobileMineralSonar</minifiedDef>
     <tickerType>Normal</tickerType>
     <PlaceWorkers>
       <li>MobileMineralSonar.PlaceWorker_MobileMineralSonar</li>
     </PlaceWorkers>
-    <minifiedDef>MinifiedMobileMineralSonar</minifiedDef>
     <CostList>
       <Steel>50</Steel>
       <Component>5</Component>
@@ -63,7 +60,7 @@
     <tradeTags>
       <li>Exotic</li>
     </tradeTags>
-
+    
     <scannedThingDefs>
       <li>MineableSteel</li>
       <li>MineableSilver</li>

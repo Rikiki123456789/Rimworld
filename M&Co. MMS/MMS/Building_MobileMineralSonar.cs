@@ -37,8 +37,7 @@ namespace MobileMineralSonar
         private bool isInstalled = false;
 
         public List<ThingDef> detectedDefList = null;
-
-
+        
         // Components references.
         public CompPowerTrader powerComp;
 

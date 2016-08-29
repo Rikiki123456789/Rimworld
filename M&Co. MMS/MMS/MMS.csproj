@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.13.5940.24501, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.15.6085.2352, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -54,9 +54,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="M&amp;Co. MMS\About\About.xml" />
+    <Content Include="M&amp;Co. MMS\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. MMS\Defs\ThingDefs_Items\Items_MinifiedMobileMineralSonar.xml" />
-    <Content Include="M&amp;Co. MMS\Defs\ResearchProjectDefs\ResearchProjects_MobileMineralSonar.xml" />
+    <Content Include="M&amp;Co. MMS\Defs\ResearchProjectDefs\ResearchProjects_MobileMineralSonar.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="M&amp;Co. MMS\Defs\ThingDefs_Buildings\Building_MobileMineralSonar.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -71,13 +75,6 @@
     <Content Include="M&amp;Co. MMS\Textures\Things\Building\SatelliteDish.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange10.psd" />
-    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange20.psd" />
-    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange30.psd" />
-    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange40.psd" />
-    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRange50.psd" />
-    <None Include="M&amp;Co. MMS\Textures\Effects\ScanRay50x50.pdn" />
-    <None Include="M&amp;Co. MMS\Textures\Effects\ScanSpot.pdn" />
     <None Include="M&amp;Co. MMS\Textures\Things\Building\MobileMineralSonar.psd" />
     <None Include="M&amp;Co. MMS\Textures\Things\Building\SatelliteDish.psd" />
   </ItemGroup>
