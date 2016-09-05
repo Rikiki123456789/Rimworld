@@ -3,9 +3,7 @@
 
   <!--=================== Seafood ===============-->
 
-  <ThingDef Name="SeaProductBase" Abstract="True" ParentName="OrganicProductBase">
-    <soundInteract>Food_Drop</soundInteract>
-    <soundDrop>Food_Drop</soundDrop>
+  <ThingDef Name="SeaProductBase" Abstract="True" ParentName="OrganicProductBase"> 
     <socialPropernessMatters>true</socialPropernessMatters>
     <statBases>
       <MaxHitPoints>50</MaxHitPoints>
@@ -26,10 +24,10 @@
     </comps>
     <ingestible>
       <foodType>Meat</foodType>
-      <preferability>Raw</preferability>
+      <preferability>RawBad</preferability>
       <nutrition>0.05</nutrition>
-      <eatEffect>EatMeat</eatEffect>
-      <soundEat>RawMeat_Eat</soundEat>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
     </ingestible>
     <thingCategories>
       <li>MeatRaw</li>
@@ -48,7 +46,7 @@
       <MarketValue>1.5</MarketValue>
     </statBases>
     <ingestible>
-      <ingestedDirectThought>AteRawFood</ingestedDirectThought>
+      <specialThoughtDirect>AteRawFood</specialThoughtDirect>
     </ingestible>
   </ThingDef>
 
@@ -64,7 +62,7 @@
       <MarketValue>2.5</MarketValue>
     </statBases>
     <ingestible>
-      <ingestedDirectThought>AteRawFood</ingestedDirectThought>
+      <specialThoughtDirect>AteRawFood</specialThoughtDirect>
     </ingestible>
   </ThingDef>
 
@@ -80,7 +78,9 @@
       <MarketValue>0.5</MarketValue>
     </statBases>
     <ingestible>
+      <preferability>RawTasty</preferability>
       <joy>0.001</joy>
+      <joyKind>Gluttonous</joyKind>
     </ingestible>
   </ThingDef>
 
@@ -96,7 +96,7 @@
       <MarketValue>2.5</MarketValue>
     </statBases>
     <ingestible>
-      <ingestedDirectThought>AteRawFood</ingestedDirectThought>
+      <specialThoughtDirect>AteRawFood</specialThoughtDirect>
     </ingestible>
   </ThingDef>
 
@@ -112,8 +112,9 @@
       <MarketValue>4</MarketValue>
     </statBases>
     <ingestible>
-      <ingestedDirectThought>AteRawFood</ingestedDirectThought>
+      <specialThoughtDirect>AteRawFood</specialThoughtDirect>
       <joy>0.008</joy>
+      <joyKind>Gluttonous</joyKind>
     </ingestible>
   </ThingDef>
 

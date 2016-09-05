@@ -27,14 +27,12 @@ namespace FishIndustry
         };
 
         public TargetIndex fishingPierIndex = TargetIndex.A;
-        FishingEquipment fishingEquipment = FishingEquipment.NoEquipment;
-        MoteThrown fishingEquipmentMote = null;
+        public FishingEquipment fishingEquipment = FishingEquipment.NoEquipment;
+        public Mote fishingRodMote = null;
 
         public override void ExposeData()
         {
             base.ExposeData();
-
-            Scribe_Deep.LookDeep<MoteThrown>(ref fishingEquipmentMote, "fishingEquipmentMote");
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
@@ -96,34 +94,31 @@ namespace FishIndustry
                 initAction = () =>
                 {
                     ThingDef moteDef = null;
-
-                    switch (fishingEquipment)
+                    if (fishingEquipment == FishingEquipment.FishingRod)
                     {
-                        case FishingEquipment.FishingRod:
-                            if (fishingPier.Rotation == Rot4.North)
-                            {
-                                moteDef = Util_FishIndustry.MoteFishingRodNorthDef;
-                            }
-                            else if (fishingPier.Rotation == Rot4.East)
-                            {
-                                moteDef = Util_FishIndustry.MoteFishingRodEastDef;
-                            }
-                            else if (fishingPier.Rotation == Rot4.South)
-                            {
-                                moteDef = Util_FishIndustry.MoteFishingRodSouthDef;
-                            }
-                            else
-                            {
-                                moteDef = Util_FishIndustry.MoteFishingRodWestDef;
-                            }
-                            break;
+                        if (fishingPier.Rotation == Rot4.North)
+                        {
+                            moteDef = Util_FishIndustry.MoteFishingRodNorthDef;
+                        }
+                        else if (fishingPier.Rotation == Rot4.East)
+                        {
+                            moteDef = Util_FishIndustry.MoteFishingRodEastDef;
+                        }
+                        else if (fishingPier.Rotation == Rot4.South)
+                        {
+                            moteDef = Util_FishIndustry.MoteFishingRodSouthDef;
+                        }
+                        else
+                        {
+                            moteDef = Util_FishIndustry.MoteFishingRodWestDef;
+                        }
                     }
                     if (moteDef != null)
                     {
-                        fishingEquipmentMote = (MoteThrown)ThingMaker.MakeThing(moteDef);
-                        fishingEquipmentMote.exactPosition = fishingPier.fishingSpotCell.ToVector3Shifted();
-                        fishingEquipmentMote.exactPosition.y = Altitudes.AltitudeFor(AltitudeLayer.VisEffects);
-                        GenSpawn.Spawn(fishingEquipmentMote, fishingPier.fishingSpotCell);
+                        this.fishingRodMote = (Mote)ThingMaker.MakeThing(moteDef, null);
+                        this.fishingRodMote.exactPosition = fishingPier.fishingSpotCell.ToVector3Shifted();
+                        this.fishingRodMote.Scale = 1f;
+                        GenSpawn.Spawn(this.fishingRodMote, fishingPier.fishingSpotCell);
                     }
                     WorkTypeDef fishingWorkDef = DefDatabase<WorkTypeDef>.GetNamed("Fishing");
                     passion = this.pawn.skills.MaxPassionOfRelevantSkillsFor(fishingWorkDef);
@@ -142,19 +137,14 @@ namespace FishIndustry
                 },
                 tickAction = () =>
                 {
-                    switch (fishingEquipment)
+                    if (fishingEquipment == FishingEquipment.Harpoon)
                     {
-                        case FishingEquipment.FishingRod:
-                            fishingEquipmentMote.Maintain();
-                            break;
-                        case FishingEquipment.Harpoon:
-                            if (Find.TickManager.TicksGame % GenTicks.TickRareInterval == 0)
-                            {
-                                Bullet thrownHarpoon = GenSpawn.Spawn(Util_FishIndustry.HarpoonDef.Verbs.First().projectileDef, this.pawn.Position) as Bullet;
-                                TargetInfo targetCell = new TargetInfo(fishingPier.fishingSpotCell + new IntVec3(Rand.RangeInclusive(-1, 1), 0, Rand.RangeInclusive(0, 2)).RotatedBy(fishingPier.Rotation));
-                                thrownHarpoon.Launch(this.pawn, targetCell);
-                            }
-                            break;
+                        if (Find.TickManager.TicksGame % GenTicks.TickRareInterval == 0)
+                        {
+                            Bullet thrownHarpoon = GenSpawn.Spawn(Util_FishIndustry.HarpoonDef.Verbs.First().projectileDef, this.pawn.Position) as Bullet;
+                            TargetInfo targetCell = new TargetInfo(fishingPier.fishingSpotCell + new IntVec3(Rand.RangeInclusive(-1, 1), 0, Rand.RangeInclusive(0, 2)).RotatedBy(fishingPier.Rotation));
+                            thrownHarpoon.Launch(this.pawn, targetCell);
+                        }
                     }
                     this.pawn.Drawer.rotator.FaceCell(fishingPier.fishingSpotCell);
 
@@ -168,6 +158,15 @@ namespace FishIndustry
                     }
                     SkillDef fishingSkillDef = DefDatabase<SkillDef>.GetNamed("Fishing");
                     this.pawn.skills.Learn(fishingSkillDef, skillGainPerTick * skillGainFactor);
+
+                    if (this.ticksLeftThisToil == 1)
+                    {
+                        if (this.fishingRodMote != null)
+                        {
+                            Log.Message("destroy mote");
+                            this.fishingRodMote.Destroy();
+                        }
+                    }
                 },
                 defaultDuration = fishingDuration,
                 defaultCompleteMode = ToilCompleteMode.Delay
@@ -215,7 +214,7 @@ namespace FishIndustry
                     bool catchIsSuccessful = Rand.Value <= catchSomethingThreshold;
                     if (catchIsSuccessful == false)
                     {
-                        MoteThrower.ThrowDrift(this.pawn.Position, ThingDefOf.Mote_IncapIcon);
+                        MoteMaker.ThrowMetaIcon(this.pawn.Position, ThingDefOf.Mote_IncapIcon);
                         this.pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
                         return;
                     }
@@ -224,30 +223,63 @@ namespace FishIndustry
                     if (catchSelectorValue > 0.04f)
                     {
                         // Catch a fish.
-                        TerrainDef fishSpotType = Find.TerrainGrid.TerrainAt(fishingPier.fishingSpotCell);
+                        bool fishSpotIsMarshy = (Find.TerrainGrid.TerrainAt(fishingPier.fishingSpotCell) == TerrainDef.Named("Marsh"));
+                        bool isDaytime = (SkyManager.CurSkyGlow >= 0.4f);
+                        
+                        ThingDef caugthFishDef = Util_FishIndustry.TailteethDef;
+                        if (fishSpotIsMarshy && isDaytime)
+                        {
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
+                                             where fishSpecies.livesInMarsh
+                                             where fishSpecies.catchableDuringDay
+                                             select fishSpecies).RandomElementByWeight((ThingDef_FishSpecies def) => def.commonality);
+                        }
+                        else if (fishSpotIsMarshy && !isDaytime)
+                        {
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
+                                             where fishSpecies.livesInMarsh
+                                             where fishSpecies.catchableDuringNight
+                                             select fishSpecies).RandomElementByWeight((ThingDef_FishSpecies def) => def.commonality);
+                        }
+                        else if (!fishSpotIsMarshy && isDaytime)
+                        {
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
+                                             where fishSpecies.livesInSea
+                                             where fishSpecies.catchableDuringDay
+                                             select fishSpecies).RandomElementByWeight((ThingDef_FishSpecies def) => def.commonality);
+                        }
+                        else
+                        {
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
+                                             where fishSpecies.livesInSea
+                                             where fishSpecies.catchableDuringNight
+                                             select fishSpecies).RandomElementByWeight((ThingDef_FishSpecies def) => def.commonality);
+                        }
+
+                        /*TerrainDef fishSpotType = Find.TerrainGrid.TerrainAt(fishingPier.fishingSpotCell);
                         List<ThingDef> fishSpeciesList = null;
-                        ThingDef_FishSpeciesProperties.AquaticEnvironment aquaticEnvironment;
-                        ThingDef_FishSpeciesProperties.LivingTime livingTime;
+                        ThingDef_FishSpecies.AquaticEnvironment aquaticEnvironment;
+                        ThingDef_FishSpecies.LivingTime livingTime;
                         float fishSpeciesTotalCommonality = 0f;
                         float fishSpeciesCommonalitySum = 0f;
 
                         // Aquatic environment.
                         if (fishSpotType == TerrainDef.Named("Marsh"))
                         {
-                            aquaticEnvironment = ThingDef_FishSpeciesProperties.AquaticEnvironment.Marsh;
+                            aquaticEnvironment = ThingDef_FishSpecies.AquaticEnvironment.Marsh;
                         }
                         else
                         {
-                            aquaticEnvironment = ThingDef_FishSpeciesProperties.AquaticEnvironment.Sea;
+                            aquaticEnvironment = ThingDef_FishSpecies.AquaticEnvironment.Sea;
                         }
                         // Day time.
                         if (SkyManager.CurSkyGlow >= 0.4f)
                         {
-                            livingTime = ThingDef_FishSpeciesProperties.LivingTime.Day;
+                            livingTime = ThingDef_FishSpecies.LivingTime.Day;
                         }
                         else
                         {
-                            livingTime = ThingDef_FishSpeciesProperties.LivingTime.Night;
+                            livingTime = ThingDef_FishSpecies.LivingTime.Night;
                         }
 
                         fishSpeciesList = Util_FishIndustry.GetFishSpeciesList(aquaticEnvironment, livingTime);
@@ -257,7 +289,7 @@ namespace FishIndustry
                         ThingDef selectedFishSpecies = null;
                         for (int fishSpeciesIndex = 0; fishSpeciesIndex < fishSpeciesList.Count; fishSpeciesIndex++)
                         {
-                            ThingDef_FishSpeciesProperties currentFishSpecies = fishSpeciesList[fishSpeciesIndex] as ThingDef_FishSpeciesProperties;
+                            ThingDef_FishSpecies currentFishSpecies = fishSpeciesList[fishSpeciesIndex] as ThingDef_FishSpecies;
                             fishSpeciesCommonalitySum += currentFishSpecies.commonality;
 
                             if (randomSelector <= fishSpeciesCommonalitySum)
@@ -265,10 +297,9 @@ namespace FishIndustry
                                 selectedFishSpecies = currentFishSpecies;
                                 break;
                             }
-                        }
-
-                        fishingCatch = GenSpawn.Spawn(selectedFishSpecies, this.pawn.Position);
-                        fishingCatch.stackCount = (selectedFishSpecies as ThingDef_FishSpeciesProperties).catchQuantity;
+                        }*/
+                        fishingCatch = GenSpawn.Spawn(caugthFishDef, this.pawn.Position);
+                        fishingCatch.stackCount = (caugthFishDef as ThingDef_FishSpecies).catchQuantity;
                         fishingPier.fishStock--;
                     }
                     else if (catchSelectorValue > 0.02)
@@ -332,7 +363,7 @@ namespace FishIndustry
                                     CompRottable rotComp = thing.TryGetComp<CompRottable>();
                                     if (rotComp != null)
                                     {
-                                        rotComp.rotProgress = 20f * 60000f; // 20 days so the corpse is dessicated.
+                                        rotComp.RotProgress = 20f * GenDate.TicksPerDay; // 20 days so the corpse is dessicated.
                                     }
                                 }
                             }

@@ -49,7 +49,7 @@
     <workSkill>Crafting</workSkill>
   </RecipeDef>
 
-  <RecipeDef>
+  <!--<RecipeDef>
     <defName>ShellMashgon</defName>
     <label>shell mashgons</label>
     <jobString>Shelling mashgons.</jobString>
@@ -81,7 +81,7 @@
     <recipeUsers>
       <li>TableButcher</li>
     </recipeUsers>
-  </RecipeDef>
+  </RecipeDef>-->
 
   <RecipeDef Parent="PrepareFishRecipeBase">
     <defName>PrepareSduiggles</defName>
@@ -309,7 +309,7 @@
     <workSpeedStat>CookSpeed</workSpeedStat>
     <effectWorking>Cook</effectWorking>
     <soundWorking>Recipe_CookMeal</soundWorking>
-    <workAmount>1000</workAmount>
+    <workAmount>700</workAmount>
     <ingredients>
       <li>
         <filter>

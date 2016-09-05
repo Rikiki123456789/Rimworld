@@ -20,7 +20,7 @@ namespace FishIndustry
     /// Remember learning is always better than just copy/paste...</permission>
     public class IncidentWorker_MicroFungus : IncidentWorker
     {
-        protected override bool StorytellerCanUseNowSub()
+        protected override bool CanFireNowSub()
         {
             bool colonyHasAquacultureBasin = Find.ListerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef).Count() > 0;
             return colonyHasAquacultureBasin;

@@ -12,33 +12,18 @@ using Verse;         // RimWorld universal objects are here
 namespace FishIndustry
 {
     /// <summary>
-    /// ThingDef_FishSpeciesProperties custom variables class.
+    /// ThingDef_FishSpecies custom variables class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class ThingDef_FishSpeciesProperties : ThingDef
+    public class ThingDef_FishSpecies : ThingDef
     {
-        // Environment.
-        public enum AquaticEnvironment
-        {
-            Sea = 1,
-            Marsh = 2,
-            SeaAndMarch = 3
-        }
-
-        // Environment.
-        public enum LivingTime
-        {
-            Day = 1,
-            Night = 2,
-            DayAndNight = 3
-        }
-
-        // Note: the following values are only default values which can be ovveriden by the one read in the XML definition.
-
-        public AquaticEnvironment aquaticEnvironment = AquaticEnvironment.SeaAndMarch;
-        public LivingTime livingTime = LivingTime.DayAndNight;
+        // Note: the following false are only default values which can be overriden by the one read in the XML definition.
+        public bool livesInSea = false;
+        public bool livesInMarsh = false;
+        public bool catchableDuringDay = false;
+        public bool catchableDuringNight = false;
         public float commonality = 0.20f;
         public int catchQuantity = 1;
         public int breedQuantity = 0;

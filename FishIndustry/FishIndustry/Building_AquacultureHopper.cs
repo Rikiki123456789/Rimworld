@@ -47,12 +47,12 @@ namespace FishIndustry
                 List<Thing> thingList = this.Position.GetThingList();
                 foreach (Thing thing in thingList)
                 {
-                    if (thing.def.IsNutritionSource)
+                    if (thing.def.IsNutritionGivingIngestible)
                     {
                         CompRottable rottableComp = thing.TryGetComp<CompRottable>();
                         if (rottableComp != null)
                         {
-                            rottableComp.rotProgress = 0;
+                            rottableComp.RotProgress = 0;
                         }
                     }
                 }

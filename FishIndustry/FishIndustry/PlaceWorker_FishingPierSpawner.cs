@@ -30,42 +30,25 @@ namespace FishIndustry
         /// </summary>
         public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
         {
-            IntVec3 checkedPosition = new IntVec3();
-            TerrainDef checkedCellTerrainDef = null;
-
-            // Check fishing pier bank cell is "solid" terrain.
-            checkedPosition = loc + new IntVec3(0, 0, -2).RotatedBy(rot);
-            checkedCellTerrainDef = Find.TerrainGrid.TerrainAt(checkedPosition);
-            if ((checkedCellTerrainDef == TerrainDef.Named("WaterShallow"))
-                || (checkedCellTerrainDef == TerrainDef.Named("WaterDeep"))
-                || (checkedCellTerrainDef == TerrainDef.Named("Marsh")))
+            // Check fishing pier bank cell is on a "solid" terrain.
+            if (IsAquaticTerrain(loc))
             {
-                return new AcceptanceReport("Fishing pier must be placed on a bank.");
+                return new AcceptanceReport("Fishing pier must touch a bank.");
             }
-            // Check the rest of fishing pier is on water.
-            for (int yOffset = -1; yOffset <= 0; yOffset++)
+            // Check fishing pier middle and river cells are on water.
+            if ((IsAquaticTerrain(loc + new IntVec3(0, 0, 1).RotatedBy(rot)) == false)
+                || (IsAquaticTerrain(loc + new IntVec3(0, 0, 2).RotatedBy(rot)) == false))
             {
-                checkedPosition = loc + new IntVec3(0, 0, yOffset).RotatedBy(rot);
-                checkedCellTerrainDef = Find.TerrainGrid.TerrainAt(checkedPosition);
-                if ((checkedCellTerrainDef != TerrainDef.Named("WaterShallow"))
-                    && (checkedCellTerrainDef != TerrainDef.Named("WaterDeep"))
-                    && (checkedCellTerrainDef != TerrainDef.Named("Marsh")))
-                {
-                    return new AcceptanceReport("Fishing pier must be placed on water.");
-                }
+                return new AcceptanceReport("Fishing pier must be placed on water.");
             }
-            // Check the fishing spot is on water.
+            // Check fishing zone is on water.
             for (int xOffset = -1; xOffset <= 1; xOffset++)
             {
-                for (int yOffset = 1; yOffset <= 3; yOffset++)
+                for (int yOffset = 3; yOffset <= 5; yOffset++)
                 {
-                    checkedPosition = loc + new IntVec3(xOffset, 0, yOffset).RotatedBy(rot);
-                    checkedCellTerrainDef = Find.TerrainGrid.TerrainAt(checkedPosition);
-                    if ((checkedCellTerrainDef != TerrainDef.Named("WaterShallow"))
-                        && (checkedCellTerrainDef != TerrainDef.Named("WaterDeep"))
-                        && (checkedCellTerrainDef != TerrainDef.Named("Marsh")))
+                    if (IsAquaticTerrain(loc + new IntVec3(xOffset, 0, yOffset).RotatedBy(rot)) == false)
                     {
-                        return new AcceptanceReport("Fishing spot must be placed on water.");
+                        return new AcceptanceReport("Fishing zone must be placed on water.");
                     }
                 }
             }
@@ -101,6 +84,18 @@ namespace FishIndustry
             }
 
             return true;
+        }
+
+        public static bool IsAquaticTerrain(IntVec3 position)
+        {
+            TerrainDef terrainDef = Find.TerrainGrid.TerrainAt(position);
+            if ((terrainDef == TerrainDef.Named("WaterShallow"))
+                || (terrainDef == TerrainDef.Named("WaterDeep"))
+                || (terrainDef == TerrainDef.Named("Marsh")))
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

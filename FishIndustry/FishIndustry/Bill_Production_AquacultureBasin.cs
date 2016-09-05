@@ -28,9 +28,9 @@ namespace FishIndustry
         {
         }
 
-        public override void Notify_IterationCompleted(Pawn billDoer)
+        public override void Notify_IterationCompleted(Pawn billDoer, List<Thing> ingredients)
         {
-            base.Notify_IterationCompleted(billDoer);
+            base.Notify_IterationCompleted(billDoer, ingredients);
 
             Building_AquacultureBasin aquacultureBasin = this.billStack.billGiver as Building_AquacultureBasin;
             if (aquacultureBasin != null)

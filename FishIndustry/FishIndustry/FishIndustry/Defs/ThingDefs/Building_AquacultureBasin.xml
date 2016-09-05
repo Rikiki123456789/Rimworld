@@ -24,10 +24,16 @@
       <texPath>Things/Building/AquacultureBasin</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(3,3)</drawSize>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
     </graphicData>
     <rotatable>false</rotatable>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
-    <altitudeLayer>Waist</altitudeLayer>
+    <altitudeLayer>Building</altitudeLayer>
     <comps>
       <li Class="CompProperties_Forbiddable"/>
       <li Class="CompProperties_Power">
@@ -43,7 +49,7 @@
     </comps>
     <CostList>
       <Steel>200</Steel>
-      <Components>3</Components>
+      <Component>3</Component>
     </CostList>
     <UseHitPoints>True</UseHitPoints>
     <statBases>

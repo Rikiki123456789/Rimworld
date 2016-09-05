@@ -50,7 +50,8 @@
       <joy>0.10</joy>
       <joyKind>Gluttonous</joyKind>
       <maxNumToIngestAtOnce>6</maxNumToIngestAtOnce>
-      <soundEat>Meal_Eat</soundEat>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>Meal_Eat</ingestSound>
     </ingestible>
   </ThingDef>
 

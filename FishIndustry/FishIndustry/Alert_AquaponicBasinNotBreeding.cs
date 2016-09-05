@@ -26,7 +26,7 @@ namespace FishIndustry
                 foreach (Building_AquacultureBasin aquacultureBasin in Find.ListerBuildings.AllBuildingsColonistOfClass<Building_AquacultureBasin>())
                 {
                     if (aquacultureBasin.powerComp.PowerOn
-                        && (aquacultureBasin.IsForbidden(Faction.OfColony) == false)
+                        && (aquacultureBasin.IsForbidden(Faction.OfPlayer) == false)
                         && (aquacultureBasin.breedingSpeciesDef == null)
                         && (aquacultureBasin.microFungusRemainingDurationInTicks == 0))
                     {

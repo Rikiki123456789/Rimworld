@@ -186,142 +186,80 @@ namespace FishIndustry
 
         public static string JobDefName_HarvestAquacultureBasinProduction = "JobDef_HarvestAquacultureBasinProduction";
 
-        // Fishes lists.
-        private static bool fishSpeciesListsAreInitialized = false;
-        private static List<ThingDef> seaDayFishSpeciesList = null;
-        private static List<ThingDef> seaNightFishSpeciesList = null;
-        private static List<ThingDef> marshDayFishSpeciesList = null;
-        private static List<ThingDef> marshNightFishSpeciesList = null;
-        private static float seaDayFishSpeciesTotalCommonality = 0;
-        private static float seaNightFishSpeciesTotalCommonality = 0;
-        private static float marshDayFishSpeciesTotalCommonality = 0;
-        private static float marshNightFishSpeciesTotalCommonality = 0;
-        public static List<ThingDef> GetFishSpeciesList(ThingDef_FishSpeciesProperties.AquaticEnvironment aquaticEnvironment, ThingDef_FishSpeciesProperties.LivingTime livingTime)
+        // Breedable fishes def.
+        public static ThingDef MashgonDef
         {
-            if (fishSpeciesListsAreInitialized == false)
+            get
             {
-                InitializeFishSpeciesListsAndTotalCommonality();
-                fishSpeciesListsAreInitialized = true;
-            }
-            if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Sea)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Day))
-            {
-                return seaDayFishSpeciesList;
-            }
-            else if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Sea)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Night))
-            {
-                return seaNightFishSpeciesList;
-            }
-            else if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Marsh)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Day))
-            {
-                return marshDayFishSpeciesList;
-            }
-            else if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Marsh)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Night))
-            {
-                return marshNightFishSpeciesList;
-            }
-            else
-            {
-                Log.Warning("FishIndustry: this aquatic environment/living time combination is not implemented.");
-                return null;
+                return (ThingDef.Named("Fish_Mashgon"));
             }
         }
 
-        private static void InitializeFishSpeciesListsAndTotalCommonality()
+        public static ThingDef BluebladeDef
         {
-            seaDayFishSpeciesTotalCommonality = 0;
-            seaNightFishSpeciesTotalCommonality = 0;
-            marshDayFishSpeciesTotalCommonality = 0;
-            marshNightFishSpeciesTotalCommonality = 0;
-            seaDayFishSpeciesList = new List<ThingDef>();
-            seaNightFishSpeciesList = new List<ThingDef>();
-            marshDayFishSpeciesList = new List<ThingDef>();
-            marshNightFishSpeciesList = new List<ThingDef>();
-
-            foreach (ThingDef thingDef in DefDatabase<ThingDef>.AllDefsListForReading)
+            get
             {
-                if (thingDef.defName.Contains("Fish_"))
+                return (ThingDef.Named("Fish_Blueblade"));
+            }
+        }
+
+        public static ThingDef TailteethDef
+        {
+            get
+            {
+                return (ThingDef.Named("Fish_Tailteeth"));
+            }
+        }
+
+        // Texture path.
+        public static string MashgonTexturePath
+        {
+            get
+            {
+                return ThingDef.Named("Fish_Mashgon").graphicData.texPath;
+            }
+        }
+
+        public static string BluebladeTexturePath
+        {
+            get
+            {
+                return ThingDef.Named("Fish_Blueblade").graphicData.texPath;
+            }
+        }
+
+        public static string TailteethTexturePath
+        {
+            get
+            {
+                return ThingDef.Named("Fish_Tailteeth").graphicData.texPath;
+            }
+        }
+
+        // Fishes lists.
+        private static List<ThingDef_FishSpecies> fishSpeciesList = null;
+        public static List<ThingDef_FishSpecies> GetFishSpeciesList()
+        {
+            if (fishSpeciesList.NullOrEmpty())
+            {
+                fishSpeciesList = new List<ThingDef_FishSpecies>();
+
+                foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
                 {
-                    ThingDef_FishSpeciesProperties fishDef = thingDef as ThingDef_FishSpeciesProperties;
-                    if (fishDef != null)
+                    if (def is ThingDef_FishSpecies)
                     {
-                        // Sea.
-                        if ((fishDef.aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Sea)
-                            || (fishDef.aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.SeaAndMarch))
-                        {
-                            // Day.
-                            if ((fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.Day)
-                                || (fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.DayAndNight))
-                            {
-                                // Sea day.
-                                seaDayFishSpeciesList.Add(thingDef);
-                                seaDayFishSpeciesTotalCommonality += fishDef.commonality;
-                            }
-                            // Night.
-                            if ((fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.Night)
-                                || (fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.DayAndNight))
-                            {
-                                // Sea night.
-                                seaNightFishSpeciesList.Add(thingDef);
-                                seaNightFishSpeciesTotalCommonality += fishDef.commonality;
-                            }
-                        }
-                        // Marsh.
-                        if ((fishDef.aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Marsh)
-                            || (fishDef.aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.SeaAndMarch))
-                        {
-                            // Day.
-                            if ((fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.Day)
-                                || (fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.DayAndNight))
-                            {
-                                // Marsh day.
-                                marshDayFishSpeciesList.Add(thingDef);
-                                marshDayFishSpeciesTotalCommonality += fishDef.commonality;
-                            }
-                            // Night.
-                            if ((fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.Night)
-                                || (fishDef.livingTime == ThingDef_FishSpeciesProperties.LivingTime.DayAndNight))
-                            {
-                                // Marsh night.
-                                marshNightFishSpeciesList.Add(thingDef);
-                                marshNightFishSpeciesTotalCommonality += fishDef.commonality;
-                            }
-                        }
+                        fishSpeciesList.Add(def as ThingDef_FishSpecies);
                     }
                 }
+                if (fishSpeciesList.NullOrEmpty())
+                {
+                    Log.Warning("FishIndustry: did not found any fish species.");
+                }
+                //TODO: debug.
+                Log.Message("Number of species = " + fishSpeciesList.Count);
             }
-        }
 
-        public static float GetFishSpeciesTotalCommonality(ThingDef_FishSpeciesProperties.AquaticEnvironment aquaticEnvironment, ThingDef_FishSpeciesProperties.LivingTime livingTime)
-        {
-            if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Sea)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Day))
-            {
-                return seaDayFishSpeciesTotalCommonality;
-            }
-            else if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Sea)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Night))
-            {
-                return seaNightFishSpeciesTotalCommonality;
-            }
-            else if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Marsh)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Day))
-            {
-                return marshDayFishSpeciesTotalCommonality;
-            }
-            else if ((aquaticEnvironment == ThingDef_FishSpeciesProperties.AquaticEnvironment.Marsh)
-                && (livingTime == ThingDef_FishSpeciesProperties.LivingTime.Night))
-            {
-                return marshNightFishSpeciesTotalCommonality;
-            }
-            else
-            {
-                Log.Warning("FishIndustry: this aquatic environment/living time combination is not implemented.");
-                return 0f;
-            }
+            return fishSpeciesList;
         }
     }
 }

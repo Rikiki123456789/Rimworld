@@ -25,23 +25,16 @@ namespace FishIndustry
         /// </summary>
         public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
         {
-            for (int i = 0; i < 4; i++)
+            for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                IntVec3 cell = loc + GenAdj.CardinalDirections[i];
+                IntVec3 cell = loc + GenAdj.CardinalDirections[directionAsInt];
                 if (cell.InBounds())
                 {
-                    List<Thing> thingList = cell.GetThingList();
-                    for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
+                    Building building = cell.GetEdifice();
+                    if ((building != null)
+                        && (building.def == Util_FishIndustry.AquacultureBasinDef))
                     {
-                        Thing thing = thingList[thingIndex];
-                        ThingDef builtDef = GenSpawn.BuiltDefOf(thing.def) as ThingDef;
-                        if (builtDef != null)
-                        {
-                            if (builtDef == Util_FishIndustry.AquacultureBasinDef)
-                            {
-                                return true;
-                            }
-                        }
+                        return true;
                     }
                 }
             }

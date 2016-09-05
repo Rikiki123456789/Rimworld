@@ -18,6 +18,7 @@ namespace FishIndustry
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
+    [StaticConstructorOnStartup]
     class Building_AquacultureBasin : Building_WorkTable
     {
         // Power comp.
@@ -30,7 +31,7 @@ namespace FishIndustry
         public bool breedingIsFinished = false;
 
         // Food.
-        public const int foodDispensePeriodInTicks = 60000; // Only once a day or this will be very time-consuming for the fishers.
+        public const int foodDispensePeriodInTicks = GenDate.TicksPerDay; // Only once a day or this will be very time-consuming for the fishers.
         public int nextFeedingDateInTicks = 0;
         public bool foodIsAvailable = false;
 
@@ -52,7 +53,10 @@ namespace FishIndustry
         public Material breedingSpeciesTexture = null;
         public Matrix4x4 breedingSpeciesMatrix = default(Matrix4x4);
         public Vector3 breedingSpeciesScale = new Vector3(0.5f, 1f, 0.5f);
-        public Material microFungusTexture = null;
+        public static Material mashgonTexture = MaterialPool.MatFrom(Util_FishIndustry.MashgonTexturePath);
+        public static Material bluebladeTexture = MaterialPool.MatFrom(Util_FishIndustry.BluebladeTexturePath);
+        public static Material tailTeethTexture = MaterialPool.MatFrom(Util_FishIndustry.TailteethTexturePath);
+        public static Material microFungusTexture = MaterialPool.MatFrom("Effects/MicroFungus", ShaderDatabase.Transparent);
         public Matrix4x4 microFungusMatrix = default(Matrix4x4);
         public Vector3 microFungusScale = new Vector3(3f, 1f, 3f);
         public float microFungusFadingFactor = 1f;
@@ -70,9 +74,19 @@ namespace FishIndustry
             // Drawing.
             if (this.breedingSpeciesDef != null)
             {
-                this.breedingSpeciesTexture = MaterialPool.MatFrom(this.breedingSpeciesDef.graphicData.texPath, ShaderDatabase.Transparent);
+                if (this.breedingSpeciesDef == Util_FishIndustry.MashgonDef)
+                {
+                    this.breedingSpeciesTexture = mashgonTexture;
+                }
+                else if (this.breedingSpeciesDef == Util_FishIndustry.BluebladeDef)
+                {
+                    this.breedingSpeciesTexture = bluebladeTexture;
+                }
+                else if (this.breedingSpeciesDef == Util_FishIndustry.TailteethDef)
+                {
+                    this.breedingSpeciesTexture = tailTeethTexture;
+                }
             }
-            this.microFungusTexture = MaterialPool.MatFrom("Effects/MicroFungus", ShaderDatabase.Transparent);
             breedingSpeciesMatrix.SetTRS(base.DrawPos + new Vector3(-1f, 0, -0.7f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0f), 0f.ToQuat(), this.breedingSpeciesScale);
             microFungusMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0f), 0f.ToQuat(), this.microFungusScale);
         }
@@ -193,7 +207,7 @@ namespace FishIndustry
                         {
                             aquacultureHopper = currentThing;
                         }
-                        if (currentThing.def.IsNutritionSource)
+                        if (currentThing.def.IsNutritionGivingIngestible)
                         {
                             food = currentThing;
                         }
@@ -234,7 +248,7 @@ namespace FishIndustry
                     {
                         aquacultureHopper = currentThing;
                     }
-                    if (currentThing.def.IsNutritionSource)
+                    if (IsAcceptableFeedstock(currentThing.def))
                     {
                         food = currentThing;
                     }
@@ -251,6 +265,10 @@ namespace FishIndustry
             return false;
         }
 
+        public static bool IsAcceptableFeedstock(ThingDef def)
+        {
+            return def.IsNutritionGivingIngestible && def.ingestible.preferability != FoodPreferability.Undefined && (def.ingestible.foodType & FoodTypeFlags.Plant) != FoodTypeFlags.Plant && (def.ingestible.foodType & FoodTypeFlags.Tree) != FoodTypeFlags.Tree;
+        }
         /// <summary>
         /// Update the water quality:
         /// - water quality decrease when aquaculture basin is unpowered or temperature is not in optimal range.
@@ -342,7 +360,7 @@ namespace FishIndustry
         public void StartNewBreedCycle(ThingDef breedingSpeciesDef)
         {
             this.breedingSpeciesDef = breedingSpeciesDef;
-            this.breedingDuratinInTicks = (int)(60000 * (breedingSpeciesDef as ThingDef_FishSpeciesProperties).breedingDurationInDays);
+            this.breedingDuratinInTicks = (int)(60000 * (breedingSpeciesDef as ThingDef_FishSpecies).breedingDurationInDays);
             this.breedingProgressInTicks = 0;
             this.breedingIsFinished = false;
 
@@ -388,7 +406,7 @@ namespace FishIndustry
         public Thing GetProduction()
         {
             Thing product = ThingMaker.MakeThing(this.breedingSpeciesDef);
-            product.stackCount = (this.breedingSpeciesDef as ThingDef_FishSpeciesProperties).breedQuantity;
+            product.stackCount = (this.breedingSpeciesDef as ThingDef_FishSpecies).breedQuantity;
             StartNewBreedCycle(this.breedingSpeciesDef);
 
             return product;
@@ -412,11 +430,12 @@ namespace FishIndustry
         {
             string bredSpeciesLabel = "";
             string progressLabel = "";
-            string waterQualityStatusText = "";
+            string problemText = "";
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(base.GetInspectString());
 
+            stringBuilder.AppendLine("Bred species: " + bredSpeciesLabel);
             if (this.breedingSpeciesDef == null)
             {
                 bredSpeciesLabel = "none";
@@ -427,25 +446,28 @@ namespace FishIndustry
                 bredSpeciesLabel = this.breedingSpeciesDef.label;
                 progressLabel = "Progress: " + ((float)this.breedingProgressInTicks / (float)breedingDuratinInTicks * 100f).ToString("F0") + "%";
             }
-            stringBuilder.AppendLine("Bred species: " + bredSpeciesLabel);
-            stringBuilder.AppendLine(progressLabel);
-            if (this.microFungusRemainingDurationInTicks > 0)
+            if (this.foodIsAvailable == false)
             {
-                waterQualityStatusText = "(micro fungus)";
+                problemText = "(no food)";
             }
             else if (this.temperature < minWaterTemperature)
             {
-                waterQualityStatusText = "(cold)";
+                problemText = "(too cold)";
             }
             else if (this.temperature > maxWaterTemperature)
             {
-                waterQualityStatusText = "(hot)";
+                problemText = "(too hot)";
             }
             else if (this.waterQuality < minWaterQuality)
             {
-                waterQualityStatusText = "(critical)";
+                problemText = "(water quality critical)";
             }
-            stringBuilder.AppendLine("Water quality/fishes health: " + (this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + waterQualityStatusText + "/" + this.fishesHealthInPercent + "%");
+            else if (this.microFungusRemainingDurationInTicks > 0)
+            {
+                problemText = "(micro fungus)";
+            }
+            stringBuilder.AppendLine(progressLabel + " " + problemText);
+            stringBuilder.AppendLine("Water quality/fishes health: " + (this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + "/" + this.fishesHealthInPercent + "%");
 
             return stringBuilder.ToString();
         }
@@ -471,13 +493,10 @@ namespace FishIndustry
 
             if (Find.TickManager.TicksGame >= this.nextBubbleThrowTick)
             {
-                this.nextBubbleThrowTick = Find.TickManager.TicksGame + 2 + (int)(Rand.Value * 60f * (1f - (this.waterQuality / maxWaterQuality))) ;
+                this.nextBubbleThrowTick = Find.TickManager.TicksGame + 6 + (int)(Rand.Value * 120f * (1f - (this.waterQuality / maxWaterQuality))) ;
                 if (this.powerComp.PowerOn)
                 {
-                    if (Rand.Value < 0.7f)
-                    {
-                        ThrowBubble(this.Position);
-                    }
+                    ThrowBubble(this.Position);
                 }
             }
 
@@ -493,10 +512,10 @@ namespace FishIndustry
                 return null;
             }
             MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(Util_FishIndustry.MoteBubbleDef, null);
-            moteThrown.ScaleUniform = 0.3f;
-            moteThrown.exactRotationRate = Rand.Range(-0.15f, 0.15f);
+            moteThrown.Scale = 0.3f;
+            moteThrown.rotationRate = Rand.Range(-0.15f, 0.15f);
             moteThrown.exactPosition = cell.ToVector3Shifted();
-            moteThrown.SetVelocityAngleSpeed((float)Rand.Range(-30, 30), 0.009f);
+            moteThrown.SetVelocity((float)Rand.Range(-30, 30), 0.33f);
             GenSpawn.Spawn(moteThrown, cell);
             return moteThrown;
         }
@@ -517,7 +536,7 @@ namespace FishIndustry
             if (this.microFungusRemainingDurationInTicks > 0)
             {
                 // Mind the Vector3 so the micro fungus is drawn over the aquaculture basin.
-                Graphics.DrawMesh(MeshPool.plane10, this.microFungusMatrix, FadedMaterialPool.FadedVersionOf(this.microFungusTexture, microFungusFadingFactor), 0);
+                Graphics.DrawMesh(MeshPool.plane10, this.microFungusMatrix, FadedMaterialPool.FadedVersionOf(Building_AquacultureBasin.microFungusTexture, microFungusFadingFactor), 0);
             }
         }
     }

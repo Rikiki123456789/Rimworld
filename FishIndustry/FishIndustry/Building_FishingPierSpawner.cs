@@ -13,7 +13,7 @@ using Verse;         // RimWorld universal objects are here
 namespace FishIndustry
 {
     /// <summary>
-    /// FishingPierSpawner class.
+    /// Building_FishingPierSpawner class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
@@ -28,9 +28,9 @@ namespace FishIndustry
             base.SpawnSetup();
             this.Destroy();
             Building_FishingPier fishingPier = ThingMaker.MakeThing(Util_FishIndustry.FishingPierDef) as Building_FishingPier;
-            IntVec3 fishingPierPosition = this.Position + new IntVec3(0, 0, -1).RotatedBy(this.Rotation);
+            IntVec3 fishingPierPosition = this.Position + new IntVec3(0, 0, 1).RotatedBy(this.Rotation);
             GenSpawn.Spawn(fishingPier, fishingPierPosition, this.Rotation);
-            fishingPier.SetFactionDirect(Faction.OfColony);
+            fishingPier.SetFactionDirect(this.Faction);
         }
     }
 }

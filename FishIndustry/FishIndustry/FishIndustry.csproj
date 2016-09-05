@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.12.5719.23323, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.13.5940.24501, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -62,7 +62,7 @@
     <Compile Include="PlaceWorker_AquacultureHopper.cs" />
     <Compile Include="JobDriver_HarvestAquacultureBasinProduction.cs" />
     <Compile Include="WorkGiver_AquaponicBasin.cs" />
-    <Compile Include="ThingDef_FishSpeciesProperties.cs" />
+    <Compile Include="ThingDef_FishSpecies.cs" />
     <Compile Include="JobDriver_FishAtFishingPier.cs" />
     <Compile Include="PlaceWorker_FishingPierSpawner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -84,7 +84,7 @@
     <Content Include="FishIndustry\Defs\JobDefs\Jobs_Joy.xml" />
     <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml" />
     <Content Include="FishIndustry\Defs\SkillDefs\Skills.xml" />
-    <Content Include="FishIndustry\Defs\StatDefs\Stats_Pawns_WorkGeneral_FishIndustry.xml" />
+    <Content Include="FishIndustry\Defs\StatDefs\Stats_Pawns_WorkGeneral_Fishing.xml" />
     <Content Include="FishIndustry\Defs\ThingCategoryDefs\ThingCategories.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs\Building_AquacultureHopper.xml">
       <SubType>Designer</SubType>
@@ -102,11 +102,13 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\JobDefs\Jobs_FishAndHarvest.xml" />
-    <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_FishIndustry.xml">
+    <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_PrepareFishes.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchProjects_Aquaculture.xml" />
-    <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishIndustry.xml" />
+    <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="FishIndustry\Defs\ThingDefs\Apparel_FishingRod.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -122,6 +124,7 @@
     <Content Include="FishIndustry\Defs\ThingDefs\Weapon_Harpoon.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\Defs\ThoughtDefs\Thoughts_Memory_Eating.xml" />
     <Content Include="FishIndustry\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>

@@ -40,29 +40,12 @@ namespace FishIndustry
         {
             base.SpawnSetup();
 
-            fishingSpotCell = this.Position + new IntVec3(0, 0, 2).RotatedBy(this.Rotation);
-            riverCell = this.Position + new IntVec3(0, 0, 1).RotatedBy(this.Rotation);
-            middleCell = this.Position + new IntVec3(0, 0, 0).RotatedBy(this.Rotation);
             bankCell = this.Position + new IntVec3(0, 0, -1).RotatedBy(this.Rotation);
+            middleCell = this.Position + new IntVec3(0, 0, 0).RotatedBy(this.Rotation);
+            riverCell = this.Position + new IntVec3(0, 0, 1).RotatedBy(this.Rotation);
+            fishingSpotCell = this.Position + new IntVec3(0, 0, 2).RotatedBy(this.Rotation);
 
             // On first spawning, save the terrain defs and apply the fishing pier equivalent.
-            TerrainDef riverCellTerrainDef = Find.TerrainGrid.TerrainAt(riverCell);
-            if (riverCellTerrainDef == TerrainDef.Named("Marsh"))
-            {
-                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
-            }
-            else if (riverCellTerrainDef == TerrainDef.Named("WaterShallow"))
-            {
-                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
-            }
-            else if (riverCellTerrainDef == TerrainDef.Named("WaterDeep"))
-            {
-                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
-            }
-
             TerrainDef middleCellTerrainDef = Find.TerrainGrid.TerrainAt(middleCell);
             if (middleCellTerrainDef == TerrainDef.Named("Marsh"))
             {
@@ -78,6 +61,23 @@ namespace FishIndustry
             {
                 middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
                 Find.TerrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
+            }
+
+            TerrainDef riverCellTerrainDef = Find.TerrainGrid.TerrainAt(riverCell);
+            if (riverCellTerrainDef == TerrainDef.Named("Marsh"))
+            {
+                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
+                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
+            }
+            else if (riverCellTerrainDef == TerrainDef.Named("WaterShallow"))
+            {
+                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
+                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
+            }
+            else if (riverCellTerrainDef == TerrainDef.Named("WaterDeep"))
+            {
+                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
+                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
             }
         }
 
@@ -122,8 +122,8 @@ namespace FishIndustry
         {
             base.ExposeData();
             // TODO: save it as a TerrainDef if possible.
-            Scribe_Values.LookValue<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
             Scribe_Values.LookValue<String>(ref this.middleTerrainCellDefAsString, "middleTerrainCellDefAsString");
+            Scribe_Values.LookValue<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
             Scribe_Values.LookValue<int>(ref this.fishStock, "fishStock", 5);
             Scribe_Values.LookValue<int>(ref this.fishStockRespawnTick, "fishStockRespawnTick", 0);
         }
@@ -134,8 +134,8 @@ namespace FishIndustry
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             base.Destroy(mode);
-            Find.TerrainGrid.SetTerrain(riverCell, TerrainDef.Named(riverTerrainCellDefAsString));
             Find.TerrainGrid.SetTerrain(middleCell, TerrainDef.Named(middleTerrainCellDefAsString));
+            Find.TerrainGrid.SetTerrain(riverCell, TerrainDef.Named(riverTerrainCellDefAsString));
         }
     }
 }

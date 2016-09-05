@@ -4,7 +4,7 @@
         <ThingCategoryDef>
           <defName>FreshFish</defName>
           <label>fresh fish</label>
-          <parent>FoodRaw</parent>
+          <parent>Foods</parent>
           <iconPath>Ui/Icons/ThingCategories/FreshFish</iconPath>
         </ThingCategoryDef>
 

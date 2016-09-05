@@ -22,8 +22,7 @@
     <defName>Mote_FishingRodNorth</defName>
     <description>Fishing rod.</description>
     <mote>
-      <ticksBeforeStartFadeout>5000</ticksBeforeStartFadeout>
-      <needsMaintenance>True</needsMaintenance>
+      <solidTime>5000</solidTime>
     </mote>
     <graphicData>
       <texPath>Things/Mote/FishingRodNorth</texPath>
@@ -35,8 +34,7 @@
     <defName>Mote_FishingRodEast</defName>
     <description>Fishing rod.</description>
     <mote>
-      <ticksBeforeStartFadeout>5000</ticksBeforeStartFadeout>
-      <needsMaintenance>True</needsMaintenance>
+      <solidTime>5000</solidTime>
     </mote>
     <graphicData>
       <texPath>Things/Mote/FishingRodEast</texPath>
@@ -48,8 +46,7 @@
     <defName>Mote_FishingRodSouth</defName>
     <description>Fishing rod.</description>
     <mote>
-      <ticksBeforeStartFadeout>5000</ticksBeforeStartFadeout>
-      <needsMaintenance>True</needsMaintenance>
+      <solidTime>5000</solidTime>
     </mote>
     <graphicData>
       <texPath>Things/Mote/FishingRodSouth</texPath>
@@ -61,8 +58,7 @@
     <defName>Mote_FishingRodWest</defName>
     <description>Fishing rod.</description>
     <mote>
-      <ticksBeforeStartFadeout>5000</ticksBeforeStartFadeout>
-      <needsMaintenance>True</needsMaintenance>
+      <solidTime>5000</solidTime>
     </mote>
     <graphicData>
       <texPath>Things/Mote/FishingRodWest</texPath>
@@ -79,9 +75,9 @@
     </graphicData>
     <altitudeLayer>MetaOverlays</altitudeLayer>
     <mote>
-      <fadeInDuration>5</fadeInDuration>
-      <ticksBeforeStartFadeout>30</ticksBeforeStartFadeout>
-      <fadeoutDuration>30</fadeoutDuration>
+      <fadeInTime>0.1</fadeInTime>
+      <solidTime>0.5</solidTime>
+      <fadeOutTime>0.5</fadeOutTime>
     </mote>
   </ThingDef>
 

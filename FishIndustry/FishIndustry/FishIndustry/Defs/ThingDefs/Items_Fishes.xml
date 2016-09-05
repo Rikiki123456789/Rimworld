@@ -20,8 +20,6 @@
 
   <ThingDef Name="FishBase" Abstract="True" ParentName="OrganicProductBase">
     <label>Base fish properties</label>
-    <soundInteract>Food_Drop</soundInteract>
-    <soundDrop>Food_Drop</soundDrop>
     <tickerType>Rare</tickerType>
     <statBases>
       <Flammability>1.0</Flammability>
@@ -38,7 +36,7 @@
     </thingCategories>
   </ThingDef>
 
-  <ThingDef Class="FishIndustry.ThingDef_FishSpeciesProperties" ParentName="FishBase">
+  <ThingDef Class="FishIndustry.ThingDef_FishSpecies" ParentName="FishBase">
     <defName>Fish_Sduiggles</defName>
     <label>sduiggles</label>
     <description>Found in the swamps and shallow waters. Behind the appearances, this kind of squid is very affectuous and intelligent. Who would like to fish it? You monster!</description>
@@ -49,14 +47,26 @@
     <statBases>
       <MarketValue>15</MarketValue>
     </statBases>
-    <aquaticEnvironment>SeaAndMarch</aquaticEnvironment>
-    <livingTime>DayAndNight</livingTime>
     <stackLimit>30</stackLimit>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>DesperateOnly</preferability>
+      <nutrition>0.20</nutrition>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+      <specialThoughtDirect>AteRawFish</specialThoughtDirect>
+      <tastesRaw>false</tastesRaw>
+    </ingestible>
+
+    <livesInSea>true</livesInSea>
+    <livesInMarsh>true</livesInMarsh>
+    <catchableDuringDay>true</catchableDuringDay>
+    <catchableDuringNight>true</catchableDuringNight>
     <commonality>0.20</commonality>
     <catchQuantity>1</catchQuantity>
   </ThingDef>
 
-  <ThingDef Class="FishIndustry.ThingDef_FishSpeciesProperties" ParentName="FishBase">
+  <ThingDef Class="FishIndustry.ThingDef_FishSpecies" ParentName="FishBase">
     <defName>Fish_Seasnake</defName>
     <label>seasnake</label>
     <description>Often mistaken for its wild tailteeth cousin, this peaceful fish is often caught during moonless nights.</description>
@@ -67,18 +77,28 @@
     <statBases>
       <MarketValue>2</MarketValue>
     </statBases>
-    <aquaticEnvironment>Sea</aquaticEnvironment>
-    <livingTime>Night</livingTime>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>DesperateOnly</preferability>
+      <nutrition>0.30</nutrition>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+      <specialThoughtDirect>AteRawFish</specialThoughtDirect>
+      <tastesRaw>false</tastesRaw>
+    </ingestible>
+
+    <livesInSea>true</livesInSea>
+    <catchableDuringNight>true</catchableDuringNight>
     <commonality>0.75</commonality>
     <catchQuantity>1</catchQuantity>
   </ThingDef>
 
   <!--=================== Fishes that can be bred ===============-->
 
-  <ThingDef Class="FishIndustry.ThingDef_FishSpeciesProperties" ParentName="FishBase">
+  <ThingDef Class="FishIndustry.ThingDef_FishSpecies" ParentName="FishBase">
     <defName>Fish_Mashgon</defName>
     <label>mashgon</label>
-    <description>A little shellfish often found in the swamps and marshes. Its name comes from the local tribespeople calling it "marsh dragon". Easy to catch and fast to breed, this is a good basic protein source.</description>
+    <description>A little shellfish often found in the swamps and marshes. Its name comes from the local tribespeople calling it "marsh dragon". Easy to catch and fast to breed, this is a good basic protein source. Frail and juicy, it can be eaten raw or grilled for a better flavour. It is not really nourishing but tasty!</description>
     <graphicData>
       <texPath>Things/Item/Resource/Fish_Mashgon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -87,15 +107,27 @@
     <statBases>
       <MarketValue>1</MarketValue>
     </statBases>
-    <aquaticEnvironment>Marsh</aquaticEnvironment>
-    <livingTime>DayAndNight</livingTime>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>RawTasty</preferability>
+      <nutrition>0.05</nutrition>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+      <tastesRaw>false</tastesRaw>
+      <joy>0.001</joy>
+      <joyKind>Gluttonous</joyKind>
+    </ingestible>
+    
+    <livesInMarsh>true</livesInMarsh>
+    <catchableDuringDay>true</catchableDuringDay>
+    <catchableDuringNight>true</catchableDuringNight>
     <commonality>0.80</commonality>
     <catchQuantity>10</catchQuantity>
     <breedQuantity>20</breedQuantity>
     <breedingDurationInDays>2</breedingDurationInDays>
   </ThingDef>
 
-  <ThingDef Class="FishIndustry.ThingDef_FishSpeciesProperties" ParentName="FishBase">
+  <ThingDef Class="FishIndustry.ThingDef_FishSpecies" ParentName="FishBase">
     <defName>Fish_Blueblade</defName>
     <label>blueblade</label>
     <description>A very common fish found in shallow water. Its name comes from its resilience: it is able to live both in hot blue lagoons or in icy blue waters.</description>
@@ -106,15 +138,25 @@
     <statBases>
       <MarketValue>3</MarketValue>
     </statBases>
-    <aquaticEnvironment>Sea</aquaticEnvironment>
-    <livingTime>Day</livingTime>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>DesperateOnly</preferability>
+      <nutrition>0.30</nutrition>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+      <specialThoughtDirect>AteRawFish</specialThoughtDirect>
+      <tastesRaw>false</tastesRaw>
+    </ingestible>
+    
+    <livesInSea>true</livesInSea>
+    <catchableDuringDay>true</catchableDuringDay>
     <commonality>0.75</commonality>
     <catchQuantity>1</catchQuantity>
     <breedQuantity>3</breedQuantity>
     <breedingDurationInDays>4</breedingDurationInDays>
   </ThingDef>
 
-  <ThingDef Class="FishIndustry.ThingDef_FishSpeciesProperties" ParentName="FishBase">
+  <ThingDef Class="FishIndustry.ThingDef_FishSpecies" ParentName="FishBase">
     <defName>Fish_Tailteeth</defName>
     <label>tailteeth</label>
     <description>This ferocious predator owns its name to its vicious tactics. Slowly approaching its unaware drinking preys, it uses its massive tail to attract them into deep water. The teeth is generaly the last vision you can get from this terrible creature.</description>
@@ -126,8 +168,19 @@
     <statBases>
       <MarketValue>300</MarketValue>
     </statBases>
-    <aquaticEnvironment>Sea</aquaticEnvironment>
-    <livingTime>DayAndNight</livingTime>
+    <ingestible>
+      <foodType>Meat</foodType>
+      <preferability>DesperateOnly</preferability>
+      <nutrition>1.50</nutrition>
+      <ingestEffect>EatMeat</ingestEffect>
+      <ingestSound>RawMeat_Eat</ingestSound>
+      <specialThoughtDirect>AteRawFish</specialThoughtDirect>
+      <tastesRaw>false</tastesRaw>
+    </ingestible>
+    
+    <livesInSea>true</livesInSea>
+    <catchableDuringDay>true</catchableDuringDay>
+    <catchableDuringNight>true</catchableDuringNight>
     <commonality>0.05</commonality>
     <catchQuantity>1</catchQuantity>
     <breedQuantity>1</breedQuantity>

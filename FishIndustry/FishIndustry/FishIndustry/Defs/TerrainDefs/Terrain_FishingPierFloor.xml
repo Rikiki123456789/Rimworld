@@ -6,7 +6,7 @@
     <label>Fishing pier floor</label>
     <texturePath>Terrain/Surfaces/WaterDeep</texturePath>
     <EdgeType>FadeRough</EdgeType>
-    <RenderPrecedence>394</RenderPrecedence>
+    <RenderPrecedence>395</RenderPrecedence>
     <PathCost>0</PathCost>
     <acceptFilth>false</acceptFilth>
     <fertility>0</fertility>

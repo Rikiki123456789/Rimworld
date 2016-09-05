@@ -51,7 +51,7 @@ namespace FishIndustry
             for (int i = 0; i < list.Count; i++)
             {
                 Thing thing2 = list[i];
-                if (thing2.def.IsNutritionSource)
+                if (Building_AquacultureBasin.IsAcceptableFeedstock(thing2.def))
                 {
                     num += thing2.stackCount;
                 }
@@ -74,13 +74,13 @@ namespace FishIndustry
             Thing firstItem = building.Position.GetFirstItem();
             if (firstItem != null)
             {
-                if (firstItem.def.IsNutritionSource)
+                if (Building_AquacultureBasin.IsAcceptableFeedstock(firstItem.def))
                 {
                     thingDef = firstItem.def;
                 }
                 else
                 {
-                    if (firstItem.IsForbidden(pawn.Faction))
+                    if (firstItem.IsForbidden(pawn))
                     {
                         return null;
                     }
@@ -90,7 +90,7 @@ namespace FishIndustry
             List<Thing> list;
             if (thingDef == null)
             {
-                list = Find.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodNotPlantOrTree);
+                list = Find.Map.listerThings.ThingsInGroup(ThingRequestGroup.FoodSourceNotPlantOrTree);
             }
             else
             {
@@ -99,19 +99,22 @@ namespace FishIndustry
             for (int i = 0; i < list.Count; i++)
             {
                 Thing thing = list[i];
-                if (thing.def.ingestible.preferability == FoodPreferability.Raw)
+                if (thing.def.IsNutritionGivingIngestible)
                 {
-                    if (HaulAIUtility.PawnCanAutomaticallyHaul(pawn, thing))
+                    if (thing.def.ingestible.preferability == FoodPreferability.RawBad || thing.def.ingestible.preferability == FoodPreferability.RawTasty)
                     {
-                        if (Find.SlotGroupManager.SlotGroupAt(building.Position).Settings.AllowedToAccept(thing))
+                        if (HaulAIUtility.PawnCanAutomaticallyHaul(pawn, thing))
                         {
-                            StoragePriority storagePriority = HaulAIUtility.StoragePriorityAtFor(thing.Position, thing);
-                            if (storagePriority < hopperSgp.GetSlotGroup().Settings.Priority)
+                            if (Find.SlotGroupManager.SlotGroupAt(building.Position).Settings.AllowedToAccept(thing))
                             {
-                                Job job = HaulAIUtility.HaulMaxNumToCellJob(pawn, thing, building.Position, true);
-                                if (job != null)
+                                StoragePriority storagePriority = HaulAIUtility.StoragePriorityAtFor(thing.Position, thing);
+                                if (storagePriority < hopperSgp.GetSlotGroup().Settings.Priority)
                                 {
-                                    return job;
+                                    Job job = HaulAIUtility.HaulMaxNumToCellJob(pawn, thing, building.Position, true);
+                                    if (job != null)
+                                    {
+                                        return job;
+                                    }
                                 }
                             }
                         }
