@@ -46,9 +46,6 @@ namespace ForceField
         // Components references.
         public CompPowerTrader powerComp = null;
         
-        // Force field properties.
-        public ThingDef_ForceFieldGeneratorProperties forceFieldProperties = null;
-
         // Drawing.
         public static readonly Material[] forceFieldTexture = new Material[5]
         {
@@ -135,22 +132,9 @@ namespace ForceField
 
             // Components initialization.
             powerComp = base.GetComp<CompPowerTrader>();
-
-            // Get parameters from XML.
-            this.forceFieldProperties = this.def as ForceField.ThingDef_ForceFieldGeneratorProperties;
-
+            
             // Textures initialization.
-            /*forceFieldTexture[0] = MaterialPool.MatFrom("Effects/ForceField1", ShaderDatabase.Transparent);
-            forceFieldTexture[1] = MaterialPool.MatFrom("Effects/ForceField2", ShaderDatabase.Transparent);
-            forceFieldTexture[2] = MaterialPool.MatFrom("Effects/ForceField3", ShaderDatabase.Transparent);
-            forceFieldTexture[3] = MaterialPool.MatFrom("Effects/ForceField4", ShaderDatabase.Transparent);
-            forceFieldTexture[4] = MaterialPool.MatFrom("Effects/ForceField5", ShaderDatabase.Transparent);*/
             forceFieldMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
-            /*forceFieldAbsorbtionTexture[0] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion1", ShaderDatabase.Transparent);
-            forceFieldAbsorbtionTexture[1] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion2", ShaderDatabase.Transparent);
-            forceFieldAbsorbtionTexture[2] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion3", ShaderDatabase.Transparent);
-            forceFieldAbsorbtionTexture[3] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion4", ShaderDatabase.Transparent);
-            forceFieldAbsorbtionTexture[4] = MaterialPool.MatFrom("Effects/ForceFieldAbsorbtion5", ShaderDatabase.Transparent);*/
             forceFieldAbsorbtionMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
         }
 
@@ -189,7 +173,7 @@ namespace ForceField
                 {
                     case ForceFieldState.Offline:
                         this.powerComp.powerOutputInt = -10;
-                        if (((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) >= -this.forceFieldProperties.powerOutputDuringInitialization)
+                        if (((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) >= -ForceFieldGeneratorProperties.powerOutputDuringInitialization)
                             || (this.powerComp.PowerNet.CurrentStoredEnergy() > 0))
                         {
                             this.initializationElapsedTimeInTicks = 0;
@@ -197,39 +181,39 @@ namespace ForceField
                         }
                         break;
                     case ForceFieldState.Initializing:
-                        this.powerComp.powerOutputInt = this.forceFieldProperties.powerOutputDuringInitialization;
+                        this.powerComp.powerOutputInt = ForceFieldGeneratorProperties.powerOutputDuringInitialization;
                         this.initializationElapsedTimeInTicks++;
-                        if (this.initializationElapsedTimeInTicks >= this.forceFieldProperties.initializationDurationInTicks)
+                        if (this.initializationElapsedTimeInTicks >= ForceFieldGeneratorProperties.initializationDurationInTicks)
                         {
                             this.forceFieldState = ForceFieldState.Charging;
-                            this.forceFieldCharge = (10f / 100) * this.forceFieldProperties.forceFieldMaxCharge;
+                            this.forceFieldCharge = (10f / 100) * ForceFieldGeneratorProperties.forceFieldMaxCharge;
                         }
                         break;
                     case ForceFieldState.Charging:
-                        this.powerComp.powerOutputInt = this.forceFieldProperties.powerOutputDuringCharge;
-                        this.forceFieldCharge += this.forceFieldProperties.forceFieldMaxCharge / (float)this.forceFieldProperties.chargeDurationInTicks;
-                        if (this.forceFieldCharge >= this.forceFieldProperties.forceFieldMaxCharge)
+                        this.powerComp.powerOutputInt = ForceFieldGeneratorProperties.powerOutputDuringCharge;
+                        this.forceFieldCharge += ForceFieldGeneratorProperties.forceFieldMaxCharge / (float)ForceFieldGeneratorProperties.chargeDurationInTicks;
+                        if (this.forceFieldCharge >= ForceFieldGeneratorProperties.forceFieldMaxCharge)
                         {
-                            this.forceFieldCharge = this.forceFieldProperties.forceFieldMaxCharge;
+                            this.forceFieldCharge = ForceFieldGeneratorProperties.forceFieldMaxCharge;
                             this.forceFieldState = ForceFieldState.Sustaining;
                         }
                         break;
                     case ForceFieldState.Sustaining:
-                        this.powerComp.powerOutputInt = this.forceFieldProperties.powerOutputDuringSustain;
-                        if (this.forceFieldCharge < this.forceFieldProperties.forceFieldMaxCharge)
+                        this.powerComp.powerOutputInt = ForceFieldGeneratorProperties.powerOutputDuringSustain;
+                        if (this.forceFieldCharge < ForceFieldGeneratorProperties.forceFieldMaxCharge)
                         {
                             this.forceFieldState = ForceFieldState.Charging;
                         }
                         break;
                     case ForceFieldState.Discharging:
-                        this.powerComp.powerOutputInt = this.forceFieldProperties.powerOutputDuringDischarge;
-                        if ((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) >= -this.forceFieldProperties.powerOutputDuringCharge)
+                        this.powerComp.powerOutputInt = ForceFieldGeneratorProperties.powerOutputDuringDischarge;
+                        if ((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) >= -ForceFieldGeneratorProperties.powerOutputDuringCharge)
                         {
                             this.forceFieldState = ForceFieldState.Charging;
                         }
                         else
                         {
-                            this.forceFieldCharge -= this.forceFieldProperties.forceFieldMaxCharge / (float)this.forceFieldProperties.dischargeDurationInTicks;
+                            this.forceFieldCharge -= ForceFieldGeneratorProperties.forceFieldMaxCharge / (float)ForceFieldGeneratorProperties.dischargeDurationInTicks;
                             if (this.forceFieldCharge <= 0)
                             {
                                 this.forceFieldCharge = 0;
@@ -254,8 +238,8 @@ namespace ForceField
                         this.forceFieldState = ForceFieldState.Discharging;
                         break;
                     case ForceFieldState.Discharging:
-                        this.powerComp.powerOutputInt = this.forceFieldProperties.powerOutputDuringDischarge;
-                        this.forceFieldCharge -= this.forceFieldProperties.forceFieldMaxCharge / (float)this.forceFieldProperties.dischargeDurationInTicks;
+                        this.powerComp.powerOutputInt = ForceFieldGeneratorProperties.powerOutputDuringDischarge;
+                        this.forceFieldCharge -= ForceFieldGeneratorProperties.forceFieldMaxCharge / (float)ForceFieldGeneratorProperties.dischargeDurationInTicks;
                         if (this.forceFieldCharge <= 0)
                         {
                             this.forceFieldCharge = 0;
@@ -338,7 +322,7 @@ namespace ForceField
 
         public void TreatRocketProjectile(ProjectileWithAngle projectileWithAngle)
         {
-            float rocketAbsorbtionCost = this.forceFieldProperties.forceFieldMaxCharge * this.forceFieldProperties.rocketAbsorbtionProportion;
+            float rocketAbsorbtionCost = ForceFieldGeneratorProperties.forceFieldMaxCharge * ForceFieldGeneratorProperties.rocketAbsorbtionProportion;
             if (this.forceFieldCharge > rocketAbsorbtionCost)
             {
                 this.forceFieldCharge -= rocketAbsorbtionCost;
@@ -362,12 +346,12 @@ namespace ForceField
 
         public void TreatExplosiveProjectile(ProjectileWithAngle projectileWithAngle)
         {
-            if (this.forceFieldCharge < this.forceFieldProperties.explosiveRepelCharge)
+            if (this.forceFieldCharge < ForceFieldGeneratorProperties.explosiveRepelCharge)
             {
                 // Force field charge is too low to repell an explosive.
                 return;
             }
-            this.forceFieldCharge -= this.forceFieldProperties.explosiveRepelCharge;
+            this.forceFieldCharge -= ForceFieldGeneratorProperties.explosiveRepelCharge;
             if (this.forceFieldCharge <= 0)
             {
                 this.forceFieldCharge = 0;
@@ -505,14 +489,14 @@ namespace ForceField
                 // Standard matrix cyan effect.
                 for (int matrixIndex = 0; matrixIndex < 5; matrixIndex++)
                 {
-                    this.matrixFadingCoefficient[matrixIndex] = fadingOffset + fadingVariable * (this.forceFieldCharge / this.forceFieldProperties.forceFieldMaxCharge);
+                    this.matrixFadingCoefficient[matrixIndex] = fadingOffset + fadingVariable * (this.forceFieldCharge / ForceFieldGeneratorProperties.forceFieldMaxCharge);
                 }
 
                 // Additional lightning effect.
                 int effectCellIndex = Rand.RangeInclusive(0, 4);
                 if (Rand.Value < (1f / 100))
                 {
-                    MoteThrower.ThrowLightningGlow(this.effectCells[effectCellIndex] + new Vector3(Rand.Range(-0.1f, 0.1f), 0f, Rand.Range(-0.1f, 0.1f)), 0.2f);
+                    MoteMaker.ThrowLightningGlow(this.effectCells[effectCellIndex] + new Vector3(Rand.Range(-0.1f, 0.1f), 0f, Rand.Range(-0.1f, 0.1f)), 0.2f);
                 }
             }
 
@@ -523,7 +507,7 @@ namespace ForceField
                 {
                     this.matrixAbsorbtionCounterInTicks[matrixIndex] = matrixAbsorbtionDurationInTicks;
                     this.matrixIsStartingAbsorbion[matrixIndex] = false;
-                    MoteThrower.ThrowLightningGlow(this.effectCells[matrixIndex] + new Vector3(Rand.Range(-0.2f, 0.2f), 0f, Rand.Range(-0.2f, 0.2f)), 0.2f);
+                    MoteMaker.ThrowLightningGlow(this.effectCells[matrixIndex] + new Vector3(Rand.Range(-0.2f, 0.2f), 0f, Rand.Range(-0.2f, 0.2f)), 0.2f);
                 }
                 if (this.matrixAbsorbtionCounterInTicks[matrixIndex] > 0)
                 {
@@ -558,7 +542,7 @@ namespace ForceField
             GenDraw.FillableBarRequest chargeBar = default(GenDraw.FillableBarRequest);
             chargeBar.center = this.DrawPos + new Vector3(-0.3f, 0f, 0f).RotatedBy(this.Rotation.AsAngle) + Vector3.up * 0.1f;
             chargeBar.size = barSize;
-            chargeBar.fillPercent = this.forceFieldCharge / this.forceFieldProperties.forceFieldMaxCharge;
+            chargeBar.fillPercent = this.forceFieldCharge / ForceFieldGeneratorProperties.forceFieldMaxCharge;
             chargeBar.filledMat = barFilledColor;
             chargeBar.unfilledMat = barUnfilledColor;
             chargeBar.margin = 0.15f;
@@ -585,7 +569,7 @@ namespace ForceField
 
             string stateAsString = GetStateAsString(this.forceFieldState);
             stringBuilder.AppendLine("Status: " + stateAsString);
-            stringBuilder.AppendLine("Force field charge: " + (int)this.forceFieldCharge + "/" + this.forceFieldProperties.forceFieldMaxCharge);
+            stringBuilder.AppendLine("Force field charge: " + (int)this.forceFieldCharge + "/" + ForceFieldGeneratorProperties.forceFieldMaxCharge);
 
             return stringBuilder.ToString();
         }
