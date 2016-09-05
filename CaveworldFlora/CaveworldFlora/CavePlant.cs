@@ -11,6 +11,8 @@ using Verse.Sound;   // Needed when you do something with the Sound
 
 namespace CaveworldFlora
 {
+    // TODO: use dictionnary to pick random cave plant def.
+
     /// <summary>
     /// CavePlant class.
     /// </summary>
@@ -55,26 +57,18 @@ namespace CaveworldFlora
         {
             get
             {
-                return (this.LifeStage == PlantLifeStage.Growing
+                return this.LifeStage == PlantLifeStage.Growing
                     && IsTemperatureConditionOk(this.Position)
                     && IsLightConditionOk(this.Position)
-                    && IsTerrainConditionOk(this.Position)
-                    && (IsNearNaturalRockBlock(this.Position)
-                    || IsOnCavePlantGrower(this.Position)));
+                    && (IsOnCavePlantGrower(this.Position)
+                       || (IsTerrainConditionOk(this.Position) && IsNearNaturalRockBlock(this.Position)));
             }
         }
-        public float GrowthPerTick
+        public new float GrowthPerTick
         {
             get
             {
                 return (1f / (60000f * this.def.plant.growDays));
-            }
-        }
-        public float GrowthPerTickLong
-        {
-            get
-            {
-                return (this.GrowthPerTick * GenTicks.TickLongInterval);
             }
         }
         public float TemperatureEfficiency
@@ -92,17 +86,16 @@ namespace CaveworldFlora
                     return 0;
             }
         }
-        public new bool Rotting
+        public new bool Dying
         {
             get
             {
-                bool plantIsTooOld = this.def.plant.LimitedLifespan && (this.age > this.def.plant.LifespanTicks);
+                bool plantIsTooOld = this.def.plant.LimitedLifespan && (this.Age > this.def.plant.LifespanTicks);
                 float temperature = this.Position.GetTemperature();
                 bool plantIsInHostileConditions = (temperature > maxTempToGrow)
                     || !IsLightConditionOk(this.Position)
-                    || !IsTerrainConditionOk(this.Position)
-                    || !(IsNearNaturalRockBlock(this.Position)
-                    || IsOnCavePlantGrower(this.Position));
+                    || !(IsOnCavePlantGrower(this.Position)
+                       || (IsTerrainConditionOk(this.Position) && IsNearNaturalRockBlock(this.Position)));
                 return ((plantIsTooOld || plantIsInHostileConditions)
                     && (this.isInCryostasis == false));
             }
@@ -157,7 +150,7 @@ namespace CaveworldFlora
             UpdateGlowerBuildingAccordingToGrowth();
             if (this.GrowingNow)
             {
-                this.growth += this.GrowthPerTickLong * this.TemperatureEfficiency;
+                this.Growth += this.GrowthPerTick * GenTicks.TickLongInterval * this.TemperatureEfficiency;
                 if (this.LifeStage == PlantLifeStage.Mature)
                 {
                     Find.MapDrawer.WholeMapChanged(MapMeshFlag.Things);
@@ -169,9 +162,9 @@ namespace CaveworldFlora
             {
                 if (this.LifeStage == PlantLifeStage.Mature)
                 {
-                    this.age += GenTicks.TickLongInterval;
+                    this.Age += GenTicks.TickLongInterval;
                 }
-                if (this.Rotting)
+                if (this.Dying)
                 {
                     int amount = Mathf.CeilToInt(1.25f);
                     base.TakeDamage(new DamageInfo(DamageDefOf.Rotting, amount, null, null, null));
@@ -194,7 +187,7 @@ namespace CaveworldFlora
                 return;
             }
             
-            if (this.growth < 0.33f)
+            if (this.Growth < 0.33f)
             {
                 if ((this.glowerBuilding.DestroyedOrNull())
                     || (this.glowerBuilding.def != Util_CavePlant.GetGlowerSmallDef(this.def)))
@@ -203,7 +196,7 @@ namespace CaveworldFlora
                     this.glowerBuilding = GenSpawn.Spawn(Util_CavePlant.GetGlowerSmallDef(this.def), this.Position);
                 }
             }
-            else if (this.growth < 0.66f)
+            else if (this.Growth < 0.66f)
             {
                 if ((this.glowerBuilding.DestroyedOrNull())
                     || (this.glowerBuilding.def != Util_CavePlant.GetGlowerMediumDef(this.def)))
@@ -321,7 +314,7 @@ namespace CaveworldFlora
         public override string GetInspectString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            float num = this.growth * 100f;
+            float num = this.Growth * 100f;
             if (num > 100f)
             {
                 num = 100.1f;
@@ -340,7 +333,7 @@ namespace CaveworldFlora
             }
             else if (this.LifeStage == PlantLifeStage.Growing)
             {
-                if (this.Rotting)
+                if (this.Dying)
                 {
                     if (this.Position.GetTemperature() > maxTempToGrow)
                     {
@@ -350,13 +343,16 @@ namespace CaveworldFlora
                     {
                         stringBuilder.AppendLine("Overlit");
                     }
-                    if (IsNearNaturalRockBlock(this.Position) == false)
+                    if (IsOnCavePlantGrower(this.Position) == false)
                     {
-                        stringBuilder.AppendLine("Too far from a rock");
-                    }
-                    if (IsTerrainConditionOk(this.Position) == false)
-                    {
-                        stringBuilder.AppendLine("Unadapted soil");
+                        if (IsNearNaturalRockBlock(this.Position) == false)
+                        {
+                            stringBuilder.AppendLine("Too far from a rock");
+                        }
+                        if (IsTerrainConditionOk(this.Position) == false)
+                        {
+                            stringBuilder.AppendLine("Unadapted soil");
+                        }
                     }
                 }
                 else

@@ -42,9 +42,6 @@
       <WoodLog>100</WoodLog>
       <RawPotatoes>50</RawPotatoes>
     </costList>
-    <inspectorTabs>
-      <li>ITab_Growing</li>
-    </inspectorTabs>
     <fertility>1.0</fertility>
     <building>
       <defaultPlantToGrow>Glowbulb</defaultPlantToGrow>

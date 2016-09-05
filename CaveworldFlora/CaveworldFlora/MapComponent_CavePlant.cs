@@ -38,7 +38,7 @@ namespace CaveworldFlora
             if (Find.TickManager.TicksGame == 1)
             {
                 GetCavePlantDefsList();
-                // Unnecessary as long as there is no natural caves.
+                // TODO: unnecessary as long as there is no natural caves.
                 /*for (int spawnTryIndex = 0; spawnTryIndex < 100; spawnTryIndex++)
                 {
                     TrySpawnNewClusterAtRandomPosition();
@@ -110,7 +110,13 @@ namespace CaveworldFlora
         /// </summary>
         public void GetCavePlantDefsList()
         {
-            foreach (ThingDef potentialCavePlantDef in DefDatabase<ThingDef>.AllDefs)
+            List<ThingDef> allDefsForReading = DefDatabase<ThingDef>.AllDefsListForReading;
+            if (allDefsForReading.NullOrEmpty())
+            {
+                Log.Warning("Caveworld flora: allDefsForReading is null or empty.");
+                return;
+            }
+            foreach (ThingDef potentialCavePlantDef in allDefsForReading)
             {
                 if (potentialCavePlantDef.thingClass.Name.Contains("CavePlant"))
                 {
@@ -124,6 +130,10 @@ namespace CaveworldFlora
                 {
                     this.commonalitySum += cavePlantDef.plant.wildCommonalityMaxFraction;
                 }
+            }
+            else
+            {
+                Log.Warning("Caveworld flora: got no cave plant when reading all defs.");
             }
         }
 

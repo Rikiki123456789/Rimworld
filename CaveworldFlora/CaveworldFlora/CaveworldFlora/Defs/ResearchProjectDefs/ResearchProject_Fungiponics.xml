@@ -4,12 +4,10 @@
   <ResearchProjectDef>
 		<defName>ResearchFungiponics</defName>
 		<label>fungiponics</label>
-		<description>Research how to adapt the hydroponics tables to grow cave plants.</description>
+		<description>Research how to grow delicate cave plants.</description>
     <descriptionDiscovered>You can now grow your own cave plants in fungiponics basins or use them as decorative plants.</descriptionDiscovered>
-    <totalCost>700</totalCost>
-		<prerequisites>
-      <li>Hydroponics</li>
-    </prerequisites>
+    <techLevel>Neolithic</techLevel>
+    <baseCost>1200</baseCost>
 	</ResearchProjectDef>
   
 </ResearchProjectDefs>

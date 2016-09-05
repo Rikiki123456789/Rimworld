@@ -24,9 +24,8 @@ namespace CaveworldFlora
         public const int sporeEffectRadius = 5;
         public const int minSporeSpawningDurationInTicks = 1200;
         public const int maxSporeSpawningDurationInTicks = 3600;
-        public int sporeSpawningDurationInTicks = 0;
         public int lifeCounterInTicks = 0;
-        public int ticksToNearPawnCheck = 0;
+        public int nextNearbyPawnCheckTick = 0;
 
         // ===================== Setup Work =====================
         /// <summary>
@@ -35,8 +34,8 @@ namespace CaveworldFlora
         public override void SpawnSetup()
         {
             base.SpawnSetup();
-            // Set a random spawning duration.
-            this.sporeSpawningDurationInTicks = Rand.RangeInclusive(minSporeSpawningDurationInTicks, maxSporeSpawningDurationInTicks);
+
+            this.lifeCounterInTicks = Rand.RangeInclusive(minSporeSpawningDurationInTicks, maxSporeSpawningDurationInTicks);
         }
 
         // ===================== Saving =====================
@@ -46,7 +45,6 @@ namespace CaveworldFlora
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.sporeSpawningDurationInTicks, "sporeSpawningDurationInTicks");
             Scribe_Values.LookValue<int>(ref this.lifeCounterInTicks, "lifeCounterInTicks");
             Scribe_References.LookReference<CavePlant_Gleamcap>(ref this.parent, "parentGleamcap");
         }
@@ -61,24 +59,23 @@ namespace CaveworldFlora
         {
             base.Tick();
 
-            if (this.lifeCounterInTicks < this.sporeSpawningDurationInTicks)
+            this.lifeCounterInTicks--;
+            if (this.lifeCounterInTicks > 0)
             {
-                MoteThrower.ThrowDustPuff(this.TrueCenter(), Rand.Value);
+                MoteMaker.ThrowDustPuff(this.TrueCenter(), Rand.Value);
 
-                this.ticksToNearPawnCheck++;
-                if (this.ticksToNearPawnCheck > GenTicks.TicksPerRealSecond)
+                if (Find.TickManager.TicksGame > this.nextNearbyPawnCheckTick)
                 {
-                    this.ticksToNearPawnCheck = 0;
+                    this.nextNearbyPawnCheckTick = Find.TickManager.TicksGame + GenTicks.TicksPerRealSecond;
                     foreach (Pawn pawn in Find.MapPawns.AllPawns)
                     {
                         if ((pawn.Position.InHorDistOf(this.Position, sporeEffectRadius))
                             && (pawn.needs.mood != null))
                         {
-                            pawn.needs.mood.thoughts.TryGainThought(Util_CavePlant.breathedGleamcapSmokeDef);
+                            pawn.needs.mood.thoughts.memories.TryGainMemoryThought(Util_CavePlant.breathedGleamcapSmokeDef);
                         }
                     }
                 }
-                this.lifeCounterInTicks++;
             }
             else
             {

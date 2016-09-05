@@ -16,10 +16,10 @@
 
   <ThingDef Abstract="True" Name="PlantFoodRawBase" ParentName="OrganicProductBase">
     <ingestible>
-      <preferability>Raw</preferability>
+      <preferability>RawBad</preferability>
       <nutrition>0.05</nutrition>
-      <eatEffect>EatVegetarian</eatEffect>
-      <soundEat>RawVegetable_Eat</soundEat>
+      <ingestEffect>EatVegetarian</ingestEffect>
+      <ingestSound>RawVegetable_Eat</ingestSound>
     </ingestible>
     <thingCategories>
       <li>PlantFoodRaw</li>
@@ -38,10 +38,13 @@
       <MarketValue>3.0</MarketValue>
     </statBases>
     <ingestible>
+      <preferability>RawTasty</preferability>
       <foodType>VegetableOrFruit</foodType>
       <nutrition>0.10</nutrition>
       <joy>0.008</joy>
-      <ingestedDirectThought>AteRawShimmershroom</ingestedDirectThought>
+      <joyKind>Gluttonous</joyKind>
+      <specialThoughtDirect>AteRawShimmershroom</specialThoughtDirect>
+      <specialThoughtAsIngredient>AteRawShimmershroom</specialThoughtAsIngredient>
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">
@@ -63,7 +66,7 @@
     </statBases>
     <ingestible>
       <foodType>VegetableOrFruit</foodType>
-      <ingestedDirectThought>AteRawFood</ingestedDirectThought>
+      <specialThoughtDirect>AteRawFood</specialThoughtDirect>
     </ingestible>
     <comps>
       <li Class="CompProperties_Rottable">

@@ -32,7 +32,7 @@ namespace CaveworldFlora
             {
                 return;
             }
-            if (cavePlant.growth < minGrowthPercentToReproduce)
+            if (cavePlant.Growth < minGrowthPercentToReproduce)
             {
                 return;
             }

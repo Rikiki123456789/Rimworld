@@ -29,6 +29,7 @@
         <min>0.3</min>
         <max>1.00</max>
       </visualSizeRange>
+      <growMinGlow>0</growMinGlow>
     </plant>
   </ThingDef>
 
@@ -82,6 +83,7 @@
       <sowResearchPrerequisites>
         <li>ResearchFungiponics</li>
       </sowResearchPrerequisites>
+      <sowMinSkill>7</sowMinSkill>
     </plant>
   </ThingDef>
 
@@ -181,13 +183,14 @@
         <min>0.3</min>
         <max>1.2</max>
       </visualSizeRange>
-      <growDays>10</growDays>
+      <growDays>12</growDays>
       <sowTags>
         <li>Fungiponics</li>
       </sowTags>
       <sowResearchPrerequisites>
         <li>ResearchFungiponics</li>
       </sowResearchPrerequisites>
+      <sowMinSkill>8</sowMinSkill>
     </plant>
   </ThingDef>
 
@@ -235,8 +238,8 @@
         <min>0.3</min>
         <max>1.05</max>
       </visualSizeRange>
-      <growDays>2</growDays>
-      <lifespanFraction>6</lifespanFraction>
+      <growDays>1</growDays>
+      <lifespanFraction>7</lifespanFraction>
       <sowTags>
         <li>Decorative</li>
       </sowTags>

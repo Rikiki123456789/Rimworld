@@ -70,7 +70,7 @@ namespace CaveworldFlora
                 || ((Find.TickManager.TicksGame - this.lastSporeSpawnTick) > minDelayBetweenSporeSpawnInTicks);
 
             if ((this.LifeStage == PlantLifeStage.Mature)
-                && (this.Rotting == false)
+                && (this.Dying == false)
                 && (this.isInCryostasis == false)
                 && sporeSpawnOccuredLongAgo
                 && ((Rand.Value < chanceToSpawnSpore)

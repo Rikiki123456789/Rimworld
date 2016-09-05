@@ -5,9 +5,8 @@
     <category>Building</category>
     <thingClass>Building</thingClass>
     <soundImpactDefault>BulletImpactWood</soundImpactDefault>
-    <selectable>true</selectable>
     <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Any</terrainAffordanceNeeded>
+    <terrainAffordanceNeeded>Undefined</terrainAffordanceNeeded>
     <graphicData>
       <texPath>Things/Building/DummyTexture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
