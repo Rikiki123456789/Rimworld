@@ -1,6 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
+  <ThingDef Name="BuildingBase" Abstract="True">
+    <category>Building</category>
+    <thingClass>Building</thingClass>
+    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
+    <selectable>true</selectable>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <repairEffect>Repair</repairEffect>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <filthLeaving>BuildingRubble</filthLeaving>
+  </ThingDef>
+
   <ThingDef ParentName="BuildingBase">
     <defName>LaserFencePylon</defName>
     <label>laser fence pylon</label>
@@ -18,7 +30,7 @@
     <placeWorkers>
       <li>LaserFence.PlaceWorker_LaserFencePylon</li>
     </placeWorkers>
-    <altitudeLayer>BuildingTall</altitudeLayer>
+    <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <fillPercent>0.6</fillPercent>
     <rotatable>true</rotatable>
@@ -36,7 +48,7 @@
 Warning! Always wear safety glasses before any maintenance operation. Local wildlife/vegetation may catch fire if directly exposed to the laser.</description>
     <size>(1,1)</size>
     <costList>
-      <Components>1</Components>
+      <Component>1</Component>
       <Steel>30</Steel>
     </costList>
     <hasInteractionCell>true</hasInteractionCell>
@@ -67,7 +79,7 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
-    <altitudeLayer>Waist</altitudeLayer>
+    <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <tickerType>Normal</tickerType>
     <selectable>false</selectable>

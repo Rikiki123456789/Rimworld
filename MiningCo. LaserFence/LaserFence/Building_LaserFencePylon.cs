@@ -18,6 +18,7 @@ namespace LaserFence
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
+    [StaticConstructorOnStartup]
     public class Building_LaserFencePylon : Building
     {
         // Pylon state.
@@ -135,7 +136,7 @@ namespace LaserFence
             {
                 gizmoList.Add(gizmo);
             }
-            if (this.Faction != Faction.OfColony)
+            if (this.Faction != Faction.OfPlayer)
             {
                 return gizmoList;
             }
@@ -481,9 +482,8 @@ namespace LaserFence
             reason = "";
             return true;
         }
-
-        // Removed as it is consuming too much CPU when there are many pylons.
-        /*public void DrawPotentialPlacePositions()
+        
+        public static void DrawPotentialPlacePositions(IntVec3 pylonPosition)
         {
             List<IntVec3> potentialPlacingPositionsList = new List<IntVec3>();
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
@@ -491,7 +491,7 @@ namespace LaserFence
                 for (int offset = 1; offset <= 5; offset++)
                 {
                     string unusedReason = "";
-                    IntVec3 testedPosition = this.Position + new IntVec3(offset, 0, 0).RotatedBy(new Rot4(directionAsInt));
+                    IntVec3 testedPosition = pylonPosition + new IntVec3(offset, 0, 0).RotatedBy(new Rot4(directionAsInt));
                     if (Building_LaserFencePylon.CanPlaceNewPylonHere(testedPosition, out unusedReason))
                     {
                         potentialPlacingPositionsList.Add(testedPosition);
@@ -502,6 +502,6 @@ namespace LaserFence
                     GenDraw.DrawFieldEdges(potentialPlacingPositionsList);
                 }
             }
-        }*/
+        }
     }
 }

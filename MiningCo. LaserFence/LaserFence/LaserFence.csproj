@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LaserFence</RootNamespace>
-    <AssemblyName>M&amp;Co. LaserFence</AssemblyName>
+    <AssemblyName>MiningCo. LaserFence</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.12.5711.30462, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.15.6085.2352, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files\Jeux\RimWorld1135Win\RimWorld1135Win_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -59,40 +59,42 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="M&amp;Co. LaserFence\About\About.xml" />
-    <Content Include="M&amp;Co. LaserFence\Defs\JobDefs\Jobs_LaserFence.xml" />
-    <Content Include="M&amp;Co. LaserFence\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml">
+    <Content Include="MiningCo. LaserFence\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. LaserFence\Defs\ThingDefs\Building_LaserFence.xml">
+    <Content Include="MiningCo. LaserFence\Defs\JobDefs\Jobs_LaserFence.xml" />
+    <Content Include="MiningCo. LaserFence\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="M&amp;Co. LaserFence\Defs\WorkGiverDefs\BaseWorkGivers_LaserFence.xml" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Effects\LaserFence.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\DummyTexture.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\LaserFencePylon.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\EastFenceActive.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\EastFenceInactive.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\NorthFenceActive.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\NorthFenceInactive.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\SouthFenceActive.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\SouthFenceInactive.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\WestFenceActive.png" />
-    <Content Include="M&amp;Co. LaserFence\Textures\Ui\Commands\WestFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Defs\ThingDefs\Building_LaserFence.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. LaserFence\Defs\WorkGiverDefs\BaseWorkGivers_LaserFence.xml" />
+    <Content Include="MiningCo. LaserFence\Textures\Effects\LaserFence.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Things\Building\Security\DummyTexture.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Things\Building\Security\LaserFencePylon.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\EastFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\EastFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\NorthFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\NorthFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\SouthFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\SouthFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\WestFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\WestFenceInactive.png" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="M&amp;Co. LaserFence\Assemblies\" />
+    <Folder Include="MiningCo. LaserFence\Assemblies\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="M&amp;Co. LaserFence\Textures\Effects\Thumbs.db" />
-    <None Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\LaserFencePylon.pdn" />
-    <None Include="M&amp;Co. LaserFence\Textures\Things\Building\Security\Thumbs.db" />
-    <None Include="M&amp;Co. LaserFence\Textures\Ui\Commands\NorthFence.pdn" />
-    <None Include="M&amp;Co. LaserFence\Textures\Ui\Thumbs.db" />
+    <None Include="MiningCo. LaserFence\Textures\Effects\Thumbs.db" />
+    <None Include="MiningCo. LaserFence\Textures\Things\Building\Security\LaserFencePylon.pdn" />
+    <None Include="MiningCo. LaserFence\Textures\Things\Building\Security\Thumbs.db" />
+    <None Include="MiningCo. LaserFence\Textures\Ui\Commands\NorthFence.pdn" />
+    <None Include="MiningCo. LaserFence\Textures\Ui\Thumbs.db" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\M&amp;Co. LaserFence\Assemblies"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. LaserFence\Assemblies"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -27,13 +27,29 @@ namespace LaserFence
             {
                 return new AcceptanceReport(reason);
             }
-
-            // Removed as it is consuming too much CPU when there are many pylons.
-            /*// Display potential placing positions.
-            foreach (Building_LaserFencePylon pylon in Find.ListerBuildings.AllBuildingsColonistOfClass<Building_LaserFencePylon>())
+            
+            // Display potential placing positions.
+            foreach (Thing pylon in Find.ListerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon").blueprintDef))
             {
-                pylon.DrawPotentialPlacePositions();
-            }*/
+                if (pylon.Position.InHorDistOf(loc, 6f))
+                {
+                    Building_LaserFencePylon.DrawPotentialPlacePositions(pylon.Position);
+                }
+            }
+            foreach (Thing pylon in Find.ListerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon").frameDef))
+            {
+                if (pylon.Position.InHorDistOf(loc, 6f))
+                {
+                    Building_LaserFencePylon.DrawPotentialPlacePositions(pylon.Position);
+                }
+            }
+            foreach (Thing pylon in Find.ListerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon")))
+            {
+                if (pylon.Position.InHorDistOf(loc, 6f))
+                {
+                    Building_LaserFencePylon.DrawPotentialPlacePositions(pylon.Position);
+                }
+            }
 
             return true;
         }
