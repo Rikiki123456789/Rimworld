@@ -117,6 +117,9 @@
       <joy>0.001</joy>
       <joyKind>Gluttonous</joyKind>
     </ingestible>
+    <thingCategories>
+      <li>MeatRaw</li>
+    </thingCategories>
     
     <livesInMarsh>true</livesInMarsh>
     <catchableDuringDay>true</catchableDuringDay>

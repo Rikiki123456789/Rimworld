@@ -49,40 +49,6 @@
     <workSkill>Crafting</workSkill>
   </RecipeDef>
 
-  <!--<RecipeDef>
-    <defName>ShellMashgon</defName>
-    <label>shell mashgons</label>
-    <jobString>Shelling mashgons.</jobString>
-    <description>Shell mashgons to get little and tasty pieces of mashgon meat.</description>
-    <workAmount>700</workAmount>
-    <workSkill>Cooking</workSkill>
-    <workSpeedStat>ButcheryFleshSpeed</workSpeedStat>
-    <efficiencyStat>ButcheryFleshEfficiency</efficiencyStat>
-    <effectWorking>ButcherFlesh</effectWorking>
-    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Fish_Mashgon</li>
-          </thingDefs>
-        </filter>
-        <count>20</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Fish_Mashgon</li>
-      </thingDefs>
-    </fixedIngredientFilter>
-    <products>
-      <RawSeaFood_Mashgon>20</RawSeaFood_Mashgon>
-    </products>
-    <recipeUsers>
-      <li>TableButcher</li>
-    </recipeUsers>
-  </RecipeDef>-->
-
   <RecipeDef Parent="PrepareFishRecipeBase">
     <defName>PrepareSduiggles</defName>
     <label>prepare sduiggles</label>
