@@ -31,9 +31,6 @@
         <daysToRotStart>2</daysToRotStart>
       </li>
     </comps>
-    <thingCategories>
-      <li>FreshFish</li>
-    </thingCategories>
   </ThingDef>
 
   <ThingDef Class="FishIndustry.ThingDef_FishSpecies" ParentName="FishBase">
@@ -57,6 +54,9 @@
       <specialThoughtDirect>AteRawFish</specialThoughtDirect>
       <tastesRaw>false</tastesRaw>
     </ingestible>
+    <thingCategories>
+      <li>FreshFish</li>
+    </thingCategories>
 
     <livesInSea>true</livesInSea>
     <livesInMarsh>true</livesInMarsh>
@@ -86,6 +86,9 @@
       <specialThoughtDirect>AteRawFish</specialThoughtDirect>
       <tastesRaw>false</tastesRaw>
     </ingestible>
+    <thingCategories>
+      <li>FreshFish</li>
+    </thingCategories>
 
     <livesInSea>true</livesInSea>
     <catchableDuringNight>true</catchableDuringNight>
@@ -150,6 +153,9 @@
       <specialThoughtDirect>AteRawFish</specialThoughtDirect>
       <tastesRaw>false</tastesRaw>
     </ingestible>
+    <thingCategories>
+      <li>FreshFish</li>
+    </thingCategories>
     
     <livesInSea>true</livesInSea>
     <catchableDuringDay>true</catchableDuringDay>
@@ -180,6 +186,9 @@
       <specialThoughtDirect>AteRawFish</specialThoughtDirect>
       <tastesRaw>false</tastesRaw>
     </ingestible>
+    <thingCategories>
+      <li>FreshFish</li>
+    </thingCategories>
     
     <livesInSea>true</livesInSea>
     <catchableDuringDay>true</catchableDuringDay>
