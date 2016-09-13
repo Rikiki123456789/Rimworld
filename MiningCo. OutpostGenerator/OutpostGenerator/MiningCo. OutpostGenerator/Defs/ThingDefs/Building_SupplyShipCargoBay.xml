@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+
+  <ThingDef Name="Building_SupplyShipCargoBay" ParentName="BuildingBase" Abstract="True">
+    <defName>SupplyShipCargoBay</defName>
+    <label>supply ship cargo bay</label>
+    <description>Supply ship cargo bay. It is used to transport any kind of goods from the humble MMS to the deepdriller machine. Combat suits and laser weapons may also have their place when supplying a harsh planet.</description>
+    <thingClass>OutpostGenerator.Building_SupplyShipCargoBay</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/SupplyShip/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Standable</passability>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
+    <fillPercent>0</fillPercent>
+    <blockLight>false</blockLight>
+    <selectable>false</selectable>
+    <building>
+      <isEdifice>false</isEdifice>
+      <fixedStorageSettings>
+        <filter>
+          <categories>
+            <li>FoodRaw</li>
+            <li>Weapons</li>
+            <li>Apparel</li>
+            <li>CorpsesHumanlike</li>
+          </categories>
+          <exceptedThingDefs>
+            <li>Hay</li>
+          </exceptedThingDefs>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Low</priority>
+        <filter>
+          <categories>
+            <li>FoodRaw</li>
+            <li>Weapons</li>
+            <li>Apparel</li>
+            <li>CorpsesHumanlike</li>
+          </categories>
+          <exceptedThingDefs>
+            <li>Hay</li>
+          </exceptedThingDefs>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <useHitPoints>false</useHitPoints>
+    <statBases>
+      <WorkToMake>5000</WorkToMake>
+    </statBases>
+    <size>(3,4)</size>
+    <costList>
+      <Steel>250</Steel>
+      <Component>10</Component>
+    </costList>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_SupplyShipCargoBay">
+    <defName>SupplyShipCargoBayLeft</defName>
+    <interactionCellOffset>(-1,0,0)</interactionCellOffset>
+  </ThingDef>
+
+  <ThingDef ParentName="Building_SupplyShipCargoBay">
+    <defName>SupplyShipCargoBayRight</defName>
+    <interactionCellOffset>(2,0,0)</interactionCellOffset>
+  </ThingDef>
+  
+</Buildings>

@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>WarfieldGenerator</defName>
+    <label>warfield generator</label>
+    <thingClass>OutpostGenerator.Building_WarfieldGenerator</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/CommsConsole</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <tickerType>Normal</tickerType>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Standable</passability>
+    <description>This building is only used to generate dead bodies of a previous battle. It will remove itself once this is performed.
+This is a necessary trick as the fogGrid and homeArea prevent damaging pawns and forbidding their bodies during map generation.</description>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  </ThingDef>
+
+</Buildings>

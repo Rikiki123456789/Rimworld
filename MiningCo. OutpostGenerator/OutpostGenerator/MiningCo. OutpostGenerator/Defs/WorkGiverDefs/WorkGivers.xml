@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<WorkGivers>
+
+  <WorkGiverDef>
+    <defName>FightFiresOutpost</defName>
+    <label>fight fires</label>
+    <giverClass>OutpostGenerator.WorkGiver_FightFiresOutpost</giverClass>
+    <workType>Firefighter</workType>
+    <verb>extinguish</verb>
+    <gerund>extinguishing</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>GrowerHarvestOutpost</defName>
+    <label>harvest crops</label>
+    <giverClass>OutpostGenerator.WorkGiver_GrowerHarvestOutpost</giverClass>
+    <workType>Growing</workType>
+    <priorityInType>90</priorityInType>
+    <verb>harvest</verb>
+    <gerund>harvesting</gerund>
+    <scanThings>false</scanThings>
+    <scanCells>true</scanCells>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>GrowerSowOutpost</defName>
+    <label>sow crops</label>
+    <giverClass>OutpostGenerator.WorkGiver_GrowerSowOutpost</giverClass>
+    <workType>Growing</workType>
+    <priorityInType>40</priorityInType>
+    <verb>sow</verb>
+    <gerund>sowing</gerund>
+    <scanThings>false</scanThings>
+    <scanCells>true</scanCells>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>DoctorRescueMiningCoEmployee</defName>
+    <giverClass>OutpostGenerator.WorkGiver_RescueDownedMiningCoEmployee</giverClass>
+    <workType>Doctor</workType>
+    <verb>rescue</verb>
+    <gerund>rescuing</gerund>
+    <priorityInType>91</priorityInType>
+    <directOrderable>false</directOrderable>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>DoctorTransferInjuredEmployee</defName>
+    <giverClass>OutpostGenerator.WorkGiver_TransferInjuredEmployee</giverClass>
+    <workType>Doctor</workType>
+    <verb>transfer</verb>
+    <gerund>transfering</gerund>
+    <priorityInType>90</priorityInType>
+    <directOrderable>false</directOrderable>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>BuryCorpsesOutpost</defName>
+    <label>bury corpses</label>
+    <giverClass>OutpostGenerator.WorkGiver_BuryCorpsesOutpost</giverClass>
+    <workType>Hauling</workType>
+    <verb>bury</verb>
+    <gerund>burying</gerund>
+    <priorityInType>4</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulCorpsesOutpost</defName>
+    <label>haul corpses</label>
+    <giverClass>OutpostGenerator.WorkGiver_HaulCorpsesOutpost</giverClass>
+    <workType>Hauling</workType>
+    <verb>haul</verb>
+    <gerund>hauling</gerund>
+    <priorityInType>3</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>HaulGeneralOutpost</defName>
+    <label>haul general things</label>
+    <giverClass>OutpostGenerator.WorkGiver_HaulGeneralOutpost</giverClass>
+    <workType>Hauling</workType>
+    <verb>haul</verb>
+    <gerund>hauling</gerund>
+    <priorityInType>2</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>FixBrokenDownBuildingOutpost</defName>
+    <label>fix broken-down things</label>
+    <giverClass>OutpostGenerator.WorkGiver_FixBrokenDownBuildingOutpost</giverClass>
+    <workType>Repair</workType>
+    <priorityInType>5</priorityInType>
+    <verb>replace broken components in</verb>
+    <gerund>replacing broken components in</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>RepairOutpost</defName>
+    <label>repair damaged things</label>
+    <giverClass>OutpostGenerator.WorkGiver_RepairOutpost</giverClass>
+    <workType>Repair</workType>
+    <priorityInType>4</priorityInType>
+    <verb>repair</verb>
+    <gerund>repairing</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>CleanFilthOutpost</defName>
+    <label>clean filth</label>
+    <giverClass>OutpostGenerator.WorkGiver_CleanFilthOutpost</giverClass>
+    <workType>Cleaning</workType>
+    <verb>clean</verb>
+    <gerund>cleaning</gerund>
+    <priorityInType>4</priorityInType>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <canBeDoneByNonColonists>true</canBeDoneByNonColonists>
+  </WorkGiverDef>
+
+</WorkGivers>

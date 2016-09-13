@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThoughtDefs>
+
+  <ThoughtDef>
+    <defName>MiningCoEmployee</defName>
+    <durationDays>1200</durationDays>
+    <stackLimit>1</stackLimit>
+    <stages>
+      <li>
+        <label>MiningCo. employee</label>
+        <description>I am proud to be part of this great company!</description>
+        <baseMoodEffect>30</baseMoodEffect>
+      </li>
+    </stages>
+  </ThoughtDef>
+
+</ThoughtDefs>

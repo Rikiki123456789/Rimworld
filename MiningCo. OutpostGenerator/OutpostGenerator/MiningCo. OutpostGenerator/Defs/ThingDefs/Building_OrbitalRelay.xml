@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>OrbitalRelay</defName>
+    <label>orbital relay</label>
+    <description>This giant communication array is able to reach nearest MiningCo. comms satellite and ships orbiting around the planet.</description>
+    <thingClass>OutpostGenerator.Building_OrbitalRelay</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Building/Misc/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+      <shadowData>
+        <volume>(2.5, 1.0, 2.5)</volume>
+      </shadowData>
+    </graphicData>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
+    <altitudeLayer>Building</altitudeLayer>
+    <fillPercent>0.2</fillPercent>
+    <passability>Impassable</passability>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToMake>30000</WorkToMake>
+      <Flammability>0</Flammability>
+      <Beauty>-25</Beauty>
+    </statBases>
+    <size>(5,5)</size>
+    <costList>
+      <Steel>350</Steel>
+      <Plasteel>100</Plasteel>
+      <Component>20</Component>
+    </costList>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>250</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+    </comps>
+    <building>
+      <soundDispense>GeothermalPlant_Ambience</soundDispense>
+    </building>
+  </ThingDef>
+
+</Buildings>

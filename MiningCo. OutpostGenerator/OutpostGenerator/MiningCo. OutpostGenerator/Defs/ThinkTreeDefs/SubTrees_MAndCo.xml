@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThinkTrees>
+
+  <ThinkTreeDef>
+    <defName>MiningCoPreMain</defName>
+    <insertTag>Humanlike_PreMain</insertTag>
+    <insertPriority>100</insertPriority>
+    <thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+        <!--  If MiningCo. employee, do emergency work.  -->
+        <li Class="OutpostGenerator.ThinkNode_ConditionalMiningCoEmployee">
+          <subNodes>
+            <!--  Seek allowed area: performed with JobGiver_WanderOutpost. -->
+            <!--  Seek safe temperatures  -->
+            <li Class="JobGiver_SeekSafeTemperature"/>
+            <!--  Drop unnused inventory  -->
+            <li Class="JobGiver_DropUnusedInventory"/>
+            <!--  Get food (only if starving)  -->
+            <li Class="ThinkNode_ConditionalStarving">
+              <subNodes>
+                <li Class="JobGiver_GetFood">
+                  <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
+                </li>
+              </subNodes>
+            </li>
+            <!--  Lord directives (medium priority)  -->
+            <li Class="ThinkNode_JoinVoluntarilyJoinableLord">
+              <dutyHook>MediumPriority</dutyHook>
+              <subNodes>
+                <li Class="ThinkNode_Subtree">
+                  <treeDef>LordDuty</treeDef>
+                </li>
+              </subNodes>
+            </li>
+            <!--  Pack food if not hungry -->
+            <li Class="ThinkNode_ConditionalNeedPercentageAbove">
+              <need>Food</need>
+              <threshold>0.6</threshold>
+              <subNodes>
+                <li Class="JobGiver_PackFood">
+                  <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
+                </li>
+              </subNodes>
+            </li>
+          </subNodes>
+        </li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  
+  <ThinkTreeDef>
+    <defName>MiningCoPostMain</defName>
+    <insertTag>Humanlike_PostMain</insertTag>
+    <insertPriority>100</insertPriority>
+    <thinkRoot Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="OutpostGenerator.ThinkNode_ConditionalMiningCoEmployee">
+          <subNodes>
+            <li Class="ThinkNode_PrioritySorter">
+              <leaveJoinableLordIfIssuesJob>true</leaveJoinableLordIfIssuesJob>
+              <subNodes>
+                <li Class="JobGiver_GetFood"/>
+                <li Class="JobGiver_GetRest"/>
+                <li Class="ThinkNode_Priority_GetJoy">
+                  <subNodes>
+                    <li Class="JobGiver_GetJoyInBed"/>
+                    <li Class="JobGiver_GetJoy"/>
+                  </subNodes>
+                </li>
+                <li Class="JobGiver_Work"/>
+              </subNodes>
+            </li>
+            <li Class="OutpostGenerator.JobGiver_ExitWithShip"/>
+            <li Class="OutpostGenerator.JobGiver_WanderOutpost">
+              <maxDanger>None</maxDanger>
+            </li>
+            <li Class="JobGiver_WanderAnywhere">
+              <maxDanger>Deadly</maxDanger>
+            </li>
+            <li Class="JobGiver_IdleError"/>
+          </subNodes>
+        </li>
+      </subNodes>
+    </thinkRoot>
+  </ThinkTreeDef>
+  
+</ThinkTrees>

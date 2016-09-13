@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>MiningCo. OutpostGenerator</name>
+	<author>Rikiki</author>
+	<url>https://ludeon.com/forums/index.php?topic=14711.msg153944#msg153944</url>
+  <targetVersion>0.15.1284</targetVersion>
+	<description>This mod adds a chance of spawning an MiningCo. outpost on map generation.
+See the forum thread for content/changelog and related mods. https://ludeon.com/forums/index.php?topic=14711.msg153944#msg153944 </description>
+</ModMetaData>

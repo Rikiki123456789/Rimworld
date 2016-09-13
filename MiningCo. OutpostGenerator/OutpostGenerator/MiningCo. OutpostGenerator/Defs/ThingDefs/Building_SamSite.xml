@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>SamSite</defName>
+    <label>SAM site</label>
+    <description>Anti-air missile battery. Automatically launches missiles at enemy air targets.</description>
+    <thingClass>OutpostGenerator.Building_SamSite</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Security/SamSite</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Things/Building/Security/SamSiteUiIcon</uiIconPath>
+    <size>(3,3)</size>
+    <altitudeLayer>Building</altitudeLayer>
+    <statBases>
+      <MaxHitPoints>750</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <WorkToMake>45000</WorkToMake>
+      <Beauty>-50</Beauty>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>false</startElectricalFires>
+        <basePowerConsumption>500</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Explosive">
+        <explosiveRadius>5.9</explosiveRadius>
+        <explosiveDamageType>Bomb</explosiveDamageType>
+      </li>
+      <li Class="CompProperties_Forbiddable"/>
+    </comps>
+    <passability>Impassable</passability>
+    <fillPercent>0.5</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <staticSunShadowHeight>0.50</staticSunShadowHeight>
+    <hasTooltip>false</hasTooltip>
+    <costList>
+      <Steel>500</Steel>
+      <Plasteel>200</Plasteel>
+      <Component>5</Component>
+    </costList>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <building>
+      <ai_combatDangerous>false</ai_combatDangerous>
+      <turretTopgraphicPath>Things/Building/Security/SamSite_Top</turretTopgraphicPath>
+      <turretShellDef>Sam</turretShellDef>
+      <soundDispense>GeothermalPlant_Ambience</soundDispense>
+    </building>
+  </ThingDef>
+
+</ThingDefs>

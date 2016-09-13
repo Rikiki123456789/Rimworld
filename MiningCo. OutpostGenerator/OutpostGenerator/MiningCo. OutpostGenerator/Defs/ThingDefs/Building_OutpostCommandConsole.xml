@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>OutpostCommandConsole</defName>
+    <label>outpost command console</label>
+    <description>The outpost command console houses an AI persona core. This AI is in charge of security systems of all the base.</description>
+    <thingClass>OutpostGenerator.Building_OutpostCommandConsole</thingClass>
+    <tickerType>Never</tickerType>
+    <graphicData>
+      <texPath>Things/Building/Misc/OutpostCommandConsole</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5,4)</drawSize>
+      <damageData>
+        <rect>(0,0,3,1.8)</rect>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <castEdgeShadows>true</castEdgeShadows>
+    <fillPercent>1</fillPercent>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <WorkToMake>2200</WorkToMake>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <size>(3,2)</size>
+    <costList>
+      <Steel>120</Steel>
+      <Component>4</Component>
+    </costList>
+    <interactionCellOffset>(0,0,2)</interactionCellOffset>
+    <hasInteractionCell>true</hasInteractionCell>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <startElectricalFires>true</startElectricalFires>
+        <basePowerConsumption>200</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+    </comps>
+    <staticSunShadowHeight>0.5</staticSunShadowHeight>
+    <researchPrerequisites>
+      <li>MicroelectronicsBasics</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Buildings>

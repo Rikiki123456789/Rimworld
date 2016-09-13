@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Buildings>
+
+  <ThingDef Name="FurnitureBase" ParentName="BuildingBase" Abstract="True">
+    <comps>
+      <li>
+        <compClass>CompQuality</compClass>
+      </li>
+    </comps>
+    <minifiedDef>MinifiedFurniture</minifiedDef>
+  </ThingDef>
+
+  <ThingDef ParentName="FurnitureBase">
+    <defName>FoodRack</defName>
+    <label>food rack</label>
+    <description>A rack used to store packaged meals.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Furniture/EquipmentRack</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(3,2)</drawSize>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <fillPercent>0.4</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <stuffCategories>
+      <li>Metallic</li>
+      <li>Woody</li>
+      <li>Stony</li>
+    </stuffCategories>
+    <costStuffCount>30</costStuffCount>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToMake>1050</WorkToMake>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <size>(2,1)</size>
+    <building>
+      <preventDeterioration>true</preventDeterioration>
+      <fixedStorageSettings>
+        <filter>
+          <categories>
+            <li>FoodMeals</li>
+          </categories>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Critical</priority>
+        <filter>
+          <categories>
+            <li>FoodMeals</li>
+          </categories>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <staticSunShadowHeight>0.5</staticSunShadowHeight>
+    <surfaceType>Item</surfaceType>
+  </ThingDef>
+
+  <ThingDef ParentName="FurnitureBase">
+    <defName>SparePartsCabinet</defName>
+    <label>spare parts cabinet</label>
+    <description>A cabinet used to store spare parts.</description>
+    <thingClass>Building_Storage</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Misc/ToolCabinet</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(2,1)</drawSize>
+      <color>(96,114,95)</color>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>PassThroughOnly</passability>
+    <staticSunShadowHeight>0.35</staticSunShadowHeight>
+    <fillPercent>0.5</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <costList>
+      <Steel>50</Steel>
+    </costList>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <WorkToMake>1800</WorkToMake>
+      <Flammability>1.0</Flammability>
+    </statBases>
+    <size>(2,1)</size>
+    <building>
+      <preventDeterioration>true</preventDeterioration>
+      <fixedStorageSettings>
+        <filter>
+          <thingDefs>
+            <li>Component</li>
+          </thingDefs>
+        </filter>
+      </fixedStorageSettings>
+      <defaultStorageSettings>
+        <priority>Critical</priority>
+        <filter>
+          <thingDefs>
+            <li>Component</li>
+          </thingDefs>
+        </filter>
+      </defaultStorageSettings>
+    </building>
+    <inspectorTabs>
+      <li>ITab_Storage</li>
+    </inspectorTabs>
+    <surfaceType>Item</surfaceType>
+  </ThingDef>
+
+</Buildings>

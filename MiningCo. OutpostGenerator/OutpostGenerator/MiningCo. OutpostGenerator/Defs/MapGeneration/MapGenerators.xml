@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <GenStepDef>
+    <defName>GenerateOutpost</defName>
+    <mapGenerator>MainMapGenerator</mapGenerator>
+    <order>510</order>
+    <genStep Class="OutpostGenerator.Genstep_GenerateOutpost"/>
+  </GenStepDef>
+    
+</Defs>
