@@ -13,47 +13,61 @@ using Verse;         // RimWorld universal objects are here
 namespace CaveworldFlora
 {
     /// <summary>
-    /// MapComponent_CavePlant class.
+    /// MapComponent_ClusterPlant class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class MapComponent_CavePlant : MapComponent
+    public class MapComponent_ClusterPlant : MapComponent
     {
-        public List<ThingDef> cavePlantDefs = new List<ThingDef>();
-        public float commonalitySum = 0;
+        private List<ThingDef_ClusterPlant> cavePlantDefsInternal = null;
         public int randomSpawnPeriodInTicks = 0;
+        public int nextRandomSpawnTick = 10;
 
-        public override void ExposeData()
+        public List<ThingDef_ClusterPlant> cavePlantDefs
         {
-            if (this.cavePlantDefs.Count == 0)
+            get
             {
-                GetCavePlantDefsList();
+                //Log.Message("MapComponent_ClusterPlant: get cavePlantDefs");
+                if (cavePlantDefsInternal.NullOrEmpty())
+                {
+                    //Log.Message("MapComponent_ClusterPlant: cavePlantDefs is null or empty");
+                    cavePlantDefsInternal = new List<ThingDef_ClusterPlant>();
+                    foreach (ThingDef plantDef in DefDatabase<ThingDef>.AllDefs)
+                    {
+                        if (plantDef.category == ThingCategory.Plant)
+                        {
+                            //Log.Message("plantDef = " + plantDef);
+                            //Log.Message("plantDef.thingClass = " + plantDef.thingClass.ToString());
+                            if ((plantDef as ThingDef_ClusterPlant) != null)
+                            /*if ((plantDef.thingClass == typeof(CaveworldFlora.ClusterPlant))
+                                || (plantDef.thingClass == typeof(CaveworldFlora.ClusterPlant_Gleamcap))
+                                || (plantDef.thingClass == typeof(CaveworldFlora.ClusterPlant_DevilTongue)))*/
+                            {
+                                //Log.Message("adding plantDef = " + plantDef);
+                                cavePlantDefsInternal.Add(plantDef as ThingDef_ClusterPlant);
+                            }
+                        }
+                    }
+                }
+                return cavePlantDefsInternal;
             }
         }
 
         public override void MapComponentTick()
         {
-            // On map initialization treatment.
-            if (Find.TickManager.TicksGame == 1)
-            {
-                GetCavePlantDefsList();
-                // TODO: unnecessary as long as there is no natural caves.
-                /*for (int spawnTryIndex = 0; spawnTryIndex < 100; spawnTryIndex++)
-                {
-                    TrySpawnNewClusterAtRandomPosition();
-                }*/
-            }
-
-            // Normal treatment.
             if (randomSpawnPeriodInTicks == 0)
             {
                 // Occurs when loading a savegame.
                 int mapSurfaceCoefficient = Find.Map.Size.x * 2 + Find.Map.Size.z * 2;
-                randomSpawnPeriodInTicks = 200000 / (mapSurfaceCoefficient / 100);
+                randomSpawnPeriodInTicks = 200000 / (mapSurfaceCoefficient / 100);                
+                randomSpawnPeriodInTicks = 1000; // TODO: fastEcology debug.
+                //Log.Message("randomSpawnPeriodInTicks = " + randomSpawnPeriodInTicks);
             }
-	        if (Find.TickManager.TicksGame % randomSpawnPeriodInTicks == 0)
+            randomSpawnPeriodInTicks = 1000; // TODO: fastEcology debug.
+            if (Find.TickManager.TicksGame > nextRandomSpawnTick)
             {
+                nextRandomSpawnTick = Find.TickManager.TicksGame + randomSpawnPeriodInTicks;
                 TrySpawnNewClusterAtRandomPosition();
             }
         }
@@ -61,100 +75,28 @@ namespace CaveworldFlora
         /// <summary>
         /// Tries to spawn a new cluster at a random position on the map. The exclusivity radius still applies.
         /// </summary>
-        public bool TrySpawnNewClusterAtRandomPosition()
+        public void TrySpawnNewClusterAtRandomPosition()
         {
-            ThingDef cavePlantDef = GetRandomCavePlantDef();
-            int newClusterSize = Rand.RangeInclusive(cavePlantDef.plant.wildClusterSizeRange.min, cavePlantDef.plant.wildClusterSizeRange.max);
-            float newClusterExclusivityRadius = CavePlant.GetClusterExclusivityRadius(cavePlantDef, newClusterSize);
-            int checkedCellsNumber = 0;
-            for (checkedCellsNumber = 0; checkedCellsNumber < 1000; checkedCellsNumber++)
+            //Log.Message("TrySpawnNewClusterAtRandomPosition");
+            for (int defindex = 0; defindex < cavePlantDefs.Count; defindex++)
             {
-                IntVec3 newClusterCell = new IntVec3(Rand.Range(0, Find.Map.Size.x), 0, Rand.Range(0, Find.Map.Size.z));
-                if (Find.RoofGrid.Roofed(newClusterCell)
-                    && ((Find.ThingGrid.ThingsListAt(newClusterCell).Count == 0)
-                    || ((Find.ThingGrid.ThingAt(newClusterCell, ThingDef.Named("RockRubble")) != null)
-                     && (Find.ThingGrid.ThingAt(newClusterCell, ThingCategory.Plant) == null)))
-                    && CavePlant.IsLightConditionOk(newClusterCell)
-                    && CavePlant.IsNearNaturalRockBlock(newClusterCell)
-                    && CavePlant.IsTerrainConditionOk(newClusterCell)
-                    && CavePlant.IsTemperatureConditionOk(newClusterCell))
-                {
-                    float cavePlantSearchRadius = CavePlant.GetMaxClusterExclusivityRadius(cavePlantDef) * 2f;
-                    IEnumerable<IntVec3> cellsAroundNewCluster = GenRadial.RadialCellsAround(newClusterCell, cavePlantSearchRadius, false);
-                    bool anotherClusterIsTooClose = false;
-                    foreach (IntVec3 cell in cellsAroundNewCluster)
-                    {
-                        Thing potentialDistantCavePlant = Find.ThingGrid.ThingAt(cell, cavePlantDef);
-                        if (potentialDistantCavePlant != null)
-                        {
-                            CavePlant distantCavePlant = potentialDistantCavePlant as CavePlant;
-                            if (distantCavePlant.Position.InHorDistOf(cell, newClusterExclusivityRadius + distantCavePlant.GetClusterExclusivityRadius()))
-                            {
-                                anotherClusterIsTooClose = true;
-                                break;
-                            }
-                        }
-                    }
-                    if (anotherClusterIsTooClose == false)
-                    {
-                        GenSpawn.Spawn(cavePlantDef, newClusterCell);
-                        return true;
-                    }
-                }
+                //Log.Message("cavePlantDefs: " + cavePlantDefs[defindex].ToString());
             }
-            return false;
-        }
+            ThingDef_ClusterPlant cavePlantDef = cavePlantDefs.RandomElementByWeight((ThingDef_ClusterPlant plantDef) => plantDef.plant.wildCommonalityMaxFraction / plantDef.clusterSizeRange.Average);
+            //Log.Message("selected cavePlantDef = " + cavePlantDef.ToString());
 
-        /// <summary>
-        /// Get the list of cave plant defs and compute the sum of their wildCommonalityMaxFraction.
-        /// </summary>
-        public void GetCavePlantDefsList()
-        {
-            List<ThingDef> allDefsForReading = DefDatabase<ThingDef>.AllDefsListForReading;
-            if (allDefsForReading.NullOrEmpty())
+            int newDesiredClusterSize = cavePlantDef.clusterSizeRange.RandomInRange;
+            IntVec3 spawnCell = IntVec3.Invalid;
+            GenClusterPlantReproduction.TryGetRandomClusterSpawnCell(cavePlantDef, newDesiredClusterSize, true, out spawnCell);
+            if (spawnCell.IsValid)
             {
-                Log.Warning("Caveworld flora: allDefsForReading is null or empty.");
-                return;
-            }
-            foreach (ThingDef potentialCavePlantDef in allDefsForReading)
-            {
-                if (potentialCavePlantDef.thingClass.Name.Contains("CavePlant"))
-                {
-                    this.cavePlantDefs.Add(potentialCavePlantDef);
-                }
-            }
-
-            if (this.cavePlantDefs.Count != 0)
-            {
-                foreach (ThingDef cavePlantDef in this.cavePlantDefs)
-                {
-                    this.commonalitySum += cavePlantDef.plant.wildCommonalityMaxFraction;
-                }
-            }
-            else
-            {
-                Log.Warning("Caveworld flora: got no cave plant when reading all defs.");
+                Cluster.SpawnNewClusterAt(spawnCell, cavePlantDef, newDesiredClusterSize);
             }
         }
 
-        /// <summary>
-        /// Get a random cave plant def from the list built in GetCavePlantDefsList function.
-        /// </summary>
-        public ThingDef GetRandomCavePlantDef()
+        public override void ExposeData()
         {
-            float randomPlantIndex = Rand.Range(0f, this.commonalitySum);
-            float localCommonalitySum = 0;
-            ThingDef randomCavePlantDef = null;
-            foreach (ThingDef cavePlantDef in this.cavePlantDefs)
-            {
-                localCommonalitySum += cavePlantDef.plant.wildCommonalityMaxFraction;
-                if (randomPlantIndex < localCommonalitySum)
-                {
-                    randomCavePlantDef = cavePlantDef;
-                    break;
-                }
-            }
-            return randomCavePlantDef;
+            Scribe_Values.LookValue<int>(ref nextRandomSpawnTick, "nextRandomSpawnTick");
         }
     }
 }

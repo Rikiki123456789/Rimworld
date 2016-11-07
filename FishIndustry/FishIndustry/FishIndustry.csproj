@@ -83,6 +83,9 @@
     <Content Include="FishIndustry\Defs\IncidentDefs\Incident MicroFungus.xml" />
     <Content Include="FishIndustry\Defs\JobDefs\Jobs_Joy.xml" />
     <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml" />
+    <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_MakeFishingRod.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="FishIndustry\Defs\SkillDefs\Skills.xml" />
     <Content Include="FishIndustry\Defs\StatDefs\Stats_Pawns_WorkGeneral_Fishing.xml" />
     <Content Include="FishIndustry\Defs\ThingCategoryDefs\ThingCategories.xml" />
@@ -105,7 +108,9 @@
     <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_PrepareFishes.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchProjects_Aquaculture.xml" />
+    <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchProjects_Aquaculture.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
       <SubType>Designer</SubType>
     </Content>

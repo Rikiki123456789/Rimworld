@@ -25,7 +25,7 @@ namespace CampfireParty
             {
                 initAction = () =>
                 {
-                    // Look for Thought_HadCampfireParty3 and replace it with Thought_HadCampfireParty4.
+                    /*// Look for Thought_HadCampfireParty3 and replace it with Thought_HadCampfireParty4.
                     IEnumerable<Thought> thoughts = this.pawn.needs.mood.thoughts.ThoughtsOfDef(Util_CampfireParty.Thought_HadCampfireParty3);
                     if (thoughts.Count() != 0)
                     {
@@ -50,7 +50,7 @@ namespace CampfireParty
                         return;
                     }
                     // Pawn has no party thought, just add Thought_HadCampfireParty1.
-                    this.pawn.needs.mood.thoughts.TryGainThought(Util_CampfireParty.Thought_HadCampfireParty1);
+                    this.pawn.needs.mood.thoughts.TryGainThought(Util_CampfireParty.Thought_HadCampfireParty1);*/
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
             };

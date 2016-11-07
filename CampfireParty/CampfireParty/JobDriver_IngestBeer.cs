@@ -54,7 +54,7 @@ namespace CampfireParty
                     this.CurJob.maxNumToCarry = 1;
                     toilsList.Add(Toils_Goto.GotoThing(TargetIndex.A, PathEndMode.ClosestTouch).FailOnDespawnedNullOrForbidden(TargetIndex.A));
                     toilsList.Add(Toils_Ingest.PickupIngestible(TargetIndex.A, this.pawn)); // TargetIndex.A becomes the carried beer.
-                    toilsList.Add(Toils_Ingest.CarryIngestibleToChewSpot(this.pawn));
+                    toilsList.Add(Toils_Ingest.CarryIngestibleToChewSpot(this.pawn, TargetIndex.A));
                     toilsList.Add(Toils_Ingest.FindAdjacentEatSurface(TargetIndex.B, TargetIndex.A));
                     // float durationMultiplier = 1f / this.pawn.GetStatValue(StatDefOf.EatingSpeed, true); // Don't use it so the job duration is nearly the same for all pawns.
                     float durationMultiplier = 1f;
@@ -72,8 +72,8 @@ namespace CampfireParty
             {
                 moteDef = Util_CampfireParty.Mote_BeerUnavailable;
             }
-            MoteAttached moteAttached = (MoteAttached)ThingMaker.MakeThing(moteDef);
-            moteAttached.AttachTo(this.pawn);
+            MoteDualAttached moteAttached = (MoteDualAttached)ThingMaker.MakeThing(moteDef);
+            moteAttached.Attach(this.pawn);
             GenSpawn.Spawn(moteAttached, this.pawn.Position);
 
             return toilsList;

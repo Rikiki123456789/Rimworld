@@ -48,6 +48,10 @@
         <li>Fisher</li>
       </defaultOutfitTags>
     </apparel>
+    <recipeUsers>
+      <li>FishingPier</li>
+      <li>CraftingSpot</li>
+    </recipeUsers>
 	</ThingDef>
   
 </Defs>

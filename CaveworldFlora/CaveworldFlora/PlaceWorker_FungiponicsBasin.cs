@@ -31,6 +31,10 @@ namespace CaveworldFlora
         {
             foreach (IntVec3 cell in GenAdj.CellsOccupiedBy(loc, rot, checkingDef.Size))
             {
+                if (ClusterPlant.IsNaturalRoughRockAt(cell) == false)
+                {
+                    return new AcceptanceReport("Fungiponics basin must be built on rough rock.");
+                }
                 if (Find.RoofGrid.Roofed(loc) == false)
                 {
                     return new AcceptanceReport("Fungiponics basin must be roofed.");

@@ -104,4 +104,26 @@
     </comps>
   </ThingDef>
 
+  <ThingDef ParentName="PlantFoodRawBase">
+    <defName>RawGiantLeaf</defName>
+    <label>giant leaf</label>
+    <description>Raw giant leaf. Not really appetizing raw, it is better prepared as a soup.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/PlantFoodRaw/RawGiantLeaf</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <MarketValue>2.0</MarketValue>
+    </statBases>
+    <ingestible>
+      <foodType>VegetableOrFruit</foodType>
+      <specialThoughtDirect>AteRawFood</specialThoughtDirect>
+    </ingestible>
+    <comps>
+      <li Class="CompProperties_Rottable">
+        <daysToRotStart>25</daysToRotStart>
+      </li>
+    </comps>
+  </ThingDef>
+
 </Resources>

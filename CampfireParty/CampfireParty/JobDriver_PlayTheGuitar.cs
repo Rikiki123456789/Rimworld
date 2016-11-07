@@ -43,8 +43,8 @@ namespace CampfireParty
                 initAction = () =>
                 {
                     tickCounter = Rand.Range(35, 50);
-                    MoteAttached moteAttached = (MoteAttached)ThingMaker.MakeThing(Util_CampfireParty.Mote_Guitar);
-                    moteAttached.AttachTo(this.pawn);
+                    MoteDualAttached moteAttached = (MoteDualAttached)ThingMaker.MakeThing(Util_CampfireParty.Mote_Guitar);
+                    moteAttached.Attach(this.pawn);
                     GenSpawn.Spawn(moteAttached, this.pawn.Position);
                     this.pawn.Drawer.rotator.FaceCell(this.pawn.Position + new IntVec3(0, 0, -1));
                 },
@@ -54,7 +54,7 @@ namespace CampfireParty
                     if (tickCounter <= 0)
                     {
                         tickCounter = Rand.Range(35, 50);
-                        MoteThrower.ThrowDrift(this.pawn.Position, Util_CampfireParty.Mote_MusicNote);
+                        MoteMaker.MakeColonistActionOverlay(this.pawn, Util_CampfireParty.Mote_MusicNote);
                     }
                     // Gain some joy.
                     this.pawn.needs.joy.GainJoy(this.CurJob.def.joyGainRate * 0.000144f, Util_CampfireParty.JoyKindDefOf_Social);

@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!--=============== Bases ==============-->
+
+  <ThingDef Name="MoteBase" Abstract="True">
+    <thingClass>MoteThrown</thingClass>
+    <label>Mote</label>
+    <category>Mote</category>
+    <graphicData>
+      <graphicClass>Graphic_Mote</graphicClass>
+      <shaderType>Mote</shaderType>
+    </graphicData>
+    <altitudeLayer>MoteLow</altitudeLayer>
+    <tickerType>Normal</tickerType>
+    <useHitPoints>false</useHitPoints>
+    <isSaveable>false</isSaveable>
+    <rotatable>false</rotatable>
+  </ThingDef>
+
+  <!--=============== Puffs ==============-->
+  
+  <ThingDef ParentName="MoteBase">
+    <defName>Mote_PoisonSmoke</defName>
+    <graphicData>
+      <texPath>Things/Mote/Smoke</texPath>
+    </graphicData>
+    <altitudeLayer>MoteOverhead</altitudeLayer>
+    <mote>
+      <fadeInTime>4</fadeInTime>
+      <solidTime>6</solidTime>
+      <fadeOutTime>4</fadeOutTime>
+      <growthRate>0.005</growthRate>
+    </mote>
+  </ThingDef>
+
+</Defs>

@@ -22,11 +22,12 @@ namespace CaveworldFlora
         public override string GetInspectString()
         {
             float temperature = GenTemperature.GetTemperatureForCell(this.Position);
-            if (temperature < CavePlant.minTempToGrow)
+            ThingDef_ClusterPlant clusterPlantDef = this.GetPlantDefToGrow() as ThingDef_ClusterPlant;
+            if (temperature < clusterPlantDef.minGrowTemperature)
             {
                 return "Cannot grow now: too cold.";
             }
-            else if (temperature > CavePlant.maxTempToGrow)
+            else if (temperature > clusterPlantDef.maxGrowTemperature)
             {
                 return "Cannot grow now: too hot.";
             }

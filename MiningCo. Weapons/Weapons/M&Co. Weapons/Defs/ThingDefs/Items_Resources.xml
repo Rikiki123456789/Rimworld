@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Resources>
+
+  <ThingDef Name="ResourceBase" Abstract="True">
+    <thingClass>ThingWithComps</thingClass>
+    <label>Unspecified resource</label>
+    <category>Item</category>
+    <resourceReadoutPriority>Middle</resourceReadoutPriority>
+    <useHitPoints>true</useHitPoints>
+    <selectable>true</selectable>
+    <altitudeLayer>Item</altitudeLayer>
+    <stackLimit>75</stackLimit>
+    <comps>
+      <li>
+        <compClass>CompForbiddable</compClass>
+      </li>
+    </comps>
+    <alwaysHaulable>true</alwaysHaulable>
+    <drawGUIOverlay>true</drawGUIOverlay>
+    <rotatable>false</rotatable>
+    <pathCost>15</pathCost>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>TargetingModule</defName>
+    <label>Targeting module</label>
+    <description>An advanced electronic module. Able to scan for target and track their position.</description>
+    <graphicClass>Graphic_Single</graphicClass>
+    <graphicPath>Things/Item/Resource/TargetingModule</graphicPath>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <MarketValue>125</MarketValue>
+      <DeteriorationRate>2</DeteriorationRate>
+    </statBases>
+    <thingCategories>
+      <li>Security</li>
+    </thingCategories>
+    <stackLimit>12</stackLimit>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+		<defName>WeaponParts</defName>
+		<label>Weapon parts</label>
+		<description>Some weapons parts used in weapon crafting.</description>
+    <graphicClass>Graphic_Single</graphicClass>
+    <graphicPath>Things/Item/Resource/WeaponParts</graphicPath>
+		<soundInteract>Metal_Drop</soundInteract>
+		<soundDrop>Metal_Drop</soundDrop>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Flammability>0.1</Flammability>
+      <MarketValue>50</MarketValue>
+      <DeteriorationRate>0.5</DeteriorationRate>
+    </statBases>
+		<thingCategories>
+			<li>Security</li>
+		</thingCategories>
+	</ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>CrysteelSpawner</defName>
+    <label>Crysteel spawner</label>
+    <thingClass>Weapons.CrysteelSpawner</thingClass>
+    <description>Object used to randomly spawn a crysteel at the end of the recipe.</description>
+    <graphicClass>Graphic_Single</graphicClass>
+    <graphicPath>Things/Item/Resource/Crysteel</graphicPath>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <thingCategories>
+      <li>Security</li>
+    </thingCategories>
+    <tradeTags>
+      <li>NeverCarried</li>
+    </tradeTags>
+  </ThingDef>
+
+  <ThingDef ParentName="ResourceBase">
+    <defName>Crysteel</defName>
+    <label>Crysteel</label>
+    <description>An extremely precious plasteel crystal. Only extracted from plasteel by experienced silversmith, these crystals are used in advanced weaponry and sophisticated computers.</description>
+    <graphicClass>Graphic_Single</graphicClass>
+    <graphicPath>Things/Item/Resource/Crysteel</graphicPath>
+    <soundInteract>Metal_Drop</soundInteract>
+    <soundDrop>Metal_Drop</soundDrop>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <Flammability>0</Flammability>
+      <MarketValue>500</MarketValue>
+      <DeteriorationRate>0</DeteriorationRate>
+    </statBases>
+    <thingCategories>
+      <li>Security</li>
+    </thingCategories>
+  </ThingDef>
+
+</Resources>

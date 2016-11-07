@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<IncidentDefs>
+
+  <!--=============== ShipChunkDrop =============-->
+  
+  <IncidentDef>
+    <defName>ShipChunkDrop</defName>
+    <label>ship chunk drop</label>
+    <workerClass>CaveBiome.IncidentWorker_ShipChunkDropInCave</workerClass>
+    <category>ShipChunkDrop</category>
+  </IncidentDef>
+
+  <!--================= Misc ================-->
+
+  <IncidentDef>
+    <defName>ResourcePodCrash</defName>
+    <label>resource pod crash</label>
+    <workerClass>CaveBiome.IncidentWorker_ResourcePodCrashInCave</workerClass>
+    <baseChance>4</baseChance>
+  </IncidentDef>
+
+	<IncidentDef>
+		<defName>RefugeePodCrash</defName>
+    <label>refugee pod crash</label>
+    <workerClass>CaveBiome.IncidentWorker_RefugeePodCrashInCave</workerClass>
+		<baseChance>1.5</baseChance>
+		<populationEffect>Increase</populationEffect>
+	</IncidentDef>
+
+</IncidentDefs>

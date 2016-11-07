@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResearchProjectDefs>
+
+  <ResearchProjectDef>
+    <defName>ResearchSkywrathController</defName>
+    <label>.</label>
+    <description>Don't bother researching this, this is just a modder trick to hide a building...</description>
+    <descriptionDiscovered>You can now build a powerful weather controller to unleash the sky's wrath on your ennemies.</descriptionDiscovered>
+    <totalCost>1000000000</totalCost>
+    <prerequisites>
+      <li>ResearchSkywrathController</li>
+    </prerequisites>
+  </ResearchProjectDef>
+
+</ResearchProjectDefs>

@@ -18,15 +18,61 @@ namespace OutpostGenerator
     // TODO: add artillery manning and resupply?
     // TODO: add strafe-run on siegeing raiders before landing!
     // TODO: add a geologist scan team with MMS in gear.
+    // TODO: do not overwrite designations. Use this instead:
+    indexer DesignationCategory.xml:
+
+        <? xml version="1.0" encoding="utf-8" ?>
+<Defs>
+	<DesignationCategoryDef>
+		<defName>OrdersDisableAll</defName>
+		<label>OrdersDisableAll(shouldbehidden)</label>
+		<description>Designate specific interactions with specific things.</description>
+		<order>9000</order>
+		<specialDesignatorClasses>
+			<li>DeactivateAll.Designator_Disable</li>
+		</specialDesignatorClasses>
+	</DesignationCategoryDef>
+</Defs>
 
 
-    /// <summary>
-    /// OG_BigOutpost class.
-    /// </summary>
-    /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
-    public static class OG_BigOutpost
+        public class Designator_Disable : Designator
+    {
+        public Designator_Disable()
+        {
+            this.defaultLabel = "Disable Mechanoid";
+            this.icon = ContentFinder<Texture2D>.Get("UI/Designators/Haul", true);
+            this.defaultDesc = "Quickly designate downed Mechanoids to add disable medical bills.";
+            this.soundDragSustain = SoundDefOf.DesignateDragStandard;
+            this.soundDragChanged = SoundDefOf.DesignateDragStandardChanged;
+            this.useMouseIcon = true;
+            this.soundSucceeded = SoundDefOf.DesignateHaul;
+
+            DesignationCategoryDef orders = DefDatabase<DesignationCategoryDef>.GetNamed("Orders");
+            Type thisType = orders.specialDesignatorClasses.Find(x => x == this.GetType());
+            if (thisType == null)
+            {
+                orders.specialDesignatorClasses.Add(this.GetType());
+                orders.ResolveReferences();
+                DesignationCategoryDef DCDtoremove = DefDatabase<DesignationCategoryDef>.GetNamed("OrdersDisableAll");
+                List<DesignationCategoryDef> allDCDs = DefDatabase<DesignationCategoryDef>.AllDefsListForReading;
+                allDCDs.Remove(DCDtoremove);
+                DefDatabase<DesignationCategoryDef>.ResolveAllReferences();
+
+            }
+            else {
+                //We got here because this designator already exists in Orders.  
+                //In the future we might need to do something with this.
+            }
+        }
+
+
+        /// <summary>
+        /// OG_BigOutpost class.
+        /// </summary>
+        /// <author>Rikiki</author>
+        /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
+        /// Remember learning is always better than just copy/paste...</permission>
+        public static class OG_BigOutpost
     {
         public const int horizontalZonesNumber = 7;
         public const int verticalZonesNumber = 7;

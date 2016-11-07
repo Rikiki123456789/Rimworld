@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3EB8FED6-314E-487B-AEF5-518D4370C4C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CaveBiome</RootNamespace>
+    <AssemblyName>CaveBiome</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\RimWorld1284Win\RimWorld1284Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="CaveworldFlora">
+      <HintPath>..\..\CaveworldFlora\CaveworldFlora\CaveworldFlora\Assemblies\CaveworldFlora.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\RimWorld1284Win\RimWorld1284Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_CrashedShipPartCopy.cs" />
+    <Compile Include="Building_AnimalCorpsesGenerator.cs" />
+    <Compile Include="Building_VillagerCorpsesGenerator.cs" />
+    <Compile Include="IncidentWorker_RefugeePodCrashInCaveInCave.cs" />
+    <Compile Include="IncidentWorker_ResourcePodCrashInCave.cs" />
+    <Compile Include="IncidentWorker_ShipChunkDropInCave.cs" />
+    <Compile Include="IncidentWorker_FlashstormInCave.cs" />
+    <Compile Include="IncidentWorker_PoisonShipPartCrashInCave.cs" />
+    <Compile Include="IncidentWorker_PsychicEmanatorShipPartCrashInCave.cs" />
+    <Compile Include="IncidentWorker_ShipPartCrashInCave.cs" />
+    <Compile Include="MapComponent_CaveWellLight.cs" />
+    <Compile Include="Util_CaveBiome.cs" />
+    <Compile Include="BiomeWorker_Cave.cs" />
+    <Compile Include="GenStep_CavePlants.cs" />
+    <Compile Include="MapCondition_Cave.cs" />
+    <Compile Include="GenStep_CaveInitializeWeatherAndLight.cs" />
+    <Compile Include="GenStep_FindPlayerStartSpot.cs" />
+    <Compile Include="GenStep_CaveRoof.cs" />
+    <Compile Include="GenStep_CaveElevation.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CaveBiome\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Defs\BiomeDefs\Biomes_Cave.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Defs\Incidents\Incidents_ThreatsBig.xml" />
+    <Content Include="CaveBiome\Defs\Incidents\Incidents_Various_Bad.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Defs\Incidents\Incidents_Various_Good.xml" />
+    <Content Include="CaveBiome\Defs\Incidents\RaidStrategies.xml" />
+    <Content Include="CaveBiome\Defs\MapConditionDefs\MapConditions_Cave.xml" />
+    <Content Include="CaveBiome\Defs\MapGeneration\MapGenerators.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveRoof.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveWell.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Building_Special_CorpsesGenerator.xml" />
+    <Content Include="CaveBiome\Defs\WeatherDefs\Weathers.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Textures\Things\Building\DummyTexture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="CaveBiome\Assemblies\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CaveBiome\Assemblies
+REM xcopy /Y /i /s $(ProjectDir)\CaveBiome C:\Users\Temp2\RimWorld1284Win\Mods\CaveBiome
+xcopy /Y /i /s $(ProjectDir)\CaveBiome "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CaveBiome"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

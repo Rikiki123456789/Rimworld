@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<WorkGivers>
+
+  <WorkGiverDef>
+    <defName>DoBillsSecurityWorkbench</defName>
+    <giverClass>WorkGiver_DoBill</giverClass>
+    <workType>Crafting</workType>
+    <priorityInType>115</priorityInType>
+    <singleBillGiverDef>SecurityWorkbench</singleBillGiverDef>
+    <verb>make a security equipment</verb>
+    <gerund>making a security equipment</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+</WorkGivers>

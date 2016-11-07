@@ -17,7 +17,6 @@ namespace OutpostGenerator
     {
         public JobGiver_WanderOutpost()
         {
-            Log.Message("JobGiver_WanderOutpost");
             this.wanderRadius = 10f;
             this.ticksBetweenWandersRange = new IntRange(125, 200);
             this.locomotionUrgency = LocomotionUrgency.Walk;

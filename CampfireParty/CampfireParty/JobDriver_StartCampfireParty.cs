@@ -46,7 +46,7 @@ namespace CampfireParty
                     defaultCompleteMode = ToilCompleteMode.Delay
                 };
                 partyToils.Add(toil);
-                pawn.needs.mood.thoughts.TryGainThought(Util_CampfireParty.Thought_HadCampfirePartyPsychopaths);
+                pawn.needs.mood.thoughts.memories.TryGainMemoryThought(Util_CampfireParty.Thought_HadCampfirePartyPsychopaths);
                 return partyToils;
             }
 

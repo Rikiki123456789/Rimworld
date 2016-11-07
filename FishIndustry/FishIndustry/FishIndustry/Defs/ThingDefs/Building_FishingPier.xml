@@ -75,9 +75,6 @@
         <compClass>CompForbiddable</compClass>
       </li>
     </comps>
-    <recipes>
-      <li>MakeFishingRod</li>
-    </recipes>
     <inspectorTabs>
       <li>ITab_Bills</li>
     </inspectorTabs>

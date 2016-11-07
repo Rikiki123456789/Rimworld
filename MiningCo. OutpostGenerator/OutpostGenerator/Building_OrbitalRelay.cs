@@ -98,8 +98,7 @@ namespace OutpostGenerator
         private void UpdateLord()
         {
             IntVec3 rallyPoint = IntVec3.Invalid;
-
-            Log.Message("UpdateLord1");
+            
             // Check there is no already existing defense lord.
             if ((Find.LordManager.lords != null)
                 && (Find.LordManager.lords.Count > 0))
@@ -113,23 +112,19 @@ namespace OutpostGenerator
                     }
                 }
             }
-            Log.Message("UpdateLord2");
             // Look for hostile in outpost perimeter.
             IntVec3 hostilePosition = FindHostileInPerimeter();
             if (hostilePosition.IsValid)
             {
-                Log.Message("UpdateLord2");
                 Area outpostArea = OG_Util.FindOutpostArea();
                 if ((outpostArea != null)
                     && (outpostArea.ActiveCells.Contains(hostilePosition)))
                 {
-                    Log.Message("UpdateLord4");
                     // Ennemy is inside outpost area.
                     rallyPoint = hostilePosition;
                 }
                 else
                 {
-                    Log.Message("UpdateLord5");
                     const int sectionsNumber = 100;
                     Vector3 sectionVector = (this.outpostCenter - hostilePosition).ToVector3();
                     sectionVector = sectionVector / sectionsNumber;
@@ -150,7 +145,6 @@ namespace OutpostGenerator
             }
             else
             {
-                Log.Message("UpdateLord6");
                 // Look for damaged turret to defend.
                 Rot4 turretRotation = Rot4.Invalid;
                 IntVec3 turretPosition = IntVec3.Invalid;
@@ -176,11 +170,9 @@ namespace OutpostGenerator
                     }
                 }
             }
-
-            Log.Message("UpdateLord7");
+            
             if (rallyPoint.IsValid)
             {
-                Log.Message("rallyPoint = " + rallyPoint.ToString());
                 // Generate defense lord.
                 LordJob_Joinable_DefendOutpost lordJob = new LordJob_Joinable_DefendOutpost(rallyPoint);
                 LordMaker.MakeNewLord(OG_Util.FactionOfMiningCo, lordJob);
