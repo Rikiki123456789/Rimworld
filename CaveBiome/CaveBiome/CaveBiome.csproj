@@ -87,7 +87,9 @@
     <Content Include="CaveBiome\Defs\MapGeneration\MapGenerators.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveRoof.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveRoof.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveWell.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Building_Special_CorpsesGenerator.xml" />
     <Content Include="CaveBiome\Defs\WeatherDefs\Weathers.xml">

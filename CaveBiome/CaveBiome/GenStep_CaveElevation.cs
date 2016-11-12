@@ -14,16 +14,9 @@ namespace CaveBiome
     {
         private const float ElevationFreq = 0.03f;
         private const float ElevationFactorCave = 1.5f;
-
-        // TODO: remove this unsuccessful test...
-        //private const float ElevationFreq = 0.1f;
-        //private const float ElevationFactorCave = 1.5f;
-        //ModuleBase moduleBase = new Voronoi(ElevationFreq, 25, Rand.Range(0, 2147483647), false);
-
+        
 		public override void Generate()
 		{
-            Log.Message("GenStep_CaveElevationFertility.Generate");
-
             if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 // Nothing to do in other biomes.

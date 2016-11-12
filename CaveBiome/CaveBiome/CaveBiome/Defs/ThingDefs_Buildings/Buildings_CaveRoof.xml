@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ThingDefs>
 
-  <ThingDef Name="BuildingNaturalBase" Abstract="True">
-    <category>Building</category>
-    <selectable>true</selectable>
-    <drawerType>MapMeshOnly</drawerType>
-    <filthLeaving>RockRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef>
     <defName>CaveRoof</defName>
     <label>cave roof</label>

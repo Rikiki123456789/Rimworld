@@ -32,7 +32,6 @@ namespace CaveBiome
 
         public void GenerateAnimalCorpses()
         {
-            Log.Message("GenerateAnimalCorpses");
             int animalCorpsesNumber = Rand.Range(3, 7);
             for (int corpseIndex = 0; corpseIndex < animalCorpsesNumber; corpseIndex++)
             {

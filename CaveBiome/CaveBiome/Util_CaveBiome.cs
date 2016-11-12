@@ -37,7 +37,7 @@ namespace CaveBiome
                 return ThingDef.Named("CaveWell");
             }
         }
-
+        
         // Weather and light.
         public static WeatherDef CaveCalmWeatherDef
         {

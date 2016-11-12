@@ -14,7 +14,6 @@ namespace CaveBiome
     {
 		public override void Generate()
 		{
-            Log.Message("GenStep_CaveInitializeWeather.Generate");
             if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 // Nothing to do in other biomes.

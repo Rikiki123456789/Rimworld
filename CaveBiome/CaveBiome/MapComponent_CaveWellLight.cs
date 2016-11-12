@@ -20,81 +20,86 @@ namespace CaveBiome
     /// Remember learning is always better than just copy/paste...</permission>
     public class MapComponent_CaveWellLight : MapComponent
     {
-        public const int lightCheckPeriodInTicks = GenDate.TicksPerHour;
+        public const int sunriseBeginHour = 6;
+        public const int sunriseBeginHourInTicks = sunriseBeginHour * GenDate.TicksPerHour;
+        public const int sunriseEndHour = 10;
+        public const int sunriseEndHourInTicks = sunriseEndHour * GenDate.TicksPerHour;
+        public const int sunriseDurationInTicks = sunriseEndHourInTicks - sunriseBeginHourInTicks;
+        public const int sunsetBeginHour = 16;
+        public const int sunsetBeginHourInTicks = sunsetBeginHour * GenDate.TicksPerHour;
+        public const int sunsetEndHour = 20;
+        public const int sunsetEndHourInTicks = sunsetEndHour * GenDate.TicksPerHour;
+        public const int sunsetDurationInTicks = sunsetEndHourInTicks - sunsetBeginHourInTicks;
+        public const int lightCheckPeriodInTicks = GenTicks.TicksPerRealSecond;
         public int nextLigthCheckTick = 1;
+
+        public const float lightRadiusCaveWellMainMin = 0f;
+        public const float lightRadiusCaveWellMainMax = 10f;
+        public const float lightRadiusCaveWellAdditionalMin = 0f;
+        public const float lightRadiusCaveWellAdditionalMax = 3f;
 
         public override void MapComponentTick()
         {
+            if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
+            {
+                return;
+            }
+
             if (Find.TickManager.TicksGame >= nextLigthCheckTick)
             {
                 nextLigthCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
-                Log.Message("Checking light, hour = " + GenDate.HourOfDay);
-                Thing caveWell = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef).First();
-                if (caveWell != null)
+                /*Log.Message("TicksAbs = " + Find.TickManager.TicksAbs); // TODO: remove this.
+                Log.Message("TicksGame = " + Find.TickManager.TicksGame);
+                Log.Message("Checking light, hour = " + GenDate.HourOfDay);*/
+                int hour = GenDate.HourOfDay;
+                if ((hour >= sunriseBeginHour)
+                    && (hour < sunriseEndHour))
                 {
-                    CompGlower glowerComp = caveWell.TryGetComp<CompGlower>();
-                    if (glowerComp != null)
+                    // Sunrise.
+                    int currentDayTick = Find.TickManager.TicksAbs % GenDate.TicksPerDay;
+                    //Log.Message("currentDayTick = " + currentDayTick);
+                    int ticksSinceSunriseBegin = currentDayTick - sunriseBeginHourInTicks;
+                    //Log.Message("ticksSinceSunriseBegin = " + ticksSinceSunriseBegin);
+                    float sunriseProgress = (float)ticksSinceSunriseBegin / (float)sunriseDurationInTicks;
+                    //Log.Message("sunriseProgress = " + sunriseProgress);
+                    float caveWellMainLigthRadius = Mathf.Lerp(lightRadiusCaveWellMainMin, lightRadiusCaveWellMainMax, sunriseProgress);
+                    //Log.Message("caveWellMainLigthRadius = " + caveWellMainLigthRadius);                    
+                    List<Thing> caveWellMainList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+                    foreach (Thing caveWellMain in caveWellMainList)
                     {
-                        switch (GenDate.HourOfDay)
-                        {
-                            case 13:
-                            case 5:
-                                glowerComp.Props.glowRadius = 1f;
-                                glowerComp.Props.overlightRadius = 0f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                            case 14:
-                            case 6:
-                                glowerComp.Props.glowRadius = 1.5f;
-                                glowerComp.Props.overlightRadius = 1f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                            case 15:
-                            case 7:
-                                glowerComp.Props.glowRadius = 2f;
-                                glowerComp.Props.overlightRadius = 1.5f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                            case 16:
-                            case 8:
-                                glowerComp.Props.glowRadius = 2f;
-                                glowerComp.Props.overlightRadius = 2f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                            case 9:
-                            case 18:
-                                glowerComp.Props.glowRadius = 2f;
-                                glowerComp.Props.overlightRadius = 1.5f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                            case 10:
-                            case 19:
-                                glowerComp.Props.glowRadius = 1.5f;
-                                glowerComp.Props.overlightRadius = 1f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                            case 11:
-                            case 20:
-                                glowerComp.Props.glowRadius = 1f;
-                                glowerComp.Props.overlightRadius = 0f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                            case 12:
-                            case 21:
-                                glowerComp.Props.glowRadius = 0f;
-                                glowerComp.Props.overlightRadius = 0f;
-                                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
-                                break;
-                        }
+                        SetGlowRadius(caveWellMain, caveWellMainLigthRadius);
+                    }
+                }
+                else if ((hour >= sunsetBeginHour)
+                    && (hour < sunsetEndHour))
+                {
+                    // Sunset.
+                    int currentDayTick = Find.TickManager.TicksAbs % GenDate.TicksPerDay;
+                    //Log.Message("currentDayTick = " + currentDayTick);
+                    int ticksSinceSunsetBegin = currentDayTick - sunsetBeginHourInTicks;
+                    //Log.Message("ticksSinceSunsetBegin = " + ticksSinceSunsetBegin);
+                    float sunsetProgress = 1f - ((float)ticksSinceSunsetBegin / (float)sunriseDurationInTicks);
+                    //Log.Message("sunsetProgress = " + sunsetProgress);
+                    float caveWellMainLigthRadius = Mathf.Lerp(lightRadiusCaveWellMainMin, lightRadiusCaveWellMainMax, sunsetProgress);
+                    //Log.Message("caveWellMainLigthRadius = " + caveWellMainLigthRadius);
+                    List<Thing> caveWellMainList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+                    foreach (Thing caveWellMain in caveWellMainList)
+                    {
+                        SetGlowRadius(caveWellMain, caveWellMainLigthRadius);
                     }
                 }
             }
         }
-
-        public override void ExposeData()
+        
+        public void SetGlowRadius(Thing caveWell, float glowradius)
         {
-            base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.nextLigthCheckTick, "nextLigthCheckTick");
+            CompGlower glowerComp = caveWell.TryGetComp<CompGlower>();
+            if (glowerComp != null)
+            {
+                glowerComp.Props.glowRadius = glowradius;
+                glowerComp.Props.overlightRadius = glowradius;
+                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
+            }
         }
     }
 }

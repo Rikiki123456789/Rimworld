@@ -18,7 +18,6 @@ namespace CaveBiome
 
 		public override void Generate()
 		{
-            Log.Message("GenStep_CaveRoof.Generate");
             if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 // Nothing to do in other biomes.
@@ -43,7 +42,7 @@ namespace CaveBiome
                 }
 			}
 
-            // Update region and room to be able to use the CanReachMapEdge function.
+            // Update regions and rooms to be able to use the CanReachMapEdge function to find goo cave well spots.
             DeepProfiler.Start("RebuildAllRegionsBeforeCaveWells");
             RegionAndRoomUpdater.Enabled = true;
             RegionAndRoomUpdater.RebuildAllRegionsAndRooms();
@@ -55,8 +54,7 @@ namespace CaveBiome
 
             // Spawn cave wells.
             // First cave well is always dry (to avoid starting thing scattering errors).
-            SpawnDryCaveWellAt(caveWellsPosition[0]);
-            SpawnAnimalCorpsesMaker(caveWellsPosition[0]);
+            SpawnDryCaveWellWithAnimalCorpsesAt(caveWellsPosition[0]);
             for (int caveWellIndex = 1; caveWellIndex < caveWellsNumber; caveWellIndex++)
             {
                 if (Rand.Value < 0.8f)
@@ -67,20 +65,28 @@ namespace CaveBiome
                 else if (Rand.Value < 0.9f)
                 {
                     // Spawn dry cave well + fallen animal corpses.
-                    SpawnDryCaveWellAt(caveWellsPosition[caveWellIndex]);
-                    SpawnAnimalCorpsesMaker(caveWellsPosition[caveWellIndex]);
+                    SpawnDryCaveWellWithAnimalCorpsesAt(caveWellsPosition[caveWellIndex]);
                 }
                 else
                 {
                     // Spawn dry cave well + sacrificial stone.
-                    SpawnDryCaveWellAt(caveWellsPosition[caveWellIndex]);
-                    SpawnRitualStone(caveWellsPosition[caveWellIndex]);
+                    SpawnDryCaveWellWithRitualStoneAt(caveWellsPosition[caveWellIndex]);
                 }
             }
+
+            // TODO: should correct null region error?
+            // Update regions and rooms now that cave wells are spawned.
+            DeepProfiler.Start("RebuildAllRegionsAfterCaveWells");
+            RegionAndRoomUpdater.Enabled = true;
+            RegionAndRoomUpdater.RebuildAllRegionsAndRooms();
+            RegionAndRoomUpdater.Enabled = false;
+            DeepProfiler.End();
 		}
 
         private static List<IntVec3> GetCaveWellsPosition()
         {
+            float distanceFromCenter = 40f;
+
             List<IntVec3> positionsList = new List<IntVec3>();
             for (int caveWellIndex = 0; caveWellIndex < caveWellsNumber; caveWellIndex++)
             {
@@ -89,7 +95,7 @@ namespace CaveBiome
                     if (caveWellIndex == 0)
                     {
                         // First cave well must be near map center.
-                        if (cell.InHorDistOf(Find.Map.Center, 40f) == false)
+                        if (cell.InHorDistOf(Find.Map.Center, distanceFromCenter) == false)
                         {
                             return false;
                         }
@@ -115,9 +121,17 @@ namespace CaveBiome
 
                 IntVec3 caveWellCell = IntVec3.Invalid;
                 bool caveWellCellIsFound = CellFinderLoose.TryFindRandomNotEdgeCellWith(20, validator, out caveWellCell);
+                if ((caveWellIndex == 0)
+                    && (caveWellCellIsFound == false))
+                {
+                    // Sometimes, there is no cave touching map edge near the ma center. Searh radius is thus greatly increased.
+                    Log.Message("Failed to get first cave well. Retrying...");
+                    distanceFromCenter = 150f;
+                    caveWellCellIsFound = CellFinderLoose.TryFindRandomNotEdgeCellWith(20, validator, out caveWellCell);
+                }
                 if (caveWellCellIsFound)
                 {
-                    //Log.Message("valid caveWellsPosition[" + caveWellIndex + "] = " + caveWellCell.ToString());
+                    Log.Message("valid caveWellsPosition[" + caveWellIndex + "] = " + caveWellCell.ToString());
                     positionsList.Add(caveWellCell);
                     if (caveWellIndex == 0)
                     {
@@ -128,7 +142,7 @@ namespace CaveBiome
                 else
                 {
                     CellFinderLoose.TryFindRandomNotEdgeCellWith(20, null, out caveWellCell);
-                    //Log.Message("default caveWellsPosition[" + caveWellIndex + "] = " + caveWellCell.ToString());
+                    Log.Message("default caveWellsPosition[" + caveWellIndex + "] = " + caveWellCell.ToString());
                     positionsList.Add(caveWellCell);
                 }
             }
@@ -139,7 +153,7 @@ namespace CaveBiome
         {
             // Spawn main hole.
             SetCellsInRadiusNoRoofNoRock(position, 10f);
-            SetCellsInRadiusCaveWell(position, 10f);
+            SpawnCaveWellOpening(position);
             SetCellsInRadiusTerrain(position, 10f, TerrainDefOf.Gravel);
             SetCellsInRadiusTerrain(position, 8f, TerrainDefOf.WaterShallow);
 
@@ -149,18 +163,46 @@ namespace CaveBiome
             {
                 IntVec3 smallHolePosition = position + (7f * Vector3Utility.HorizontalVectorFromAngle(Rand.Range(0, 360))).ToIntVec3();
                 SetCellsInRadiusNoRoofNoRock(smallHolePosition, 5f);
-                SetCellsInRadiusCaveWell(position, 5f);
                 SetCellsInRadiusTerrain(smallHolePosition, 3.2f, TerrainDefOf.WaterShallow);
                 SetCellsInRadiusTerrain(smallHolePosition, 2.1f, TerrainDefOf.WaterDeep);
             }
             SetCellsInRadiusTerrain(position, 5.2f, TerrainDefOf.WaterDeep);
         }
 
+        private static void SpawnCaveWellOpening(IntVec3 position)
+        {
+            Thing potentialCaveWell = position.GetFirstThing(Util_CaveBiome.CaveWellDef);
+            if (potentialCaveWell == null)
+            {
+                GenSpawn.Spawn(Util_CaveBiome.CaveWellDef, position);
+            }
+            foreach (IntVec3 checkedCell in GenAdjFast.AdjacentCells8Way(position))
+            {
+                potentialCaveWell = checkedCell.GetFirstThing(Util_CaveBiome.CaveWellDef);
+                if (potentialCaveWell == null)
+                {
+                    GenSpawn.Spawn(Util_CaveBiome.CaveWellDef, checkedCell);
+                }
+            }
+        }
+
+        private static void SpawnDryCaveWellWithAnimalCorpsesAt(IntVec3 position)
+        {
+            SpawnDryCaveWellAt(position);
+            SpawnAnimalCorpsesMaker(position);
+        }
+
+        private static void SpawnDryCaveWellWithRitualStoneAt(IntVec3 position)
+        {
+            SpawnDryCaveWellAt(position);
+            SpawnRitualStone(position);
+        }
+
         private static void SpawnDryCaveWellAt(IntVec3 position)
         {
             // Spawn main hole.
             SetCellsInRadiusNoRoofNoRock(position, 10f);
-            SetCellsInRadiusCaveWell(position, 10f);
+            SpawnCaveWellOpening(position);
             SetCellsInRadiusTerrain(position, 10f, TerrainDefOf.Gravel);
             SetCellsInRadiusTerrain(position, 8f, TerrainDefOf.Soil);
 
@@ -170,21 +212,10 @@ namespace CaveBiome
             {
                 IntVec3 smallHolePosition = position + (7f * Vector3Utility.HorizontalVectorFromAngle(Rand.Range(0, 360))).ToIntVec3();
                 SetCellsInRadiusNoRoofNoRock(smallHolePosition, 5f);
-                SetCellsInRadiusCaveWell(position, 5f);
                 SetCellsInRadiusTerrain(smallHolePosition, 3.2f, TerrainDefOf.Soil);
                 SetCellsInRadiusTerrain(smallHolePosition, 2.1f, TerrainDef.Named("SoilRich"));
             }
             SetCellsInRadiusTerrain(position, 6.5f, TerrainDef.Named("SoilRich"));
-        }
-
-        private static void SpawnChipChunksAt(IntVec3 position)
-        {
-            int partsNumber = Rand.Range(2, 5);
-            for (int partIndex = 0; partIndex < partsNumber; partIndex++)
-            {
-                IntVec3 spawnCell = position + Vector3Utility.RandomHorizontalOffset(5f).ToIntVec3();
-                GenSpawn.Spawn(ThingDefOf.ShipChunk, spawnCell);
-            }
         }
 
         private static void SpawnAnimalCorpsesMaker(IntVec3 position)
@@ -273,36 +304,7 @@ namespace CaveBiome
                 }
             }
         }
-
-        private static void SetCellsInRadiusCaveWell(IntVec3 position, float radius)
-        {
-            bool caveWellIsAlreadySpawned = false;
-
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, radius, true))
-            {
-                if (cell.InBounds() == false)
-                {
-                    continue;
-                }
-                caveWellIsAlreadySpawned = false;
-                List<Thing> thingList = cell.GetThingList();
-                for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
-                {
-                    Thing thing = thingList[thingIndex];
-                    if (thing.def == Util_CaveBiome.CaveWellDef)
-                    {
-                        // A cave well has already be spawned on this cell.
-                        caveWellIsAlreadySpawned = true;
-                        break;
-                    }
-                }
-                if (caveWellIsAlreadySpawned == false)
-                {
-                    GenSpawn.Spawn(Util_CaveBiome.CaveWellDef, cell);
-                }
-            }
-        }
-
+        
         private static void SetCellsInRadiusTerrain(IntVec3 position, float radius, TerrainDef terrain)
         {
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, radius, true))

@@ -153,6 +153,7 @@
       <harvestWork>400</harvestWork>
       <harvestDestroys>true</harvestDestroys>
       <harvestedThingDef>RawGiantLeaf</harvestedThingDef>
+      <harvestTag>Standard</harvestTag>
       <harvestYield>20</harvestYield>
       <maxMeshCount>1</maxMeshCount>
       <visualSizeRange>
@@ -216,6 +217,9 @@
     <plant>
       <harvestWork>400</harvestWork>
       <harvestDestroys>false</harvestDestroys>
+      <harvestedThingDef>PsychoidLeaves</harvestedThingDef>
+      <harvestYield>30</harvestYield>
+      <harvestTag>Standard</harvestTag>
       <visualSizeRange>
         <min>0.8</min>
         <max>1.0</max>
@@ -252,7 +256,7 @@
   <ThingDef ParentName="CavePlantBase" Class="CaveworldFlora.ThingDef_ClusterPlant">
     <defName>BlackLotus</defName>
     <label>black lotus</label>
-    <description>TODO</description>
+    <description>A beautiful and very impressive plant, the black lotus slowly growths a single massive flower. Be careful as the pheromons emanating from it are extremely toxic.</description>
     <thingClass>CaveworldFlora.ClusterPlant_BlackLotus</thingClass>
     <tickerType>Rare</tickerType>
     <statBases>
@@ -277,6 +281,9 @@
     <plant>
       <harvestWork>800</harvestWork>
       <harvestDestroys>true</harvestDestroys>
+      <harvestedThingDef>SmokeleafLeaves</harvestedThingDef>
+      <harvestYield>50</harvestYield>
+      <harvestTag>Standard</harvestTag>
       <visualSizeRange>
         <min>0.8</min>
         <max>1.2</max>

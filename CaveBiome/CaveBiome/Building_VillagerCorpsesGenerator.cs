@@ -32,7 +32,6 @@ namespace CaveBiome
 
         public void GenerateVillagerCorpses()
         {
-            Log.Message("GenerateVillagerCorpses");
             Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.Tribe);
             SpawnPawnCorpse(this.Position, PawnKindDef.Named("TribalChief"), faction, GenDate.TicksPerDay, true);
             SpawnPawnCorpse(this.Position + new IntVec3(2, 0, 2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);

@@ -36,7 +36,6 @@ namespace CaveBiome
                 {
                     wildCavePlants.Add(cavePlantDef);
                     wildCavePlantsWeighted.Add(cavePlantDef, Find.Map.Biome.CommonalityOfPlant(cavePlantDef) / cavePlantDef.clusterSizeRange.Average);
-                    Log.Message("Found caveplant def/commonality " + cavePlantDef + "/" + wildCavePlantsWeighted[cavePlantDef]);
                 }
             }
 
@@ -67,7 +66,6 @@ namespace CaveBiome
                     totalFailedSpawns++;
                     if (failedSpawns >= 50)
                     {
-                        Log.Message("Stopping plant generation.");
                         break;
                     }
                 }
@@ -90,10 +88,8 @@ namespace CaveBiome
             }
             if (seedPlantsNumber == 0)
             {
-                //Log.Message("Growing cluster at " + cluster.Position.ToString() + " seedPlantsNumber = 0");
                 return;
             }
-            //Log.Message("Growing cluster at " + cluster.Position.ToString() + " to " + (cluster.actualSize + seedPlantsNumber) + "/" + cluster.desiredSize);
             for (int seedPlantIndex = 0; seedPlantIndex < seedPlantsNumber; seedPlantIndex++)
             {
                 ClusterPlant seedPlant = GenClusterPlantReproduction.TryToReproduce(plant);

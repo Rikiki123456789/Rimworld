@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Buildings>
 
-  <ThingDef ParentName="BuildingNaturalBase">
+  <ThingDef>
     <defName>AnimalCorpsesGenerator</defName>
     <label>animal corpses generator</label>
     <thingClass>CaveBiome.Building_AnimalCorpsesGenerator</thingClass>
+    <category>Building</category>
     <graphicData>
       <texPath>Things/Building/Misc/Campfire</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -22,10 +23,11 @@ This is a necessary trick as the fogGrid and homeArea prevent damaging pawns and
     </building>
   </ThingDef>
 
-  <ThingDef ParentName="BuildingNaturalBase">
+  <ThingDef>
     <defName>VillagerCorpsesGenerator</defName>
     <label>villagers corpses generator</label>
     <thingClass>CaveBiome.Building_VillagerCorpsesGenerator</thingClass>
+    <category>Building</category>
     <graphicData>
       <texPath>Things/Building/Misc/Campfire</texPath>
       <graphicClass>Graphic_Single</graphicClass>
