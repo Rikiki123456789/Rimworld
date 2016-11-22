@@ -9,8 +9,6 @@ using Verse.AI;
 using Verse.Sound;
 using RimWorld;
 //using RimWorld.Planet;
-using RimWorld.SquadAI;
-
 
 namespace MechanoidTerraformer
 {
@@ -25,9 +23,9 @@ namespace MechanoidTerraformer
         {
             yield return Toils_Reserve.Reserve(terraformerIndex);
 
-            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyed(terraformerIndex);
+            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyedOrNull(terraformerIndex);
 
-            yield return Toils_General.Wait(600).FailOnDestroyed(terraformerIndex);
+            yield return Toils_General.Wait(600).FailOnDestroyedOrNull(terraformerIndex);
 
             Toil secureBuildingToil = new Toil()
             {
@@ -35,9 +33,8 @@ namespace MechanoidTerraformer
                 {
                     (this.TargetThingA as Building_MechanoidTerraformer).reverseEngineeringState = Building_MechanoidTerraformer.ReverseEngineeringState.Studying;
 
-                    string eventText = "   You have secured the strange building.\n\nYou are now sure of one thing: this is a mechanoid device.\n" +
-                    "As usual when dealing with mechanoid technology, be really careful. You should better be prepared for anything...\n";
-                    Find.LetterStack.ReceiveLetter("Artifact secured", eventText, LetterType.BadNonUrgent, this.pawn.Position);
+                    string eventText = "secure_artifact".Translate();
+                    Find.LetterStack.ReceiveLetter("Artifactsecured".Translate(), eventText, LetterType.BadNonUrgent, this.pawn.Position);
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
             };

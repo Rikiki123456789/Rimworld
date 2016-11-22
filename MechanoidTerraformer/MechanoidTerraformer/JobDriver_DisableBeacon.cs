@@ -9,7 +9,6 @@ using Verse.AI;
 using Verse.Sound;
 using RimWorld;
 //using RimWorld.Planet;
-using RimWorld.SquadAI;
 
 
 namespace MechanoidTerraformer
@@ -27,9 +26,9 @@ namespace MechanoidTerraformer
         {
             yield return Toils_Reserve.Reserve(terraformerIndex);
 
-            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyed(terraformerIndex);
+            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyedOrNull(terraformerIndex);
 
-            yield return Toils_General.Wait(1500).FailOnDestroyed(terraformerIndex);
+            yield return Toils_General.Wait(1500).FailOnDestroyedOrNull(terraformerIndex);
 
             Toil beaconDisablingResultToil = new Toil()
             {
@@ -44,29 +43,36 @@ namespace MechanoidTerraformer
                     Building_MechanoidTerraformer terraformer = this.TargetThingA as Building_MechanoidTerraformer;
                     terraformer.invasionIsDone = true;
 
-                    string sheHeOrIt = "it";
-                    string herHimOrIt = "it";
-                    string herHisOrIts = "its";
+                    string sheHeOrIt = "it".Translate();
+                    string herHimOrIt = "it".Translate();
+                    string herHisOrIts = "its".Translate();
                     if (pawn.gender == Gender.Female)
                     {
-                        sheHeOrIt = "she";
-                        herHisOrIts = "her";
-                        herHimOrIt = "her";
+                        sheHeOrIt = "she".Translate();
+                        herHisOrIts = "her".Translate();
+                        herHimOrIt = "her".Translate();
                     }
                     else if (pawn.gender == Gender.Male)
                     {
-                        sheHeOrIt = "he";
-                        herHisOrIts = "his";
-                        herHimOrIt = "him";
+                        sheHeOrIt = "he".Translate();
+                        herHisOrIts = "his".Translate();
+                        herHimOrIt = "him".Translate();
                     }
 
                     if ((this.pawn.skills.GetSkill(SkillDefOf.Research).TotallyDisabled == true)
                         || (this.pawn.skills.GetSkill(SkillDefOf.Research).level < 3))
                     {
-                        eventTitle = "Invasion";
-                        eventText = "   " + this.pawn.Name.ToStringShort + " has tried to disable the terraformer beacon but technology is not " + herHisOrIts + " big passion... "
-                        + sheHeOrIt.CapitalizeFirst() + " just pressed on every button alerting by the way every nearby mechanoid shuttles.\n\n"
-                        + "Be prepared to welcome some nasty and numerous visitors from nearby mechanoid hives!";
+                        eventTitle = "Invasion".Translate();
+                        eventText = string.Concat(new string[]
+                        {
+                            "   ",
+                            this.pawn.Name.ToStringShort,
+                            "try_to_diable".Translate(),
+                            herHisOrIts,
+                            "bigpassion".Translate(),
+                            sheHeOrIt.CapitalizeFirst(),
+                            "button_press".Translate()
+                        });
 
                         raidPointsFactor = 1.4f;
                         dropsNumber = 5;
@@ -74,9 +80,17 @@ namespace MechanoidTerraformer
                     }
                     else if (this.pawn.skills.GetSkill(SkillDefOf.Research).level == 20)
                     {
-                        eventTitle = "Beacon disabled";
-                        eventText = "   " + this.pawn.Name.ToStringShort + " is a real crack in alien technology. Disabling the terraformer beacon was just another game for " + herHimOrIt + "\n\n"
-                            + "You have nothing to fear from it anymore.";
+                        eventTitle = "Beacondisabled".Translate();
+
+
+                        eventText = string.Concat(new string[]
+                        {
+                            "   ",
+                            this.pawn.Name.ToStringShort,
+                            "real_crack".Translate(),
+                            herHimOrIt,
+                            "no_fear".Translate()
+                        });
 
                         raidPointsFactor = 0f;
                         dropsNumber = 0;
@@ -88,9 +102,16 @@ namespace MechanoidTerraformer
                         if (rand < this.pawn.skills.GetSkill(SkillDefOf.Research).level * chanceToSucceedPerResearchLevel)
                         {
                             // Disable sucessfull.
-                            eventTitle = "Beacon disabled";
-                            eventText = "   Even if " + this.pawn.Name.ToStringShort + " is not the best about alien technology, " + sheHeOrIt + " successfully disabled the terraformer beacon!\n\n"
-                                + "You have nothing to fear from it anymore.";
+                            eventTitle = "Beacondisabled".Translate();
+
+                            eventText = string.Concat(new string[]
+                            {
+                                "Evenif".Translate(),
+                                this.pawn.Name.ToStringShort,
+                                "alien_about".Translate(),
+                                sheHeOrIt,
+                                "success_disabling".Translate()
+                            });
 
                             raidPointsFactor = 0f;
                             dropsNumber = 0;
@@ -99,10 +120,15 @@ namespace MechanoidTerraformer
                         else
                         {
                             // Bad luck.
-                            eventTitle = "Invasion";
-                            eventText = "   " + this.pawn.Name.ToStringShort + " has some knowledge about alien technology but " + sheHeOrIt + " still failed at properly disabling the terraformer beacon.\n\n"
-                                + "Be prepared to welcome the incoming terrafomer defending force.";
-
+                            eventTitle = "Invasion".Translate();
+                            eventText = string.Concat(new string[]
+                            {
+                                "   ",
+                                this.pawn.Name.ToStringShort,
+                                "some_knowledge".Translate(),
+                                sheHeOrIt,
+                                "terr_beacon".Translate()
+                            });
                             raidPointsFactor = 0.4f;
                             dropsNumber = 2;
                             letterType = LetterType.BadUrgent;

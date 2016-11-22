@@ -9,7 +9,6 @@ using Verse.AI;
 using Verse.Sound;
 using RimWorld;
 //using RimWorld.Planet;
-using RimWorld.SquadAI;
 
 
 namespace MechanoidTerraformer
@@ -33,7 +32,7 @@ namespace MechanoidTerraformer
 
             yield return Toils_Reserve.Reserve(terraformerIndex);
 
-            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyed(terraformerIndex);
+            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyedOrNull(terraformerIndex);
 
             Toil extractionToil = new Toil()
             {
@@ -60,7 +59,7 @@ namespace MechanoidTerraformer
                 defaultCompleteMode = ToilCompleteMode.Delay,
                 defaultDuration = extractionDuration
             };
-            yield return extractionToil.FailOnDestroyed(terraformerIndex);
+            yield return extractionToil.FailOnDestroyedOrNull(terraformerIndex);
 
             yield return Toils_Reserve.Release(terraformerIndex);
 
