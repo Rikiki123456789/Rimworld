@@ -257,14 +257,14 @@ namespace CaveBiome
                 }
             }
             // Spawn torches.
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(1, 0, 3));
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(3, 0, 1));
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(3, 0, -1));
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(1, 0, -3));
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(-1, 0, -3));
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(-3, 0, -1));
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(-3, 0, 1));
-            GenSpawn.Spawn(ThingDef.Named("TorchLamp"), position + new IntVec3(-1, 0, 3));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(1, 0, 3));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(3, 0, 1));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(3, 0, -1));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(1, 0, -3));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(-1, 0, -3));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(-3, 0, -1));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(-3, 0, 1));
+            GenSpawn.Spawn(Util_CaveBiome.CrystalLampDef, position + new IntVec3(-1, 0, 3));
             // Spawn corpses generator.
             if (Rand.Value < 0.5f)
             {

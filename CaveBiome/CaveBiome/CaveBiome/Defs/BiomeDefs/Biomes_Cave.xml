@@ -6,7 +6,7 @@
     <label>cave</label>
     <description>Deep under the surface, millenia after millenia, the wind, water and lava shape gigantic cave networks. Only ways in and out are through labyrinthic endless galleries or bright cave wells. A rich fauna seek shelter and food in these galleries... or just get lost like you.</description>
     <workerClass>CaveBiome.BiomeWorker_Cave</workerClass>
-    <animalDensity>4.0</animalDensity>
+    <animalDensity>3.0</animalDensity>
     <plantDensity>0.83</plantDensity>
     <baseColor>(0.588, 0.588, 0.588)</baseColor>
     <soundsAmbient>

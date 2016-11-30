@@ -32,35 +32,6 @@ namespace CaveBiome
             IntVec3 vec = IntVec3.Invalid;
             for (int i = 0; i < countToSpawn; i++)
             {
-                Predicate<IntVec3> validator = delegate(IntVec3 c)
-                {
-                    if (c.Fogged())
-                    {
-                        return false;
-                    }
-                    if (Find.Map.Biome == Util_CaveBiome.CaveBiomeDef)
-                    {
-                        if (c.GetFirstThing(Util_CaveBiome.CaveWellDef) == null)
-                        {
-                            Log.Warning("Not in cave well at " + c.ToString());
-                            return false;
-                        }
-                    }
-                    foreach (IntVec3 current in GenAdj.CellsOccupiedBy(c, Rot4.North, this.def.shipPart.size))
-                    {
-                        if (!current.Standable())
-                        {
-                            bool result = false;
-                            return result;
-                        }
-                        if (Find.RoofGrid.Roofed(current))
-                        {
-                            bool result = false;
-                            return result;
-                        }
-                    }
-                    return c.CanReachColony();
-                };
                 IntVec3 spawnCell = IntVec3.Invalid;
                 TryFindShipCrashSite(out spawnCell);
                 if (spawnCell.IsValid == false)
@@ -102,17 +73,16 @@ namespace CaveBiome
 
         public bool IsValidPositionForShipCrashSite(IntVec3 position)
         {
-            ThingDef chunkDef = ThingDefOf.ShipChunk;
             if ((position.InBounds() == false)
                 || position.Fogged())
             {
                 return false;
             }
-			foreach (IntVec3 chckedPosition in GenAdj.CellsOccupiedBy(position, Rot4.North, this.def.shipPart.size))
+			foreach (IntVec3 checkedPosition in GenAdj.CellsOccupiedBy(position, Rot4.North, this.def.shipPart.size))
 			{
-				if ((chckedPosition.Standable() == false)
-                    || chckedPosition.Roofed()
-                    || chckedPosition.CanReachColony() == false)
+				if ((checkedPosition.Standable() == false)
+                    || checkedPosition.Roofed()
+                    || checkedPosition.CanReachColony() == false)
 				{
 					return false;
 				}

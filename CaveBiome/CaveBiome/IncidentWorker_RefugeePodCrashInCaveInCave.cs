@@ -17,7 +17,6 @@ namespace CaveBiome
         private const float RelationWithColonistWeight = 20f;
         public override bool TryExecute(IncidentParms parms)
         {
-            Log.Message("IncidentWorker_RefugeePodCrashInCave:TryExecute");
             if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 return base.TryExecute(parms);

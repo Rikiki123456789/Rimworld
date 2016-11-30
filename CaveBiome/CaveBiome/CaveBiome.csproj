@@ -35,7 +35,8 @@
     <Reference Include="Assembly-CSharp">
       <HintPath>..\..\RimWorld1284Win\RimWorld1284Win_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="CaveworldFlora">
+    <Reference Include="CaveworldFlora, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\CaveworldFlora\CaveworldFlora\CaveworldFlora\Assemblies\CaveworldFlora.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -52,10 +53,10 @@
     <Compile Include="Building_CrashedShipPartCopy.cs" />
     <Compile Include="Building_AnimalCorpsesGenerator.cs" />
     <Compile Include="Building_VillagerCorpsesGenerator.cs" />
+    <Compile Include="GenStep_CaveSetRules.cs" />
     <Compile Include="IncidentWorker_RefugeePodCrashInCaveInCave.cs" />
     <Compile Include="IncidentWorker_ResourcePodCrashInCave.cs" />
     <Compile Include="IncidentWorker_ShipChunkDropInCave.cs" />
-    <Compile Include="IncidentWorker_FlashstormInCave.cs" />
     <Compile Include="IncidentWorker_PoisonShipPartCrashInCave.cs" />
     <Compile Include="IncidentWorker_PsychicEmanatorShipPartCrashInCave.cs" />
     <Compile Include="IncidentWorker_ShipPartCrashInCave.cs" />
@@ -77,12 +78,10 @@
     <Content Include="CaveBiome\Defs\BiomeDefs\Biomes_Cave.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\Incidents\Incidents_ThreatsBig.xml" />
-    <Content Include="CaveBiome\Defs\Incidents\Incidents_Various_Bad.xml">
+    <Content Include="CaveBiome\Defs\Incidents\Incidents_ThreatsBig.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="CaveBiome\Defs\Incidents\Incidents_Various_Good.xml" />
-    <Content Include="CaveBiome\Defs\Incidents\RaidStrategies.xml" />
     <Content Include="CaveBiome\Defs\MapConditionDefs\MapConditions_Cave.xml" />
     <Content Include="CaveBiome\Defs\MapGeneration\MapGenerators.xml">
       <SubType>Designer</SubType>
@@ -91,11 +90,21 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveWell.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CrystalLamp.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_MinableColdCrystal.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveMortars.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Building_Special_CorpsesGenerator.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Items\Items_Resource_ColdCrystal.xml" />
     <Content Include="CaveBiome\Defs\WeatherDefs\Weathers.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="CaveBiome\Textures\Things\Building\DummyTexture.png" />
+    <Content Include="CaveBiome\Textures\Things\Building\Misc\CrystalLamp.png" />
+    <Content Include="CaveBiome\Textures\Things\Item\Resource\ColdCrystal.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CaveBiome\Assemblies\" />

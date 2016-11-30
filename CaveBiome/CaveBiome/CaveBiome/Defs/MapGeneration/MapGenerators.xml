@@ -30,6 +30,13 @@
     <genStep Class="CaveBiome.GenStep_CaveInitializeWeatherAndLight"/>
   </GenStepDef>
 
+  <GenStepDef>
+    <defName>GenStep_CaveSetRules</defName>
+    <mapGenerator>MainMapGenerator</mapGenerator>
+    <order>702</order>
+    <genStep Class="CaveBiome.GenStep_CaveSetRules"/>
+  </GenStepDef>
+
   <!-- Voluntarily override the base GenStep. -->
   <GenStepDef>
     <defName>Plants</defName>

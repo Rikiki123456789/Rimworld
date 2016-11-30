@@ -42,7 +42,6 @@ namespace CaveBiome
 
         public override bool TryExecute(IncidentParms parms)
         {
-            Log.Message("IncidentWorker_ResourcePodCrashInCave:TryExecute");
             if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 return base.TryExecute(parms);

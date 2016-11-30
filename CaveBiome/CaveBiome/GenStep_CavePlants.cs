@@ -49,7 +49,7 @@ namespace CaveBiome
 
                 int newDesiredClusterSize = cavePlantDef.clusterSizeRange.RandomInRange;
                 IntVec3 spawnCell = IntVec3.Invalid;
-                GenClusterPlantReproduction.TryGetRandomClusterSpawnCell(cavePlantDef, newDesiredClusterSize, false, out spawnCell);
+                GenClusterPlantReproduction.TryGetRandomClusterSpawnCell(cavePlantDef, newDesiredClusterSize, false, out spawnCell); // Ignore temperature condition.
                 if (spawnCell.IsValid)
                 {
                     totalSuccessfulSpawns++;

@@ -10,9 +10,7 @@ using RimWorld.Planet;
 
 namespace CaveBiome
 {
-    // TODO: mortars need line of sight
     // TODO: add solar panel placed near glowing crystal?
-    // TODO: set caveWell light according to mapCondition (volcanoe, eclipse, toxic fallout, ...).
 
     public class BiomeWorker_Cave : BiomeWorker
     {

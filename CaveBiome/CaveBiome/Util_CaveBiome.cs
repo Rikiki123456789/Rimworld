@@ -12,14 +12,15 @@ namespace CaveBiome
 {
     public static class Util_CaveBiome
     {
-        // Plant glowers.
-        public static ThingDef StoneGrassGlowerDef
+        // Crystal lamp.
+        public static ThingDef CrystalLampDef
         {
             get
             {
-                return ThingDef.Named("StoneGrassGlower");
+                return ThingDef.Named("CrystalLamp");
             }
         }
+
 
         // Roof and cave well.
         public static ThingDef CaveRoofDef
