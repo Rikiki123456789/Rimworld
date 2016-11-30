@@ -104,7 +104,6 @@ namespace CaveworldFlora
             this.actualSize--;
             if (this.actualSize <= 0)
             {
-                Log.Message("Destroying cluster (" + this.plantDef + ") at " + this.Position);
                 this.Destroy();
                 return;
             }

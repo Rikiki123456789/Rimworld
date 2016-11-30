@@ -60,7 +60,7 @@ namespace CaveworldFlora
             Predicate<IntVec3> validator = delegate(IntVec3 cell)
             {
                 // Check a plant can be spawned here.
-                if (GenClusterPlantReproduction.IsValidPositionToGrowPlant(plantDef, cell) == false)
+                if (GenClusterPlantReproduction.IsValidPositionToGrowPlant(plantDef, cell, checkTemperature) == false)
                 {
                     return false;
                 }
@@ -79,58 +79,7 @@ namespace CaveworldFlora
                 spawnCell = IntVec3.Invalid;
             }
         }
-
-        /// <summary>
-        /// Get the center of a cluster and its actual size.
-        /// </summary>
-        /*public static void GetClusterCenterAndActualSize(ClusterPlant plant, out IntVec3 clusterCenter, out int actualClusterSize)
-        {
-            // Default values.
-            clusterCenter = plant.Position;
-            actualClusterSize = 1;
-
-            if (plant.desiredClusterSize == 1)
-            {
-                return;
-            }
-            else
-            {
-                clusterCenter = IntVec3.Zero;
-                actualClusterSize = 0;
-                Room plantRoom = plant.Position.GetRoom();
-                // We only check with clusterSpawnRadius (+ a small offset). No need to check entire cluster exclusivity area.
-                IEnumerable<IntVec3> cellsInCluster = GenRadial.RadialCellsAround(plant.Position, plant.clusterPlantProps.clusterSpawnRadius + 3f, true);
-                foreach (IntVec3 cell in cellsInCluster)
-                {
-                    if ((cell.GetRoom() == plantRoom)
-                        && (Find.ThingGrid.ThingAt(cell, plant.def) != null))
-                    {
-                        actualClusterSize++;
-                        clusterCenter += cell;
-                    }
-                }
-                clusterCenter.x = (int)Mathf.Round(clusterCenter.x / (float)actualClusterSize);
-                clusterCenter.z = (int)Mathf.Round(clusterCenter.z / (float)actualClusterSize);
-                if (clusterCenter.x < 0)
-                {
-                    clusterCenter.x = 0;
-                }
-                else if (clusterCenter.x > Find.Map.Size.x)
-                {
-                    clusterCenter.x = Find.Map.Size.x;
-                }
-                if (clusterCenter.z < 0)
-                {
-                    clusterCenter.z = 0;
-                }
-                else if (clusterCenter.z > Find.Map.Size.z)
-                {
-                    clusterCenter.z = Find.Map.Size.z;
-                }
-                //Log.Message("GetClusterActualSizeAndCenter: " + plant.Position.ToString() + "/" + clusterActualSize + "/" + clusterCenter);
-            }
-        }*/
-
+        
         /// <summary>
         /// Try to spawn another plant in this cluster.
         /// </summary>
@@ -169,15 +118,7 @@ namespace CaveworldFlora
             spawnCell = IntVec3.Invalid;
 
             float maxSpawnDistance = GenRadial.RadiusOfNumCells(cluster.actualSize + 1); // Min radius to hold cluster's plants + new plant.
-            //Log.Message("Cluster at " + clusterCenter.ToString() + ": actualClusterSize/desiredClusterSize => maxSpawnDistance " + actualClusterSize + "/" + desiredClusterSize + " => " + maxSpawnDistance);
             maxSpawnDistance += 2f; // Add a margin so the cluster does not have a perfect circle shape.
-            /* = plantDef.clusterSpawnRadius;
-            if (plantDef.clusterSizeRange.max > plantDef.clusterSizeRange.min)
-            {
-                maxSpawnDistance *= clusterMaturity;
-                maxSpawnDistance = Math.Max(2f, maxSpawnDistance);
-            }
-            Log.Message("maxSpawnDistance at " + clusterCenter.ToString() + ": maturity/maxSpawnDistance => " + clusterMaturity + "/" + maxSpawnDistance);*/
             Predicate<IntVec3> validator = delegate(IntVec3 cell)
             {
                 // Check cell is not too far away from current cluster.
@@ -205,7 +146,6 @@ namespace CaveworldFlora
         /// </summary>
         public static ClusterPlant TrySpawnNewClusterAwayFrom(Cluster cluster)
         {
-            //Log.Message("TrySpawnNewClusterAwayFrom");
             IntVec3 spawnCell = IntVec3.Invalid;
             int newDesiredClusterSize = cluster.plantDef.clusterSizeRange.RandomInRange;
             TryGetRandomSpawnCellAwayFromCluster(cluster, newDesiredClusterSize, out spawnCell);
@@ -226,12 +166,10 @@ namespace CaveworldFlora
         {
             spawnCell = IntVec3.Invalid;
             float newClusterExclusivityRadius = Cluster.GetExclusivityRadius(cluster.plantDef, newDesiredClusterSize);
-            //Log.Message("newCluster size/ExclusivityRadius = " + newClusterSize + "/" + newClusterExclusivityRadius);
 
             // Current cluster and new cluster zones are exclusive and should not overlap.
             float newClusterMinDistance = cluster.exclusivityRadius + newClusterExclusivityRadius;
             float newClusterMaxDistance = 2f * newClusterMinDistance;
-            //Log.Message("newClusterMinDistance/newClusterMaxDistance = " + newClusterMinDistance + "/" + newClusterMaxDistance);
 
             Predicate<IntVec3> validator = delegate(IntVec3 cell)
             {
@@ -240,13 +178,11 @@ namespace CaveworldFlora
                 {
                     return false;
                 }
-                //Log.Message("not too close");
                 // Check cell is not too distant from current cluster.
                 if (cell.InHorDistOf(cluster.Position, newClusterMaxDistance) == false)
                 {
                     return false;
                 }
-                //Log.Message("not too distant");
                 // Check cell is in the same room.
                 if (cell.GetRoom() != cluster.GetRoom())
                 {
@@ -257,7 +193,6 @@ namespace CaveworldFlora
                 {
                     return false;
                 }
-                //Log.Message("IsValidPositionToSpawnPlant OK");
                 // Check there is no third cluster nearby.
                 if (IsClusterAreaClear(cluster.plantDef, newDesiredClusterSize, cell) == false)
                 {
@@ -347,7 +282,6 @@ namespace CaveworldFlora
 	        for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
 	        {
                 Thing thing = thingList[thingIndex];
-                //Log.Message("checking thing + " + thing.ToString() + " at " + position.ToString());
 		        if (thing.def.BlockPlanting)
 		        {
 			        return false;
@@ -386,6 +320,7 @@ namespace CaveworldFlora
                         plant.Destroy();
                         ClusterPlant symbiosisPlant = Cluster.SpawnNewClusterAt(cell, cluster.plantDef.symbiosisPlantDefEvolution, cluster.plantDef.symbiosisPlantDefEvolution.clusterSizeRange.RandomInRange);
                         cluster.NotifySymbiosisClusterAdded(symbiosisPlant.cluster);
+
                         return symbiosisPlant;
                     }
                 }

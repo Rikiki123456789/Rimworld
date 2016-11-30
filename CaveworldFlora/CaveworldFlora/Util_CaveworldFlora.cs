@@ -59,12 +59,12 @@ namespace CaveworldFlora
             }
         }
 
-        // Thoughts.
-        public static ThoughtDef breathedGleamcapSmokeDef
+        // HediffDef.
+        public static HediffDef gleamcapSmokeDef
         {
             get
             {
-                return (ThoughtDef.Named("BreathedGleamcapSmoke"));
+                return (HediffDef.Named("HediffGleamcapSmoke"));
             }
         }
 

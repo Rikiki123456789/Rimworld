@@ -39,7 +39,7 @@
   <ThingDef ParentName="CavePlantGlowerBase">
     <defName>GiantLeafGlower</defName>
     <label>glowing giant leaf</label>
-    <Description>Soft light of stone grass.</Description>
+    <Description>Energizing light of a juicy giant leaf.</Description>
     <comps>
       <li Class="CompProperties_Glower">
         <glowRadius>2.5</glowRadius>
@@ -61,12 +61,24 @@
   </ThingDef>
 
   <ThingDef ParentName="CavePlantGlowerBase">
+    <defName>CaveVineGlower</defName>
+    <label>glowing cave vine</label>
+    <Description>Deem light of a giant cave tree.</Description>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <glowColor>(114,181,125,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="CavePlantGlowerBase">
     <defName>CaveLaceGlower</defName>
     <label>glowing cave lace</label>
     <Description>Crystal and subtle light of a cave lace.</Description>
     <comps>
       <li Class="CompProperties_Glower">
-        <glowRadius>2</glowRadius>
+        <glowRadius>3</glowRadius>
         <glowColor>(173,255,255,0)</glowColor>
       </li>
     </comps>

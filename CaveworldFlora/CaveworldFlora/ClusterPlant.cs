@@ -278,21 +278,10 @@ namespace CaveworldFlora
         /// </summary>
         public override void TickLong()
         {
-            /*Log.Message("TickLong");
-            Log.Message("isGrowingNow = " + this.isGrowingNow);
-            Log.Message("isInCryostasis = " + this.isInCryostasis);*/
             if (this.isGrowingNow)
             {
                 bool plantWasAlreadyMature = (this.LifeStage == PlantLifeStage.Mature);
-                /*Log.Message("plantWasAlreadyMature = " + plantWasAlreadyMature);
-                Log.Message("growthInt before = " + this.growthInt);
-                Log.Message("GrowthPerTick = " + this.GrowthPerTick);*/
                 this.growthInt += this.GrowthPerTick * GenTicks.TickLongInterval;
-                if (DebugSettings.fastEcology)
-                {
-                    // TODO: fastEcology debug.
-                    this.growthInt += 0.1f;
-                }
                 if (!plantWasAlreadyMature
                     && (this.LifeStage == PlantLifeStage.Mature))
                 {
@@ -317,14 +306,6 @@ namespace CaveworldFlora
                     && (this.growthInt > minGrowthToReproduce)
                     && Rand.MTBEventOccurs(this.def.plant.seedEmitMTBDays, GenDate.TicksPerDay, GenTicks.TickLongInterval))
                 {
-                    GenClusterPlantReproduction.TryToReproduce(this);
-                }
-
-                if (DebugSettings.fastEcology
-                    && !base.Destroyed
-                    && (this.growthInt > minGrowthToReproduce))
-                {
-                    // TODO: fastEcology debug.
                     GenClusterPlantReproduction.TryToReproduce(this);
                 }
             }
@@ -386,8 +367,7 @@ namespace CaveworldFlora
             {
                 return;
             }
-
-            // TODO: use flick component instead of spawning glower?
+            
             if (this.isInCryostasis
                 || (this.Position.GetSnowDepth() >= this.def.hideAtSnowDepth))
             {
@@ -436,15 +416,9 @@ namespace CaveworldFlora
 
         protected void TryToDestroyGlower()
         {
-            //Log.Message("TryToDestroyGlower at " + this.Position.ToString());
             if (this.glower.DestroyedOrNull() == false)
             {
-                //Log.Message("DestroyedOrNull() == false");
                 this.glower.Destroy();
-            }
-            else
-            {
-                //Log.Message("DestroyedOrNull()");
             }
             this.glower = null;
         }

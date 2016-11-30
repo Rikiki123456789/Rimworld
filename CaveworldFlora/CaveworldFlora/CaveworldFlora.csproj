@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CaveworldFlora\Assemblies\" />
-    <Folder Include="CaveworldFlora\Textures\Things\Plant\CaveVine\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="CaveworldFlora\About\About.xml">
@@ -72,6 +71,7 @@
     </Content>
     <Content Include="CaveworldFlora\About\Preview.png" />
     <Content Include="CaveworldFlora\Defs\Effects\Mote_Visual.xml" />
+    <Content Include="CaveworldFlora\Defs\HediffDefs\Hediffs_BreathedGleamcap.xml" />
     <Content Include="CaveworldFlora\Defs\ResearchProjectDefs\ResearchProject_Fungiponics.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -105,7 +105,9 @@
     <Content Include="CaveworldFlora\Textures\Things\Plant\BlackLotus\BlackLotusA.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\BlackLotus\BlackLotusB.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\Brightbells\Brightbells.png" />
-    <Content Include="CaveworldFlora\Textures\Things\Plant\CaveLace\CaveLace.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\CaveLace\CaveLaceA.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\CaveLace\CaveLaceB.png" />
+    <Content Include="CaveworldFlora\Textures\Things\Plant\CaveVine\CaveVineA.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\DevilTongue\Body\DevilTongueBody.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\DevilTongue\Flower\DevilTongueFlower.png" />
     <Content Include="CaveworldFlora\Textures\Things\Plant\GiantLeaf\GiantLeafA.png" />
@@ -125,6 +127,7 @@
     <None Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\RawGiantLeaf.psd" />
     <None Include="CaveworldFlora\Textures\Things\Plant\BlackLotus\BlackLotus.psd" />
     <None Include="CaveworldFlora\Textures\Things\Plant\Brightbells\Brightbells.psd" />
+    <None Include="CaveworldFlora\Textures\Things\Plant\CaveVineLace.psd" />
     <None Include="CaveworldFlora\Textures\Things\Plant\DevilTongue\DevilTongue.psd" />
     <None Include="CaveworldFlora\Textures\Things\Plant\GiantLeaf\GiantLeaf.psd" />
     <None Include="CaveworldFlora\Textures\Things\Plant\Mushies.psd" />

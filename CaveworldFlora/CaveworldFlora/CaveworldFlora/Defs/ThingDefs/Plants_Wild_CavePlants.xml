@@ -263,7 +263,6 @@
       <MaxHitPoints>250</MaxHitPoints>
       <Beauty>85</Beauty>
     </statBases>
-    <drawerType>MapMeshOnly</drawerType>
     <graphicData>
       <texPath>Things/Plant/BlackLotus</texPath>
       <graphicClass>Graphic_Random</graphicClass>
@@ -281,8 +280,8 @@
     <plant>
       <harvestWork>800</harvestWork>
       <harvestDestroys>true</harvestDestroys>
-      <harvestedThingDef>SmokeleafLeaves</harvestedThingDef>
-      <harvestYield>50</harvestYield>
+      <harvestedThingDef>InsectJelly</harvestedThingDef>
+      <harvestYield>20</harvestYield>
       <harvestTag>Standard</harvestTag>
       <visualSizeRange>
         <min>0.8</min>
@@ -344,7 +343,7 @@
     <minOptimalGrowTemperature>5</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>45</maxOptimalGrowTemperature>
     <maxGrowTemperature>50</maxGrowTemperature>
-    <hasStaticGlower>false</hasStaticGlower>
+    <hasStaticGlower>true</hasStaticGlower>
     <hasDynamicGlower>false</hasDynamicGlower>
     <growOnlyOnRoughRock>true</growOnlyOnRoughRock>
     <growOnlyUndeRoof>false</growOnlyUndeRoof>

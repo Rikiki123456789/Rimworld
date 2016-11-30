@@ -38,7 +38,7 @@ namespace CaveworldFlora
         public FlowerState flowerState = FlowerState.closed;
 
         public int nextLongTick = GenTicks.TickLongInterval;
-        public int nextNearbyPawnCheckTick = GenTicks.TicksPerRealSecond;
+        public int nextNearbyPawnCheckTick = 0;
 
         public int flowerClosingRemainingTicks = 0;
         public int flowerOpeningTicks = 0;
@@ -84,7 +84,6 @@ namespace CaveworldFlora
 
             if (base.Destroyed)
             {
-                Log.Warning("ClusterPlant_DevilTongue:Tick: already destroyed at " + this.Position.ToString()); // TODO: debug.
                 return;
             }
             switch (flowerState)
@@ -155,10 +154,6 @@ namespace CaveworldFlora
 
         protected void TransitionToOpened()
         {
-            if (this.glower.DestroyedOrNull() == false)
-            {
-                Log.Warning("glower is not null at " + this.Position.ToString()); // TODO: remove this.
-            }
             this.glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerStaticDef(this.def), this.Position);
             this.flowerState = FlowerState.opened;
         }
@@ -214,12 +209,6 @@ namespace CaveworldFlora
             this.flowerState = FlowerState.closed;
         }
         
-        // TODO: add some loot when harvested (luciferium seems too OP).
-        public override void PlantCollected()
-        {
-            base.PlantCollected();
-        }
-
         public override void Draw()
         {
             if (this.flowerState != FlowerState.closed)

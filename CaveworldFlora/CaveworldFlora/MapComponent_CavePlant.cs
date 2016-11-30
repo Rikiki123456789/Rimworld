@@ -28,24 +28,18 @@ namespace CaveworldFlora
         {
             get
             {
-                //Log.Message("MapComponent_ClusterPlant: get cavePlantDefs");
                 if (cavePlantDefsInternal.NullOrEmpty())
                 {
-                    //Log.Message("MapComponent_ClusterPlant: cavePlantDefs is null or empty");
                     cavePlantDefsInternal = new List<ThingDef_ClusterPlant>();
                     foreach (ThingDef plantDef in DefDatabase<ThingDef>.AllDefs)
                     {
                         if (plantDef.category == ThingCategory.Plant)
                         {
-                            //Log.Message("plantDef = " + plantDef);
-                            //Log.Message("plantDef.thingClass = " + plantDef.thingClass.ToString());
-                            if ((plantDef as ThingDef_ClusterPlant) != null)
-                            /*if ((plantDef.thingClass == typeof(CaveworldFlora.ClusterPlant))
-                                || (plantDef.thingClass == typeof(CaveworldFlora.ClusterPlant_Gleamcap))
-                                || (plantDef.thingClass == typeof(CaveworldFlora.ClusterPlant_DevilTongue)))*/
+                            ThingDef_ClusterPlant clusterPlantDef = (plantDef as ThingDef_ClusterPlant);
+                            if ((clusterPlantDef != null)
+                                && (clusterPlantDef.isSymbiosisPlant == false))
                             {
-                                //Log.Message("adding plantDef = " + plantDef);
-                                cavePlantDefsInternal.Add(plantDef as ThingDef_ClusterPlant);
+                                cavePlantDefsInternal.Add(clusterPlantDef);
                             }
                         }
                     }
@@ -60,11 +54,8 @@ namespace CaveworldFlora
             {
                 // Occurs when loading a savegame.
                 int mapSurfaceCoefficient = Find.Map.Size.x * 2 + Find.Map.Size.z * 2;
-                randomSpawnPeriodInTicks = 200000 / (mapSurfaceCoefficient / 100);                
-                randomSpawnPeriodInTicks = 1000; // TODO: fastEcology debug.
-                //Log.Message("randomSpawnPeriodInTicks = " + randomSpawnPeriodInTicks);
+                randomSpawnPeriodInTicks = 200000 / (mapSurfaceCoefficient / 100);
             }
-            randomSpawnPeriodInTicks = 1000; // TODO: fastEcology debug.
             if (Find.TickManager.TicksGame > nextRandomSpawnTick)
             {
                 nextRandomSpawnTick = Find.TickManager.TicksGame + randomSpawnPeriodInTicks;
@@ -77,14 +68,8 @@ namespace CaveworldFlora
         /// </summary>
         public void TrySpawnNewClusterAtRandomPosition()
         {
-            //Log.Message("TrySpawnNewClusterAtRandomPosition");
-            for (int defindex = 0; defindex < cavePlantDefs.Count; defindex++)
-            {
-                //Log.Message("cavePlantDefs: " + cavePlantDefs[defindex].ToString());
-            }
             ThingDef_ClusterPlant cavePlantDef = cavePlantDefs.RandomElementByWeight((ThingDef_ClusterPlant plantDef) => plantDef.plant.wildCommonalityMaxFraction / plantDef.clusterSizeRange.Average);
-            //Log.Message("selected cavePlantDef = " + cavePlantDef.ToString());
-
+            
             int newDesiredClusterSize = cavePlantDef.clusterSizeRange.RandomInRange;
             IntVec3 spawnCell = IntVec3.Invalid;
             GenClusterPlantReproduction.TryGetRandomClusterSpawnCell(cavePlantDef, newDesiredClusterSize, true, out spawnCell);

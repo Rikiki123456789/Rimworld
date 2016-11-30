@@ -61,7 +61,7 @@ namespace CaveworldFlora
 
             if (Find.TickManager.TicksGame > this.nextSporeThrowTick)
             {
-                this.nextNearbyPawnCheckTick = Find.TickManager.TicksGame + 10;
+                this.nextSporeThrowTick = Find.TickManager.TicksGame + 10;
                 MoteMaker.ThrowDustPuff(this.TrueCenter(), Rand.Value);
             }
 
@@ -71,10 +71,9 @@ namespace CaveworldFlora
                 foreach (Pawn pawn in Find.MapPawns.AllPawns)
                 {
                     if ((pawn.Position.InHorDistOf(this.Position, sporeEffectRadius))
-                        && (pawn.needs.mood != null))
+                        && (pawn.health != null))
                     {
-                        // TODO: add a hediff diminishing consciousness.
-                        pawn.needs.mood.thoughts.memories.TryGainMemoryThought(Util_CaveworldFlora.breathedGleamcapSmokeDef);
+                        pawn.health.AddHediff(Util_CaveworldFlora.gleamcapSmokeDef);
                     }
                 }
             }
