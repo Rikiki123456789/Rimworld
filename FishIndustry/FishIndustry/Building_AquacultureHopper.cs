@@ -28,9 +28,9 @@ namespace FishIndustry
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             this.powerComp = base.GetComp<CompPowerTrader>();
         }
 
@@ -44,7 +44,7 @@ namespace FishIndustry
 
             if (this.powerComp.PowerOn)
             {
-                List<Thing> thingList = this.Position.GetThingList();
+                List<Thing> thingList = this.Position.GetThingList(this.Map);
                 foreach (Thing thing in thingList)
                 {
                     if (thing.def.IsNutritionGivingIngestible)

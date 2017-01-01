@@ -20,25 +20,44 @@ namespace FishIndustry
     /// Remember learning is always better than just copy/paste...</permission>
     public class IncidentWorker_MicroFungus : IncidentWorker
     {
-        protected override bool CanFireNowSub()
+
+        protected override bool CanFireNowSub(IIncidentTarget target)
         {
-            bool colonyHasAquacultureBasin = Find.ListerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef).Count() > 0;
+            Map map = (Map)target;
+            bool colonyHasAquacultureBasin = map.listerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef).Count() > 0;
             return colonyHasAquacultureBasin;
         }
 
         public override bool TryExecute(IncidentParms parms)
         {
+            Map map = (Map)parms.target;
             Building_AquacultureBasin aquacultureBasin = null;
-            foreach (Building building in Find.ListerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef))
+            foreach (Building building in map.listerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef))
             {
                 aquacultureBasin = building as Building_AquacultureBasin;
-                aquacultureBasin.StartMicroFungusInfestation((int)(60000f * Rand.Range(this.def.durationDays.min, this.def.durationDays.max)));
+                int infestationDuration = (int)(GenDate.TicksPerDay * this.def.durationDays.min * Rand.Range(0.8f, 1.2f));
+                Room room = aquacultureBasin.InteractionCell.GetRoom(map);
+                if ((room == null)
+                    || room.PsychologicallyOutdoors)
+                {
+                    // Maximum infestation duration.
+                    infestationDuration = (int)(GenDate.TicksPerDay * this.def.durationDays.max * Rand.Range(0.8f, 1.2f));
+                }
+                else
+                {
+                    // Adjust infestation duration according to cleanliness.
+                    float dirtyness = -room.GetStat(RoomStatDefOf.Cleanliness);
+                    if (dirtyness > 0)
+                    {
+                        infestationDuration += (int)(GenDate.TicksPerDay * this.def.durationDays.min * dirtyness);
+                    }
+                }
+                aquacultureBasin.StartMicroFungusInfestation(infestationDuration);
             }
             if (aquacultureBasin != null)
             {
                 Find.LetterStack.ReceiveLetter("Micro fungus", "Some of your aquaculture basins have been infected by a strange aquatic fungus.\nIt seems to consume all the water's oxygen.\nLet's hope the fishes will survive this deprivation.", LetterType.BadNonUrgent, aquacultureBasin);
             }
-
             return true;
         }
     }

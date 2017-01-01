@@ -43,6 +43,14 @@ namespace FishIndustry
             }
             Building_FishingPier fishingPier = t as Building_FishingPier;
 
+            if (fishingPier.IsBurning())
+            {
+                return false;
+            }
+            if (Util_FishIndustry.IsAquaticTerrain(fishingPier.Map, fishingPier.fishingSpotCell) == false)
+            {
+                return false;
+            }
             if (pawn.Dead
                 || pawn.Downed
                 || pawn.IsBurning())
@@ -57,19 +65,7 @@ namespace FishIndustry
             {
                 return false;
             }
-            if ((pawn.equipment.Primary != null)
-                && (pawn.equipment.Primary.def == Util_FishIndustry.HarpoonDef))
-            {
-                return true;
-            }
-            foreach (Apparel apparel in pawn.apparel.WornApparel)
-            {
-                if (apparel.def == Util_FishIndustry.FishingRodDef)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return true;
 		}
 
 		public override Job JobOnThing(Pawn pawn, Thing t)
@@ -77,7 +73,7 @@ namespace FishIndustry
             Job job = new Job();
             Building_FishingPier fishingPier = t as Building_FishingPier;
 
-            job = new Job(DefDatabase<JobDef>.GetNamed(Util_FishIndustry.JobDefName_FishAtFishingPier), fishingPier);
+            job = new Job(DefDatabase<JobDef>.GetNamed(Util_FishIndustry.JobDefName_FishAtFishingPier), fishingPier, fishingPier.fishingSpotCell);
 
             return job;
 		}

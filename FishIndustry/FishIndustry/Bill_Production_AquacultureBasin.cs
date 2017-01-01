@@ -36,8 +36,32 @@ namespace FishIndustry
             if (aquacultureBasin != null)
             {
                 // Get the supplied species def and start a new breed cycle in the aquaculture basin.
-                ThingDef speciesSuppliedDef = this.recipe.products.First().thingDef;
-                aquacultureBasin.StartNewBreedCycle(speciesSuppliedDef);
+                Corpse fishCorpse = ingredients.First() as Corpse;
+                if (fishCorpse != null)
+                {
+                    PawnKindDef fishKind = null;
+                    string fishCorpseAsString = fishCorpse.ToString();
+                    if (fishCorpseAsString.Contains("Mashgon"))
+                    {
+                        fishKind = Util_FishIndustry.MashgonDef;
+                    }
+                    else if (fishCorpseAsString.Contains("Blueblade"))
+                    {
+                        fishKind = Util_FishIndustry.BluebladeDef;
+                    }
+                    else if (fishCorpseAsString.Contains("Tailteeth"))
+                    {
+                        fishKind = Util_FishIndustry.TailteethDef;
+                    }
+                    if (fishKind != null)
+                    {
+                        aquacultureBasin.StartNewBreedCycle(fishKind);
+                    }
+                    else
+                    {
+                        Log.Warning("FishIndustry: this fish is not handled for breeding (" + fishCorpseAsString + ").");
+                    }
+                }
             }
         }
     }

@@ -17,15 +17,14 @@ namespace FishIndustry
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class ThingDef_FishSpecies : ThingDef
+    public class PawnKindDef_FishSpecies : PawnKindDef
     {
-        // Note: the following false are only default values which can be overriden by the one read in the XML definition.
+        // Note: the following values are only default values which can be overriden by the one read in the XML definition.
         public bool livesInSea = false;
         public bool livesInMarsh = false;
         public bool catchableDuringDay = false;
         public bool catchableDuringNight = false;
         public float commonality = 0.20f;
-        public int catchQuantity = 1;
         public int breedQuantity = 0;
         public float breedingDurationInDays = 1f;
     }

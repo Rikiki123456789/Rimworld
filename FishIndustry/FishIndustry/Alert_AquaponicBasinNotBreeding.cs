@@ -17,13 +17,14 @@ namespace FishIndustry
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class Alert_AquacultureBasinNotBreeding : Alert_High
+    public class Alert_AquacultureBasinNotBreeding : Alert
     {
-        public override AlertReport Report
+        public override AlertReport GetReport()
         {
-            get
+            List<Map> maps = Find.Maps;
+            for (int i = 0; i<maps.Count; i++)
             {
-                foreach (Building_AquacultureBasin aquacultureBasin in Find.ListerBuildings.AllBuildingsColonistOfClass<Building_AquacultureBasin>())
+                foreach (Building_AquacultureBasin aquacultureBasin in maps[i].listerBuildings.AllBuildingsColonistOfClass<Building_AquacultureBasin>())
                 {
                     if (aquacultureBasin.powerComp.PowerOn
                         && (aquacultureBasin.IsForbidden(Faction.OfPlayer) == false)
@@ -33,13 +34,13 @@ namespace FishIndustry
                         return AlertReport.CulpritIs(aquacultureBasin);
                     }
                 }
-                return AlertReport.Inactive;
             }
+            return AlertReport.Inactive;
         }
         public Alert_AquacultureBasinNotBreeding()
         {
-            this.baseLabel = "Idle aquaculture basin";
-            this.baseExplanation = "You have an idle aquaculture basin.\n\nYou should supply it some fish eggs to start breeding.\n\nUse the bills tab to order it and check you have an available fisher.";
+            this.defaultLabel = "Idle aquaculture basin";
+            this.defaultExplanation = "You have an idle aquaculture basin.\n\nYou should supply it some fish eggs to start breeding.\n\nUse the bills tab to order it and check you have an available fisher.";
         }
     }
 }

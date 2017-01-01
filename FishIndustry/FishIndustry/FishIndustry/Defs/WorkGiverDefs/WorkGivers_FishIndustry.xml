@@ -4,7 +4,7 @@
   <WorkGiverDef>
     <defName>WorkGiver_HarvestAquacultureBasinProduction</defName>
     <giverClass>FishIndustry.WorkGiver_AquacultureBasin</giverClass>
-    <workType>Fishing</workType>
+    <workType>Hunting</workType>
     <priorityInType>92</priorityInType>
     <fixedBillGiverDefs>
       <li>AquacultureBasin</li>
@@ -19,7 +19,7 @@
   <WorkGiverDef>
     <defName>WorkGiver_DoBillsAtAquacultureBasin</defName>
     <giverClass>WorkGiver_DoBill</giverClass>
-    <workType>Fishing</workType>
+    <workType>Hunting</workType>
     <priorityInType>91</priorityInType>
     <fixedBillGiverDefs>
       <li>AquacultureBasin</li>
@@ -34,7 +34,7 @@
   <WorkGiverDef>
     <defName>FillAquacultureHopper</defName>
     <giverClass>FishIndustry.WorkGiver_FillAquacultureHopper</giverClass>
-    <workType>Fishing</workType>
+    <workType>Hunting</workType>
     <priorityInType>90</priorityInType>
     <verb>fill</verb>
     <gerund>filling</gerund>
@@ -44,25 +44,10 @@
   </WorkGiverDef>
 
   <WorkGiverDef>
-    <defName>WorkGiver_DoBillsAtFishingPier</defName>
-    <giverClass>WorkGiver_DoBill</giverClass>
-    <workType>Fishing</workType>
-    <priorityInType>81</priorityInType>
-    <fixedBillGiverDefs>
-      <li>FishingPier</li>
-    </fixedBillGiverDefs>
-    <verb>make fishing tool</verb>
-    <gerund>making fishing tool</gerund>
-    <requiredCapacities>
-      <li>Manipulation</li>
-    </requiredCapacities>
-  </WorkGiverDef>
-
-  <WorkGiverDef>
     <defName>WorkGiver_FishAtFishingPier</defName>
     <giverClass>FishIndustry.WorkGiver_FishingPier</giverClass>
-    <workType>Fishing</workType>
-    <priorityInType>80</priorityInType>
+    <workType>Hunting</workType>
+    <priorityInType>89</priorityInType>
     <fixedBillGiverDefs>
       <li>FishingPier</li>
     </fixedBillGiverDefs>

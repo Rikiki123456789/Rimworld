@@ -23,13 +23,13 @@ namespace FishIndustry
         /// <summary>
         /// Spawns the fishing pier.
         /// </summary>
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             this.Destroy();
             Building_FishingPier fishingPier = ThingMaker.MakeThing(Util_FishIndustry.FishingPierDef) as Building_FishingPier;
             IntVec3 fishingPierPosition = this.Position + new IntVec3(0, 0, 1).RotatedBy(this.Rotation);
-            GenSpawn.Spawn(fishingPier, fishingPierPosition, this.Rotation);
+            GenSpawn.Spawn(fishingPier, fishingPierPosition, map, this.Rotation);
             fishingPier.SetFactionDirect(this.Faction);
         }
     }

@@ -24,10 +24,10 @@ namespace FishIndustry
         {
             base.Destroy(mode);
 
-            // Small chance to spawn some pearl.
+            // Small chance to spawn a pearl.
             if (Rand.Value < 0.02f)
             {
-                GenSpawn.Spawn(Util_FishIndustry.PearlDef, this.Position);
+                GenSpawn.Spawn(Util_FishIndustry.PearlDef, this.Position, this.Map);
             }
         }
 

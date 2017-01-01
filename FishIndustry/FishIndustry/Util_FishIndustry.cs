@@ -20,7 +20,6 @@ namespace FishIndustry
     /// Remember learning is always better than just copy/paste...</permission>
     public static class Util_FishIndustry
     {
-        // TODO: damage equipment when catching big fish?
         // TODO: add aquariums for sduiggles
 
         // Building.
@@ -75,25 +74,7 @@ namespace FishIndustry
                 return (DefDatabase<RecipeDef>.GetNamed("SupplyTailteethEggs"));
             }
         }
-
-        // Apparel.
-        public static ThingDef FishingRodDef
-        {
-            get
-            {
-                return (ThingDef.Named("FishingRod"));
-            }
-        }
-
-        // Equipment.
-        public static ThingDef HarpoonDef
-        {
-            get
-            {
-                return (ThingDef.Named("Harpoon"));
-            }
-        }
-
+        
         // Terrain.
         public static TerrainDef FishingPierFloorDeepWaterDef
         {
@@ -171,43 +152,34 @@ namespace FishIndustry
                 return (ThingDef.Named("Pearl"));
             }
         }
-
-        // Stat.
-        public static StatDef FishingSpeedDef
-        {
-            get
-            {
-                return (StatDef.Named("FishingSpeed"));
-            }
-        }
-
+        
         // Job.
         public static string JobDefName_FishAtFishingPier = "JobDef_FishAtFishingPier";
 
         public static string JobDefName_HarvestAquacultureBasinProduction = "JobDef_HarvestAquacultureBasinProduction";
 
         // Breedable fishes def.
-        public static ThingDef MashgonDef
+        public static PawnKindDef MashgonDef
         {
             get
             {
-                return (ThingDef.Named("Fish_Mashgon"));
+                return (PawnKindDef.Named("PawnKindDefFishMashgon"));
             }
         }
 
-        public static ThingDef BluebladeDef
+        public static PawnKindDef BluebladeDef
         {
             get
             {
-                return (ThingDef.Named("Fish_Blueblade"));
+                return (PawnKindDef.Named("PawnKindDefFishBlueblade"));
             }
         }
 
-        public static ThingDef TailteethDef
+        public static PawnKindDef TailteethDef
         {
             get
             {
-                return (ThingDef.Named("Fish_Tailteeth"));
+                return (PawnKindDef.Named("PawnKindDefFishTailteeth"));
             }
         }
 
@@ -216,7 +188,7 @@ namespace FishIndustry
         {
             get
             {
-                return ThingDef.Named("Fish_Mashgon").graphicData.texPath;
+                return PawnKindDef.Named("PawnKindDefFishMashgon").lifeStages.First().bodyGraphicData.texPath;
             }
         }
 
@@ -224,7 +196,7 @@ namespace FishIndustry
         {
             get
             {
-                return ThingDef.Named("Fish_Blueblade").graphicData.texPath;
+                return PawnKindDef.Named("PawnKindDefFishBlueblade").lifeStages.First().bodyGraphicData.texPath;
             }
         }
 
@@ -232,31 +204,42 @@ namespace FishIndustry
         {
             get
             {
-                return ThingDef.Named("Fish_Tailteeth").graphicData.texPath;
+                return PawnKindDef.Named("PawnKindDefFishTailteeth").lifeStages.First().bodyGraphicData.texPath;
             }
         }
 
+        // Util functions.
+        public static bool IsAquaticTerrain(Map map, IntVec3 position)
+        {
+            TerrainDef terrainDef = map.terrainGrid.TerrainAt(position);
+            if ((terrainDef == TerrainDef.Named("WaterShallow"))
+                || (terrainDef == TerrainDef.Named("WaterDeep"))
+                || (terrainDef == TerrainDef.Named("Marsh")))
+            {
+                return true;
+            }
+            return false;
+        }
+
         // Fishes lists.
-        private static List<ThingDef_FishSpecies> fishSpeciesList = null;
-        public static List<ThingDef_FishSpecies> GetFishSpeciesList()
+        private static List<PawnKindDef_FishSpecies> fishSpeciesList = null;
+        public static List<PawnKindDef_FishSpecies> GetFishSpeciesList()
         {
             if (fishSpeciesList.NullOrEmpty())
             {
-                fishSpeciesList = new List<ThingDef_FishSpecies>();
+                fishSpeciesList = new List<PawnKindDef_FishSpecies>();
 
-                foreach (ThingDef def in DefDatabase<ThingDef>.AllDefsListForReading)
+                foreach (PawnKindDef def in DefDatabase<PawnKindDef>.AllDefsListForReading)
                 {
-                    if (def is ThingDef_FishSpecies)
+                    if (def is PawnKindDef_FishSpecies)
                     {
-                        fishSpeciesList.Add(def as ThingDef_FishSpecies);
+                        fishSpeciesList.Add(def as PawnKindDef_FishSpecies);
                     }
                 }
                 if (fishSpeciesList.NullOrEmpty())
                 {
                     Log.Warning("FishIndustry: did not found any fish species.");
                 }
-                //TODO: debug.
-                Log.Message("Number of species = " + fishSpeciesList.Count);
             }
 
             return fishSpeciesList;

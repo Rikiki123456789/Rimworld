@@ -6,7 +6,7 @@
     <label>Fishing pier floor</label>
     <texturePath>Terrain/Surfaces/WaterDeep</texturePath>
     <EdgeType>FadeRough</EdgeType>
-    <RenderPrecedence>395</RenderPrecedence>
+    <RenderPrecedence>397</RenderPrecedence>
     <PathCost>0</PathCost>
     <acceptFilth>false</acceptFilth>
     <fertility>0</fertility>
@@ -20,7 +20,7 @@
     <label>Fishing pier floor</label>
     <texturePath>Terrain/Surfaces/WaterShallow</texturePath>
     <EdgeType>FadeRough</EdgeType>
-    <RenderPrecedence>394</RenderPrecedence>
+    <RenderPrecedence>396</RenderPrecedence>
     <PathCost>0</PathCost>
     <acceptFilth>false</acceptFilth>
     <fertility>0</fertility>
@@ -34,7 +34,7 @@
     <label>Fishing pier floor</label>
     <texturePath>Terrain/Surfaces/Marsh</texturePath>
     <EdgeType>FadeRough</EdgeType>
-    <RenderPrecedence>394</RenderPrecedence>
+    <RenderPrecedence>326</RenderPrecedence>
     <PathCost>0</PathCost>
     <acceptFilth>false</acceptFilth>
     <fertility>0</fertility>

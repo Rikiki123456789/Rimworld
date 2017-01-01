@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.13.5940.24501, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.16.6198.16597, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +54,6 @@
     <Compile Include="Bill_Production_AquacultureBasin.cs" />
     <Compile Include="Alert_AquaponicBasinNeedsAquaponicHopper.cs" />
     <Compile Include="Building_AquacultureHopper.cs" />
-    <Compile Include="Alert_FrozenFishingSpot.cs" />
     <Compile Include="Alert_AquaponicBasinNotBreeding.cs" />
     <Compile Include="Item_Oyster.cs" />
     <Compile Include="IncidentWorker_MicroFungus.cs" />
@@ -62,7 +61,7 @@
     <Compile Include="PlaceWorker_AquacultureHopper.cs" />
     <Compile Include="JobDriver_HarvestAquacultureBasinProduction.cs" />
     <Compile Include="WorkGiver_AquaponicBasin.cs" />
-    <Compile Include="ThingDef_FishSpecies.cs" />
+    <Compile Include="PawnKindDef_FishSpecies.cs" />
     <Compile Include="JobDriver_FishAtFishingPier.cs" />
     <Compile Include="PlaceWorker_FishingPierSpawner.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -80,22 +79,18 @@
     <Content Include="FishIndustry\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\Defs\Bodies\Bodies_Animal_Fish.xml" />
+    <Content Include="FishIndustry\Defs\Bodies\BodyParts_Animal_Fish.xml" />
     <Content Include="FishIndustry\Defs\IncidentDefs\Incident MicroFungus.xml" />
     <Content Include="FishIndustry\Defs\JobDefs\Jobs_Joy.xml" />
-    <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml" />
-    <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_MakeFishingRod.xml">
+    <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\SkillDefs\Skills.xml" />
-    <Content Include="FishIndustry\Defs\StatDefs\Stats_Pawns_WorkGeneral_Fishing.xml" />
-    <Content Include="FishIndustry\Defs\ThingCategoryDefs\ThingCategories.xml" />
+    <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_Mud.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs\Building_AquacultureHopper.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ThingDefs\Building_FishingPier.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Items_Seafood.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ThingDefs\Item_Pearl.xml">
@@ -114,26 +109,21 @@
     <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Apparel_FishingRod.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="FishIndustry\Defs\ThingDefs\Building_AquacultureBasin.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Items_Fishes.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs\Mote_FishingRod.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Mote_FishIndustry.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs\Mote_Bubble.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Weapon_Harpoon.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs_Races\Races_Animal_Fish.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThoughtDefs\Thoughts_Memory_Eating.xml" />
     <Content Include="FishIndustry\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\WorkTypeDefs\WorkTypes_FishIndustry.xml" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureBasin.png" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureHopper.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPier.png" />
@@ -152,7 +142,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\FishIndustry\Assemblies"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\FishIndustry\Assemblies"
+xcopy /Y /i /s $(ProjectDir)\FishIndustry "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\FishIndustry"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

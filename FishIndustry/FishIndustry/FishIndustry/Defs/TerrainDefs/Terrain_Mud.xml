@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TerrainDefs>
+
+  <TerrainDef>
+    <defName>Mud</defName>
+    <label>mud</label>
+    <texturePath>Terrain/Surfaces/Mud</texturePath>
+    <EdgeType>FadeRough</EdgeType>
+    <RenderPrecedence>330</RenderPrecedence>
+    <PathCost>12</PathCost>
+    <statBases>
+      <Beauty>-2</Beauty>
+      <Cleanliness>-2</Cleanliness>
+    </statBases>
+    <affordances>
+      <li>Undefined</li>
+    </affordances>
+    <TerrainFilthDef>FilthDirt</TerrainFilthDef>
+    <Fertility>0</Fertility>
+    <TakeFootprints>True</TakeFootprints>
+    <acceptFilth>false</acceptFilth>
+    <avoidWander>true</avoidWander>
+    <driesTo>Soil</driesTo>
+  </TerrainDef>
+
+</TerrainDefs>

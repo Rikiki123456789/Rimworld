@@ -23,14 +23,14 @@ namespace FishIndustry
         /// <summary>
         /// Check the aquaculture hopper is placed next to an aquaculture basin.
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
                 IntVec3 cell = loc + GenAdj.CardinalDirections[directionAsInt];
-                if (cell.InBounds())
+                if (cell.InBounds(this.Map))
                 {
-                    Building building = cell.GetEdifice();
+                    Building building = cell.GetEdifice(this.Map);
                     if ((building != null)
                         && (building.def == Util_FishIndustry.AquacultureBasinDef))
                     {

@@ -43,15 +43,15 @@ namespace FishIndustry
                     }
                     else
                     {
-                        GenSpawn.Spawn(product, aquacultureBasin.InteractionCell);
+                        GenSpawn.Spawn(product, aquacultureBasin.InteractionCell, this.Map);
 
                         IntVec3 storageCell;
-                        if (StoreUtility.TryFindBestBetterStoreCellFor(product, this.pawn, StoragePriority.Unstored, this.pawn.Faction, out storageCell, true))
+                        if (StoreUtility.TryFindBestBetterStoreCellFor(product, this.pawn, this.Map, StoragePriority.Unstored, this.pawn.Faction, out storageCell, true))
                         {
-                            this.pawn.carrier.TryStartCarry(product);
+                            this.pawn.carryTracker.TryStartCarry(product);
                             curJob.targetB = storageCell;
                             curJob.targetC = product;
-                            curJob.maxNumToCarry = 99999;
+                            curJob.count = 99999;
                         }
                         else
                         {

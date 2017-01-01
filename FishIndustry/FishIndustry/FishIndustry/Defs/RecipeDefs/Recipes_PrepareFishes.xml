@@ -1,142 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <RecipeDefs>
 
-  <RecipeDef Parent="PrepareFishRecipeBase">
-    <defName>PrepareSduiggles</defName>
-    <label>prepare sduiggles</label>
-    <jobString>Preparing sduiggles.</jobString>
-    <description>Chop down a sduiggles to get its 7 gelatinous tentacles.</description>
-    <workAmount>300</workAmount>
-    <workSkill>Cooking</workSkill>
-    <workSpeedStat>ButcheryFleshSpeed</workSpeedStat>
-    <efficiencyStat>ButcheryFleshEfficiency</efficiencyStat>
-    <effectWorking>ButcherFlesh</effectWorking>
-    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Fish_Sduiggles</li>
-          </thingDefs>
-        </filter>
-        <count>3</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Fish_Sduiggles</li>
-      </thingDefs>
-    </fixedIngredientFilter>
-    <products>
-      <RawSeaFood_SduigglesTentacle>21</RawSeaFood_SduigglesTentacle>
-  </products>
-    <recipeUsers>
-      <li>TableButcher</li>
-    </recipeUsers>
-  </RecipeDef>
-
-  <RecipeDef Parent="PrepareFishRecipeBase">
-    <defName>PrepareSeasnake</defName>
-    <label>gut seasnake</label>
-    <jobString>Gutting seasnake.</jobString>
-    <description>Gut fresh seasnakes to get cookable fish filets.</description>
-    <workAmount>600</workAmount>
-    <workSkill>Cooking</workSkill>
-    <workSpeedStat>ButcheryFleshSpeed</workSpeedStat>
-    <efficiencyStat>ButcheryFleshEfficiency</efficiencyStat>
-    <effectWorking>ButcherFlesh</effectWorking>
-    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Fish_Seasnake</li>
-          </thingDefs>
-        </filter>
-        <count>4</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Fish_Seasnake</li>
-      </thingDefs>
-    </fixedIngredientFilter>
-    <products>
-      <RawSeaFood_SeasnakeFilet>40</RawSeaFood_SeasnakeFilet>
-    </products>
-    <recipeUsers>
-      <li>TableButcher</li>
-    </recipeUsers>
-  </RecipeDef>
-
-  <RecipeDef Parent="PrepareFishRecipeBase">
-    <defName>PrepareBlueblade</defName>
-    <label>gut blueblade</label>
-    <jobString>Gutting blueblade.</jobString>
-    <description>Gut fresh blueblades to get cookable fish filets.</description>
-    <workAmount>500</workAmount>
-    <workSkill>Cooking</workSkill>
-    <workSpeedStat>ButcheryFleshSpeed</workSpeedStat>
-    <efficiencyStat>ButcheryFleshEfficiency</efficiencyStat>
-    <effectWorking>ButcherFlesh</effectWorking>
-    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Fish_Blueblade</li>
-          </thingDefs>
-        </filter>
-        <count>6</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Fish_Blueblade</li>
-      </thingDefs>
-    </fixedIngredientFilter>
-    <products>
-      <RawSeaFood_BluebladeFilet>60</RawSeaFood_BluebladeFilet>
-    </products>
-    <recipeUsers>
-      <li>TableButcher</li>
-    </recipeUsers>
-  </RecipeDef>
-
-  <RecipeDef Parent="PrepareFishRecipeBase">
-    <defName>ButcherTailteeth</defName>
-    <label>butcher tailteeth</label>
-    <jobString>Butchering tailteeth.</jobString>
-    <description>Butcher a tailteeth to obtain highly nutritious steaks.</description>
-    <workAmount>1200</workAmount>
-    <workSkill>Cooking</workSkill>
-    <workSpeedStat>ButcheryFleshSpeed</workSpeedStat>
-    <efficiencyStat>ButcheryFleshEfficiency</efficiencyStat>
-    <effectWorking>ButcherFlesh</effectWorking>
-    <soundWorking>Recipe_ButcherCorpseFlesh</soundWorking>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Fish_Tailteeth</li>
-          </thingDefs>
-        </filter>
-        <count>1</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Fish_Tailteeth</li>
-      </thingDefs>
-    </fixedIngredientFilter>
-    <products>
-      <RawSeaFood_TailteethSteak>150</RawSeaFood_TailteethSteak>
-    </products>
-    <recipeUsers>
-      <li>TableButcher</li>
-    </recipeUsers>
-  </RecipeDef>
-
   <!--=================== Aquaculture basin breeding ===============-->
   
   <RecipeDef>
@@ -149,7 +13,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>Fish_Mashgon</li>
+            <li>ThingDefFishMashgon_Corpse</li>
           </thingDefs>
         </filter>
         <count>1</count>
@@ -157,11 +21,14 @@
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Fish_Mashgon</li>
+        <li>ThingDefFishMashgon_Corpse</li>
       </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
     </fixedIngredientFilter>
     <products>
-      <Fish_Mashgon>1</Fish_Mashgon>
+      <ThingDefFishMashgon_Meat>5</ThingDefFishMashgon_Meat>
     </products>
   </RecipeDef>
 
@@ -175,7 +42,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>Fish_Blueblade</li>
+            <li>ThingDefFishBlueblade_Corpse</li>
           </thingDefs>
         </filter>
         <count>1</count>
@@ -183,11 +50,14 @@
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Fish_Blueblade</li>
+        <li>ThingDefFishBlueblade_Corpse</li>
       </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
     </fixedIngredientFilter>
     <products>
-      <Fish_Blueblade>1</Fish_Blueblade>
+      <ThingDefFishBlueblade_Meat>10</ThingDefFishBlueblade_Meat>
     </products>
   </RecipeDef>
 
@@ -201,7 +71,7 @@
       <li>
         <filter>
           <thingDefs>
-            <li>Fish_Tailteeth</li>
+            <li>ThingDefFishTailteeth_Corpse</li>
           </thingDefs>
         </filter>
         <count>1</count>
@@ -209,11 +79,14 @@
     </ingredients>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Fish_Tailteeth</li>
+        <li>ThingDefFishTailteeth_Corpse</li>
       </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
     </fixedIngredientFilter>
     <products>
-      <Fish_Tailteeth>1</Fish_Tailteeth>
+      <ThingDefFishTailteeth_Meat>50</ThingDefFishTailteeth_Meat>
     </products>
   </RecipeDef>
 
@@ -231,9 +104,9 @@
     <ingredients>
       <li>
         <filter>
-          <thingDefs>
-            <li>Fish_Blueblade</li>
-          </thingDefs>
+          <categories>
+            <li>Corpses</li>
+          </categories>
         </filter>
         <count>1</count>
       </li>
@@ -243,8 +116,12 @@
     </products>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Fish_Blueblade</li>
+        <li>ThingDefFishBlueblade_Corpse</li>
+        <li>ThingDefFishSeasnake_Corpse</li>
       </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
     </fixedIngredientFilter>
     <recipeUsers>
       <li>Campfire</li>

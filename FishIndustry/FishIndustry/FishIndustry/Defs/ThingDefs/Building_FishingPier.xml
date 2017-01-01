@@ -2,7 +2,7 @@
 
 <Buildings>
 
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="BuildingBase" Name ="FishingPierSpawnerBase">
     <defName>FishingPierSpawner</defName>
     <Label>fishing pier</Label>
     <Description>A simple and solid fishing pier. Keeps your feet dry while fishing.</Description>
@@ -36,14 +36,29 @@
     <hasInteractionCell>True</hasInteractionCell>
     <interactionCellOffset>(0,0,0)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
+    <specialDisplayRadius>10</specialDisplayRadius>
   </ThingDef>
 
+  <ThingDef ParentName="FishingPierSpawnerBase">
+    <defName>FishingPierSpawnerOnMud</defName>
+    <Label>fishing pier (on mud)</Label>
+    <Description>A simple and solid fishing pier. Keeps your feet dry while fishing. Can be built over mud be requires more time and building materials.</Description>
+    <terrainAffordanceNeeded>Undefined</terrainAffordanceNeeded>
+    <CostList>
+      <WoodLog>225</WoodLog>
+      <Steel>75</Steel>
+    </CostList>
+    <statBases>
+      <WorkToMake>7500</WorkToMake>
+    </statBases>
+  </ThingDef>
+  
   <ThingDef ParentName="BuildingBase">
     <defName>FishingPier</defName>
     <Label>fishing pier</Label>
     <Description>A simple and solid fishing pier. Keeps your feet dry while fishing.</Description>
     <thingClass>FishIndustry.Building_FishingPier</thingClass>
-    <TickerType>Normal</TickerType>
+    <TickerType>Rare</TickerType>
     <soundImpactDefault>BulletImpactWood</soundImpactDefault>
     <graphicData>
       <texPath>Things/Building/FishingPier</texPath>
@@ -68,7 +83,7 @@
     <size>(1,3)</size>
     <passability>Standable</passability>
     <hasInteractionCell>True</hasInteractionCell>
-    <interactionCellOffset>(0,0,0)</interactionCellOffset>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
     <comps>
       <li>
@@ -81,6 +96,7 @@
     <building>
       <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
     </building>
+    <specialDisplayRadius>10</specialDisplayRadius>
   </ThingDef>
 
 </Buildings>

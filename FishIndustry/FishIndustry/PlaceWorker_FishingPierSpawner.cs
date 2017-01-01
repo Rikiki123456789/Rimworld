@@ -28,16 +28,16 @@ namespace FishIndustry
         /// - the rest of the fishing pier and the fishing spot must be on water.
         /// - must not be too near from another fishing pier.
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
             // Check fishing pier bank cell is on a "solid" terrain.
-            if (IsAquaticTerrain(loc))
+            if (Util_FishIndustry.IsAquaticTerrain(this.Map, loc))
             {
                 return new AcceptanceReport("Fishing pier must touch a bank.");
             }
             // Check fishing pier middle and river cells are on water.
-            if ((IsAquaticTerrain(loc + new IntVec3(0, 0, 1).RotatedBy(rot)) == false)
-                || (IsAquaticTerrain(loc + new IntVec3(0, 0, 2).RotatedBy(rot)) == false))
+            if ((Util_FishIndustry.IsAquaticTerrain(this.Map, loc + new IntVec3(0, 0, 1).RotatedBy(rot)) == false)
+                || (Util_FishIndustry.IsAquaticTerrain(this.Map, loc + new IntVec3(0, 0, 2).RotatedBy(rot)) == false))
             {
                 return new AcceptanceReport("Fishing pier must be placed on water.");
             }
@@ -46,7 +46,7 @@ namespace FishIndustry
             {
                 for (int yOffset = 3; yOffset <= 5; yOffset++)
                 {
-                    if (IsAquaticTerrain(loc + new IntVec3(xOffset, 0, yOffset).RotatedBy(rot)) == false)
+                    if (Util_FishIndustry.IsAquaticTerrain(this.Map, loc + new IntVec3(xOffset, 0, yOffset).RotatedBy(rot)) == false)
                     {
                         return new AcceptanceReport("Fishing zone must be placed on water.");
                     }
@@ -54,9 +54,9 @@ namespace FishIndustry
             }
 
             // Check if another fishing pier is not too close (mind the test on "fishing pier" def and "fishing pier spawner" blueprint and frame defs.
-            List<Thing> fishingPierList = Find.ListerThings.ThingsOfDef(Util_FishIndustry.FishingPierDef);
-            List<Thing> fishingPierSpawnerBlueprintList = Find.ListerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.blueprintDef);
-            List<Thing> fishingPierSpawnerFrameList = Find.ListerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.frameDef);
+            List<Thing> fishingPierList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierDef);
+            List<Thing> fishingPierSpawnerBlueprintList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.blueprintDef);
+            List<Thing> fishingPierSpawnerFrameList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.frameDef);
 
             if (fishingPierList != null)
             {
@@ -84,18 +84,6 @@ namespace FishIndustry
             }
 
             return true;
-        }
-
-        public static bool IsAquaticTerrain(IntVec3 position)
-        {
-            TerrainDef terrainDef = Find.TerrainGrid.TerrainAt(position);
-            if ((terrainDef == TerrainDef.Named("WaterShallow"))
-                || (terrainDef == TerrainDef.Named("WaterDeep"))
-                || (terrainDef == TerrainDef.Named("Marsh")))
-            {
-                return true;
-            }
-            return false;
         }
     }
 }

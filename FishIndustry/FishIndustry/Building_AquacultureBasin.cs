@@ -25,13 +25,13 @@ namespace FishIndustry
         public CompPowerTrader powerComp;
 
         // Breeding parameters.
-        public ThingDef breedingSpeciesDef = null;
+        public PawnKindDef breedingSpeciesDef = null;
         public int breedingDuratinInTicks = 0;
         public int breedingProgressInTicks = 0;
         public bool breedingIsFinished = false;
 
         // Food.
-        public const int foodDispensePeriodInTicks = GenDate.TicksPerDay; // Only once a day or this will be very time-consuming for the fishers.
+        public const int foodDispensePeriodInTicks = GenDate.TicksPerDay; // Only once a day or this will be very time-consuming for besin technicians.
         public int nextFeedingDateInTicks = 0;
         public bool foodIsAvailable = false;
 
@@ -39,7 +39,7 @@ namespace FishIndustry
         public const float minWaterTemperature = 0;
         public const float maxWaterTemperature = 40;
         public float temperature = 0f;
-        public const float maxWaterQuality = 30000f;
+        public const float maxWaterQuality = GenDate.TicksPerDay / 2;
         public const float minWaterQuality = maxWaterQuality / 10f; // Fishes will die if water quality last under this limit for too long.
         public const float waterQualityVariationPerRareTick = maxWaterQuality / GenTicks.TickRareInterval; // Quality completely degrades in 0.5 day.
         public float waterQuality = 2f * minWaterQuality; // Determine the breeding rate.
@@ -66,9 +66,9 @@ namespace FishIndustry
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             this.powerComp = base.GetComp<CompPowerTrader>();
 
             // Drawing.
@@ -99,7 +99,7 @@ namespace FishIndustry
             base.ExposeData();
 
             // Breeding parameters.
-            Scribe_Defs.LookDef<ThingDef>(ref breedingSpeciesDef, "breedingSpeciesDef");
+            Scribe_Defs.LookDef<PawnKindDef>(ref breedingSpeciesDef, "breedingSpeciesDef");
             Scribe_Values.LookValue<int>(ref breedingDuratinInTicks, "breedingDuratinInTicks");
             Scribe_Values.LookValue<int>(ref breedingProgressInTicks, "breedingProgressInTicks");
             Scribe_Values.LookValue<bool>(ref breedingIsFinished, "breedingIsFinished");
@@ -199,7 +199,7 @@ namespace FishIndustry
                 {
                     Thing food = null;
                     Thing aquacultureHopper = null;
-                    List<Thing> thingList = cell.GetThingList();
+                    List<Thing> thingList = cell.GetThingList(this.Map);
                     for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
                     {
                         Thing currentThing = thingList[thingIndex];
@@ -240,7 +240,7 @@ namespace FishIndustry
             {
                 Thing food = null;
                 Thing aquacultureHopper = null;
-                List<Thing> thingList = cell.GetThingList();
+                List<Thing> thingList = cell.GetThingList(this.Map);
                 for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
                 {
                     Thing currentThing = thingList[thingIndex];
@@ -282,7 +282,7 @@ namespace FishIndustry
                 return;
             }
 
-            this.temperature = this.Position.GetTemperature();
+            this.temperature = this.Position.GetTemperature(this.Map);
             bool temperatureIsInOptimalRange = (this.temperature >= minWaterTemperature) && (this.temperature <= maxWaterTemperature);
             if (this.powerComp.PowerOn)
             {
@@ -357,10 +357,10 @@ namespace FishIndustry
         /// <summary>
         /// Start a new breeding cycle of the given species.
         /// </summary>
-        public void StartNewBreedCycle(ThingDef breedingSpeciesDef)
+        public void StartNewBreedCycle(PawnKindDef breedingSpeciesDef)
         {
             this.breedingSpeciesDef = breedingSpeciesDef;
-            this.breedingDuratinInTicks = (int)(60000 * (breedingSpeciesDef as ThingDef_FishSpecies).breedingDurationInDays);
+            this.breedingDuratinInTicks = (int)(GenDate.TicksPerDay * (breedingSpeciesDef as PawnKindDef_FishSpecies).breedingDurationInDays);
             this.breedingProgressInTicks = 0;
             this.breedingIsFinished = false;
 
@@ -371,7 +371,7 @@ namespace FishIndustry
 
             this.fishesHealthInPercent = 100;
 
-            this.breedingSpeciesTexture = MaterialPool.MatFrom(this.breedingSpeciesDef.graphicData.texPath, ShaderDatabase.Transparent);
+            this.breedingSpeciesTexture = MaterialPool.MatFrom(this.breedingSpeciesDef.lifeStages.First().bodyGraphicData.texPath, ShaderDatabase.Transparent);
         }
 
         /// <summary>
@@ -405,8 +405,9 @@ namespace FishIndustry
         /// </summary>
         public Thing GetProduction()
         {
-            Thing product = ThingMaker.MakeThing(this.breedingSpeciesDef);
-            product.stackCount = (this.breedingSpeciesDef as ThingDef_FishSpecies).breedQuantity;
+            Thing product = ThingMaker.MakeThing(this.breedingSpeciesDef.race.race.meatDef);
+            
+            product.stackCount = ((PawnKindDef_FishSpecies)this.breedingSpeciesDef).breedQuantity;
             StartNewBreedCycle(this.breedingSpeciesDef);
 
             return product;
@@ -435,7 +436,6 @@ namespace FishIndustry
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(base.GetInspectString());
 
-            stringBuilder.AppendLine("Bred species: " + bredSpeciesLabel);
             if (this.breedingSpeciesDef == null)
             {
                 bredSpeciesLabel = "none";
@@ -466,6 +466,7 @@ namespace FishIndustry
             {
                 problemText = "(micro fungus)";
             }
+            stringBuilder.AppendLine("Bred species: " + bredSpeciesLabel);
             stringBuilder.AppendLine(progressLabel + " " + problemText);
             stringBuilder.AppendLine("Water quality/fishes health: " + (this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + "/" + this.fishesHealthInPercent + "%");
 
@@ -496,7 +497,7 @@ namespace FishIndustry
                 this.nextBubbleThrowTick = Find.TickManager.TicksGame + 6 + (int)(Rand.Value * 120f * (1f - (this.waterQuality / maxWaterQuality))) ;
                 if (this.powerComp.PowerOn)
                 {
-                    ThrowBubble(this.Position);
+                    ThrowBubble();
                 }
             }
 
@@ -505,18 +506,18 @@ namespace FishIndustry
         /// <summary>
         /// Throw a bubble.
         /// </summary>
-        public static Mote ThrowBubble(IntVec3 cell)
+        public Mote ThrowBubble()
         {
-            if (!cell.ShouldSpawnMotesAt())
+            if (!this.Position.ShouldSpawnMotesAt(this.Map))
             {
                 return null;
             }
             MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(Util_FishIndustry.MoteBubbleDef, null);
             moteThrown.Scale = 0.3f;
             moteThrown.rotationRate = Rand.Range(-0.15f, 0.15f);
-            moteThrown.exactPosition = cell.ToVector3Shifted();
+            moteThrown.exactPosition = this.Position.ToVector3Shifted();
             moteThrown.SetVelocity((float)Rand.Range(-30, 30), 0.33f);
-            GenSpawn.Spawn(moteThrown, cell);
+            GenSpawn.Spawn(moteThrown, this.Position, this.Map);
             return moteThrown;
         }
 

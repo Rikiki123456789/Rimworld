@@ -28,17 +28,21 @@ namespace FishIndustry
         public IntVec3 middleCell = new IntVec3(0, 0, 0);
         public IntVec3 bankCell = new IntVec3(0, 0, 0);
 
-        private const int maxFishStock = 5;
-        public int fishStock = maxFishStock;
-        private const int fishStockRespawnInterval = 60000 / maxFishStock;
+        private const int maxFishStockDefault = 5;
+        private int maxFishStock = maxFishStockDefault;
+        public int fishStock = 1;
+        private const int fishStockRespawnInterval = GenDate.TicksPerDay / maxFishStockDefault;
         private int fishStockRespawnTick = 0;
 
         /// <summary>
         /// Convert the cells under the fishing pier into fishing pier cells (technically just water cells with movespeed = 100%).
         /// </summary>
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
+
+            // Compute max fish stock according to terrain and biome.
+            UpdateMaxFishStock();
 
             bankCell = this.Position + new IntVec3(0, 0, -1).RotatedBy(this.Rotation);
             middleCell = this.Position + new IntVec3(0, 0, 0).RotatedBy(this.Rotation);
@@ -46,49 +50,49 @@ namespace FishIndustry
             fishingSpotCell = this.Position + new IntVec3(0, 0, 2).RotatedBy(this.Rotation);
 
             // On first spawning, save the terrain defs and apply the fishing pier equivalent.
-            TerrainDef middleCellTerrainDef = Find.TerrainGrid.TerrainAt(middleCell);
+            TerrainDef middleCellTerrainDef = map.terrainGrid.TerrainAt(middleCell);
             if (middleCellTerrainDef == TerrainDef.Named("Marsh"))
             {
                 middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorMarshDef);
+                map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorMarshDef);
             }
             else if (middleCellTerrainDef == TerrainDef.Named("WaterShallow"))
             {
                 middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
+                map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
             }
             else if (middleCellTerrainDef == TerrainDef.Named("WaterDeep"))
             {
                 middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
+                map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
             }
 
-            TerrainDef riverCellTerrainDef = Find.TerrainGrid.TerrainAt(riverCell);
+            TerrainDef riverCellTerrainDef = map.terrainGrid.TerrainAt(riverCell);
             if (riverCellTerrainDef == TerrainDef.Named("Marsh"))
             {
                 riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
+                map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
             }
             else if (riverCellTerrainDef == TerrainDef.Named("WaterShallow"))
             {
                 riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
+                map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
             }
             else if (riverCellTerrainDef == TerrainDef.Named("WaterDeep"))
             {
                 riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
-                Find.TerrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
-            }
+                map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
+            }            
         }
 
         /// <summary>
         /// Periodically resplenishes the fish stock if necessary.
         /// </summary>
-        public override void Tick()
+        public override void TickRare()
         {
-            base.Tick();
+            base.TickRare();
 
-            if (this.fishStock < maxFishStock)
+            if (this.fishStock < this.maxFishStock)
             {
                 if (this.fishStockRespawnTick == 0)
                 {
@@ -99,6 +103,56 @@ namespace FishIndustry
                     this.fishStock++;
                     this.fishStockRespawnTick = 0;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Update the max fishing stock according to terrain and biome (to avoid exploits due to terrain changes).
+        /// </summary>
+        public void UpdateMaxFishStock()
+        {
+            int maxFishStockTerrain = maxFishStockDefault;
+
+            // Compute max fish stock according to surrounding aquatic cells.
+            float aquaticCellsNumber = 0;
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.Position, this.def.specialDisplayRadius, true))
+            {
+                if (cell.InBounds(this.Map) == false)
+                {
+                    continue;
+                }
+                if (Util_FishIndustry.IsAquaticTerrain(this.Map, cell))
+                {
+                    aquaticCellsNumber++;
+                }
+            }
+            float aquaticCellsNumberThreshold = (float)(GenRadial.NumCellsInRadius(this.def.specialDisplayRadius)) / 2f;
+            if (aquaticCellsNumber < aquaticCellsNumberThreshold)
+            {
+                maxFishStockTerrain = Mathf.CeilToInt((float)maxFishStockDefault * (aquaticCellsNumber / aquaticCellsNumberThreshold));
+            }
+
+            // Compute max fish stock according to biome.
+            int maxFishStockBiome = maxFishStockDefault;
+            if ((this.Map.Biome == BiomeDef.Named("AridShrubland"))
+                || (this.Map.Biome == BiomeDef.Named("Tundra")))
+            {
+                maxFishStockBiome = 3;
+            }
+            else if ((this.Map.Biome == BiomeDef.Named("IceSheet"))
+                || (this.Map.Biome == BiomeDef.Named("Desert")))
+            {
+                maxFishStockBiome = 2;
+            }
+            else if ((this.Map.Biome == BiomeDef.Named("SeaIce"))
+                || (this.Map.Biome == BiomeDef.Named("ExtremeDesert")))
+            {
+                maxFishStockBiome = 1;
+            }
+            this.maxFishStock = Math.Min(maxFishStockTerrain, maxFishStockBiome);
+            if (this.maxFishStock < 1)
+            {
+                this.maxFishStock = 1;
             }
         }
 
@@ -124,7 +178,7 @@ namespace FishIndustry
             // TODO: save it as a TerrainDef if possible.
             Scribe_Values.LookValue<String>(ref this.middleTerrainCellDefAsString, "middleTerrainCellDefAsString");
             Scribe_Values.LookValue<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
-            Scribe_Values.LookValue<int>(ref this.fishStock, "fishStock", 5);
+            Scribe_Values.LookValue<int>(ref this.fishStock, "fishStock", maxFishStockDefault);
             Scribe_Values.LookValue<int>(ref this.fishStockRespawnTick, "fishStockRespawnTick", 0);
         }
 
@@ -133,9 +187,9 @@ namespace FishIndustry
         /// </summary>
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
+            this.Map.terrainGrid.SetTerrain(middleCell, TerrainDef.Named(middleTerrainCellDefAsString));
+            this.Map.terrainGrid.SetTerrain(riverCell, TerrainDef.Named(riverTerrainCellDefAsString));
             base.Destroy(mode);
-            Find.TerrainGrid.SetTerrain(middleCell, TerrainDef.Named(middleTerrainCellDefAsString));
-            Find.TerrainGrid.SetTerrain(riverCell, TerrainDef.Named(riverTerrainCellDefAsString));
         }
     }
 }
