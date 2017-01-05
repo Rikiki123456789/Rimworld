@@ -36,7 +36,7 @@ namespace FishIndustry
             if (aquacultureBasin != null)
             {
                 // Get the supplied species def and start a new breed cycle in the aquaculture basin.
-                Corpse fishCorpse = ingredients.First() as Corpse;
+                Thing fishCorpse = ingredients.First();
                 if (fishCorpse != null)
                 {
                     PawnKindDef fishKind = null;

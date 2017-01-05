@@ -37,6 +37,13 @@ namespace FishIndustry
                 return (ThingDef.Named("FishingPierSpawner"));
             }
         }
+        public static ThingDef FishingPierSpawnerOnMudDef
+        {
+            get
+            {
+                return (ThingDef.Named("FishingPierSpawnerOnMud"));
+            }
+        }
         public static ThingDef AquacultureBasinDef
         {
             get

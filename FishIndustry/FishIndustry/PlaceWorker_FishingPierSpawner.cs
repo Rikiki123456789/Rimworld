@@ -57,6 +57,8 @@ namespace FishIndustry
             List<Thing> fishingPierList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierDef);
             List<Thing> fishingPierSpawnerBlueprintList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.blueprintDef);
             List<Thing> fishingPierSpawnerFrameList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.frameDef);
+            List<Thing> fishingPierSpawnerOnMudBlueprintList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerOnMudDef.blueprintDef);
+            List<Thing> fishingPierSpawnerOnMudFrameList = this.Map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerOnMudDef.frameDef);
 
             if (fishingPierList != null)
             {
@@ -78,6 +80,22 @@ namespace FishIndustry
             {
                 IEnumerable<Thing> fishingPierFrameInTheArea = fishingPierSpawnerFrameList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
                 if (fishingPierFrameInTheArea.Count() > 0)
+                {
+                    return new AcceptanceReport("An other fishing pier frame is too close.");
+                }
+            }
+            if (fishingPierSpawnerOnMudBlueprintList != null)
+            {
+                IEnumerable<Thing> fishingPierOnMudBlueprintInTheArea = fishingPierSpawnerOnMudBlueprintList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
+                if (fishingPierOnMudBlueprintInTheArea.Count() > 0)
+                {
+                    return new AcceptanceReport("An other fishing pier blueprint is too close.");
+                }
+            }
+            if (fishingPierSpawnerOnMudFrameList != null)
+            {
+                IEnumerable<Thing> fishingPierOnMudFrameInTheArea = fishingPierSpawnerOnMudFrameList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
+                if (fishingPierOnMudFrameInTheArea.Count() > 0)
                 {
                     return new AcceptanceReport("An other fishing pier frame is too close.");
                 }
