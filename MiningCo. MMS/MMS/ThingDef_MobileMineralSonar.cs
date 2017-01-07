@@ -12,16 +12,13 @@ using Verse;         // RimWorld universal objects are here
 namespace MobileMineralSonar
 {
     /// <summary>
-    /// Mobile mineral sonar custom def class.
+    /// ThingDef_MobileMineralSonar class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    /*public class ThingDef_MobileMineralSonar : ThingDef
+    public class ThingDef_MobileMineralSonar : ThingDef
     {
-        // Using custom ThingDef leads to "short hash" bug when loading a savegame.
-        // Disabled until I find a working example.
-
         public List<ThingDef> scannedThingDefs;
-    }*/
+    }
 }

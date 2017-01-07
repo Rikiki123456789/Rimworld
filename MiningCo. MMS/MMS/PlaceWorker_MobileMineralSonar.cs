@@ -23,9 +23,9 @@ namespace MobileMineralSonar
         /// Display the scan range of built mobile mineral sonar and the max scan range at the tested position.
         /// Allow placement nearly anywhere.
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
-            IEnumerable<Building> mobileMineralSonarList = Find.ListerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("MobileMineralSonar"));
+            IEnumerable<Building> mobileMineralSonarList = this.Map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("MobileMineralSonar"));
 
             if (mobileMineralSonarList != null)
             {

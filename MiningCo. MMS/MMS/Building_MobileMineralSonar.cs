@@ -86,25 +86,15 @@ namespace MobileMineralSonar
         /// Initialize instance variables.
         /// </summary>
         /// 
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             
             detectedDefList = new List<ThingDef>();
-            detectedDefList.Add(ThingDef.Named("MineableSteel"));
-            detectedDefList.Add(ThingDef.Named("MineableSilver"));
-            detectedDefList.Add(ThingDef.Named("MineableGold"));
-            detectedDefList.Add(ThingDef.Named("MineableUranium"));
-            detectedDefList.Add(ThingDef.Named("MineablePlasteel"));
-            detectedDefList.Add(ThingDef.Named("MineableComponents"));
-            detectedDefList.Add(ThingDef.Named("AncientCryptosleepCasket"));
-
-            // Using custom ThingDef leads to "short hash" bug when loading a savegame.
-            // Disabled until I find a working example.
-            /*foreach (ThingDef metallicDef in ((ThingDef_MobileMineralSonar)this.def).scannedThingDefs)
+            foreach (ThingDef metallicDef in ((ThingDef_MobileMineralSonar)this.def).scannedThingDefs)
             {
                 detectedDefList.Add(metallicDef);
-            }*/
+            }
 
             // Components initialization.
             powerComp = base.GetComp<CompPowerTrader>();
@@ -230,7 +220,7 @@ namespace MobileMineralSonar
         public void UnfogSomeRandomThingAtScanRange(ThingDef thingDefParameter)
         {
             // Get the mineral blocks at current scan range.
-            IEnumerable<Thing> thingsInTheArea = Find.ListerThings.ThingsOfDef(thingDefParameter);
+            IEnumerable<Thing> thingsInTheArea = this.Map.listerThings.ThingsOfDef(thingDefParameter);
             if (thingsInTheArea != null)
             {
                 IEnumerable<Thing> thingsAtScanRange = thingsInTheArea.Where(thing => thing.Position.InHorDistOf(this.Position, scanRange)
@@ -242,7 +232,7 @@ namespace MobileMineralSonar
                     float detectionThreshold = detectionChance + detectionChance * (1 - (float)scanRange / (float)enhancedMaxScanRange);
                     if (Rand.Range(0f, 1f) <= detectionThreshold)
                     {
-                        Find.FogGrid.Unfog(thing.Position);
+                        this.Map.fogGrid.Unfog(thing.Position);
                     }
                 }
             }
@@ -330,13 +320,13 @@ namespace MobileMineralSonar
             float scanSpotDrawingIntensity = 0f;
 
             // Get the things within current scan range.
-            IEnumerable<Thing> thingsInTheArea = Find.ListerThings.ThingsOfDef(thingDefParameter);
+            IEnumerable<Thing> thingsInTheArea = this.Map.listerThings.ThingsOfDef(thingDefParameter);
             if (thingsInTheArea != null)
             {
                 thingsInTheArea = thingsInTheArea.Where(thing => thing.Position.InHorDistOf(this.Position, scanRange));
                 foreach (Thing thing in thingsInTheArea)
                 {
-                    if (Find.FogGrid.IsFogged(thing.Position) == false)
+                    if (this.Map.fogGrid.IsFogged(thing.Position) == false)
                     {
                         // Set spot intensity proportional to the dynamic scan ray rotation.
                         Vector3 sonarToMineralVector = thing.Position.ToVector3Shifted() - this.Position.ToVector3Shifted();

@@ -7,7 +7,7 @@
     <useHitPoints>true</useHitPoints>
     <selectable>true</selectable>
     <altitudeLayer>Item</altitudeLayer>
-    <canMakeOnMapGen>false</canMakeOnMapGen>
+    <scatterableOnMapGen>false</scatterableOnMapGen>
     <!-- for CompForbiddable -->
     <drawerType>RealtimeOnly</drawerType>
     <comps>

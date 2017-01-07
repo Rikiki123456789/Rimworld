@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.15.6085.2352, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.15.6089.4186, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,7 +57,10 @@
     <Content Include="MiningCo. MMS\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. MMS\Defs\ThingDefs_Items\Items_MinifiedMobileMineralSonar.xml" />
+    <Content Include="MiningCo. MMS\About\PublishedFileId.txt" />
+    <Content Include="MiningCo. MMS\Defs\ThingDefs_Items\Items_MinifiedMobileMineralSonar.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MiningCo. MMS\Defs\ResearchProjectDefs\ResearchProjects_MobileMineralSonar.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -83,7 +86,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. MMS\Assemblies"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. MMS\Assemblies"
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. MMS" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. MMS"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
