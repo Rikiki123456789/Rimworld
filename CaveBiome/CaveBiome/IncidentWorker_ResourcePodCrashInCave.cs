@@ -42,7 +42,8 @@ namespace CaveBiome
 
         public override bool TryExecute(IncidentParms parms)
         {
-            if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
+            Map map = (Map)parms.target;
+            if (map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 return base.TryExecute(parms);
             }
@@ -72,23 +73,23 @@ namespace CaveBiome
             }
             while (list.Count < MaxStacks && num > thingDef.BaseMarketValue);
             IntVec3 intVec = IntVec3.Invalid;
-            TryFindDropPodSpot(out intVec);
+            TryFindDropPodSpot(map, out intVec);
             if (intVec.IsValid)
             {
-                DropPodUtility.DropThingsNear(intVec, list, 110, false, true, true);
-                Find.LetterStack.ReceiveLetter("LetterLabelCargoPodCrash".Translate(), "CargoPodCrash".Translate(), LetterType.Good, intVec, null);
+                DropPodUtility.DropThingsNear(intVec, map, list, 110, false, true, true);
+                Find.LetterStack.ReceiveLetter("LetterLabelCargoPodCrash".Translate(), "CargoPodCrash".Translate(), LetterType.Good, new GlobalTargetInfo(intVec, map), null);
                 return true;
             }
             return false;
         }
 
-        public void TryFindDropPodSpot(out IntVec3 spawnCell)
+        public void TryFindDropPodSpot(Map map, out IntVec3 spawnCell)
         {
             spawnCell = IntVec3.Invalid;
-            List<Thing> caveWellsList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+            List<Thing> caveWellsList = map.listerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
             foreach (Thing caveWell in caveWellsList.InRandomOrder())
             {
-                if (IsValidPositionToSpawnDropPod(caveWell.Position))
+                if (IsValidPositionToSpawnDropPod(map, caveWell.Position))
                 {
                     spawnCell = caveWell.Position;
                     return;
@@ -96,14 +97,14 @@ namespace CaveBiome
             }
         }
 
-        public static bool IsValidPositionToSpawnDropPod(IntVec3 position)
+        public static bool IsValidPositionToSpawnDropPod(Map map, IntVec3 position)
         {
             ThingDef chunkDef = ThingDefOf.ShipChunk;
-            if ((position.InBounds() == false)
-                || position.Fogged()
-                || (position.Standable() == false)
-                || (position.Roofed()
-                    && position.GetRoof().isThickRoof))
+            if ((position.InBounds(map) == false)
+                || position.Fogged(map)
+                || (position.Standable(map) == false)
+                || (position.Roofed(map)
+                    && position.GetRoof(map).isThickRoof))
             {
                 return false;
             }

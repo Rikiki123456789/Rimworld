@@ -17,25 +17,26 @@ namespace CaveBiome
         private const float RelationWithColonistWeight = 20f;
         public override bool TryExecute(IncidentParms parms)
         {
-            if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
+            Map map = (Map)parms.target;
+            if (map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 return base.TryExecute(parms);
             }
             IntVec3 intVec = IntVec3.Invalid;
-            TryFindRefugeePodSpot(out intVec);
+            TryFindRefugeePodSpot(map, out intVec);
             if (intVec.IsValid == false)
             {
                 return false;
             }
             Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.Spacer);
-            PawnGenerationRequest request = new PawnGenerationRequest(PawnKindDefOf.SpaceRefugee, faction, PawnGenerationContext.NonPlayer, false, false, false, false, true, false, 20f, false, true, true, null, null, null, null, null, null);
+			PawnGenerationRequest request = new PawnGenerationRequest(PawnKindDefOf.SpaceRefugee, faction, PawnGenerationContext.NonPlayer, null, false, false, false, false, true, false, 20f, false, true, true, null, null, null, null, null, null);
             Pawn pawn = PawnGenerator.GeneratePawn(request);
             HealthUtility.GiveInjuriesToForceDowned(pawn);
             string label = "LetterLabelRefugeePodCrash".Translate();
             string text = "RefugeePodCrash".Translate();
             PawnRelationUtility.TryAppendRelationsWithColonistsInfo(ref text, ref label, pawn);
-            Find.LetterStack.ReceiveLetter(label, text, LetterType.BadNonUrgent, intVec, null);
-            DropPodUtility.MakeDropPodAt(intVec, new DropPodInfo
+            Find.LetterStack.ReceiveLetter(label, text, LetterType.BadNonUrgent, new GlobalTargetInfo(intVec, map, false), null);
+            DropPodUtility.MakeDropPodAt(intVec, map, new ActiveDropPodInfo
             {
                 SingleContainedThing = pawn,
                 openDelay = 180,
@@ -44,13 +45,13 @@ namespace CaveBiome
             return true;
         }
 
-        public static void TryFindRefugeePodSpot(out IntVec3 spawnCell)
+        public static void TryFindRefugeePodSpot(Map map, out IntVec3 spawnCell)
         {
             spawnCell = IntVec3.Invalid;
-            List<Thing> caveWellsList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+            List<Thing> caveWellsList = map.listerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
             foreach (Thing caveWell in caveWellsList.InRandomOrder())
             {
-                if (IsValidPositionToSpawnRefugeePod(caveWell.Position))
+                if (IsValidPositionToSpawnRefugeePod(map, caveWell.Position))
                 {
                     spawnCell = caveWell.Position;
                     return;
@@ -58,14 +59,14 @@ namespace CaveBiome
             }
         }
 
-        public static bool IsValidPositionToSpawnRefugeePod(IntVec3 position)
+        public static bool IsValidPositionToSpawnRefugeePod(Map map, IntVec3 position)
         {
             ThingDef chunkDef = ThingDefOf.ShipChunk;
-            if ((position.InBounds() == false)
-                || position.Fogged()
-                || (position.Standable() == false)
-                || (position.Roofed()
-                    && position.GetRoof().isThickRoof))
+            if ((position.InBounds(map) == false)
+                || position.Fogged(map)
+                || (position.Standable(map) == false)
+                || (position.Roofed(map)
+                    && position.GetRoof(map).isThickRoof))
             {
                 return false;
             }

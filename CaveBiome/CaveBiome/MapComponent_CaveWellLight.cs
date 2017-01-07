@@ -36,26 +36,30 @@ namespace CaveBiome
         public const float lightRadiusCaveWellMin = 0f;
         public const float lightRadiusCaveWellMax = 10f;
 
+        public static bool plantsMessageHasBeenSent = false;
+        public static bool growingMessageHasBeenSent = false;
+
+        public MapComponent_CaveWellLight(Map map) : base(map)
+		{
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
 
+            Scribe_Values.LookValue<bool>(ref MapComponent_CaveWellLight.plantsMessageHasBeenSent, "plantsMessageHasBeenSent");
+            Scribe_Values.LookValue<bool>(ref MapComponent_CaveWellLight.growingMessageHasBeenSent, "growingMessageHasBeenSent");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                GenStep_CaveSetRules.SetCaveRules();
-                
-                // Set default cave well glowing radius.
-                List<Thing> caveWellsList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
-                foreach (Thing caveWell in caveWellsList)
-                {
-                    SetGlowRadius(caveWell, 0f);
-                }
+                GenStep_CaveSetRules.SetCaveRules(this.map);
+
+                MapComponentTick();
             }
         }
 
         public override void MapComponentTick()
-        {
-            if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
+        {   
+            if (this.map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 return;
             }
@@ -63,7 +67,7 @@ namespace CaveBiome
             if (Find.TickManager.TicksGame >= nextLigthCheckTick)
             {
                 nextLigthCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
-                int hour = GenDate.HourOfDay;
+                int hour = GenLocalDate.HourOfDay(map);
                 if ((hour >= sunriseBeginHour)
                     && (hour < sunriseEndHour))
                 {
@@ -72,7 +76,7 @@ namespace CaveBiome
                     int ticksSinceSunriseBegin = currentDayTick - sunriseBeginHourInTicks;
                     float sunriseProgress = (float)ticksSinceSunriseBegin / (float)sunriseDurationInTicks;
                     float caveWellLigthRadius = Mathf.Lerp(lightRadiusCaveWellMin, lightRadiusCaveWellMax, sunriseProgress);
-                    List<Thing> caveWellsList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+                    List<Thing> caveWellsList = map.listerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
                     foreach (Thing caveWell in caveWellsList)
                     {
                         SetGlowRadius(caveWell, caveWellLigthRadius);
@@ -86,11 +90,26 @@ namespace CaveBiome
                     int ticksSinceSunsetBegin = currentDayTick - sunsetBeginHourInTicks;
                     float sunsetProgress = 1f - ((float)ticksSinceSunsetBegin / (float)sunriseDurationInTicks);
                     float caveWellLigthRadius = Mathf.Lerp(lightRadiusCaveWellMin, lightRadiusCaveWellMax, sunsetProgress);
-                    List<Thing> caveWellsList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+                    List<Thing> caveWellsList = map.listerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
                     foreach (Thing caveWell in caveWellsList)
                     {
                         SetGlowRadius(caveWell, caveWellLigthRadius);
                     }
+                }
+
+                if ((MapComponent_CaveWellLight.plantsMessageHasBeenSent == false)
+                    && (hour >= sunriseBeginHour + 1))
+                {
+                    Find.LetterStack.ReceiveLetter("Cave plants", "In caves, most cave plants can be useful so look around!\n- some plants like giant leafs can be cooked,\n- others like cave vine are hard enough to be used like wood,\n- and some like devil's tongue provide useful fibrous material.\n\nBeware, though! Caves are a hard place to live and some plants may be dangerous.",
+                        LetterType.Good);
+                    MapComponent_CaveWellLight.plantsMessageHasBeenSent = true;
+                }
+                if ((MapComponent_CaveWellLight.growingMessageHasBeenSent == false)
+                    && (hour >= sunriseBeginHour + 2))
+                {
+                    Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
+                        LetterType.Good, new RimWorld.Planet.GlobalTargetInfo(MapGenerator.PlayerStartSpot, this.map));
+                    MapComponent_CaveWellLight.growingMessageHasBeenSent = true;
                 }
             }
         }
@@ -102,7 +121,7 @@ namespace CaveBiome
             {
                 glowerComp.Props.glowRadius = glowradius;
                 glowerComp.Props.overlightRadius = glowradius;
-                Find.GlowGrid.MarkGlowGridDirty(caveWell.Position);
+                caveWell.Map.glowGrid.MarkGlowGridDirty(caveWell.Position);
             }
         }
     }

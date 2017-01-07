@@ -12,24 +12,21 @@ namespace CaveBiome
 {
     public class GenStep_CaveFindPlayerStartSpot : GenStep_FindPlayerStartSpot
     {
-		public override void Generate()
+		public override void Generate(Map map)
 		{
-            Log.Message("GenStep_CaveFindPlayerStartSpot.Generate");
-            if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
+            if (map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 // Use standard base function.
-                base.Generate();
+                base.Generate(map);
                 return;
             }
             if (MapGenerator.PlayerStartSpot.IsValid)
             {
-                Log.Message("PlayerStartSpot = " + MapGenerator.PlayerStartSpot.ToString());
                 return;
             }
             else
             {
-                Log.Warning("Calling vanilla GenStep_FindPlayerStartSpot");
-                base.Generate();
+                base.Generate(map);
             }
         }
     }

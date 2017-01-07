@@ -12,9 +12,10 @@ namespace CaveBiome
 {
     public class IncidentWorker_PsychicEmanatorShipPartCrashInCave : IncidentWorker_ShipPartCrashInCave
     {
-        protected override bool CanFireNowSub()
+        protected override bool CanFireNowSub(IIncidentTarget target)
         {
-            return !Find.MapConditionManager.ConditionIsActive(MapConditionDefOf.PsychicDrone) && base.CanFireNowSub();
+            Map map = (Map)target;
+            return !map.mapConditionManager.ConditionIsActive(MapConditionDefOf.PsychicDrone) && base.CanFireNowSub(target);
         }
     }
 }

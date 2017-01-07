@@ -4,11 +4,12 @@
   <IncidentDef>
     <defName>PsychicEmanatorShipPartCrash</defName>
     <label>ship part crash (psychic)</label>
+    <targetType>BaseMap</targetType>
     <workerClass>CaveBiome.IncidentWorker_PsychicEmanatorShipPartCrashInCave</workerClass>
     <letterLabel>Psychic ship</letterLabel>
     <letterText>A large piece of an ancient ship has crashed nearby.\n\nYour colonists can feel it in the back of their mind, exhorting unspeakable acts. It must have an onboard AI persona with psychic projection ability. And this AI is not friendly.\n\nDestroy it as soon as possible.</letterText>
     <letterType>BadNonUrgent</letterType>
-    <baseChance>2</baseChance>
+    <baseChance>2.0</baseChance>
     <minRefireDays>15</minRefireDays>
     <tags>
       <li>MechanoidShip</li>
@@ -19,17 +20,18 @@
     <category>ThreatBig</category>
     <pointsScaleable>true</pointsScaleable>
     <minThreatPoints>450</minThreatPoints>
-    <shipPart>CrashedPsychicEmanatorShipPart</shipPart>
+    <shipPart>CrashedPsychicEmanatorShipPartInCave</shipPart>
   </IncidentDef>
-  
+
   <IncidentDef>
     <defName>PoisonShipPartCrash</defName>
     <label>ship part crash (poison)</label>
+    <targetType>BaseMap</targetType>
     <workerClass>CaveBiome.IncidentWorker_PoisonShipPartCrashInCave</workerClass>
     <letterLabel>Poison ship</letterLabel>
     <letterText>A large piece of an ancient ship has crashed nearby.\n\nIt is leaking toxic material and will kill all plants in an expanding circle around itself.\n\nDestroy it as soon as possible.</letterText>
     <letterType>BadNonUrgent</letterType>
-    <baseChance>2</baseChance>
+    <baseChance>2.0</baseChance>
     <minRefireDays>15</minRefireDays>
     <tags>
       <li>MechanoidShip</li>
@@ -40,7 +42,7 @@
     <category>ThreatBig</category>
     <pointsScaleable>true</pointsScaleable>
     <minThreatPoints>450</minThreatPoints>
-    <shipPart>CrashedPoisonShipPart</shipPart>
+    <shipPart>CrashedPoisonShipPartInCave</shipPart>
   </IncidentDef>
-  
+
 </Defs>

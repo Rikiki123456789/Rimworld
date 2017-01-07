@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\RimWorld1284Win\RimWorld1284Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp, Version=0.16.6197.26833, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="CaveworldFlora, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -45,11 +46,14 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\RimWorld1284Win\RimWorld1284Win_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Building_PsychicShipPartCopy.cs" />
+    <Compile Include="Building_PoisonShipPartCopy.cs" />
     <Compile Include="Building_CrashedShipPartCopy.cs" />
     <Compile Include="Building_AnimalCorpsesGenerator.cs" />
     <Compile Include="Building_VillagerCorpsesGenerator.cs" />
@@ -93,6 +97,7 @@
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CrystalLamp.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_ShipPartInCave.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_MinableColdCrystal.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -105,6 +110,7 @@
     <Content Include="CaveBiome\Textures\Things\Building\DummyTexture.png" />
     <Content Include="CaveBiome\Textures\Things\Building\Misc\CrystalLamp.png" />
     <Content Include="CaveBiome\Textures\Things\Item\Resource\ColdCrystal.png" />
+    <Content Include="CaveBiome\Textures\World\Biomes\Cave.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CaveBiome\Assemblies\" />
@@ -112,7 +118,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CaveBiome\Assemblies
-REM xcopy /Y /i /s $(ProjectDir)\CaveBiome C:\Users\Temp2\RimWorld1284Win\Mods\CaveBiome
 xcopy /Y /i /s $(ProjectDir)\CaveBiome "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CaveBiome"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

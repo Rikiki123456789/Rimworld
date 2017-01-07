@@ -39,13 +39,15 @@
     <statBases>
       <MaxHitPoints>180</MaxHitPoints>
       <Flammability>1.0</Flammability>
-      <WorkToMake>2700</WorkToMake>
+      <WorkToBuild>2700</WorkToBuild>
+      <Mass>200</Mass>
       <Beauty>-60</Beauty>
     </statBases>
     <building>
-      <turretShellDef>ArtilleryShell</turretShellDef>
-      <turretBurstWarmupTicks>300</turretBurstWarmupTicks>
-      <turretBurstCooldownTicks>2100</turretBurstCooldownTicks>
+      <turretShellDef>MortarShell</turretShellDef>
+
+      <turretBurstwarmupTime>5.0</turretBurstwarmupTime>
+      <turretBurstCooldownTime>35.0</turretBurstCooldownTime>
       <buildingTags>
         <li>Artillery</li>
       </buildingTags>
@@ -97,14 +99,14 @@
     </costList>
     <designationHotKey>Misc3</designationHotKey>
     <building>
-      <turretGunDef>Artillery_MortarBomb</turretGunDef>
+      <turretGunDef>Artillery_MortarBombCave</turretGunDef>
       <turretTopgraphicPath>Things/Building/Security/TurretMortarBomb_Top</turretTopgraphicPath>
       <buildingTags>
         <li>Artillery_BaseDestroyer</li>
       </buildingTags>
     </building>
   </ThingDef>
-  
+
   <ThingDef ParentName="BaseArtilleryWeapon">
     <defName>Artillery_MortarBombCave</defName>
     <label>explosive mortar</label>
@@ -119,7 +121,8 @@
         <hasStandardCommand>true</hasStandardCommand>
         <projectileDef>Bullet_MortarBombCave</projectileDef>
         <forcedMissRadius>4</forcedMissRadius>
-        <warmupTicks>350</warmupTicks>
+
+        <warmupTime>5.8</warmupTime>
         <minRange>10</minRange>
         <range>300</range>
         <burstShotCount>1</burstShotCount>
@@ -177,7 +180,7 @@
     </building>
     <designationHotKey>Misc4</designationHotKey>
   </ThingDef>
-  
+
   <ThingDef ParentName="BaseArtilleryWeapon">
     <defName>Artillery_MortarIncendiaryCave</defName>
     <label>incendiary mortar</label>
@@ -193,7 +196,7 @@
         <projectileDef>Bullet_MortarIncendiaryCave</projectileDef>
         <forcedMissRadius>4</forcedMissRadius>
         <ai_IsIncendiary>true</ai_IsIncendiary>
-        <warmupTicks>250</warmupTicks>
+        <warmupTime>5.8</warmupTime>
         <minRange>10</minRange>
         <range>300</range>
         <burstShotCount>1</burstShotCount>
@@ -243,14 +246,14 @@
     <costList>
       <Steel>150</Steel>
       <Component>4</Component>
-     </costList>
+    </costList>
     <building>
       <turretGunDef>Artillery_MortarEMPCave</turretGunDef>
       <turretTopgraphicPath>Things/Building/Security/TurretMortarEMP_Top</turretTopgraphicPath>
     </building>
     <designationHotkey>Misc5</designationHotkey>
   </ThingDef>
-  
+
   <ThingDef ParentName="BaseArtilleryWeapon">
     <defName>Artillery_MortarEMPCave</defName>
     <label>EMP mortar</label>
@@ -262,7 +265,7 @@
         <hasStandardCommand>true</hasStandardCommand>
         <projectileDef>Bullet_MortarEMPCave</projectileDef>
         <forcedMissRadius>4</forcedMissRadius>
-        <warmupTicks>350</warmupTicks>
+        <warmupTime>5.8</warmupTime>
         <minRange>10</minRange>
         <range>300</range>
         <burstShotCount>1</burstShotCount>

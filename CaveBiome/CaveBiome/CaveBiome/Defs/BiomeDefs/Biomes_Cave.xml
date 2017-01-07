@@ -8,7 +8,16 @@
     <workerClass>CaveBiome.BiomeWorker_Cave</workerClass>
     <animalDensity>3.0</animalDensity>
     <plantDensity>0.83</plantDensity>
-    <baseColor>(0.588, 0.588, 0.588)</baseColor>
+    <texture>World/Biomes/Cave</texture>
+    <factionBaseSelectionWeight>0</factionBaseSelectionWeight>
+    <pathCost>
+      <points>
+        <li>(0, 50000)</li>
+        <li>(0.4, 30000)</li>
+        <li>(0.6, 30000)</li>
+        <li>(1, 50000)</li>
+      </points>
+    </pathCost>
     <soundsAmbient>
       <li>AmbientNightInsects_Standard</li>
     </soundsAmbient>
@@ -100,7 +109,7 @@
       <Boomrat>1.5</Boomrat>
       <Spelopede>1.2</Spelopede>
       <Warg>0.5</Warg>
-      <Megatherium>0.4</Megatherium>
+      <Megasloth>0.4</Megasloth>
       <GrizzlyBear>0.3</GrizzlyBear>
       <Squirrel>0.2</Squirrel>
       <Tortoise>0.2</Tortoise>
@@ -110,7 +119,7 @@
       <Raccoon>0.03</Raccoon>
     </wildAnimals>
     <allowedPackAnimals>
-      <li>Megatherium</li>
+      <li>Megasloth</li>
       <li>Rat</li>
     </allowedPackAnimals>
   </BiomeDef>

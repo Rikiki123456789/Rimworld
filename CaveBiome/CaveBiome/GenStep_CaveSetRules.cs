@@ -12,15 +12,15 @@ namespace CaveBiome
 {
     public class GenStep_CaveSetRules : GenStep
     {
-		public override void Generate()
+		public override void Generate(Map map)
 		{
             // Note that the same treatment is performed in MapComponent_CaveWellLight.ExposeData when loading a savegame.
-            SetCaveRules();
+            SetCaveRules(map);
         }
 
-        public static void SetCaveRules()
+        public static void SetCaveRules(Map map)
         {
-            if (Find.Map.Biome == Util_CaveBiome.CaveBiomeDef)
+            if (map.Biome == Util_CaveBiome.CaveBiomeDef)
             {
                 // Disallow building of solar panels and vanilla mortars.
                 Current.Game.Rules.SetAllowBuilding(ThingDefOf.SolarGenerator, false);

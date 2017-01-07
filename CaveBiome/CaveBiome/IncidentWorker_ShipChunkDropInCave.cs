@@ -38,40 +38,42 @@ namespace CaveBiome
 		}
 
 		public override bool TryExecute(IncidentParms parms)
-		{
-            if (Find.Map.Biome != Util_CaveBiome.CaveBiomeDef)
+        {
+            Map map = (Map)parms.target;
+            if (map.Biome != Util_CaveBiome.CaveBiomeDef)
             {
                 return base.TryExecute(parms);
             }
             
             IntVec3 firstChunkPosition = IntVec3.Invalid;
-            TryFindShipChunkDropSpot(out firstChunkPosition);
+            TryFindShipChunkDropSpot(map, out firstChunkPosition);
             if (firstChunkPosition.IsValid)
             {
                 // Spawn ship chunks.
                 int partsCount = this.RandomCountToDrop;
-                GenSpawn.Spawn(ThingDefOf.ShipChunk, firstChunkPosition);
+                GenSpawn.Spawn(ThingDefOf.ShipChunk, firstChunkPosition, map);
                 for (int shipShunkIndex = 0; shipShunkIndex < partsCount - 1; shipShunkIndex++)
                 {
                     IntVec3 nexChunkPosition = IntVec3.Invalid;
-                    TryFindShipChunkDropSpotNear(firstChunkPosition, out nexChunkPosition);
+                    TryFindShipChunkDropSpotNear(map, firstChunkPosition, out nexChunkPosition);
                     if (nexChunkPosition.IsValid)
                     {
-                        GenSpawn.Spawn(ThingDefOf.ShipChunk, nexChunkPosition);
+                        GenSpawn.Spawn(ThingDefOf.ShipChunk, nexChunkPosition, map);
                     }
                 }
+                Messages.Message("MessageShipChunkDrop".Translate(), new TargetInfo(firstChunkPosition, map, false), MessageSound.Standard);
                 return true;
             }
             return false;
         }
 
-        public void TryFindShipChunkDropSpot(out IntVec3 spawnCell)
+        public void TryFindShipChunkDropSpot(Map map, out IntVec3 spawnCell)
         {
             spawnCell = IntVec3.Invalid;
-            List<Thing> caveWellsList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+            List<Thing> caveWellsList = map.listerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
             foreach (Thing caveWell in caveWellsList.InRandomOrder())
             {
-	            if (IsValidPositionToSpawnShipChunk(caveWell.Position))
+	            if (IsValidPositionToSpawnShipChunk(map, caveWell.Position))
                 {
                     spawnCell = caveWell.Position;
                     return;
@@ -79,12 +81,12 @@ namespace CaveBiome
             }
         }
 
-        public void TryFindShipChunkDropSpotNear(IntVec3 root, out IntVec3 spawnCell)
+        public void TryFindShipChunkDropSpotNear(Map map, IntVec3 root, out IntVec3 spawnCell)
         {
             spawnCell = IntVec3.Invalid;
             foreach (IntVec3 checkedPosition in GenRadial.RadialCellsAround(root, 5f, false))
             {
-	            if (IsValidPositionToSpawnShipChunk(checkedPosition))
+	            if (IsValidPositionToSpawnShipChunk(map, checkedPosition))
                 {
                     spawnCell = checkedPosition;
                     return;
@@ -92,22 +94,22 @@ namespace CaveBiome
             }
         }
 
-        public bool IsValidPositionToSpawnShipChunk(IntVec3 position)
+        public bool IsValidPositionToSpawnShipChunk(Map map, IntVec3 position)
         {
 	        ThingDef chunkDef = ThingDefOf.ShipChunk;
-            if ((position.InBounds() == false)
-                || position.Fogged()
-                || (position.Standable() == false)
-                || (position.Roofed()
-                    && position.GetRoof().isThickRoof))
+            if ((position.InBounds(map) == false)
+                || position.Fogged(map)
+                || (position.Standable(map) == false)
+                || (position.Roofed(map)
+                    && position.GetRoof(map).isThickRoof))
             {
                 return false;
             }
-            if (position.SupportsStructureType(chunkDef.terrainAffordanceNeeded) == false)
+            if (position.SupportsStructureType(map, chunkDef.terrainAffordanceNeeded) == false)
             {
                 return false;
             }
-            List<Thing> thingList = position.GetThingList();
+            List<Thing> thingList = position.GetThingList(map);
             for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
             {
                 Thing thing = thingList[thingIndex];

@@ -22,12 +22,9 @@ namespace CaveBiome
         public override void Tick()
         {
             base.Tick();
-
-            if (Find.TickManager.TicksGame == 1)
-            {
-                GenerateAnimalCorpses();
-                this.Destroy();
-            }
+            
+            GenerateAnimalCorpses();
+            this.Destroy();
         }
 
         public void GenerateAnimalCorpses()
@@ -37,11 +34,11 @@ namespace CaveBiome
             {
                 Predicate<IntVec3> validator = delegate(IntVec3 cell)
                 {
-                    if (cell.Standable() == false)
+                    if (cell.Standable(this.Map) == false)
                     {
                         return false;
                     }
-                    foreach (Thing thing in Find.ThingGrid.ThingsListAt(cell))
+                    foreach (Thing thing in this.Map.thingGrid.ThingsListAt(cell))
                     {
                         if (thing is Corpse)
                         {
@@ -52,7 +49,7 @@ namespace CaveBiome
                 };
 
                 IntVec3 spawnCell = IntVec3.Invalid;
-                bool spawnCellIsFound = CellFinder.TryFindRandomCellNear(this.Position, 5, validator, out spawnCell);
+                bool spawnCellIsFound = CellFinder.TryFindRandomCellNear(this.Position, this.Map, 5, validator, out spawnCell);
                 if (spawnCellIsFound)
                 {
                     PawnKindDef animalKindDef;
@@ -69,7 +66,7 @@ namespace CaveBiome
                     {
                         animalKindDef = PawnKindDef.Named("Deer");
                     }
-                    Building_VillagerCorpsesGenerator.SpawnPawnCorpse(spawnCell, animalKindDef, null, Rand.Range(5f, 20f) * GenDate.TicksPerDay);
+                    Building_VillagerCorpsesGenerator.SpawnPawnCorpse(this.Map, spawnCell, animalKindDef, null, Rand.Range(5f, 20f) * GenDate.TicksPerDay);
                 }
             }
         }

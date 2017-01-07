@@ -11,34 +11,34 @@ using RimWorld.Planet;
 namespace CaveBiome
 {
     // TODO: add solar panel placed near glowing crystal?
+    // TODO : add some insect hives with a limit of size? Modify hive class to limit reproduction?
+    // TODO: Try to correct incoming caravans establishing a new colony without visibility.
 
     public class BiomeWorker_Cave : BiomeWorker
     {
-        public override float GetScore(WorldSquare square)
+        public override float GetScore(Tile tile)
         {
-            if (square.elevation <= 0f)
+            if (tile.elevation <= 0f)
             {
                 return -100f;
             }
-            if (square.temperature < -10f)
+            if (tile.temperature < -10f)
             {
                 return 0f;
             }
-            if ((square.elevation < 1000f)
-                || (square.elevation > 3000f))
+            if ((tile.elevation < 1000f)
+                || (tile.elevation > 3000f))
             {
                 return 0f;
             }
-            // TODO: debug.
-            return 200;
-            /*if (Rand.Value < 0.05f)
+            if (Rand.Value < 0.05f)
             {
                 return 100f;
             }
             else
             {
                 return -100f;
-            }*/
+            }
         }
     }
 }

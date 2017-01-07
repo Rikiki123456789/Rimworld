@@ -21,25 +21,27 @@ namespace CaveBiome
                 return 1;
             }
         }
-        protected override bool CanFireNowSub()
+        protected override bool CanFireNowSub(IIncidentTarget target)
         {
-            return Find.ListerThings.ThingsOfDef(this.def.shipPart).Count <= 0;
+            Map map = (Map)target;
+            return map.listerThings.ThingsOfDef(this.def.shipPart).Count <= 0;
         }
         public override bool TryExecute(IncidentParms parms)
         {
+            Map map = (Map)parms.target;
             int num = 0;
             int countToSpawn = this.CountToSpawn;
             IntVec3 vec = IntVec3.Invalid;
             for (int i = 0; i < countToSpawn; i++)
             {
                 IntVec3 spawnCell = IntVec3.Invalid;
-                TryFindShipCrashSite(out spawnCell);
+                TryFindShipCrashSite(map, out spawnCell);
                 if (spawnCell.IsValid == false)
                 {
                     break;
                 }
-                GenExplosion.DoExplosion(spawnCell, 3f, DamageDefOf.Flame, null, null, null, null, null, 0f, 1, false, null, 0f, 1);
-                Building_CrashedShipPartCopy building_CrashedShipPart = (Building_CrashedShipPartCopy)GenSpawn.Spawn(this.def.shipPart, spawnCell);
+                GenExplosion.DoExplosion(spawnCell, map, 3f, DamageDefOf.Flame, null, null, null, null, null, 0f, 1, false, null, 0f, 1);
+                Building_CrashedShipPartCopy building_CrashedShipPart = (Building_CrashedShipPartCopy)GenSpawn.Spawn(this.def.shipPart, spawnCell, map);
                 building_CrashedShipPart.SetFaction(Faction.OfMechanoids, null);
                 building_CrashedShipPart.pointsLeft = parms.points * ShipPointsFactor;
                 if (building_CrashedShipPart.pointsLeft < IncidentMinimumPoints)
@@ -52,18 +54,18 @@ namespace CaveBiome
             if (num > 0)
             {
                 Find.CameraDriver.shaker.DoShake(1f);
-                Find.LetterStack.ReceiveLetter(this.def.letterLabel, this.def.letterText, this.def.letterType, vec, null);
+                Find.LetterStack.ReceiveLetter(this.def.letterLabel, this.def.letterText, this.def.letterType, new TargetInfo(vec, map, false), null);
             }
             return num > 0;
         }
 
-        public void TryFindShipCrashSite(out IntVec3 spawnCell)
+        public void TryFindShipCrashSite(Map map, out IntVec3 spawnCell)
         {
             spawnCell = IntVec3.Invalid;
-            List<Thing> caveWellsList = Find.ListerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
+            List<Thing> caveWellsList = map.listerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
             foreach (Thing caveWell in caveWellsList.InRandomOrder())
             {
-                if (IsValidPositionForShipCrashSite(caveWell.Position))
+                if (IsValidPositionForShipCrashSite(map, caveWell.Position))
                 {
                     spawnCell = caveWell.Position;
                     return;
@@ -71,18 +73,18 @@ namespace CaveBiome
             }
         }
 
-        public bool IsValidPositionForShipCrashSite(IntVec3 position)
+        public bool IsValidPositionForShipCrashSite(Map map, IntVec3 position)
         {
-            if ((position.InBounds() == false)
-                || position.Fogged())
+            if ((position.InBounds(map) == false)
+                || position.Fogged(map))
             {
                 return false;
             }
 			foreach (IntVec3 checkedPosition in GenAdj.CellsOccupiedBy(position, Rot4.North, this.def.shipPart.size))
 			{
-				if ((checkedPosition.Standable() == false)
-                    || checkedPosition.Roofed()
-                    || checkedPosition.CanReachColony() == false)
+				if ((checkedPosition.Standable(map) == false)
+                    || checkedPosition.Roofed(map)
+                    || map.reachability.CanReachColony(checkedPosition) == false)
 				{
 					return false;
 				}

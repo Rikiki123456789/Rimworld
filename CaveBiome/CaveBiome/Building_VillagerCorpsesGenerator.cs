@@ -22,28 +22,25 @@ namespace CaveBiome
         public override void Tick()
         {
             base.Tick();
-
-            if (Find.TickManager.TicksGame == 1)
-            {
-                GenerateVillagerCorpses();
-                this.Destroy();
-            }
+            
+            GenerateVillagerCorpses();
+            this.Destroy();
         }
 
         public void GenerateVillagerCorpses()
         {
             Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.Tribe);
-            SpawnPawnCorpse(this.Position, PawnKindDef.Named("TribalChief"), faction, GenDate.TicksPerDay, true);
-            SpawnPawnCorpse(this.Position + new IntVec3(2, 0, 2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
-            SpawnPawnCorpse(this.Position + new IntVec3(2, 0, -2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
-            SpawnPawnCorpse(this.Position + new IntVec3(-2, 0, -2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
-            SpawnPawnCorpse(this.Position + new IntVec3(-2, 0, 2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
+            SpawnPawnCorpse(this.Map, this.Position, PawnKindDef.Named("TribalChief"), faction, GenDate.TicksPerDay, true);
+            SpawnPawnCorpse(this.Map, this.Position + new IntVec3(2, 0, 2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
+            SpawnPawnCorpse(this.Map, this.Position + new IntVec3(2, 0, -2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
+            SpawnPawnCorpse(this.Map, this.Position + new IntVec3(-2, 0, -2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
+            SpawnPawnCorpse(this.Map, this.Position + new IntVec3(-2, 0, 2), PawnKindDef.Named("TribalWarrior"), faction, GenDate.TicksPerDay, true);
         }
 
-        public static void SpawnPawnCorpse(IntVec3 spawnCell, PawnKindDef pawnKindDef, Faction faction, float rotProgressInTicks, bool removeEquipment = false)
+        public static void SpawnPawnCorpse(Map map, IntVec3 spawnCell, PawnKindDef pawnKindDef, Faction faction, float rotProgressInTicks, bool removeEquipment = false)
         {
             Pawn pawn = PawnGenerator.GeneratePawn(pawnKindDef, faction);
-            GenSpawn.Spawn(pawn, spawnCell);
+            GenSpawn.Spawn(pawn, spawnCell, map);
             if (removeEquipment)
             {
                 pawn.equipment.DestroyAllEquipment();
@@ -55,7 +52,7 @@ namespace CaveBiome
         public static void KillAndRotPawn(Pawn pawn, float rotProgressInTicks)
         {
             HealthUtility.GiveInjuriesToKill(pawn);
-            foreach (Thing thing in pawn.Position.GetThingList())
+            foreach (Thing thing in pawn.Position.GetThingList(pawn.MapHeld))
             {
                 if (thing.def.defName.Contains("Corpse"))
                 {
