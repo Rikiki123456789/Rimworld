@@ -10,8 +10,7 @@
     <defName>HediffGleamcapSmoke</defName>
     <label>gleamcap smoke</label>
     <comps>
-      <li>
-        <compClass>HediffComp_Disappears</compClass>
+      <li Class="HediffCompProperties_Disappears">
         <disappearsAfterTicks>
           <min>3000</min>
           <max>3000</max>

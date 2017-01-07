@@ -23,6 +23,7 @@ namespace CaveworldFlora
         public const float minGrowthToPoison = 0.3f;
 
         public int nextLongTick = GenTicks.TickLongInterval;
+        public static bool alertHasBeenSent = false;
 
         // ===================== Saving =====================
         /// <summary>
@@ -32,6 +33,7 @@ namespace CaveworldFlora
         {
             base.ExposeData();
             Scribe_Values.LookValue<int>(ref this.nextLongTick, "nextLongTick");
+            Scribe_Values.LookValue<bool>(ref ClusterPlant_BlackLotus.alertHasBeenSent, "alertHasBeenSent");
         }
 
         // ===================== Main Work Function =====================
@@ -49,7 +51,7 @@ namespace CaveworldFlora
                 ThrowPoisonSmoke();
 
                 // Poison nearby pawns.
-                List<Pawn> allPawnsSpawned = Find.MapPawns.AllPawnsSpawned;
+                List<Pawn> allPawnsSpawned = this.Map.mapPawns.AllPawnsSpawned;
 				for (int pawnIndex = 0; pawnIndex < allPawnsSpawned.Count; pawnIndex++)
 				{
 					Pawn pawn = allPawnsSpawned[pawnIndex];
@@ -65,6 +67,13 @@ namespace CaveworldFlora
                             Rand.PopSeed();
                             num *= num2;
                             HealthUtility.AdjustSeverity(pawn, HediffDefOf.ToxicBuildup, num);
+                            if ((ClusterPlant_BlackLotus.alertHasBeenSent == false)
+                                && pawn.IsColonist)
+                            {
+                                Find.LetterStack.ReceiveLetter("Black lotus", "One of your colonists has been intoxited by the effluvium of a black lotus. Beware, those emanations are extremely toxic.",
+                                    LetterType.BadNonUrgent, new RimWorld.Planet.GlobalTargetInfo(pawn));
+                                ClusterPlant_BlackLotus.alertHasBeenSent = true;
+                            }
                         }
                     }
                 }
@@ -82,7 +91,7 @@ namespace CaveworldFlora
         {
             Vector3 spawnPosition = this.Position.ToVector3Shifted() + Vector3Utility.RandomHorizontalOffset(3f);
 
-            if (!spawnPosition.ShouldSpawnMotesAt() || MoteCounter.SaturatedLowPriority)
+            if (!spawnPosition.ShouldSpawnMotesAt(this.Map) || this.Map.moteCounter.SaturatedLowPriority)
             {
                 return;
             }
@@ -90,8 +99,8 @@ namespace CaveworldFlora
             moteThrown.Scale = 3f * this.Growth;
             moteThrown.rotationRate = (float)Rand.Range(-5, 5);
             moteThrown.exactPosition = spawnPosition;
-            moteThrown.SetVelocity((float)Rand.Range(-20, 20), 0);//Rand.Range(0.6f, 0.75f));
-            GenSpawn.Spawn(moteThrown, spawnPosition.ToIntVec3());
+            moteThrown.SetVelocity((float)Rand.Range(-20, 20), 0);
+            GenSpawn.Spawn(moteThrown, spawnPosition.ToIntVec3(), this.Map);
         }
     }
 }

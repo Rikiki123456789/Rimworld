@@ -27,32 +27,32 @@ namespace CaveworldFlora
         /// - the fungiponics basin must be roofed.
         /// - must not be too near from another fungiponics basin.
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
             foreach (IntVec3 cell in GenAdj.CellsOccupiedBy(loc, rot, checkingDef.Size))
             {
-                if (ClusterPlant.IsNaturalRoughRockAt(cell) == false)
+                if (ClusterPlant.IsNaturalRoughRockAt(base.Map, cell) == false)
                 {
                     return new AcceptanceReport("Fungiponics basin must be built on rough rock.");
                 }
-                if (Find.RoofGrid.Roofed(loc) == false)
+                if (base.Map.roofGrid.Roofed(loc) == false)
                 {
                     return new AcceptanceReport("Fungiponics basin must be roofed.");
                 }
             }
 
             List<Thing> fungiponicsBasinsList = new List<Thing>();
-            IEnumerable<Thing> list = Find.ListerThings.ThingsOfDef(ThingDef.Named("FungiponicsBasin"));
+            IEnumerable<Thing> list = base.Map.listerThings.ThingsOfDef(ThingDef.Named("FungiponicsBasin"));
             foreach (Thing basin in list)
             {
                 fungiponicsBasinsList.Add(basin);
             }
-            list = Find.ListerThings.ThingsOfDef(ThingDef.Named("FungiponicsBasin").blueprintDef);
+            list = base.Map.listerThings.ThingsOfDef(ThingDef.Named("FungiponicsBasin").blueprintDef);
             foreach (Thing basin in list)
             {
                 fungiponicsBasinsList.Add(basin);
             }
-            list = Find.ListerThings.ThingsOfDef(ThingDef.Named("FungiponicsBasin").frameDef);
+            list = base.Map.listerThings.ThingsOfDef(ThingDef.Named("FungiponicsBasin").frameDef);
             foreach (Thing basin in list)
             {
                 fungiponicsBasinsList.Add(basin);

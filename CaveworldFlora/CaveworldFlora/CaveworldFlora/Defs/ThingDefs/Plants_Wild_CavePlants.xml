@@ -103,7 +103,7 @@
         <max>0.6</max>
       </visualSizeRange>
       <growDays>2.5</growDays>
-      <seedEmitMTBDays>0.2</seedEmitMTBDays>
+      <reproduceMtbDays>0.2</reproduceMtbDays>
       <topWindExposure>0.2</topWindExposure>
     </plant>
 
@@ -161,7 +161,7 @@
         <max>1.0</max>
       </visualSizeRange>
       <growDays>3.5</growDays>
-      <seedEmitMTBDays>0.3</seedEmitMTBDays>
+      <reproduceMtbDays>0.3</reproduceMtbDays>
       <topWindExposure>0.3</topWindExposure>
     </plant>
 
@@ -217,15 +217,15 @@
     <plant>
       <harvestWork>400</harvestWork>
       <harvestDestroys>false</harvestDestroys>
-      <harvestedThingDef>PsychoidLeaves</harvestedThingDef>
-      <harvestYield>30</harvestYield>
+      <harvestedThingDef>Cloth</harvestedThingDef>
+      <harvestYield>10</harvestYield>
       <harvestTag>Standard</harvestTag>
       <visualSizeRange>
         <min>0.8</min>
         <max>1.0</max>
       </visualSizeRange>
       <growDays>5.0</growDays>
-      <seedEmitMTBDays>0.5</seedEmitMTBDays>
+      <reproduceMtbDays>0.5</reproduceMtbDays>
       <topWindExposure>0</topWindExposure>
     </plant>
 
@@ -288,7 +288,7 @@
         <max>1.2</max>
       </visualSizeRange>
       <growDays>30.0</growDays>
-      <seedEmitMTBDays>3.0</seedEmitMTBDays>
+      <reproduceMtbDays>3.0</reproduceMtbDays>
       <topWindExposure>0</topWindExposure>
     </plant>
 
@@ -333,7 +333,7 @@
     </ingestible>
     <plant>
       <growDays>30</growDays>
-      <seedEmitMTBDays>3.0</seedEmitMTBDays>
+      <reproduceMtbDays>3.0</reproduceMtbDays>
       <topWindExposure>0.1</topWindExposure>
       <harvestWork>1200</harvestWork>
       <harvestYield>60</harvestYield>
@@ -379,7 +379,7 @@
     </ingestible>
     <plant>
       <growDays>5</growDays>
-      <seedEmitMTBDays>0.5</seedEmitMTBDays>
+      <reproduceMtbDays>0.5</reproduceMtbDays>
       <topWindExposure>0.2</topWindExposure>
       <harvestWork>600</harvestWork>
       <harvestYield>15</harvestYield>

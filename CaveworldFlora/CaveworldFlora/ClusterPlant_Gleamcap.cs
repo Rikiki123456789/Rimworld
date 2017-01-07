@@ -74,11 +74,11 @@ namespace CaveworldFlora
                 && (this.isInCryostasis == false)
                 && sporeSpawnOccuredLongAgo
                 && ((Rand.Value < chanceToSpawnSpore)
-                || Find.MapConditionManager.ConditionIsActive(MapConditionDefOf.Eclipse)))
+                || this.Map.mapConditionManager.ConditionIsActive(MapConditionDefOf.Eclipse)))
             {
                 this.lastSporeSpawnTick = Find.TickManager.TicksGame;
                 this.sporeSpawner = ThingMaker.MakeThing(Util_CaveworldFlora.gleamcapSporeSpawnerDef) as GleamcapSporeSpawner;
-                GenSpawn.Spawn(this.sporeSpawner, this.Position);
+                GenSpawn.Spawn(this.sporeSpawner, this.Position, this.Map);
                 this.sporeSpawner.parent = this;
             }
         }

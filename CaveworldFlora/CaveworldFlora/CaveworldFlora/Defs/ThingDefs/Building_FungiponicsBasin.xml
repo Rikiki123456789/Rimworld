@@ -45,7 +45,6 @@
     <fertility>1.0</fertility>
     <building>
       <defaultPlantToGrow>Glowbulb</defaultPlantToGrow>
-      <plantsDestroyWithMe>true</plantsDestroyWithMe>
       <sowTag>Fungiponics</sowTag>
     </building>
     <tickerType>Rare</tickerType>

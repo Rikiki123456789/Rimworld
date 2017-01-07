@@ -30,13 +30,13 @@ namespace CaveworldFlora
         public Cluster symbiosisCluster = null;
 
         // New cluster initialization.
-        public static ClusterPlant SpawnNewClusterAt(IntVec3 spawnCell, ThingDef_ClusterPlant plantDef, int desiredSize)
+        public static ClusterPlant SpawnNewClusterAt(Map map, IntVec3 spawnCell, ThingDef_ClusterPlant plantDef, int desiredSize)
         {
             ClusterPlant newPlant = ThingMaker.MakeThing(plantDef) as ClusterPlant;
-            GenSpawn.Spawn(newPlant, spawnCell);
+            GenSpawn.Spawn(newPlant, spawnCell, map);
             Cluster newCluster = ThingMaker.MakeThing(Util_CaveworldFlora.ClusterDef) as Cluster;
             newCluster.Initialize(plantDef, desiredSize);
-            GenSpawn.Spawn(newCluster, spawnCell);
+            GenSpawn.Spawn(newCluster, spawnCell, map);
             newPlant.cluster = newCluster;
             return newPlant;
         }
@@ -119,8 +119,8 @@ namespace CaveworldFlora
             IEnumerable<IntVec3> cellsInCluster = GenRadial.RadialCellsAround(this.Position, this.plantDef.clusterSpawnRadius + 3f, true);
             foreach (IntVec3 cell in cellsInCluster)
             {
-                if ((cell.GetRoom() == clusterRoom)
-                    && (Find.ThingGrid.ThingAt(cell, this.plantDef) != null))
+                if ((cell.GetRoom(this.Map) == clusterRoom)
+                    && (this.Map.thingGrid.ThingAt(cell, this.plantDef) != null))
                 {
                     size++;
                     center += cell;
@@ -132,17 +132,17 @@ namespace CaveworldFlora
             {
                 center.x = 0;
             }
-            else if (center.x > Find.Map.Size.x)
+            else if (center.x > this.Map.Size.x)
             {
-                center.x = Find.Map.Size.x;
+                center.x = this.Map.Size.x;
             }
             if (center.z < 0)
             {
                 center.z = 0;
             }
-            else if (center.z > Find.Map.Size.z)
+            else if (center.z > this.Map.Size.z)
             {
-                center.z = Find.Map.Size.z;
+                center.z = this.Map.Size.z;
             }
             this.Position = center;
             this.actualSize = size;

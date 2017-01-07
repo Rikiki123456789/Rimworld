@@ -32,9 +32,9 @@ namespace CaveworldFlora
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
             this.sporeSpawnEndTick = Find.TickManager.TicksGame + Rand.RangeInclusive(minSporeSpawningDurationInTicks, maxSporeSpawningDurationInTicks);
         }
 
@@ -62,13 +62,13 @@ namespace CaveworldFlora
             if (Find.TickManager.TicksGame > this.nextSporeThrowTick)
             {
                 this.nextSporeThrowTick = Find.TickManager.TicksGame + 10;
-                MoteMaker.ThrowDustPuff(this.TrueCenter(), Rand.Value);
+                MoteMaker.ThrowDustPuff(this.TrueCenter(), this.Map, Rand.Value);
             }
 
             if (Find.TickManager.TicksGame > this.nextNearbyPawnCheckTick)
             {
                 this.nextNearbyPawnCheckTick = Find.TickManager.TicksGame + GenTicks.TicksPerRealSecond;
-                foreach (Pawn pawn in Find.MapPawns.AllPawns)
+                foreach (Pawn pawn in this.Map.mapPawns.AllPawns)
                 {
                     if ((pawn.Position.InHorDistOf(this.Position, sporeEffectRadius))
                         && (pawn.health != null))

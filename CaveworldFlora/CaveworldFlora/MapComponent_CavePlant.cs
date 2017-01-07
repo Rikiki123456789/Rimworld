@@ -24,6 +24,10 @@ namespace CaveworldFlora
         public int randomSpawnPeriodInTicks = 0;
         public int nextRandomSpawnTick = 10;
 
+        public MapComponent_ClusterPlant(Map map) : base(map)
+        {
+        }
+
         public List<ThingDef_ClusterPlant> cavePlantDefs
         {
             get
@@ -53,7 +57,7 @@ namespace CaveworldFlora
             if (randomSpawnPeriodInTicks == 0)
             {
                 // Occurs when loading a savegame.
-                int mapSurfaceCoefficient = Find.Map.Size.x * 2 + Find.Map.Size.z * 2;
+                int mapSurfaceCoefficient = this.map.Size.x * 2 + this.map.Size.z * 2;
                 randomSpawnPeriodInTicks = 200000 / (mapSurfaceCoefficient / 100);
             }
             if (Find.TickManager.TicksGame > nextRandomSpawnTick)
@@ -72,10 +76,10 @@ namespace CaveworldFlora
             
             int newDesiredClusterSize = cavePlantDef.clusterSizeRange.RandomInRange;
             IntVec3 spawnCell = IntVec3.Invalid;
-            GenClusterPlantReproduction.TryGetRandomClusterSpawnCell(cavePlantDef, newDesiredClusterSize, true, out spawnCell);
+            GenClusterPlantReproduction.TryGetRandomClusterSpawnCell(cavePlantDef, newDesiredClusterSize, true, this.map, out spawnCell);
             if (spawnCell.IsValid)
             {
-                Cluster.SpawnNewClusterAt(spawnCell, cavePlantDef, newDesiredClusterSize);
+                Cluster.SpawnNewClusterAt(this.map, spawnCell, cavePlantDef, newDesiredClusterSize);
             }
         }
 

@@ -8,6 +8,7 @@
     <thingClass>CaveworldFlora.Cluster</thingClass>
     <drawerType>None</drawerType>
     <tickerType>Never</tickerType>
+    <useHitPoints>False</useHitPoints>
   </ThingDef>
 
 </ThingDefinitions>

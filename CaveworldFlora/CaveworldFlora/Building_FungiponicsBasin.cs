@@ -11,6 +11,8 @@ using Verse.Sound;   // Needed when you do something with the Sound
 
 namespace CaveworldFlora
 {
+    // TODO: rework fungus textures when harvested.
+
     /// <summary>
     /// Building_FungiponicsBasin class.
     /// </summary>
@@ -21,7 +23,7 @@ namespace CaveworldFlora
     {
         public override string GetInspectString()
         {
-            float temperature = GenTemperature.GetTemperatureForCell(this.Position);
+            float temperature = GenTemperature.GetTemperatureForCell(this.Position, this.Map);
             ThingDef_ClusterPlant clusterPlantDef = this.GetPlantDefToGrow() as ThingDef_ClusterPlant;
             if (temperature < clusterPlantDef.minGrowTemperature)
             {

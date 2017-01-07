@@ -47,12 +47,7 @@ namespace CaveworldFlora
         public static Material flowerTexture = MaterialPool.MatFrom("Things/Plant/DevilTongue/Flower/DevilTongueFlower", ShaderDatabase.Transparent);
         public Matrix4x4 flowerMatrix = default(Matrix4x4);
         public Vector3 flowerScale = new Vector3(0f, 1f, 0f);
-
-        public override void SpawnSetup()
-        {
-            base.SpawnSetup();
-        }
-
+        
         // ===================== Saving =====================
         /// <summary>
         /// Save and load internal state variables (stored in savegame data).
@@ -154,7 +149,7 @@ namespace CaveworldFlora
 
         protected void TransitionToOpened()
         {
-            this.glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerStaticDef(this.def), this.Position);
+            this.glower = GenSpawn.Spawn(Util_CaveworldFlora.GetGlowerStaticDef(this.def), this.Position, this.Map);
             this.flowerState = FlowerState.opened;
         }
 
@@ -174,7 +169,7 @@ namespace CaveworldFlora
         }
         protected bool IsPawnNearby()
         {
-            foreach (Pawn pawn in Find.MapPawns.AllPawns)
+            foreach (Pawn pawn in this.Map.mapPawns.AllPawns)
             {
                 if (pawn.Position.InHorDistOf(this.Position, pawnDetectionRadius))
                 {
