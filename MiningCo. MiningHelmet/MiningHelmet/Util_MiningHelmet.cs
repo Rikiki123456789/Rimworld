@@ -21,11 +21,11 @@ namespace MiningHelmet
     public static class Util_MiningHelmet
     {
         // Mining helmet glower.
-        public static ThingDef miningHelmetGlowerDef
+        public static ThingDef miningLightDef
         {
             get
             {
-                return ThingDef.Named("MiningHelmetGlower");
+                return ThingDef.Named("MiningLight");
             }
         }
     }

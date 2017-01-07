@@ -13,20 +13,20 @@ using Verse;         // RimWorld universal objects are here
 namespace MiningHelmet
 {
     /// <summary>
-    /// MiningHelmet class.
+    /// ApparelWithMiningLight class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class MiningHelmet : Apparel
+    public class ApparelWithMiningLight : Apparel
     {
-        public Thing headLight;
+        public Thing light;
         public bool lightIsOn = false;
         public bool refreshIsNecessary = false;
 
         /// <summary>
-        /// Perform the MiningHelmet main treatment:
-        /// - switch on the headlight if the pawn is awake and under a natural roof or in the open dark and mining,
+        /// Perform the main treatment:
+        /// - switch on the light if the pawn is awake and under a natural roof or in the open dark and mining,
         /// - switch off the headlight otherwise.
         /// </summary>
         public override void Tick()
@@ -40,63 +40,66 @@ namespace MiningHelmet
                 return;
             }
 
-            // Helmet on ground or wearer is sleeping.
+            // Apparel on ground or wearer is sleeping.
             if ((this.wearer == null)
                 || this.wearer.InBed())
             {
-                SwitchOffHeadLight();
+                SwitchOffLight();
                 return;
             }
 
             // Colonist is mining.
-            bool colonistIsMining = (this.wearer.CurJob != null)
-                && (this.wearer.CurJob.def == JobDefOf.Mine);
-            if (colonistIsMining)
+            if ((this.wearer.CurJob != null)
+                && (this.wearer.CurJob.def == JobDefOf.Mine))
             {
-                SwitchOnHeadLight();
+                SwitchOnLight();
                 return;
             }
-            
+
             // Colonist is under a natural roof.
-            bool colonistIsUnderARoof = Find.RoofGrid.Roofed(this.wearer.Position);
-            if (colonistIsUnderARoof)
+            if (this.wearer.Map.roofGrid.Roofed(this.wearer.Position)
+                && this.wearer.Map.roofGrid.RoofAt(this.wearer.Position).isNatural)
             {
-                RoofDef roofType = Find.RoofGrid.RoofAt(this.wearer.Position);
-                if ((roofType == DefDatabase<RoofDef>.GetNamed("RoofRockThin"))
-                    || (roofType == DefDatabase<RoofDef>.GetNamed("RoofRockThick")))
-                {
-                    SwitchOnHeadLight();
-                    return;
-                }
+                SwitchOnLight();
+                return;
             }
 
             // Other cases.
-            SwitchOffHeadLight();
+            SwitchOffLight();
         }
 
-        public void SwitchOnHeadLight()
+        public void SwitchOnLight()
         {
             IntVec3 newPosition = this.wearer.DrawPos.ToIntVec3();
-            if (this.headLight.DestroyedOrNull())
-            {
-                this.headLight = GenSpawn.Spawn(Util_MiningHelmet.miningHelmetGlowerDef, newPosition);
-            }
-            if ((newPosition != this.headLight.Position)
+
+            // Switch off previous light if pawn moved.
+            if (((this.light.DestroyedOrNull() == false)
+                && (newPosition != this.light.Position))
                 || this.refreshIsNecessary)
             {
-                SwitchOffHeadLight();
-                this.headLight = GenSpawn.Spawn(Util_MiningHelmet.miningHelmetGlowerDef, newPosition);
+                SwitchOffLight();
                 this.refreshIsNecessary = false;
+            }
+
+            // Try to spawn a new light.
+            if (this.light.DestroyedOrNull())
+            {
+                Thing potentialLight = newPosition.GetFirstThing(this.wearer.Map, Util_MiningHelmet.miningLightDef);
+                if (potentialLight == null)
+                {
+                    this.light = GenSpawn.Spawn(Util_MiningHelmet.miningLightDef, newPosition, this.wearer.Map);
+                }
+                // else another light is already here.
             }
             this.lightIsOn = true;
         }
 
-        public void SwitchOffHeadLight()
+        public void SwitchOffLight()
         {
-            if (this.headLight.DestroyedOrNull() == false)
+            if (this.light.DestroyedOrNull() == false)
             {
-                this.headLight.Destroy();
-                this.headLight = null;
+                this.light.Destroy();
+                this.light = null;
             }
             this.lightIsOn = false;
         }
@@ -105,7 +108,7 @@ namespace MiningHelmet
         {
             base.ExposeData();
 
-            Scribe_References.LookReference<Thing>(ref this.headLight, "headLight");
+            Scribe_References.LookReference<Thing>(ref this.light, "headLight");
             Scribe_Values.LookValue<bool>(ref this.lightIsOn, "lightIsOn");
             if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {

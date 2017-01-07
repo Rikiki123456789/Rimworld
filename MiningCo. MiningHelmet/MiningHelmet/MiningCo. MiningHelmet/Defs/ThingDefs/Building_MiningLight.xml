@@ -14,9 +14,9 @@
   </ThingDef>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>MiningHelmetGlower</defName>
-    <label>mining helmet light</label>
-    <Description>Mining helmet light.</Description>
+    <defName>MiningLight</defName>
+    <label>mining light</label>
+    <Description>Mining light.</Description>
     <graphicData>
       <texPath>Things/Building/DummyTexture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
