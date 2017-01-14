@@ -17,22 +17,22 @@ namespace ForceField
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public static class ForceFieldGeneratorProperties
+    public class ThingDef_FieldGenerator : ThingDef
     {
         // Power consumption.
-        public const int powerOutputDuringInitialization = -125;
-        public const int powerOutputDuringCharge = -1000;
-        public const int powerOutputDuringSustain = -250;
-        public const int powerOutputDuringDischarge = 500;
+        public int powerOutputDuringInitialization = -125;
+        public int powerOutputDuringCharge = -1000;
+        public int powerOutputDuringSustain = -250;
+        public int powerOutputDuringDischarge = 500;
 
         // Durations.
-        public const int initializationDurationInTicks = 300;
-        public const int chargeDurationInTicks = 3000;
-        public const int dischargeDurationInTicks = 1500;
+        public int initializationDurationInTicks = 300;
+        public int chargeDurationInTicks = 3000;
+        public int dischargeDurationInTicks = 1500;
 
         // Force field charge.
-        public const float forceFieldMaxCharge = 250f;
-        public const float rocketAbsorbtionProportion = 0.5f; // Proportion of the force field max charge necessary to absorb a rocket.
-        public const float explosiveRepelCharge = 40f; // Energy cost to repel an explosive (grenade).
+        public float forceFieldMaxCharge = 250f;
+        public float rocketAbsorbtionProportion = 0.5f; // Proportion of the force field max charge necessary to absorb a rocket.
+        public float explosiveRepelCharge = 40f; // Energy cost to repel an explosive (grenade).
     }
 }

@@ -13,7 +13,7 @@
     <filthLeaving>BuildingRubble</filthLeaving>
   </ThingDef>
 
-  <ThingDef ParentName="BuildingBase">
+  <ThingDef ParentName="BuildingBase" Class="ForceField.ThingDef_FieldGenerator">
     <defName>ForceFieldGenerator</defName>
     <label>force field generator</label>
     <description>This defensive building will charge up and sustain a forward force field. It is able to absorb or repel incoming projectiles until it is completely discharged. Once discharged, the generator needs some time to reinitialize. When powered down, the generator will send back a part of its energy to the power net.</description>
@@ -32,9 +32,9 @@
     </placeWorkers>
     <castEdgeShadows>true</castEdgeShadows>
     <fillPercent>0.5</fillPercent>
-    <UseHitPoints>True</UseHitPoints>
+    <UseHitPoints>true</UseHitPoints>
     <statBases>
-      <WorkToMake>10000</WorkToMake>
+      <WorkToBuild>10000</WorkToBuild>
       <MaxHitPoints>300</MaxHitPoints>
       <Flammability>1.0</Flammability>
     </statBases>
@@ -66,7 +66,7 @@
       <li>ResearchForceField</li>
     </researchPrerequisites>
 
-    <!--<powerOutputDuringInitialization>-125</powerOutputDuringInitialization>
+    <powerOutputDuringInitialization>-125</powerOutputDuringInitialization>
     <powerOutputDuringCharge>-1000</powerOutputDuringCharge>
     <powerOutputDuringSustain>-250</powerOutputDuringSustain>
     <powerOutputDuringDischarge>500</powerOutputDuringDischarge>
@@ -77,7 +77,7 @@
     
     <forceFieldMaxCharge>500</forceFieldMaxCharge>
     <rocketAbsorbtionProportion>0.5</rocketAbsorbtionProportion>
-    <explosiveRepelCharge>40</explosiveRepelCharge>-->
+    <explosiveRepelCharge>40</explosiveRepelCharge>
   </ThingDef>
 
 </ThingDefs>

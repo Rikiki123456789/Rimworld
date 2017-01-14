@@ -26,21 +26,21 @@ namespace ForceField
         /// Checks if a new force field generator can be built at this location.
         /// - must not be too near from another force field generator (or it would perturb other fields).
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
             // Check if another force field generator is not too close.
             List<Thing> forceFieldGeneratorList = new List<Thing>();
-            IEnumerable<Thing> list = Find.ListerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator"));
+            IEnumerable<Thing> list = this.Map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator"));
             foreach (Thing generator in list)
             {
                 forceFieldGeneratorList.Add(generator);
             }
-            list = Find.ListerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").blueprintDef);
+            list = this.Map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").blueprintDef);
             foreach (Thing generator in list)
             {
                 forceFieldGeneratorList.Add(generator);
             }
-            list = Find.ListerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").frameDef);
+            list = this.Map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").frameDef);
             foreach (Thing generator in list)
             {
                 forceFieldGeneratorList.Add(generator);
