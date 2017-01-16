@@ -20,6 +20,7 @@ namespace FishIndustry
     /// Remember learning is always better than just copy/paste...</permission>
     public static class Util_FishIndustry
     {
+        // TODO: organize researches for a nicer tree.
         // TODO: add aquariums for sduiggles
 
         // Building.

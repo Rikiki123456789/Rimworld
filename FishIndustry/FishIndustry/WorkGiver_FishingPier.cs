@@ -61,7 +61,7 @@ namespace FishIndustry
             {
                 return false;
             }
-            if (fishingPier.fishStock == 0)
+            if (fishingPier.fishStock <= 0)
             {
                 return false;
             }
