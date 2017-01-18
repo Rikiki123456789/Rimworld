@@ -32,14 +32,14 @@ namespace MiningHelmet
         public override void Tick()
         {
             base.Tick();
-
+            
             // Only tick once a second when light is off.
             if ((this.lightIsOn == false)
                 && (Find.TickManager.TicksGame % GenTicks.TicksPerRealSecond != 0))
             {
                 return;
             }
-
+            
             // Apparel on ground or wearer is sleeping.
             if ((this.wearer == null)
                 || this.wearer.InBed())
@@ -47,7 +47,7 @@ namespace MiningHelmet
                 SwitchOffLight();
                 return;
             }
-
+            
             // Colonist is mining.
             if ((this.wearer.CurJob != null)
                 && (this.wearer.CurJob.def == JobDefOf.Mine))
@@ -55,15 +55,16 @@ namespace MiningHelmet
                 SwitchOnLight();
                 return;
             }
-
+            
             // Colonist is under a natural roof.
-            if (this.wearer.Map.roofGrid.Roofed(this.wearer.Position)
-                && this.wearer.Map.roofGrid.RoofAt(this.wearer.Position).isNatural)
+            if ((this.wearer.Map != null)
+                && this.wearer.MapHeld.roofGrid.Roofed(this.wearer.Position)
+                && this.wearer.MapHeld.roofGrid.RoofAt(this.wearer.Position).isNatural)
             {
                 SwitchOnLight();
                 return;
             }
-
+            
             // Other cases.
             SwitchOffLight();
         }
