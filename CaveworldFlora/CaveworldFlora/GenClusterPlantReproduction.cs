@@ -24,6 +24,11 @@ namespace CaveworldFlora
         /// </summary>
         public static ClusterPlant TryToReproduce(ClusterPlant plant)
         {
+            if (plant.cluster == null)
+            {
+                Log.Warning("CaveworldFlora:TryToReproduce: cluster is null at " + plant.Position);
+            }
+
             // Test if it is growing on a fungiponics basin.
             if (plant.isOnCavePlantGrower)
             {
@@ -127,7 +132,21 @@ namespace CaveworldFlora
                     return false;
                 }
                 // Check cell is in the same room.
-                if (cell.GetRoom(cluster.Map) != cluster.GetRoom())
+                Room clusterRoom = cluster.GetRoom();
+                Room cellRoom = cell.GetRoom(cluster.Map);
+                if (clusterRoom == null)
+                {
+                    if (Current.ProgramState == ProgramState.Playing)
+                    {
+                        Log.Warning("clusterRoom at " + cluster.Position + " is null.");
+                        if (cellRoom == null)
+                        {
+                            Log.Message("cellRoom at " + cell + " is null.");
+                        }
+                    }
+                }
+                if ((cellRoom == null)
+                    || (cellRoom != clusterRoom))
                 {
                     return false;
                 }

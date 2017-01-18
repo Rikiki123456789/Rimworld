@@ -137,7 +137,6 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y $(TargetPath) $(ProjectDir)\CaveworldFlora\Assemblies
-REM xcopy /Y /i /s $(ProjectDir)\CaveworldFlora C:\Users\Temp2\RimWorld1284Win\Mods\CaveworldFlora
 xcopy /Y /i /s $(ProjectDir)\CaveworldFlora "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\CaveworldFlora"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

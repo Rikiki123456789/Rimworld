@@ -107,6 +107,7 @@
       <topWindExposure>0.2</topWindExposure>
     </plant>
 
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
     <minGrowTemperature>0</minGrowTemperature>
     <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>45</maxOptimalGrowTemperature>
@@ -165,6 +166,7 @@
       <topWindExposure>0.3</topWindExposure>
     </plant>
 
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
     <minGrowTemperature>0</minGrowTemperature>
     <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
@@ -189,6 +191,7 @@
     <symbiosisPlantDefSource>StoneGrass</symbiosisPlantDefSource>
   </ThingDef>
 
+  <!-- If you experience lags with dynamic devil's tongue, you can remove the following definition and use the commented one just below. -->
   <ThingDef ParentName="CavePlantBase" Class="CaveworldFlora.ThingDef_ClusterPlant">
     <defName>DevilTongue</defName>
     <label>devil's tongue</label>
@@ -229,6 +232,7 @@
       <topWindExposure>0</topWindExposure>
     </plant>
 
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
     <minGrowTemperature>0</minGrowTemperature>
     <minOptimalGrowTemperature>15</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
@@ -252,6 +256,73 @@
     <isSymbiosisPlant>false</isSymbiosisPlant>
     <symbiosisPlantDefEvolution>BlackLotus</symbiosisPlantDefEvolution>
   </ThingDef>
+
+  <!-- "Static" devil's tongue (remove the comment tags).
+  <ThingDef ParentName="CavePlantBase" Class="CaveworldFlora.ThingDef_ClusterPlant">
+    <defName>DevilTongue</defName>
+    <label>devil's tongue</label>
+    <description>Local tribesmen call these plants "devil's tongue" because of their color. They also know that when their light goes down, something is approaching... threat or foe?</description>
+    <thingClass>CaveworldFlora.ClusterPlant</thingClass>
+    <tickerType>Long</tickerType>
+    <statBases>
+      <MaxHitPoints>120</MaxHitPoints>
+      <Beauty>25</Beauty>
+    </statBases>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>Things/Plant/DevilTongue/Body</texPath>
+      <graphicClass>Graphic_Random</graphicClass>
+      <shadowData>
+        <volume>(0.6, 0.2, 0.6)</volume>
+      </shadowData>
+    </graphicData>
+    <selectable>true</selectable>
+    <fillPercent>0.25</fillPercent>
+    <pathCost>30</pathCost>
+    <ingestible>
+      <preferability>NeverForNutrition</preferability>
+      <nutrition>0.0</nutrition>
+    </ingestible>
+    <plant>
+      <harvestWork>400</harvestWork>
+      <harvestDestroys>false</harvestDestroys>
+      <harvestedThingDef>Cloth</harvestedThingDef>
+      <harvestYield>10</harvestYield>
+      <harvestTag>Standard</harvestTag>
+      <visualSizeRange>
+        <min>0.8</min>
+        <max>1.0</max>
+      </visualSizeRange>
+      <growDays>5.0</growDays>
+      <reproduceMtbDays>0.5</reproduceMtbDays>
+      <topWindExposure>0</topWindExposure>
+    </plant>
+
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
+    <minGrowTemperature>0</minGrowTemperature>
+    <minOptimalGrowTemperature>15</minOptimalGrowTemperature>
+    <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
+    <maxGrowTemperature>55</maxGrowTemperature>
+    <hasStaticGlower>true</hasStaticGlower>
+    <hasDynamicGlower>false</hasDynamicGlower>
+    <growOnlyOnRoughRock>false</growOnlyOnRoughRock>
+    <growOnlyUndeRoof>false</growOnlyUndeRoof>
+    <growOnlyNearNaturalRock>false</growOnlyNearNaturalRock>
+    <minFertility>0.05</minFertility>
+    <maxFertility>999.0</maxFertility>
+    <minLight>0.0</minLight>
+    <maxLight>0.6</maxLight>
+    <clusterSizeRange>
+      <min>5</min>
+      <max>10</max>
+    </clusterSizeRange>
+    <clusterSpawnRadius>5.0</clusterSpawnRadius>
+    <clusterExclusivityRadiusOffset>0</clusterExclusivityRadiusOffset>
+    <clusterExclusivityRadiusFactor>3</clusterExclusivityRadiusFactor>
+    <isSymbiosisPlant>false</isSymbiosisPlant>
+    <symbiosisPlantDefEvolution>BlackLotus</symbiosisPlantDefEvolution>
+  </ThingDef>
+  -->
 
   <ThingDef ParentName="CavePlantBase" Class="CaveworldFlora.ThingDef_ClusterPlant">
     <defName>BlackLotus</defName>
@@ -292,6 +363,7 @@
       <topWindExposure>0</topWindExposure>
     </plant>
 
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
     <minGrowTemperature>0</minGrowTemperature>
     <minOptimalGrowTemperature>20</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>50</maxOptimalGrowTemperature>
@@ -339,6 +411,7 @@
       <harvestYield>60</harvestYield>
     </plant>
 
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
     <minGrowTemperature>0</minGrowTemperature>
     <minOptimalGrowTemperature>5</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>45</maxOptimalGrowTemperature>
@@ -385,6 +458,7 @@
       <harvestYield>15</harvestYield>
     </plant>
 
+    <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
     <minGrowTemperature>0</minGrowTemperature>
     <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>

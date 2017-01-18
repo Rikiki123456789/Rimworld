@@ -96,7 +96,6 @@ namespace CaveworldFlora
         public void NotifyPlantAdded()
         {
             this.actualSize++;
-            this.UpdateClusterPosition();
         }
 
         public void NotifyPlantRemoved()
@@ -110,42 +109,30 @@ namespace CaveworldFlora
             this.UpdateClusterPosition();
         }
 
+        // Only move cluster root to another plant if current position becomes invalid (for example: a building is built over it).
         protected void UpdateClusterPosition()
         {
             Room clusterRoom = this.GetRoom();
-            int size = 0;
             IntVec3 center = IntVec3.Zero;
             // We only check with clusterSpawnRadius (+ a small offset). No need to check entire cluster exclusivity area.
+            List<IntVec3> plantsInClusterList = new List<IntVec3>();
             IEnumerable<IntVec3> cellsInCluster = GenRadial.RadialCellsAround(this.Position, this.plantDef.clusterSpawnRadius + 3f, true);
             foreach (IntVec3 cell in cellsInCluster)
             {
-                if ((cell.GetRoom(this.Map) == clusterRoom)
-                    && (this.Map.thingGrid.ThingAt(cell, this.plantDef) != null))
+                if ((this.Map.thingGrid.ThingAt(cell, this.plantDef) != null)
+                    && (cell.GetRoom(this.Map) == clusterRoom))
                 {
-                    size++;
-                    center += cell;
+                    plantsInClusterList.Add(cell);
                 }
             }
-            center.x = (int)Mathf.Round(center.x / (float)size);
-            center.z = (int)Mathf.Round(center.z / (float)size);
-            if (center.x < 0)
+            if (plantsInClusterList.Count > 0)
             {
-                center.x = 0;
+                this.Position = plantsInClusterList.RandomElement();
             }
-            else if (center.x > this.Map.Size.x)
+            else
             {
-                center.x = this.Map.Size.x;
+                this.Destroy();
             }
-            if (center.z < 0)
-            {
-                center.z = 0;
-            }
-            else if (center.z > this.Map.Size.z)
-            {
-                center.z = this.Map.Size.z;
-            }
-            this.Position = center;
-            this.actualSize = size;
         }
 
         public void NotifySymbiosisClusterAdded(Cluster symbiosisCluster)

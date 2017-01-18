@@ -20,7 +20,7 @@ namespace CaveworldFlora
     /// Remember learning is always better than just copy/paste...</permission>
     public class MapComponent_ClusterPlant : MapComponent
     {
-        private List<ThingDef_ClusterPlant> cavePlantDefsInternal = null;
+        public List<ThingDef_ClusterPlant> cavePlantDefsInternal = null;
         public int randomSpawnPeriodInTicks = 0;
         public int nextRandomSpawnTick = 10;
 
@@ -41,7 +41,9 @@ namespace CaveworldFlora
                         {
                             ThingDef_ClusterPlant clusterPlantDef = (plantDef as ThingDef_ClusterPlant);
                             if ((clusterPlantDef != null)
-                                && (clusterPlantDef.isSymbiosisPlant == false))
+                                && (clusterPlantDef.isSymbiosisPlant == false)
+                                && ((clusterPlantDef.growsOnlyInCaveBiome == false)
+                                   || (this.map.Biome.defName == "Cave")))
                             {
                                 cavePlantDefsInternal.Add(clusterPlantDef);
                             }

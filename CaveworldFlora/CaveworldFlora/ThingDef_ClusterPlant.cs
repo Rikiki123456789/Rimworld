@@ -19,6 +19,8 @@ namespace CaveworldFlora
     /// Remember learning is always better than just copy/paste...</permission>
     public class ThingDef_ClusterPlant : ThingDef
     {
+        public bool growsOnlyInCaveBiome = false;
+
         public int minGrowTemperature = 0; // Plant will enter cryostatis under this temperature.
         public int minOptimalGrowTemperature = 10;
         public int maxOptimalGrowTemperature = 40;

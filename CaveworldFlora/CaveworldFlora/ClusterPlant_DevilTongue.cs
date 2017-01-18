@@ -73,7 +73,7 @@ namespace CaveworldFlora
         {
             if (Find.TickManager.TicksGame >= this.nextLongTick)
             {
-                this.nextLongTick += GenTicks.TickLongInterval;
+                this.nextLongTick = Find.TickManager.TicksGame + GenTicks.TickLongInterval;
                 base.TickLong();
             }
 

@@ -304,6 +304,7 @@ namespace CaveworldFlora
                 }
                 if (!base.Destroyed
                     && (this.growthInt > minGrowthToReproduce)
+                    && !this.Dying
                     && Rand.MTBEventOccurs(this.def.plant.reproduceMtbDays, GenDate.TicksPerDay, GenTicks.TickLongInterval))
                 {
                     GenClusterPlantReproduction.TryToReproduce(this);
@@ -327,7 +328,8 @@ namespace CaveworldFlora
                     && this.isTemperatureConditionOk
                     && this.isLightConditionOk
                     && (this.isOnCavePlantGrower
-                       || this.isOnValidNaturalSpot);
+                       || (this.isOnValidNaturalSpot
+                          && (this.cluster.DestroyedOrNull() == false)));
             }
         }
         public new bool Dying
@@ -347,7 +349,8 @@ namespace CaveworldFlora
                 bool plantIsInHostileConditions = (temperature > this.clusterPlantProps.maxGrowTemperature)
                     || !this.isLightConditionOk
                     || !(this.isOnCavePlantGrower
-                        || this.isOnValidNaturalSpot)
+                        || (this.isOnValidNaturalSpot
+                          && (this.cluster.DestroyedOrNull() == false)))
                     || !this.isSymbiosisOk;
                 if (plantIsInHostileConditions)
                 {

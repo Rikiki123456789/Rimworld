@@ -90,7 +90,7 @@
       <MaxHitPoints>100</MaxHitPoints>
       <MarketValue>5.5</MarketValue>
       <Flammability>1.0</Flammability>
-      <MedicalPotency>0.85</MedicalPotency>
+      <MedicalPotency>0.70</MedicalPotency>
       <DeteriorationRate>10</DeteriorationRate>
     </statBases>
     <thingCategories>
