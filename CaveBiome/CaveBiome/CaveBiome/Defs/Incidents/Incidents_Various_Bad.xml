@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <IncidentDef>
+    <defName>Flashstorm</defName>
+    <label>flashstorm</label>
+    <targetType>BaseMap</targetType>
+    <workerClass>CaveBiome.IncidentWorker_FlashstormCave</workerClass>
+    <letterLabel>Flashstorm</letterLabel>
+    <letterText>Extreme amounts of lightning are hitting a small region. This can cause massive fires.</letterText>
+    <letterType>BadNonUrgent</letterType>
+    <baseChance>0.3</baseChance>
+    <minRefireDays>15</minRefireDays>
+    <minDifficulty>2</minDifficulty>
+    <durationDays>
+      <min>0.075</min>
+      <max>0.1</max>
+    </durationDays>
+  </IncidentDef>
+
+</Defs>

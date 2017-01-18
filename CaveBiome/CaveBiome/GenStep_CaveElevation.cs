@@ -12,8 +12,8 @@ namespace CaveBiome
 {
     public class GenStep_CaveElevation : GenStep
     {
-        private const float ElevationFreq = 0.03f;
-        private const float ElevationFactorCave = 1.5f;
+        public const float ElevationFreq = 0.03f;
+        public const float ElevationFactorCave = 1.5f;
         
 		public override void Generate(Map map)
 		{
@@ -22,17 +22,20 @@ namespace CaveBiome
                 // Nothing to do in other biomes.
                 return;
             }
+            
+            // Generate basic map elevation.
 			NoiseRenderer.renderSize = new IntVec2(map.Size.x, map.Size.z);
-            ModuleBase moduleBase = new Perlin(ElevationFreq, 1.0, 0.5, 6, Rand.Range(0, 2147483647), QualityMode.High);
-			moduleBase = new ScaleBias(0.5, 0.5, moduleBase);
-            NoiseDebugUI.StoreNoiseRender(moduleBase, "Cave: elev base");
-            moduleBase = new Multiply(moduleBase, new Const((double)ElevationFactorCave));
-            NoiseDebugUI.StoreNoiseRender(moduleBase, "Cave: elev cave-factored");
+            ModuleBase perlinMap = new Perlin(ElevationFreq, 1.0, 0.5, 6, Rand.Range(0, 2147483647), QualityMode.High);
+			perlinMap = new ScaleBias(0.5, 0.5, perlinMap);
+            NoiseDebugUI.StoreNoiseRender(perlinMap, "Cave: elev base");
+            perlinMap = new Multiply(perlinMap, new Const((double)ElevationFactorCave));
+            NoiseDebugUI.StoreNoiseRender(perlinMap, "Cave: elev cave-factored");
+            
             // Override base elevation grid so the GenStep_Terrain.Generate function uses this one.
             MapGenFloatGrid mapGenFloatGrid = MapGenerator.FloatGridNamed("Elevation", map);
 			foreach (IntVec3 current in map.AllCells)
 			{
-                mapGenFloatGrid[current] = moduleBase.GetValue(current);
+                mapGenFloatGrid[current] = perlinMap.GetValue(current);
 			}
 		}
     }

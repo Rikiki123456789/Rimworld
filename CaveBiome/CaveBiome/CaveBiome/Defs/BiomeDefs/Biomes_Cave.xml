@@ -119,8 +119,7 @@
       <Raccoon>0.03</Raccoon>
     </wildAnimals>
     <allowedPackAnimals>
-      <li>Megasloth</li>
-      <li>Rat</li>
+      <li>Muffalo</li>
     </allowedPackAnimals>
   </BiomeDef>
 

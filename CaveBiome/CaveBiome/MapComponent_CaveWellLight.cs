@@ -51,8 +51,6 @@ namespace CaveBiome
             Scribe_Values.LookValue<bool>(ref MapComponent_CaveWellLight.growingMessageHasBeenSent, "growingMessageHasBeenSent");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
-                GenStep_CaveSetRules.SetCaveRules(this.map);
-
                 MapComponentTick();
             }
         }
@@ -107,8 +105,17 @@ namespace CaveBiome
                 if ((MapComponent_CaveWellLight.growingMessageHasBeenSent == false)
                     && (hour >= sunriseBeginHour + 2))
                 {
-                    Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
-                        LetterType.Good, new RimWorld.Planet.GlobalTargetInfo(MapGenerator.PlayerStartSpot, this.map));
+                    if (MapGenerator.PlayerStartSpot.IsValid
+                        && (MapGenerator.PlayerStartSpot != IntVec3.Zero)) // Checking PlayerStartSpot validity will still raise an error message if it is invalid.
+                    {
+                        Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
+                            LetterType.Good, new RimWorld.Planet.GlobalTargetInfo(MapGenerator.PlayerStartSpot, this.map));
+                    }
+                    else
+                    {
+                        Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
+                            LetterType.Good);
+                    }
                     MapComponent_CaveWellLight.growingMessageHasBeenSent = true;
                 }
             }

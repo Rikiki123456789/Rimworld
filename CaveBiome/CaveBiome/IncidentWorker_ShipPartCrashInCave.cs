@@ -35,7 +35,38 @@ namespace CaveBiome
             for (int i = 0; i < countToSpawn; i++)
             {
                 IntVec3 spawnCell = IntVec3.Invalid;
-                TryFindShipCrashSite(map, out spawnCell);
+                if (map.Biome == Util_CaveBiome.CaveBiomeDef)
+                {
+                    TryFindShipCrashSite(map, out spawnCell);
+                }
+                else
+                {
+                    Predicate<IntVec3> validator = delegate (IntVec3 c)
+                    {
+                        if (c.Fogged(map))
+                        {
+                            return false;
+                        }
+                        foreach (IntVec3 current in GenAdj.CellsOccupiedBy(c, Rot4.North, this.def.shipPart.size))
+                        {
+                            if (!current.Standable(map))
+                            {
+                                bool result = false;
+                                return result;
+                            }
+                            if (map.roofGrid.Roofed(current))
+                            {
+                                bool result = false;
+                                return result;
+                            }
+                        }
+                        return map.reachability.CanReachColony(c);
+                    };
+                    if (!CellFinderLoose.TryFindRandomNotEdgeCellWith(14, validator, map, out spawnCell))
+                    {
+                        break;
+                    }
+                }
                 if (spawnCell.IsValid == false)
                 {
                     break;

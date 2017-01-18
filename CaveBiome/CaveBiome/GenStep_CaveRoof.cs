@@ -73,7 +73,7 @@ namespace CaveBiome
                 }
             }
 
-            // TODO: should correct null region error?
+            // TODO: should correct null region error? May be due to artificial buildings. River should avoid this.
             // Update regions and rooms now that cave wells are spawned.
             DeepProfiler.Start("RebuildAllRegionsAfterCaveWells");
             map.regionAndRoomUpdater.Enabled = true;
@@ -84,25 +84,19 @@ namespace CaveBiome
 
         private static List<IntVec3> GetCaveWellsPosition(Map map)
         {
-            float distanceFromCenter = 40f;
+            const float DistanceBeetweenCaveWells = 40f;
 
             List<IntVec3> positionsList = new List<IntVec3>();
-            for (int caveWellIndex = 0; caveWellIndex < caveWellsNumber; caveWellIndex++)
+            // Reuse PlayerStartSpot defined in river generation.
+            positionsList.Add(MapGenerator.PlayerStartSpot);
+            for (int caveWellIndex = 1; caveWellIndex < caveWellsNumber; caveWellIndex++)
             {
                 Predicate<IntVec3> validator = delegate(IntVec3 cell)
                 {
-                    if (caveWellIndex == 0)
-                    {
-                        // First cave well must be near map center.
-                        if (cell.InHorDistOf(map.Center, distanceFromCenter) == false)
-                        {
-                            return false;
-                        }
-                    }
                     // Check cave well is not too close from another one.
                     for (int i = 0; i < positionsList.Count; i++)
                     {
-                        if (cell.InHorDistOf(positionsList[i], 40f))
+                        if (cell.InHorDistOf(positionsList[i], DistanceBeetweenCaveWells))
                         {
                             return false;
                         }
@@ -120,21 +114,9 @@ namespace CaveBiome
 
                 IntVec3 caveWellCell = IntVec3.Invalid;
                 bool caveWellCellIsFound = CellFinderLoose.TryFindRandomNotEdgeCellWith(20, validator, map, out caveWellCell);
-                if ((caveWellIndex == 0)
-                    && (caveWellCellIsFound == false))
-                {
-                    // Sometimes, there is no cave touching map edge near the map center. Searh radius is thus greatly increased.
-                    distanceFromCenter = 150f;
-                    caveWellCellIsFound = CellFinderLoose.TryFindRandomNotEdgeCellWith(20, validator, map, out caveWellCell);
-                }
                 if (caveWellCellIsFound)
                 {
                     positionsList.Add(caveWellCell);
-                    if (caveWellIndex == 0)
-                    {
-                        // Found a good start point. Reuse it later.
-                        MapGenerator.PlayerStartSpot = caveWellCell;
-                    }
                 }
                 else
                 {

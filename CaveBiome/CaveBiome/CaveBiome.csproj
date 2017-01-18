@@ -52,12 +52,16 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GenStep_CaveRiver.cs" />
+    <Compile Include="IncidentWorker_RaidEnemyCave.cs" />
+    <Compile Include="IncidentWorker_FlashstormCave.cs" />
+    <Compile Include="PlaceWorker_OnlyInCave.cs" />
+    <Compile Include="PlaceWorker_NotInCave.cs" />
     <Compile Include="Building_PsychicShipPartCopy.cs" />
     <Compile Include="Building_PoisonShipPartCopy.cs" />
     <Compile Include="Building_CrashedShipPartCopy.cs" />
     <Compile Include="Building_AnimalCorpsesGenerator.cs" />
     <Compile Include="Building_VillagerCorpsesGenerator.cs" />
-    <Compile Include="GenStep_CaveSetRules.cs" />
     <Compile Include="IncidentWorker_RefugeePodCrashInCaveInCave.cs" />
     <Compile Include="IncidentWorker_ResourcePodCrashInCave.cs" />
     <Compile Include="IncidentWorker_ShipChunkDropInCave.cs" />
@@ -82,6 +86,9 @@
     <Content Include="CaveBiome\Defs\BiomeDefs\Biomes_Cave.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="CaveBiome\Defs\Incidents\Incidents_Various_Bad.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="CaveBiome\Defs\Incidents\Incidents_ThreatsBig.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -90,6 +97,10 @@
     <Content Include="CaveBiome\Defs\MapGeneration\MapGenerators.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_Base.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_Mortars.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveRoof.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -97,11 +108,12 @@
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CrystalLamp.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_SolarGenerator.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_ShipPartInCave.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_MinableColdCrystal.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveMortars.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_MortarsCave.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Building_Special_CorpsesGenerator.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Items\Items_Resource_ColdCrystal.xml" />
     <Content Include="CaveBiome\Defs\WeatherDefs\Weathers.xml">
