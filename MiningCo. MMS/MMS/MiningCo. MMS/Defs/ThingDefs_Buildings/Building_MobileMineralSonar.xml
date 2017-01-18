@@ -35,7 +35,7 @@
     <useHitPoints>True</useHitPoints>
     <Size>(1,1)</Size>
     <statBases>
-      <WorkToMake>200</WorkToMake>
+      <WorkToBuild>200</WorkToBuild>
       <MaxHitPoints>200</MaxHitPoints>
       <Flammability>0.1</Flammability>
       <Mass>20</Mass>
