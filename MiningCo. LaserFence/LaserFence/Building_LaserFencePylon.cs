@@ -61,9 +61,9 @@ namespace LaserFence
 
         // ######## Spawn setup ######## //
 
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
+            base.SpawnSetup(map);
 
             this.powerComp = this.TryGetComp<CompPowerTrader>();
         }
@@ -263,7 +263,7 @@ namespace LaserFence
             for (int offset = 1; offset <= 5; offset++)
             {
                 IntVec3 checkedPosition = this.Position + new IntVec3(0, 0, offset).RotatedBy(direction);
-                foreach (Thing thing in checkedPosition.GetThingList())
+                foreach (Thing thing in checkedPosition.GetThingList(this.Map))
                 {
                     if (thing is Building_LaserFencePylon)
                     {
@@ -281,7 +281,7 @@ namespace LaserFence
                         }
                     }
                 }
-                if (checkedPosition.GetEdifice() != null)
+                if (checkedPosition.GetEdifice(this.Map) != null)
                 {
                     return;
                 }
@@ -345,7 +345,7 @@ namespace LaserFence
                 for (int offset = 1; offset <= this.fenceLength[direction.AsInt]; offset++)
                 {
                     IntVec3 checkedPosition = this.Position + new IntVec3(0, 0, offset).RotatedBy(direction);
-                    List<Thing> thingList = checkedPosition.GetThingList();
+                    List<Thing> thingList = checkedPosition.GetThingList(this.Map);
                     for (int thingIndex = thingList.Count - 1; thingIndex >= 0; thingIndex--)
                     {
                         Thing thing = thingList[thingIndex];
@@ -373,7 +373,7 @@ namespace LaserFence
                     IntVec3 fencePosition = this.Position + new IntVec3(0, 0, offset).RotatedBy(direction);
                     Building_LaserFence laserFence = ThingMaker.MakeThing(ThingDef.Named("LaserFence")) as Building_LaserFence;
                     laserFence.pylon = this;
-                    GenSpawn.Spawn(laserFence, fencePosition);
+                    GenSpawn.Spawn(laserFence, fencePosition, this.Map);
                 }
                 // Drawing parameters.
                 Vector3 fenceScale = new Vector3(fenceLength, 1f, 1f);
@@ -460,18 +460,18 @@ namespace LaserFence
             }
         }
                 
-        public static bool CanPlaceNewPylonHere(IntVec3 testedPosition, out string reason)
+        public static bool CanPlaceNewPylonHere(Map map, IntVec3 testedPosition, out string reason)
         {
-            foreach (IntVec3 cell in GenAdj.CellsAdjacent8Way(testedPosition))
+            foreach (IntVec3 cell in GenAdj.CellsAdjacent8Way(new TargetInfo(testedPosition, map)))
             {
-                Building building = cell.GetEdifice();
+                Building building = cell.GetEdifice(map);
                 if ((building != null)
                     && (building.def.building.isNaturalRock))
                 {
                     reason = "Pylon cannot be built near a natural rock.";
                     return false;
                 }
-                TerrainDef terrain = cell.GetTerrain();
+                TerrainDef terrain = cell.GetTerrain(map);
                 if ((terrain == TerrainDef.Named("WaterDeep"))
                     || (terrain == TerrainDef.Named("WaterShallow")))
                 {
@@ -483,7 +483,7 @@ namespace LaserFence
             return true;
         }
         
-        public static void DrawPotentialPlacePositions(IntVec3 pylonPosition)
+        public static void DrawPotentialPlacePositions(Map map, IntVec3 pylonPosition)
         {
             List<IntVec3> potentialPlacingPositionsList = new List<IntVec3>();
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
@@ -492,7 +492,7 @@ namespace LaserFence
                 {
                     string unusedReason = "";
                     IntVec3 testedPosition = pylonPosition + new IntVec3(offset, 0, 0).RotatedBy(new Rot4(directionAsInt));
-                    if (Building_LaserFencePylon.CanPlaceNewPylonHere(testedPosition, out unusedReason))
+                    if (Building_LaserFencePylon.CanPlaceNewPylonHere(map, testedPosition, out unusedReason))
                     {
                         potentialPlacingPositionsList.Add(testedPosition);
                     }

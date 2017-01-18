@@ -19,35 +19,35 @@ namespace LaserFence
     /// Remember learning is always better than just copy/paste...</permission>
     public class PlaceWorker_LaserFencePylon : PlaceWorker
     {
-        public override AcceptanceReport  AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
             string reason = "";
-            bool canBePlacedHere = Building_LaserFencePylon.CanPlaceNewPylonHere(loc, out reason);
+            bool canBePlacedHere = Building_LaserFencePylon.CanPlaceNewPylonHere(this.Map, loc, out reason);
             if (canBePlacedHere == false)
             {
                 return new AcceptanceReport(reason);
             }
             
             // Display potential placing positions.
-            foreach (Thing pylon in Find.ListerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon").blueprintDef))
+            foreach (Thing pylon in this.Map.listerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon").blueprintDef))
             {
                 if (pylon.Position.InHorDistOf(loc, 6f))
                 {
-                    Building_LaserFencePylon.DrawPotentialPlacePositions(pylon.Position);
+                    Building_LaserFencePylon.DrawPotentialPlacePositions(this.Map, pylon.Position);
                 }
             }
-            foreach (Thing pylon in Find.ListerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon").frameDef))
+            foreach (Thing pylon in this.Map.listerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon").frameDef))
             {
                 if (pylon.Position.InHorDistOf(loc, 6f))
                 {
-                    Building_LaserFencePylon.DrawPotentialPlacePositions(pylon.Position);
+                    Building_LaserFencePylon.DrawPotentialPlacePositions(this.Map, pylon.Position);
                 }
             }
-            foreach (Thing pylon in Find.ListerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon")))
+            foreach (Thing pylon in this.Map.listerThings.ThingsOfDef(ThingDef.Named("LaserFencePylon")))
             {
                 if (pylon.Position.InHorDistOf(loc, 6f))
                 {
-                    Building_LaserFencePylon.DrawPotentialPlacePositions(pylon.Position);
+                    Building_LaserFencePylon.DrawPotentialPlacePositions(this.Map, pylon.Position);
                 }
             }
 

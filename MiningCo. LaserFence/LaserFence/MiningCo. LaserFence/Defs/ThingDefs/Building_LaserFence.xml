@@ -35,8 +35,8 @@
     <fillPercent>0.6</fillPercent>
     <rotatable>true</rotatable>
     <statBases>
-      <MaxHitPoints>250</MaxHitPoints>
-      <WorkToMake>2000</WorkToMake>
+      <MaxHitPoints>400</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
       <Flammability>0.0</Flammability>
     </statBases>
     <holdsRoof>false</holdsRoof>

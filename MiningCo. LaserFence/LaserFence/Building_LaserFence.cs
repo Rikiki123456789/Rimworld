@@ -21,15 +21,18 @@ namespace LaserFence
     public class Building_LaserFence : Building
     {
         public Building_LaserFencePylon pylon = null;
+        public int nextBuildingCheckTick = 0;
+        public int nextPlantCheckTick = 0;
 
         // ######## Tick ######## //
 
         public override void Tick()
         {
             // Check if a new building is cutting the laser fence.
-            if ((Find.TickManager.TicksGame % 30) == 0)
+            if (Find.TickManager.TicksGame > this.nextBuildingCheckTick)
             {
-                if (this.Position.GetEdifice() != null)
+                this.nextBuildingCheckTick = Find.TickManager.TicksGame + (GenTicks.TicksPerRealSecond / 2);
+                if (this.Position.GetEdifice(this.Map) != null)
                 {
                     if (pylon != null)
                     {
@@ -38,15 +41,16 @@ namespace LaserFence
                 }
             }
             // Check if a plant or pawn is in the laser fence path.
-            if ((Find.TickManager.TicksGame % 200) == 0)
+            if (Find.TickManager.TicksGame > this.nextPlantCheckTick)
             {
-                List<Thing> thingList = this.Position.GetThingList();
+                this.nextPlantCheckTick = Find.TickManager.TicksGame + GenTicks.TickRareInterval;
+                List<Thing> thingList = this.Position.GetThingList(this.Map);
                 for (int thingIndex = thingList.Count - 1; thingIndex >= 0; thingIndex--)
                 {
                     Thing thing = thingList[thingIndex];
                     if (thing is Plant)
                     {
-                        FireUtility.TryStartFireIn(this.Position, 0.1f);
+                        FireUtility.TryStartFireIn(this.Position, this.Map, 0.1f);
                         break;
                     }
                     if (thing is Pawn)
