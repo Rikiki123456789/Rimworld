@@ -20,86 +20,20 @@ namespace AlertSpeaker
     /// Remember learning is always better than just copy/paste...</permission>
     public static class Util_AlertSpeaker
     {
-        // Stat bonus.
-        public static ThingDef SmallAdrenalineBoostStatBonusDef
+        // HediffDefs.
+        public static HediffDef HediffAdrenalineSmallDef
         {
             get
             {
-                return (ThingDef.Named("SmallAdrenalineBoostStatBonus"));
-            }
-        }
-        public static ThingDef MediumAdrenalineBoostStatBonusDef
-        {
-            get
-            {
-                return (ThingDef.Named("MediumAdrenalineBoostStatBonus"));
-            }
-        }
-        public static ThingDef SmallStressStatMalusDef
-        {
-            get
-            {
-                return (ThingDef.Named("SmallStressStatMalus"));
+                return HediffDef.Named("HediffAdrenalineSmall");
             }
         }
 
-        // Thought.
-        public static ThoughtDef SmallAdrenalineBoostThoughtDef
+        public static HediffDef HediffAdrenalineMediumDef
         {
             get
             {
-                return (ThoughtDef.Named("SmallAdrenalineBoostThought"));
-            }
-        }
-        public static ThoughtDef MediumAdrenalineBoostThoughtDef
-        {
-            get
-            {
-                return (ThoughtDef.Named("MediumAdrenalineBoostThought"));
-            }
-        }
-        public static ThoughtDef ColonyIsThreatenedThoughtDef
-        {
-            get
-            {
-                return (ThoughtDef.Named("ColonyIsThreatenedThought"));
-            }
-        }
-        public static ThoughtDef ColonyIsUnderPressureThoughtDef
-        {
-            get
-            {
-                return (ThoughtDef.Named("ColonyIsUnderPressureThought"));
-            }
-        }
-        public static ThoughtDef ThreatIsFinishedThoughtDef
-        {
-            get
-            {
-                return (ThoughtDef.Named("ThreatIsFinishedThought"));
-            }
-        }
-
-        // Motes.
-        public static ThingDef SmallAdrenalineBoostMoteDef
-        {
-            get
-            {
-                return (ThingDef.Named("Mote_SmallAdrenalineBoost"));
-            }
-        }
-        public static ThingDef MediumAdrenalineBoostMoteDef
-        {
-            get
-            {
-                return (ThingDef.Named("Mote_MediumAdrenalineBoost"));
-            }
-        }
-        public static ThingDef SmallStressMoteDef
-        {
-            get
-            {
-                return (ThingDef.Named("Mote_SmallStress"));
+                return HediffDef.Named("HediffAdrenalineMedium");
             }
         }
     }

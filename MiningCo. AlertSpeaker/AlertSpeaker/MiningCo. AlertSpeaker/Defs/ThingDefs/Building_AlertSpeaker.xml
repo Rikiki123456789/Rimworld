@@ -27,16 +27,17 @@
     <placeWorkers>
       <li>AlertSpeaker.PlaceWorker_AlertSpeaker</li>
     </placeWorkers>
+    <minifiedDef>MinifiedAlertSpeaker</minifiedDef>
     <CostList>
       <Steel>20</Steel>
-      <Components>1</Components>
+      <Component>1</Component>
     </CostList>
     <AltitudeLayer>FlyingItem</AltitudeLayer>
     <fillPercent>0.2</fillPercent>
     <UseHitPoints>True</UseHitPoints>
     <statBases>
-      <WorkToMake>1200</WorkToMake>
-      <MaxHitPoints>50</MaxHitPoints>
+      <WorkToBuild>1200</WorkToBuild>
+      <MaxHitPoints>75</MaxHitPoints>
       <Flammability>0.2</Flammability>
     </statBases>
     <Size>(1,1)</Size>

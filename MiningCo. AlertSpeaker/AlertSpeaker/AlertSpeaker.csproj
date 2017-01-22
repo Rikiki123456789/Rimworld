@@ -34,7 +34,7 @@
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=0.13.5940.24501, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -57,29 +57,21 @@
     <Content Include="MiningCo. AlertSpeaker\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. AlertSpeaker\Defs\HeddifsDefs\Hediffs_Adrenaline.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MiningCo. AlertSpeaker\Defs\SoundDefs\Sounds_AlertSpeaker.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. AlertSpeaker\Defs\ThingDefs\Items_MinifiedAlertSpeaker.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. AlertSpeaker\Defs\ThingDefs\Building_AlertSpeaker.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. AlertSpeaker\Defs\ThingDefs\Apparel_StatBonus.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="MiningCo. AlertSpeaker\Defs\ThingDefs\Mote_AlertSpeaker.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="MiningCo. AlertSpeaker\Defs\ThoughtDefs\Thoughts_Memories.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="MiningCo. AlertSpeaker\Textures\Effects\EnergyBall.png" />
     <Content Include="MiningCo. AlertSpeaker\Textures\Things\Building\AlertSpeaker.png" />
-    <Content Include="MiningCo. AlertSpeaker\Textures\Things\Item\Equipment\HeavyLasgun.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="MiningCo. AlertSpeaker\Textures\Effects\EnergyBall.pdn" />
-    <None Include="MiningCo. AlertSpeaker\Textures\Things\Building\AlertSpeaker.psd" />
-    <None Include="MiningCo. AlertSpeaker\Textures\Things\Item\Equipment\HeavyLasgun.pdn" />
+    <Content Include="MiningCo. AlertSpeaker\Textures\Ui\Commands\CommandButton_SirenSoundDisabled.png" />
+    <Content Include="MiningCo. AlertSpeaker\Textures\Ui\Commands\CommandButton_SirenSoundEnabled.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MiningCo. AlertSpeaker\Assemblies\" />
@@ -89,7 +81,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. AlertSpeaker\Assemblies"</PostBuildEvent>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. AlertSpeaker\Assemblies"
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. AlertSpeaker" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. AlertSpeaker"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

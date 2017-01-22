@@ -18,15 +18,13 @@ namespace AlertSpeaker
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
+    [StaticConstructorOnStartup]
     class Building_AlertSpeaker : Building
     {
-        // Used by Destroy function.
-        public static int numberOfAlertSpeakers = 0;
-
         // Constants.
         public const float alertSpeakerMaxRange = 6.9f;
-        public const int earlyPhaseTicksThreshold = 60000; // Maximum duration the adrenaline boost can last: 1 day.
-        public const int latePhaseTicksThreshold = 120000; // A very prolonged alert may generate stress: 2 days.
+        public const int earlyPhaseTicksThreshold = GenDate.TicksPerDay / 4; // Maximum duration the adrenaline boost can last: 1/4 day.
+        public const int latePhaseTicksThreshold = 2 * GenDate.TicksPerDay; // A very prolonged alert may generate stress: 2 days.
 
         // Danger phase.
         public static int lastUpdateTick = 0;
@@ -35,45 +33,40 @@ namespace AlertSpeaker
         public static StoryDanger currentDangerRate = StoryDanger.None;
 
         // Drawing parameters.
-        public static int lowDangerDrawingTick = 0;
-        public static int highDangerDrawingTick = 0;
-        public CompGlower glowerComp;
+        public CompGlower glowerComp = null;
         public static float glowRadius = 0f;
         public static ColorInt glowColor = new ColorInt(0, 0, 0, 255);
+        public static float redAlertLightAngle = 0f;
+        public static float redAlertLightIntensity = 0.25f;
+        public static Material redAlertLight = MaterialPool.MatFrom("Effects/RedAlertLight", ShaderDatabase.Transparent);
+        public static Matrix4x4 redAlertLightMatrix = default(Matrix4x4);
+        public static Vector3 redAlertLightScale = new Vector3(5f, 1f, 5f);
 
         // Sound parameters.
         public static bool soundIsActivated = true;
-        public static int alarmSoundTick = 0;
-        public const int alarmSoundPeriod = 1200;  // 20 s.
+        public static int nextAlarmSoundTick = 0;
+        public const int alarmSoundPeriod = 20 * GenTicks.TicksPerRealSecond; // 20 s.
         public static SoundDef lowDangerAlarmSound = SoundDef.Named("LowDangerAlarm");
         public static SoundDef highDangerAlarmSound = SoundDef.Named("HighDangerAlarm");
 
         // Other variables.
-        public CompPowerTrader powerComp;
-
-        // Icons texture.
-        public Texture2D sirenSoundEnabledIcon;
-        public Texture2D sirenSoundDisabledIcon;
-                
+        public CompPowerTrader powerComp = null;
+        
         // ===================== Setup Work =====================
         /// <summary>
-        /// Initializes instance variables.
+        /// Initialize instance variables.
         /// </summary>
         /// 
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
-
-            numberOfAlertSpeakers++;
-            glowerComp = base.GetComp<CompGlower>();
-            powerComp = base.GetComp<CompPowerTrader>();
-
-            sirenSoundEnabledIcon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundEnabled");
-            sirenSoundDisabledIcon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundDisabled");
+            base.SpawnSetup(map);
+            
+            glowerComp = this.GetComp<CompGlower>();
+            powerComp = this.GetComp<CompPowerTrader>();
         }
 
         /// <summary>
-        /// Saves and loads variables (stored in savegame data).
+        /// Save and load variables (stored in savegame data).
         /// </summary>
         public override void ExposeData()
         {
@@ -82,55 +75,24 @@ namespace AlertSpeaker
             Scribe_Values.LookValue<int>(ref alertStartTick, "alertStartTick", 0);
             Scribe_Values.LookValue<StoryDanger>(ref previousDangerRate, "previousDangerRate", StoryDanger.None);
             Scribe_Values.LookValue<StoryDanger>(ref currentDangerRate, "currentDangerRate", StoryDanger.None);
-            Scribe_Values.LookValue<int>(ref lowDangerDrawingTick, "lowDangerDrawingTick", 0);
-            Scribe_Values.LookValue<int>(ref highDangerDrawingTick, "highDangerDrawingTick", 0);
-            Scribe_Values.LookValue<int>(ref alarmSoundTick, "alarmSoundTick", 0);
-        }
-        
-        // ===================== Destroy =====================
-        /// <summary>
-        /// Destroys the alert speaker and remove any bonus/malus i fthere are no more on the map.
-        /// </summary>
-        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.Destroy();
-
-            if (mode == DestroyMode.Deconstruct)
-            {
-                List<ThingCount> costList = this.def.costList;
-                foreach (ThingCount cost in costList)
-                {
-                    Thing deconstructedResource = ThingMaker.MakeThing(cost.thingDef);
-                    deconstructedResource.stackCount = cost.count;
-                    GenSpawn.Spawn(deconstructedResource, this.Position);
-                }
-            }
-
-            numberOfAlertSpeakers--;
-            if (numberOfAlertSpeakers == 0)
-            {
-                RemoveAnyStatBonusFromAllColonists();
-                RemoveAnyStatMalusFromAllColonists();
-                RemoveAnyThoughtBonusFromAllColonists();
-                RemoveAnyThoughtMalusFromAllColonists();
-            }
+            Scribe_Values.LookValue<int>(ref nextAlarmSoundTick, "nextAlarmSoundTick", 0);
         }
         
         /// <summary>
         /// Checks if the wall supporting the alert speaker is still alive.
         /// </summary>
-        public static bool CheckIfSupportingWallIsAlive(IntVec3 alertSpeakerPosition, Rot4 alertSpeakerRotation)
+        public static bool CheckIfSupportingWallIsAlive(Map map, IntVec3 position, Rot4 rotation)
         {
-            IntVec3 wallPosition = alertSpeakerPosition + new IntVec3(0, 0, -1).RotatedBy(alertSpeakerRotation);
+            IntVec3 wallPosition = position + new IntVec3(0, 0, -1).RotatedBy(rotation);
             
             // Built wall.
-            if (Find.ThingGrid.ThingAt(wallPosition, ThingDefOf.Wall) != null)
+            if (map.thingGrid.ThingAt(wallPosition, ThingDefOf.Wall) != null)
             {
                 return true;
             }
 
             // Natural block.
-            Thing potentialWall = Find.ThingGrid.ThingAt(wallPosition, ThingCategory.Building);
+            Thing potentialWall = map.thingGrid.ThingAt(wallPosition, ThingCategory.Building);
             if (potentialWall != null)
             {
                 if ((potentialWall as Building).def.building.isNaturalRock)
@@ -145,13 +107,13 @@ namespace AlertSpeaker
         /// <summary>
         /// Get the effect zone cells.
         /// </summary>
-        public static List<IntVec3> GetEffectZoneCells(IntVec3 alertSpeakerPosition)
+        public static List<IntVec3> GetEffectZoneCells(Map map, IntVec3 position)
         {
-            IEnumerable<IntVec3> cellsInRange = GenRadial.RadialCellsAround(alertSpeakerPosition, Building_AlertSpeaker.alertSpeakerMaxRange, true);
+            IEnumerable<IntVec3> cellsInRange = GenRadial.RadialCellsAround(position, Building_AlertSpeaker.alertSpeakerMaxRange, true);
             List<IntVec3> effectZoneCells = new List<IntVec3>();
             foreach (IntVec3 cell in cellsInRange)
             {
-                if (cell.GetRoom() == alertSpeakerPosition.GetRoom())
+                if (cell.GetRoom(map) == position.GetRoom(map))
                 {
                     effectZoneCells.Add(cell);
                 }
@@ -159,36 +121,41 @@ namespace AlertSpeaker
             return effectZoneCells;
         }
 
-        // ===================== Main Work Function =====================
+        // ===================== Main work function =====================
         /// <summary>
-        /// - Checks if the supporting wall is still alive.
-        /// - Checks current threat level.
-        /// - Performs adequate treatment when a danger level transition occurs.
-        /// - Applies an adrenaline bonus to nearby colonists according to current danger rate.
+        /// - Check if the supporting wall is still alive.
+        /// - Check current threat level.
+        /// - Perform adequate treatment when a danger level transition occurs.
+        /// - Apply an adrenaline bonus to nearby colonists according to current danger rate.
         /// </summary>
         public override void Tick()
         {
-            if (CheckIfSupportingWallIsAlive(this.Position, this.Rotation) == false)
-            {
-                this.Destroy(DestroyMode.Deconstruct);
-            }
             base.Tick();
 
-            int tickCounter = Find.TickManager.TicksGame;
-            if (lastUpdateTick != tickCounter)
+            if (this.Map == null)
             {
-                // The following treatment is performed only once per tick (static treatment).
-                lastUpdateTick = tickCounter;
-                if ((tickCounter % (2 * GenTicks.TicksPerRealSecond)) == 0)
-                {
-                    DisplayActiveMote();
-                }
+                // This case can occur when the alert speaker has just been uninstalled.
+                return;
+            }
+            if (CheckIfSupportingWallIsAlive(this.Map, this.Position, this.Rotation) == false)
+            {
+                this.Destroy(DestroyMode.Deconstruct);
+                return;
+            }
 
+            int tickCounter = Find.TickManager.TicksGame;
+            if (tickCounter > lastUpdateTick)
+            {
+                // The following treatment is performed only once per tick for all speakers.
+                lastUpdateTick = tickCounter;
                 if ((tickCounter % GenTicks.TicksPerRealSecond) == 0)
                 {
                     previousDangerRate = currentDangerRate;
-                    currentDangerRate = Find.StoryWatcher.watcherDanger.DangerRating;
-                    PerformTreatmentOnDangerRateTransition();
+                    currentDangerRate = this.Map.dangerWatcher.DangerRating;
+                    if (currentDangerRate != previousDangerRate)
+                    {
+                        PerformTreatmentOnDangerRateTransition();
+                    }
                 }
                 PerformSoundTreatment();
                 ComputeDrawingParameters();
@@ -203,35 +170,6 @@ namespace AlertSpeaker
                 }
             }
             PerformDrawingTreatment();
-        }
-        
-        /// <summary>
-        /// Displays the active mote when applicable.   
-        /// </summary>
-        public void DisplayActiveMote()
-        {
-            foreach (Pawn colonist in Find.MapPawns.FreeColonists)
-            {
-                MoteAttached bonusMalusMote = null;
-                if (CheckIfColonistHasASmallAdrenalineBoostBonus(colonist))
-                {
-                    bonusMalusMote = ThingMaker.MakeThing(Util_AlertSpeaker.SmallAdrenalineBoostMoteDef) as MoteAttached;
-                    bonusMalusMote.AttachTo(colonist);
-                    GenSpawn.Spawn(bonusMalusMote, colonist.Position);
-                }
-                else if (CheckIfColonistHasAMediumAdrenalineBoostBonus(colonist))
-                {
-                    bonusMalusMote = ThingMaker.MakeThing(Util_AlertSpeaker.MediumAdrenalineBoostMoteDef) as MoteAttached;
-                    bonusMalusMote.AttachTo(colonist);
-                    GenSpawn.Spawn(bonusMalusMote, colonist.Position);
-                }
-                else if (CheckIfColonistHasASmallStressMalus(colonist))
-                {
-                    bonusMalusMote = ThingMaker.MakeThing(Util_AlertSpeaker.SmallStressMoteDef) as MoteAttached;
-                    bonusMalusMote.AttachTo(colonist);
-                    GenSpawn.Spawn(bonusMalusMote, colonist.Position);
-                }
-            }
         }
 
         /// <summary>
@@ -256,60 +194,29 @@ namespace AlertSpeaker
             {
                 // Set the alert start tick.
                 alertStartTick = Find.TickManager.TicksGame;
-                RemoveAnyThoughtBonusFromAllColonists();
-                TryApplyColonyIsThreatenedThoughtToAllColonists();
-                if (currentDangerRate == StoryDanger.Low)
-                {
-                    lowDangerDrawingTick = 0;
-                    PlayOneLowDangerAlarmSound();
-                    alarmSoundTick = 0;
-                }
-                else
-                {
-                    highDangerDrawingTick = 0;
-                    PlayOneHighDangerAlarmSound();
-                    alarmSoundTick = 0;
-                }
+                nextAlarmSoundTick = 0;
             }
             // Transition 2: finished alert.
             else if (((previousDangerRate == StoryDanger.Low)
                 || (previousDangerRate == StoryDanger.High))
                 && (currentDangerRate == StoryDanger.None))
             {
-                RemoveAnyStatBonusFromAllColonists();
-                RemoveAnyStatMalusFromAllColonists();
-                RemoveAnyThoughtBonusFromAllColonists();
-                RemoveAnyThoughtMalusFromAllColonists();
-                TryApplyThreatIsFinishedThoughtToAllColonists();
+                RemoveAnyAdrenalineHediffFromAllColonists();
+                nextAlarmSoundTick = 0;
             }
             // Transition 3: increased danger rating.
             else if ((previousDangerRate == StoryDanger.Low)
                 && (currentDangerRate == StoryDanger.High))
             {
-                highDangerDrawingTick = 0;
-                PlayOneHighDangerAlarmSound();
-                alarmSoundTick = 0;
+                nextAlarmSoundTick = 0;
 
-                // Convert the small adrenaline boost into medium adrenaline boost.
-                IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
-                foreach (Pawn colonist in colonistList)
+                // Convert the small adrenaline hediff into medium adrenaline hediff.
+                foreach (Pawn colonist in this.Map.mapPawns.FreeColonists)
                 {
-                    foreach (Apparel apparel in colonist.apparel.WornApparel)
+                    if (HasHediffAdrenalineSmall(colonist))
                     {
-                        if (apparel.def == Util_AlertSpeaker.SmallAdrenalineBoostStatBonusDef)
-                        {
-                            Apparel unusedDestroyedApparel;
-                            colonist.apparel.TryDrop(apparel, out unusedDestroyedApparel, colonist.Position);
-                            colonist.apparel.Wear((Apparel)ThingMaker.MakeThing(Util_AlertSpeaker.MediumAdrenalineBoostStatBonusDef), true);
-
-                            IEnumerable<Thought> thoughts = colonist.needs.mood.thoughts.ThoughtsOfDef(Util_AlertSpeaker.SmallAdrenalineBoostThoughtDef);
-                            if (thoughts.Count() != 0)
-                            {
-                                (thoughts.First() as Thought_Memory).age = thoughts.First().def.DurationTicks;
-                            }
-                            colonist.needs.mood.thoughts.TryGainThought(Util_AlertSpeaker.MediumAdrenalineBoostThoughtDef);
-                            break;
-                        }
+                        RemoveHediffAdrenalineSmall(colonist);
+                        ApplyHediffAdrenalineMedium(colonist);
                     }
                 }
             }
@@ -317,276 +224,123 @@ namespace AlertSpeaker
             else if ((previousDangerRate == StoryDanger.High)
                 && (currentDangerRate == StoryDanger.Low))
             {
-                lowDangerDrawingTick = 0;
-                alarmSoundTick = 0;
-            }
-        }
-
-
-        /// <summary>
-        /// Performs the treatments during an alert according to the current danger rate.
-        ///   o danger rate == None => no bonus.
-        ///   o danger rate == Low  =>
-        ///      * early phase: small adrenaline boost.
-        ///      * middle and late phase: no bonus.
-        ///   o danger rate == High =>
-        ///      * early phase: medium adrenaline boost.
-        ///      * middle phase: no bonus.
-        ///      * late phase: small stress malus.
-        /// </summary>
-        public void PerformTreatmentDuringAlert()
-        {
-            int tickCounter = Find.TickManager.TicksGame;
-
-            if (currentDangerRate == StoryDanger.None)
-            {
-                // TODO: add music when peaceful.
-                return;
-            }
-            
-            List<Pawn> colonistList = new List<Pawn>();
-            foreach (Pawn colonist in Find.MapPawns.FreeColonists)
-            {
-                if ((colonist.GetRoom() == this.GetRoom())
-                    && colonist.Position.InHorDistOf(this.Position, alertSpeakerMaxRange))
-                {
-                    colonistList.Add(colonist);
-                }
-            }
-
-            if (tickCounter <= alertStartTick + earlyPhaseTicksThreshold)
-            {
-                if (colonistList.Count == 0)
-                    return;
-                if (currentDangerRate == StoryDanger.Low)
-                {
-                    TryApplySmallAdrenalineBoostBonusToColonists(colonistList);
-                }
-                else if (currentDangerRate == StoryDanger.High)
-                {
-                    TryApplyMediumAdrenalineBoostBonusToColonists(colonistList);
-                }
-            }
-            else if (tickCounter <= alertStartTick + latePhaseTicksThreshold)
-            {
-                RemoveAnyStatBonusFromAllColonists();
-                RemoveAnyThoughtBonusFromAllColonists();
-            }
-            else
-            {
-                if (currentDangerRate == StoryDanger.High)
-                {
-                    TryApplySmallStressMalusToAllColonists();
-                }
-            }
-        }
-
-        // ===================== Stat and thought bonus/malus functions =====================
-
-        /// <summary>
-        /// Check if the given colonist has a small adrenaline boost bonus.
-        /// </summary>
-        public bool CheckIfColonistHasASmallAdrenalineBoostBonus(Pawn colonist)
-        {
-            foreach (Apparel apparel in colonist.apparel.WornApparel)
-            {
-                if (apparel.def == Util_AlertSpeaker.SmallAdrenalineBoostStatBonusDef)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Check if the given colonist has a medium adrenaline boost bonus.
-        /// </summary>
-        public bool CheckIfColonistHasAMediumAdrenalineBoostBonus(Pawn colonist)
-        {
-            foreach (Apparel apparel in colonist.apparel.WornApparel)
-            {
-                if (apparel.def == Util_AlertSpeaker.MediumAdrenalineBoostStatBonusDef)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Check if the given colonist has a small stress malus.
-        /// </summary>
-        public bool CheckIfColonistHasASmallStressMalus(Pawn colonist)
-        {
-            foreach (Apparel apparel in colonist.apparel.WornApparel)
-            {
-                if (apparel.def == Util_AlertSpeaker.SmallStressStatMalusDef)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        /// <summary>
-        /// Try to apply a small adrenaline boost to each colonist if he has not already a small or a medium one.
-        /// </summary>
-        public void TryApplySmallAdrenalineBoostBonusToColonists(List<Pawn> colonistList)
-        {
-            foreach (Pawn colonist in colonistList)
-            {
-                bool colonistHasAnAdrenalineBoostBonus = CheckIfColonistHasASmallAdrenalineBoostBonus(colonist) || CheckIfColonistHasAMediumAdrenalineBoostBonus(colonist);
-                if (colonistHasAnAdrenalineBoostBonus == false)
-                {
-                    colonist.apparel.Wear((Apparel)ThingMaker.MakeThing(Util_AlertSpeaker.SmallAdrenalineBoostStatBonusDef));
-                    colonist.needs.mood.thoughts.TryGainThought(Util_AlertSpeaker.SmallAdrenalineBoostThoughtDef);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Try to apply a medium adrenaline boost bonus to each colonist if he has not already one.
-        /// </summary>
-        public void TryApplyMediumAdrenalineBoostBonusToColonists(List<Pawn> colonistList)
-        {
-            foreach (Pawn colonist in colonistList)
-            {
-                if (CheckIfColonistHasAMediumAdrenalineBoostBonus(colonist) == false)
-                {
-                    colonist.apparel.Wear((Apparel)ThingMaker.MakeThing(Util_AlertSpeaker.MediumAdrenalineBoostStatBonusDef));
-                    colonist.needs.mood.thoughts.TryGainThought(Util_AlertSpeaker.MediumAdrenalineBoostThoughtDef);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Try to apply a small stress malus to all colonists.
-        /// </summary>
-        public void TryApplySmallStressMalusToAllColonists()
-        {
-            IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
-            foreach (Pawn colonist in colonistList)
-            {
-                if (CheckIfColonistHasASmallStressMalus(colonist) == false)
-                {
-                    colonist.apparel.Wear((Apparel)ThingMaker.MakeThing(Util_AlertSpeaker.SmallStressStatMalusDef));
-                    colonist.needs.mood.thoughts.TryGainThought(Util_AlertSpeaker.ColonyIsUnderPressureThoughtDef);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Try to apply the "colony is threathened" malus thought to all colonists.
-        /// </summary>
-        public void TryApplyColonyIsThreatenedThoughtToAllColonists()
-        {
-            IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
-            foreach (Pawn colonist in colonistList)
-            {
-                colonist.needs.mood.thoughts.TryGainThought(Util_AlertSpeaker.ColonyIsThreatenedThoughtDef);
+                nextAlarmSoundTick = 0;
             }
         }
         
         /// <summary>
-        /// Try to apply the "threat is finished" thought to all colonists.
+        /// Performs the treatments during an alert according to the current danger rate.
+        ///   o danger rate == None => no bonus.
+        ///   o danger rate == Low  => small adrenaline.
+        ///   o danger rate == High => medium adrenaline.
+        ///   
+        /// No bonus is applied when alert is lasting for too long.
         /// </summary>
-        public void TryApplyThreatIsFinishedThoughtToAllColonists()
+        public void PerformTreatmentDuringAlert()
         {
-            IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
-            foreach (Pawn colonist in colonistList)
+            if (currentDangerRate == StoryDanger.None)
             {
-                colonist.needs.mood.thoughts.TryGainThought(Util_AlertSpeaker.ThreatIsFinishedThoughtDef);
+                return;
             }
-        }
 
-        /// <summary>
-        /// Remove any stat bonus from all colonists.
-        /// </summary>
-        public void RemoveAnyStatBonusFromAllColonists()
-        {
-            IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
-            foreach (Pawn colonist in colonistList)
+            if (Find.TickManager.TicksGame <= alertStartTick + earlyPhaseTicksThreshold)
             {
-                foreach (Apparel apparel in colonist.apparel.WornApparel)
+                foreach (Pawn colonist in this.Map.mapPawns.FreeColonists)
                 {
-                    if ((apparel.def == Util_AlertSpeaker.SmallAdrenalineBoostStatBonusDef)
-                        || (apparel.def == Util_AlertSpeaker.MediumAdrenalineBoostStatBonusDef))
+                    if ((colonist.Downed == false)
+                        && (colonist.GetRoom() == this.GetRoom())
+                        && colonist.Position.InHorDistOf(this.Position, alertSpeakerMaxRange))
                     {
-                        Apparel unusedDestroyedApparel;
-                        colonist.apparel.TryDrop(apparel, out unusedDestroyedApparel, colonist.Position);
-                        break;
+                        if (currentDangerRate == StoryDanger.Low)
+                        {
+                            if (HasHediffAdrenalineMedium(colonist) == false)
+                            {
+                                ApplyHediffAdrenalineSmall(colonist);
+                            }
+                        }
+                        else
+                        {
+                            RemoveHediffAdrenalineSmall(colonist);
+                            ApplyHediffAdrenalineMedium(colonist);
+                        }
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// Remove any stat malus from all colonists.
-        /// </summary>
-        public void RemoveAnyStatMalusFromAllColonists()
+        // ===================== Hediff functions =====================
+
+        public static bool HasHediffAdrenalineSmall(Pawn colonist)
         {
-            IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
+            Hediff adrenalineHediff = colonist.health.hediffSet.GetFirstHediffOfDef(Util_AlertSpeaker.HediffAdrenalineSmallDef);
+            if (adrenalineHediff != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static bool HasHediffAdrenalineMedium(Pawn colonist)
+        {
+            Hediff adrenalineHediff = colonist.health.hediffSet.GetFirstHediffOfDef(Util_AlertSpeaker.HediffAdrenalineMediumDef);
+            if (adrenalineHediff != null)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public static void ApplyHediffAdrenalineSmall(Pawn colonist)
+        {
+            if (HasHediffAdrenalineSmall(colonist) == false)
+            {
+                MoteBubble mote = (MoteBubble)ThingMaker.MakeThing(ThingDefOf.Mote_ThoughtGood, null);
+                mote.SetupMoteBubble(ContentFinder<Texture2D>.Get("Things/Mote/IncapIcon"), null);
+                mote.Attach(colonist);
+                GenSpawn.Spawn(mote, colonist.Position, colonist.Map);
+            }
+            colonist.health.AddHediff(Util_AlertSpeaker.HediffAdrenalineSmallDef);
+        }
+
+        public static void ApplyHediffAdrenalineMedium(Pawn colonist)
+        {
+            if (HasHediffAdrenalineMedium(colonist) == false)
+            {
+                MoteBubble mote = (MoteBubble)ThingMaker.MakeThing(ThingDefOf.Mote_ThoughtBad, null);
+                mote.SetupMoteBubble(ContentFinder<Texture2D>.Get("Things/Mote/IncapIcon"), null);
+                mote.Attach(colonist);
+                GenSpawn.Spawn(mote, colonist.Position, colonist.Map);
+            }
+            colonist.health.AddHediff(Util_AlertSpeaker.HediffAdrenalineMediumDef);
+        }
+
+        public static void RemoveHediffAdrenalineSmall(Pawn colonist)
+        {
+            Hediff adrenalineHediff = colonist.health.hediffSet.GetFirstHediffOfDef(Util_AlertSpeaker.HediffAdrenalineSmallDef);
+            if (adrenalineHediff != null)
+            {
+                colonist.health.RemoveHediff(adrenalineHediff);
+            }
+        }
+        
+        public void RemoveAnyAdrenalineHediffFromAllColonists()
+        {
+            IEnumerable<Pawn> colonistList = this.Map.mapPawns.FreeColonists;
             foreach (Pawn colonist in colonistList)
             {
-                foreach (Apparel apparel in colonist.apparel.WornApparel)
+                Hediff adrenalineHediff = colonist.health.hediffSet.GetFirstHediffOfDef(Util_AlertSpeaker.HediffAdrenalineSmallDef);
+                if (adrenalineHediff != null)
                 {
-                    if (apparel.def == Util_AlertSpeaker.SmallStressStatMalusDef)
-                    {
-                        Apparel unusedDestroyedApparel;
-                        colonist.apparel.TryDrop(apparel, out unusedDestroyedApparel, colonist.Position);
-                        break;
-                    }
+                    colonist.health.RemoveHediff(adrenalineHediff);
+                }
+                adrenalineHediff = colonist.health.hediffSet.GetFirstHediffOfDef(Util_AlertSpeaker.HediffAdrenalineMediumDef);
+                if (adrenalineHediff != null)
+                {
+                    colonist.health.RemoveHediff(adrenalineHediff);
                 }
             }
         }
-
-        /// <summary>
-        /// Remove any thought bonus from all colonists.
-        /// </summary>
-        public void RemoveAnyThoughtBonusFromAllColonists()
-        {
-            IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
-            foreach (Pawn colonist in colonistList)
-            {
-                IEnumerable<Thought> thoughts = colonist.needs.mood.thoughts.ThoughtsOfDef(Util_AlertSpeaker.SmallAdrenalineBoostThoughtDef);
-                if (thoughts.Count() != 0)
-                {
-                    (thoughts.First() as Thought_Memory).age = thoughts.First().def.DurationTicks;
-                }
-                thoughts = colonist.needs.mood.thoughts.ThoughtsOfDef(Util_AlertSpeaker.MediumAdrenalineBoostThoughtDef);
-                if (thoughts.Count() != 0)
-                {
-                    (thoughts.First() as Thought_Memory).age = thoughts.First().def.DurationTicks;
-                }
-                thoughts = colonist.needs.mood.thoughts.ThoughtsOfDef(Util_AlertSpeaker.ThreatIsFinishedThoughtDef);
-                if (thoughts.Count() != 0)
-                {
-                    (thoughts.First() as Thought_Memory).age = thoughts.First().def.DurationTicks;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Remove any thought malus from all colonists.
-        /// </summary>
-        public void RemoveAnyThoughtMalusFromAllColonists()
-        {
-            IEnumerable<Pawn> colonistList = Find.MapPawns.FreeColonists;
-            foreach (Pawn colonist in colonistList)
-            {
-                IEnumerable<Thought> thoughts = colonist.needs.mood.thoughts.ThoughtsOfDef(Util_AlertSpeaker.ColonyIsThreatenedThoughtDef);
-                if (thoughts.Count() != 0)
-                {
-                    (thoughts.First() as Thought_Memory).age = thoughts.First().def.DurationTicks;
-                }
-                thoughts = colonist.needs.mood.thoughts.ThoughtsOfDef(Util_AlertSpeaker.ColonyIsUnderPressureThoughtDef);
-                if (thoughts.Count() != 0)
-                {
-                    (thoughts.First() as Thought_Memory).age = thoughts.First().def.DurationTicks;
-                }
-            }
-        }
-
+        
         // ===================== Sound functions =====================
 
         /// <summary>
@@ -597,25 +351,22 @@ namespace AlertSpeaker
         /// </summary>
         public void PerformSoundTreatment()
         {
-            int localAlarmSoundPeriod = alarmSoundPeriod * (int)Find.TickManager.CurTimeSpeed;
-            switch (currentDangerRate)
+            if (currentDangerRate == StoryDanger.None)
             {
-                case StoryDanger.Low:
-                    if (alarmSoundTick >= localAlarmSoundPeriod)
-                    {
-                        PlayOneLowDangerAlarmSound();
-                        alarmSoundTick = 0;
-                    }
-                    break;
-                case StoryDanger.High:
-                    if (alarmSoundTick >= localAlarmSoundPeriod)
-                    {
-                        PlayOneHighDangerAlarmSound();
-                        alarmSoundTick = 0;
-                    }
-                    break;
+                return;
             }
-            alarmSoundTick++;
+            if (Find.TickManager.TicksGame >= nextAlarmSoundTick)
+            {
+                nextAlarmSoundTick = Find.TickManager.TicksGame + alarmSoundPeriod * (int)Find.TickManager.CurTimeSpeed;
+                if (currentDangerRate == StoryDanger.Low)
+                {
+                    PlayOneLowDangerAlarmSound();
+                }
+                else
+                {
+                    PlayOneHighDangerAlarmSound();
+                }
+            }
         }
 
         /// <summary>
@@ -650,61 +401,44 @@ namespace AlertSpeaker
         /// </summary>
         public void ComputeDrawingParameters()
         {
-            const int lowDangerHalfPeriod = 60;
-            const int highDangerHalfPeriod = 10;
-            const int highDangerQuietPeriod = 40;
-            const float noDangerGlowRadiusOffset = 2f;
-            const float lowDangerGlowRadiusOffset = 1f;
-            const float lowDangerGlowRadiusDynamic = 4f;
-            const float highDangerGlowRadiusOffset = 1f;
-            const float highDangerGlowRadiusDynamic = 6f;
+            const float rotationPeriod = 2f * GenTicks.TicksPerRealSecond;
+            const float rotationAngleStep = 360f / rotationPeriod;
+            const float lowDangerGlowRadiusOffset = 4f;
+
             switch (currentDangerRate)
             {
                 case StoryDanger.None:
-                    glowRadius = noDangerGlowRadiusOffset;
+                    glowRadius = 0;
                     glowColor.r = 0;
                     glowColor.g = 220;
                     glowColor.b = 0;
                     break;
                 case StoryDanger.Low:
+                    glowRadius = lowDangerGlowRadiusOffset;
                     glowColor.r = 242;
                     glowColor.g = 185;
                     glowColor.b = 0;
-                    if (lowDangerDrawingTick < lowDangerHalfPeriod)
-                    {
-                        glowRadius = lowDangerGlowRadiusOffset + lowDangerGlowRadiusDynamic * ((float)lowDangerDrawingTick / (float)lowDangerHalfPeriod);
-                    }
-                    else if (lowDangerDrawingTick < 2 * lowDangerHalfPeriod)
-                    {
-                        glowRadius = lowDangerGlowRadiusOffset + lowDangerGlowRadiusDynamic * (1f - ((float)(lowDangerDrawingTick - lowDangerHalfPeriod) / (float)lowDangerHalfPeriod));
-                    }
-                    else
-                    {
-                        lowDangerDrawingTick = 0;
-                    }
-                    lowDangerDrawingTick++;
                     break;
                 case StoryDanger.High:
+                    glowRadius = 0;
                     glowColor.r = 220;
                     glowColor.g = 0;
                     glowColor.b = 0;
-                    if (highDangerDrawingTick < highDangerHalfPeriod)
+
+                    // TickRateMultiplier should always be > 0 when unpaused.
+                    redAlertLightAngle = (redAlertLightAngle + (rotationAngleStep / Find.TickManager.TickRateMultiplier)) % 360f;
+                    if (redAlertLightAngle < 90f)
                     {
-                        glowRadius = highDangerGlowRadiusOffset + highDangerGlowRadiusDynamic * ((float)highDangerDrawingTick / (float)highDangerHalfPeriod);
+                        redAlertLightIntensity = (redAlertLightAngle / 90f);
                     }
-                    else if (highDangerDrawingTick < 2 * highDangerHalfPeriod)
+                    else if (redAlertLightAngle < 180f)
                     {
-                        glowRadius = highDangerGlowRadiusOffset + highDangerGlowRadiusDynamic * (1 - ((float)(highDangerDrawingTick - highDangerHalfPeriod) / (float)highDangerHalfPeriod));
-                    }
-                    else if (highDangerDrawingTick < highDangerQuietPeriod)
-                    {
-                        glowRadius = 0;
+                        redAlertLightIntensity = 1f - ((redAlertLightAngle - 90f) / 90f);
                     }
                     else
                     {
-                        highDangerDrawingTick = 0;
+                        redAlertLightIntensity = 0;
                     }
-                    highDangerDrawingTick++;
                     break;
             }
         }
@@ -714,13 +448,13 @@ namespace AlertSpeaker
         /// </summary>
         public void PerformDrawingTreatment()
         {
-            if ((glowerComp.Props.glowRadius != glowRadius)
-                || (glowerComp.Props.glowColor != glowColor))
+            if ((this.glowerComp.Props.glowRadius != glowRadius)
+                || (this.glowerComp.Props.glowColor != glowColor))
             {
-                glowerComp.Props.glowRadius = glowRadius;
-                glowerComp.Props.glowColor = glowColor;
-                Find.MapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
-                Find.GlowGrid.MarkGlowGridDirty(this.Position);
+                this.glowerComp.Props.glowRadius = glowRadius;
+                this.glowerComp.Props.glowColor = glowColor;
+                this.Map.mapDrawer.MapMeshDirty(this.Position, MapMeshFlag.Things);
+                this.Map.glowGrid.MarkGlowGridDirty(this.Position);
             }
         }
 
@@ -731,9 +465,16 @@ namespace AlertSpeaker
         {
             base.Draw();
 
+            if ((currentDangerRate == StoryDanger.High)
+                && (this.powerComp.PowerOn))
+            {
+                redAlertLightMatrix.SetTRS(this.Position.ToVector3Shifted() + new Vector3(0f, 10f, -0.25f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect, redAlertLightAngle.ToQuat(), redAlertLightScale);
+                Graphics.DrawMesh(MeshPool.plane10, redAlertLightMatrix, FadedMaterialPool.FadedVersionOf(redAlertLight, redAlertLightIntensity), 0);
+            }
+
             if (Find.Selector.IsSelected(this))
             {
-                List<IntVec3> cellsInEffectZone = Building_AlertSpeaker.GetEffectZoneCells(this.Position);
+                List<IntVec3> cellsInEffectZone = Building_AlertSpeaker.GetEffectZoneCells(this.Map, this.Position);
                 GenDraw.DrawFieldEdges(cellsInEffectZone);
             }
         }
@@ -750,13 +491,13 @@ namespace AlertSpeaker
             Command_Action soundActivationButton = new Command_Action();
             if (soundIsActivated)
             {
-                soundActivationButton.icon = sirenSoundEnabledIcon;
+                soundActivationButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundEnabled");
                 soundActivationButton.defaultDesc = "Deactivate siren sound.";
                 soundActivationButton.defaultLabel = "Siren sound activated.";
             }
             else
             {
-                soundActivationButton.icon = sirenSoundDisabledIcon;
+                soundActivationButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundDisabled");
                 soundActivationButton.defaultDesc = "Activate siren sound.";
                 soundActivationButton.defaultLabel = "Siren sound deactivated.";
             }
