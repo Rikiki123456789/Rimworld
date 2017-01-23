@@ -31,7 +31,7 @@ namespace FishIndustry
         private const int maxFishStockDefault = 5;
         private int maxFishStock = maxFishStockDefault;
         public int fishStock = 1;
-        private const int fishStockRespawnInterval = GenDate.TicksPerDay / maxFishStockDefault;
+        private const int fishStockRespawnInterval = (2 * GenDate.TicksPerDay) / maxFishStockDefault;
         private int fishStockRespawnTick = 0;
 
         /// <summary>

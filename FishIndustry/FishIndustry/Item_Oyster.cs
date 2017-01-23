@@ -22,13 +22,12 @@ namespace FishIndustry
     {
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            base.Destroy(mode);
-
             // Small chance to spawn a pearl.
             if (Rand.Value < 0.02f)
             {
-                GenSpawn.Spawn(Util_FishIndustry.PearlDef, this.Position, this.Map);
+                GenSpawn.Spawn(Util_FishIndustry.PearlDef, this.Position, this.MapHeld);
             }
+            base.Destroy(mode);
         }
 
     }
