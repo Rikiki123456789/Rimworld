@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{3EB8FED6-314E-487B-AEF5-518D4370C4C7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PowerFist</RootNamespace>
+    <AssemblyName>MiningCo. PowerFist</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\RimWorld1393Win\RimWorld1393Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\RimWorld1393Win\RimWorld1393Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ThingDef_PowerFist.cs" />
+    <Compile Include="Util_PowerFist.cs" />
+    <Compile Include="PowerFistRepeller.cs" />
+    <Compile Include="Verb_MeleeAttackWithRepel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="MiningCo. PowerFist\About\About.xml" />
+    <Content Include="MiningCo. PowerFist\About\Preview.png" />
+    <Content Include="MiningCo. PowerFist\Assemblies\MiningCo. PowerFist.dll" />
+    <Content Include="MiningCo. PowerFist\Defs\DamageDefs\Damages_Electric.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. PowerFist\Defs\HediffDefs\Hediffs_Electric.xml" />
+    <Content Include="MiningCo. PowerFist\Defs\Things_Special\PowerFistRepeller.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. PowerFist\Defs\ThingDefs_Misc\Weapons_PowerFist.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. PowerFist\Textures\Things\Item\Resource\ColdCrystal.png" />
+    <Content Include="MiningCo. PowerFist\Textures\Things\Special\DummyTexture.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. PowerFist\Assemblies"
+REM xcopy /Y /i /s "$(ProjectDir)\MiningCo. PowerFist" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. PowerFist"
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. PowerFist" "C:\Users\Temp2\RimWorld1393Win\Mods\MiningCo. PowerFist"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

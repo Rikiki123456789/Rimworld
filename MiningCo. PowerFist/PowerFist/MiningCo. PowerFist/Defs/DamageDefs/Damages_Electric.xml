@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+  
+  <DamageDef>
+    <defName>Electric</defName>
+    <label>electric</label>
+    <workerClass>DamageWorker_AddInjury</workerClass>
+    <externalViolence>true</externalViolence>
+    <battleWound>true</battleWound>
+    <deathMessage>{0} has been electrocuted to death.</deathMessage>
+    <hasForcefulImpact>true</hasForcefulImpact>
+    <makesBlood>false</makesBlood>
+    <incapChanceMultiplier>2</incapChanceMultiplier>
+    <canInterruptJobs>true</canInterruptJobs>
+    <hediff>Electric</hediff>
+    <hediffSkin>Burn</hediffSkin>
+    <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
+    <hasChanceToAdditionallyDamageInnerSolidParts>false</hasChanceToAdditionallyDamageInnerSolidParts>
+    <impactSoundType>Electric</impactSoundType>
+    <armorCategory>Electric</armorCategory>
+  </DamageDef>
+
+</Defs>
