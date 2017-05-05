@@ -62,9 +62,16 @@ namespace CaveBiome
                 return;
             }
 
-            if (Find.TickManager.TicksGame >= nextLigthCheckTick)
+            if (Find.TickManager.TicksGame >= this.nextLigthCheckTick)
             {
-                nextLigthCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
+                this.nextLigthCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
+
+                // Shut down light when there is an eclipse.
+                /*if (this.map.mapConditionManager.ConditionIsActive(MapConditionDefOf.Eclipse))
+                {
+                    ... // TODO: eclipse.
+                }*/
+
                 int hour = GenLocalDate.HourOfDay(map);
                 if ((hour >= sunriseBeginHour)
                     && (hour < sunriseEndHour))
