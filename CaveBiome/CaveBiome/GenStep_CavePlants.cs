@@ -91,7 +91,7 @@ namespace CaveBiome
             }
             for (int seedPlantIndex = 0; seedPlantIndex < seedPlantsNumber; seedPlantIndex++)
             {
-                ClusterPlant seedPlant = GenClusterPlantReproduction.TryToReproduce(plant);
+                ClusterPlant seedPlant = GenClusterPlantReproduction.TryGrowCluster(cluster, false); // Ignore temperature condition.
                 if (seedPlant != null)
                 {
                     seedPlant.Growth = Rand.Range(plantMinGrowth, plantMaxGrowth);
@@ -100,7 +100,7 @@ namespace CaveBiome
             if (clusterIsMature
                 && cluster.plantDef.symbiosisPlantDefEvolution != null)
             {
-                ClusterPlant symbiosisPlant = GenClusterPlantReproduction.TryToSpawnNewSymbiosisCluster(cluster);
+                ClusterPlant symbiosisPlant = GenClusterPlantReproduction.TrySpawnNewSymbiosisCluster(cluster);
                 if (symbiosisPlant != null)
                 {
                     symbiosisPlant.Growth = Rand.Range(plantMinGrowth, plantMaxGrowth);

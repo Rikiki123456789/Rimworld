@@ -13,8 +13,9 @@ namespace CaveBiome
     // TODO: add solar panel placed near glowing crystal?
     // TODO: add some insect hives with a limit of size? Modify hive class to limit reproduction?
     // TODO: Try to correct incoming caravans establishing a new colony without visibility.
-    // TODO: add a genstep to remove any non-natural building near cave well (to prevent null region error).
     // TODO: add underwater power conduits and bridges?! Oh yeah!
+    // TODO: correct cave well light during eclipse.
+    // TODO: correct cave well light inside roofed buildings.
 
     public class BiomeWorker_Cave : BiomeWorker
     {

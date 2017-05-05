@@ -64,7 +64,11 @@ namespace CaveBiome
             {
                 return;
             }
-			
+              // Shut down light when there is an eclipse.
+              /*if (this.map.mapConditionManager.ConditionIsActive(MapConditionDefOf.Eclipse))
+              {
+                  ... // TODO: eclipse.
+              }*/
             if (Find.TickManager.TicksGame >= nextLightCheckTick)
             {
                 nextLightCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
@@ -73,7 +77,6 @@ namespace CaveBiome
 
 				float sunriseProgress = Math.Max(0f, gamehour - sunriseBeginHour) / (sunriseEndHour-sunriseBeginHour);
 				float sunsetProgress = Math.Max(0f, gamehour - sunsetBeginHour) / (sunsetEndHour-sunsetBeginHour);
-
 				float caveWellBrightness = 0.0f;
 				
 				if(gamehour < sunriseBeginHour) {
