@@ -9,8 +9,7 @@ using Verse.AI;
 using Verse.Sound;
 using RimWorld;
 //using RimWorld.Planet;
-using RimWorld.SquadAI;
-
+using Verse.AI.Group;
 
 namespace MechanoidTerraformer
 {
@@ -26,9 +25,9 @@ namespace MechanoidTerraformer
         {
             yield return Toils_Reserve.Reserve(terraformerIndex);
 
-            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyed(terraformerIndex);
+            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyedOrNull(terraformerIndex);
 
-            yield return Toils_General.Wait(240).FailOnDestroyed(terraformerIndex);
+            yield return Toils_General.Wait(240).FailOnDestroyedOrNull(terraformerIndex);
 
             Toil scytherScoutsArrivalToil = new Toil()
             {
@@ -52,8 +51,14 @@ namespace MechanoidTerraformer
                             });
                         }
                     }
+
+                    /*
                     StateGraph stateGraph = GraphMaker.MechanoidsDefendShipGraph(this.TargetThingA, defensiveRadiusAroundTerraformer);
                     BrainMaker.MakeNewBrain(Faction.OfMechanoids, stateGraph, scytherScoutsList);
+                    */
+
+                    LordJob_MechanoidsDefendShip lordJob = new LordJob_MechanoidsDefendShip(this.TargetThingA, Faction.OfMechanoids, defensiveRadiusAroundTerraformer, this.TargetThingA.Position);
+                    LordMaker.MakeNewLord(Faction.OfMechanoids, lordJob, scytherScoutsList);
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
             };
@@ -66,7 +71,7 @@ namespace MechanoidTerraformer
                     (this.TargetThingA as Building_MechanoidTerraformer).reverseEngineeringState = Building_MechanoidTerraformer.ReverseEngineeringState.BuildingNotSecured;
 
                     ThingRequest thingRequest = new ThingRequest();
-                    thingRequest.singleDef = ThingDefOf.CommsConsole;
+                    thingRequest.singleDef = ThingDef.Named("CommsConsole");
                     Thing commsConsole = GenClosest.ClosestThingReachable(pawn.Position, thingRequest, PathEndMode.InteractionCell, TraverseParms.For(pawn));
                     if (commsConsole != null)
                     {
@@ -78,21 +83,30 @@ namespace MechanoidTerraformer
                         pawn.pather.StartPath(pawn.Position, PathEndMode.OnCell);
                     }
                     
-                    string herHimOrIt = "it";
-                    string sheHeOrIt = "it";
+                    string herHimOrIt = "it".Translate();
+                    string sheHeOrIt = "it".Translate();
                     if (pawn.gender == Gender.Female)
                     {
-                        herHimOrIt = "her";
-                        sheHeOrIt = "she";
+                        herHimOrIt = "her".Translate();
+                        sheHeOrIt = "she".Translate();
                     }
                     else if (pawn.gender == Gender.Male)
                     {
-                        herHimOrIt = "him";
-                        sheHeOrIt = "he";
+                        herHimOrIt = "him".Translate();
+                        sheHeOrIt = "he".Translate();
                     }
-                    string eventText = "   " + pawn.Name.ToStringShort + " is just arriving near the strange building when " + sheHeOrIt + " hears the loud noise of incoming drop pods.\n\n"
-                        + "You should better take " + herHimOrIt + " to safety... and fast!\n";
-                    Find.LetterStack.ReceiveLetter("Drop pods", eventText, LetterType.BadUrgent, this.pawn.Position);
+                    string eventText = string.Concat(new string[]
+                    {
+                        "   ",
+                        this.pawn.Name.ToStringShort,
+                        "strange_building".Translate(),
+                        sheHeOrIt,
+                        "hear".Translate(),
+                        herHimOrIt,
+                        "to_safety".Translate()
+                    });
+
+                    Find.LetterStack.ReceiveLetter("Droppods".Translate(), eventText, LetterType.BadUrgent, this.pawn.Position);
                 },
                 defaultCompleteMode = ToilCompleteMode.PatherArrival
             };

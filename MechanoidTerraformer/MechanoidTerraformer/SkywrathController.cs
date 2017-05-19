@@ -8,7 +8,6 @@ using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
 using Verse.Sound;   // Needed when you do something with the Sound
-using RimWorld.SquadAI;
 
 using MechanoidTerraformer;
 
@@ -20,6 +19,7 @@ namespace SkywrathController
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
+    [StaticConstructorOnStartup]
     public class Building_SkywrathController : Building_TurretGun
     {
         public enum SkywrathState
@@ -147,7 +147,7 @@ namespace SkywrathController
                     {
                         // Strike on a nearby pawn.
                         List<Pawn> nearbyPawns = new List<Pawn>();
-                        foreach (Pawn pawn in Find.ListerPawns.AllPawns)
+                        foreach (Pawn pawn in Find.MapPawns.AllPawns)
                         {
                             if (pawn.Position.InHorDistOf(base.forcedTarget.Cell, this.areaOfEffectRadius))
                             {
@@ -191,12 +191,12 @@ namespace SkywrathController
         {
             if (this.skywrathState != SkywrathState.Ready)
             {
-                Messages.Message("The skywrath controller is not ready.", MessageSound.RejectInput);
+                Messages.Message("controller_not_ready".Translate(), MessageSound.RejectInput);
                 return;
             }
             if (Find.FogGrid.IsFogged(targ.Cell))
             {
-                Messages.Message("Cannot target a fogged position.", MessageSound.RejectInput);
+                Messages.Message("cannot_target".Translate(), MessageSound.RejectInput);
                 return;
             }
             if (this.mannableComp.MannedNow)
@@ -205,13 +205,13 @@ namespace SkywrathController
                 if (supervizor.skills.GetSkill(SkillDefOf.Research).TotallyDisabled
                     || (supervizor.skills.GetSkill(SkillDefOf.Research).level < 10))
                 {
-                    Messages.Message("The skywrath controller is not supervized by a skilled scientist (level 10 research).", MessageSound.RejectInput);
+                    Messages.Message("supervize_controller".Translate(), MessageSound.RejectInput);
                     return;
                 }
             }
             else
             {
-                Messages.Message("The skywrath controller is not supervized.", MessageSound.RejectInput);
+                Messages.Message("supervize_sientist".Translate(), MessageSound.RejectInput);
                 return;
             }
             if ((targ.Cell - this.Position).LengthHorizontal < this.GunCompEq.PrimaryVerb.verbProps.minRange)
@@ -242,26 +242,26 @@ namespace SkywrathController
                 powerProduction = powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick;
                 powerStored = powerComp.PowerNet.CurrentStoredEnergy();
             }
-            stringBuilder.AppendLine("Power needed: " + powerNeeded + " W");
-            stringBuilder.AppendLine("Connected rate/stored: " + powerProduction.ToString("F0") + " W / " + powerStored.ToString("F0") + " W");
-            stringBuilder.AppendLine("State: " + GetStateAsString(this.skywrathState));
-            stringBuilder.AppendLine("Charge progress: " + (this.charge / chargeTargetValue * 100f).ToString("F0") + " %");
+            stringBuilder.AppendLine("Powerneeded".Translate() + powerNeeded + " W");
+            stringBuilder.AppendLine("Connect_r_s".Translate() + powerProduction.ToString("F0") + " W / " + powerStored.ToString("F0") + " W");
+            stringBuilder.AppendLine("State".Translate() + GetStateAsString(this.skywrathState));
+            stringBuilder.AppendLine("Charge_progress".Translate() + (this.charge / chargeTargetValue * 100f).ToString("F0") + " %");
             if (this.mannableComp.MannedNow)
             {
                 Pawn supervizor = this.mannableComp.ManningPawn;
                 if (supervizor.skills.GetSkill(SkillDefOf.Research).TotallyDisabled
                     || (supervizor.skills.GetSkill(SkillDefOf.Research).level < 10))
                 {
-                    stringBuilder.AppendLine("Supervizor: (need a skilled scientist, min level 10 research)");
+                    stringBuilder.AppendLine("Supervizor_sientist".Translate());
                 }
                 else
                 {
-                    stringBuilder.AppendLine("Supervizor: " + supervizor.Name.ToStringShort);
+                    stringBuilder.AppendLine("Supervizor".Translate() + supervizor.Name.ToStringShort);
                 }
             }
             else
             {
-                stringBuilder.AppendLine("Supervizor: none");
+                stringBuilder.AppendLine("Supervizor_none".Translate());
             }
             return stringBuilder.ToString();
         }
@@ -273,16 +273,16 @@ namespace SkywrathController
             switch (state)
             {
                 case SkywrathState.Offline:
-                    stateAsString = "offline";
+                    stateAsString = "offline".Translate();
                     break;
                 case SkywrathState.Charging:
-                    stateAsString = "charging";
+                    stateAsString = "charging".Translate();
                     break;
                 case SkywrathState.Ready:
-                    stateAsString = "ready";
+                    stateAsString = "ready".Translate();
                     break;
                 case SkywrathState.Channeling:
-                    stateAsString = "channeling";
+                    stateAsString = "channeling".Translate();
                     break;
             }
             return stateAsString;

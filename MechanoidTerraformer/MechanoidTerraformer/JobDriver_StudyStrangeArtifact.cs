@@ -9,7 +9,6 @@ using Verse.AI;
 using Verse.Sound;
 using RimWorld;
 //using RimWorld.Planet;
-using RimWorld.SquadAI;
 
 
 namespace MechanoidTerraformer
@@ -33,7 +32,7 @@ namespace MechanoidTerraformer
 
             yield return Toils_Reserve.Reserve(terraformerIndex);
 
-            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyed(terraformerIndex);
+            yield return Toils_Goto.GotoCell(terraformerIndex, PathEndMode.InteractionCell).FailOnDestroyedOrNull(terraformerIndex);
 
             Toil studyToil = new Toil()
             {
@@ -70,22 +69,31 @@ namespace MechanoidTerraformer
                     terraformer.studyCounter++;
                     if (terraformer.studyCounter >= Building_MechanoidTerraformer.studyCounterTargetValue)
                     {
-                        string herHisOrIts = "its";
+                        string herHisOrIts = "its".Translate();
                         if (pawn.gender == Gender.Female)
                         {
-                            herHisOrIts = "her";
+                            herHisOrIts = "her".Translate();
                         }
                         else if (pawn.gender == Gender.Male)
                         {
-                            herHisOrIts = "his";
+                            herHisOrIts = "his".Translate();
                         }
-                        string studyReportHeader = "   " + pawn.Name.ToStringShort + " has finished the study of the strange artifact. "
-                        + herHisOrIts.CapitalizeFirst() + " report is quite alarming!\n\n\n"
-                        + "### Study references ###\n\n"
-                        + "Date: " + GenDate.DateFullStringAt(Find.TickManager.TicksAbs) + "\n"
-                        + "Researcher: " + pawn.Name.ToStringFull + "\n\n";
+
+
+                        string studyReportHeader = string.Concat(new string[]
+                        {
+                            "   ",
+                            this.pawn.Name.ToStringShort,
+                            "finish_study".Translate(),
+                            herHisOrIts.CapitalizeFirst(),
+                            "repstudy".Translate(),
+                            GenDate.DateFullStringAt(Find.TickManager.TicksAbs),
+                            "Researcher".Translate(),
+                            this.pawn.Name.ToStringFull,
+                            "\n\n"
+                        });
                         terraformer.DisplayStudyReport(studyReportHeader);
-                        terraformer.def.label = "Mechanoid terraformer";
+                        terraformer.def.label = "Mechanoidterraformer".Translate();
                         terraformer.reverseEngineeringState = Building_MechanoidTerraformer.ReverseEngineeringState.StudyCompleted;
                         Building_MechanoidTerraformer.studyIsCompleted = true;
                     }

@@ -21,7 +21,7 @@ namespace MechanoidTerraformer
     {
         private const int squareAreaRange = 7;
 
-        protected override bool StorytellerCanUseNowSub()
+        protected override bool UsableNowSub()
         {
             return true;
         }
@@ -55,9 +55,8 @@ namespace MechanoidTerraformer
             {
                 return false;
             }
-            string eventText = "   You have detected a strange thing falling from the sky. It is quite bigger than a drop pod and does not emit the standard trading federation emergency call.\n"
-                + "You should send someone to scout it but be careful, this stinks mechanoid technology...";
-            Find.LetterStack.ReceiveLetter("Artifact", eventText, LetterType.BadNonUrgent, landingCell);
+            string eventText = "strange_thing".Translate();
+            Find.LetterStack.ReceiveLetter("Artifact".Translate(), eventText, LetterType.BadNonUrgent, landingCell);
             Thing mechanoidTerraformerIncoming = ThingMaker.MakeThing(Util_MechanoidTerraformer.MechanoidTerraformerIncomingDef);
             mechanoidTerraformerIncoming.SetFactionDirect(Faction.OfMechanoids);
             GenSpawn.Spawn(mechanoidTerraformerIncoming, landingCell);

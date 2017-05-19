@@ -17,6 +17,7 @@ namespace MechanoidTerraformer
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
+    [StaticConstructorOnStartup]
     public class MechanoidTerraformerIncoming : Thing
     {
         public const int diagonalTrajectoryDurationInTicks = 240;
@@ -56,7 +57,7 @@ namespace MechanoidTerraformer
             base.SpawnSetup();
             if (Find.RoofGrid.Roofed(base.Position))
             {
-                Log.Warning("Mechanoid terraformer dropped on roof at " + base.Position);
+                Log.Warning("Mech_drop".Translate() + base.Position);
             }
         }
 
@@ -81,34 +82,34 @@ namespace MechanoidTerraformer
                         {
                             continue;
                         }
-                        if ((thing != this) && (thing.Faction == Faction.OfColony))
+                        if ((thing != this) && (thing.Faction == Faction.OfPlayer))
                         {
                             if (((thing is Building)
                                 || (thing is Pawn))
                                 && (pawnOrBuildingHasBeenCrushed == false))
                             {
                                 pawnOrBuildingHasBeenCrushed = true;
-                                stringBuilder.AppendLine("This strange building has crushed anything under it upon landing.");
+                                stringBuilder.AppendLine("strange_building_crash".Translate());
                                 stringBuilder.AppendLine();
-                                stringBuilder.AppendLine("The following things have been crushed:");
+                                stringBuilder.AppendLine("things_fall".Translate());
                                 stringBuilder.AppendLine();
                             }
                             if (thing is Pawn)
                             {
                                 Pawn crushedPawn = thing as Pawn;
-                                string herHimOrIt = "it";
-                                string sheHeOrIt = "it";
+                                string herHimOrIt = "it".Translate();
+                                string sheHeOrIt = "it".Translate();
                                 if (crushedPawn.gender == Gender.Female)
                                 {
-                                    herHimOrIt = "her";
-                                    sheHeOrIt = "she";
+                                    herHimOrIt = "her".Translate();
+                                    sheHeOrIt = "she".Translate();
                                 }
                                 else if (crushedPawn.gender == Gender.Male)
                                 {
-                                    herHimOrIt = "him";
-                                    sheHeOrIt = "he";
+                                    herHimOrIt = "him".Translate();
+                                    sheHeOrIt = "he".Translate();
                                 }
-                                stringBuilder.AppendLine("- Poor " + crushedPawn.Name + "'. Don't bother looking for " + herHimOrIt + ", " + sheHeOrIt + " is already six feet under. RIP.");
+                                stringBuilder.AppendLine("Poor".Translate() + crushedPawn.Name + "Dontbotherlookingfor".Translate() + herHimOrIt + ", " + sheHeOrIt + "isalreadysixfeetunderRIP".Translate());
 
                             }
                             else if (thing is Building)
@@ -122,7 +123,7 @@ namespace MechanoidTerraformer
                 }
                 if (pawnOrBuildingHasBeenCrushed)
                 {
-                    Find.LetterStack.ReceiveLetter("Hurting landing", stringBuilder.ToString(), LetterType.BadNonUrgent, this.Position);
+                    Find.LetterStack.ReceiveLetter("Hurtinglanding".Translate(), stringBuilder.ToString(), LetterType.BadNonUrgent, this.Position);
                 }
 
                 Thing mechanoidTerraformer = ThingMaker.MakeThing(Util_MechanoidTerraformer.MechanoidTerraformerDef);
