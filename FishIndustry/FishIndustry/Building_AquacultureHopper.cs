@@ -28,9 +28,9 @@ namespace FishIndustry
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             this.powerComp = base.GetComp<CompPowerTrader>();
         }
 

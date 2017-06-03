@@ -35,7 +35,7 @@ namespace FishIndustry
 			}
 		}
 
-		public override bool HasJobOnThing(Pawn pawn, Thing t)
+		public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
             if ((t is Building_AquacultureBasin) == false)
             {
@@ -61,7 +61,7 @@ namespace FishIndustry
             return false;
 		}
 
-		public override Job JobOnThing(Pawn pawn, Thing t)
+		public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
             Job job = new Job();
             Building_AquacultureBasin aquacultureBasin = t as Building_AquacultureBasin;

@@ -221,7 +221,11 @@ namespace FishIndustry
         {
             TerrainDef terrainDef = map.terrainGrid.TerrainAt(position);
             if ((terrainDef == TerrainDef.Named("WaterShallow"))
+                || (terrainDef == TerrainDef.Named("WaterOceanShallow"))
+                || (terrainDef == TerrainDef.Named("WaterMovingShallow"))
                 || (terrainDef == TerrainDef.Named("WaterDeep"))
+                || (terrainDef == TerrainDef.Named("WaterOceanDeep"))
+                || (terrainDef == TerrainDef.Named("WaterMovingDeep"))
                 || (terrainDef == TerrainDef.Named("Marsh")))
             {
                 return true;
@@ -229,27 +233,48 @@ namespace FishIndustry
             return false;
         }
 
-        // Fishes lists.
-        private static List<PawnKindDef_FishSpecies> fishSpeciesList = null;
-        public static List<PawnKindDef_FishSpecies> GetFishSpeciesList()
+        public static float GetAquaticCellsProportionInRadius(IntVec3 position, Map map, float radius)
         {
-            if (fishSpeciesList.NullOrEmpty())
+            if (radius <= 0)
             {
-                fishSpeciesList = new List<PawnKindDef_FishSpecies>();
-
-                foreach (PawnKindDef def in DefDatabase<PawnKindDef>.AllDefsListForReading)
+                return 0f;
+            }
+            float aquaticCellsNumber = 0;
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, radius, true))
+            {
+                if (cell.InBounds(map) == false)
                 {
-                    if (def is PawnKindDef_FishSpecies)
-                    {
-                        fishSpeciesList.Add(def as PawnKindDef_FishSpecies);
-                    }
+                    continue;
                 }
-                if (fishSpeciesList.NullOrEmpty())
+                if (IsAquaticTerrain(map, cell))
                 {
-                    Log.Warning("FishIndustry: did not found any fish species.");
+                    aquaticCellsNumber++;
                 }
             }
+            float aquaticCellsNumberProportion = aquaticCellsNumber / (float)GenRadial.NumCellsInRadius(radius);
+            return aquaticCellsNumberProportion;
+        }
 
+        // Fishes lists.
+        public static List<PawnKindDef_FishSpecies> GetFishSpeciesList(BiomeDef biome)
+        {
+            List<PawnKindDef_FishSpecies> fishSpeciesList = new List<PawnKindDef_FishSpecies>();
+            
+            foreach (PawnKindDef def in DefDatabase<PawnKindDef>.AllDefsListForReading)
+            {
+                if (def is PawnKindDef_FishSpecies)
+                {
+                    PawnKindDef_FishSpecies fishDef = def as PawnKindDef_FishSpecies;
+                    if (fishDef.naturalBiomes.Contains(biome))
+                    {
+                        fishSpeciesList.Add(fishDef);
+                    }
+                }
+            }
+            if (fishSpeciesList.NullOrEmpty())
+            {
+                Log.Warning("FishIndustry: did not found any fish species.");
+            }
             return fishSpeciesList;
         }
     }

@@ -36,7 +36,6 @@
     <hasInteractionCell>True</hasInteractionCell>
     <interactionCellOffset>(0,0,0)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
-    <specialDisplayRadius>10</specialDisplayRadius>
   </ThingDef>
 
   <ThingDef ParentName="FishingPierSpawnerBase">
@@ -90,13 +89,9 @@
         <compClass>CompForbiddable</compClass>
       </li>
     </comps>
-    <inspectorTabs>
-      <li>ITab_Bills</li>
-    </inspectorTabs>
     <building>
       <spawnedConceptLearnOpportunity>BillsTab</spawnedConceptLearnOpportunity>
     </building>
-    <specialDisplayRadius>10</specialDisplayRadius>
   </ThingDef>
 
 </Buildings>

@@ -23,9 +23,9 @@ namespace FishIndustry
         /// <summary>
         /// Spawns the fishing pier.
         /// </summary>
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             this.Destroy();
             Building_FishingPier fishingPier = ThingMaker.MakeThing(Util_FishIndustry.FishingPierDef) as Building_FishingPier;
             IntVec3 fishingPierPosition = this.Position + new IntVec3(0, 0, 1).RotatedBy(this.Rotation);

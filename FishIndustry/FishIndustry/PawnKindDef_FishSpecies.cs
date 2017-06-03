@@ -20,12 +20,12 @@ namespace FishIndustry
     public class PawnKindDef_FishSpecies : PawnKindDef
     {
         // Note: the following values are only default values which can be overriden by the one read in the XML definition.
-        public bool livesInSea = false;
+        public bool livesInOcean = false;
         public bool livesInMarsh = false;
-        public bool catchableDuringDay = false;
-        public bool catchableDuringNight = false;
+        public bool livesInRiver = false;
         public float commonality = 0.20f;
         public int breedQuantity = 0;
         public float breedingDurationInDays = 1f;
+        public List<BiomeDef> naturalBiomes;
     }
 }

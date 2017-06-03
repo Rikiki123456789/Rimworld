@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FishIndustry\Assemblies\" />
-    <Folder Include="FishIndustry\Textures\Things\Item\Equipment\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
@@ -86,17 +85,22 @@
     <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_Mud.xml" />
-    <Content Include="FishIndustry\Defs\ThingDefs\Building_AquacultureHopper.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Item_Oyster.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Building_FishingPier.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Item_Pearl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Item_Pearl.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_Bubble.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Item_Oyster.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_FishingRod.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Building_AquacultureHopper.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Building_FishingPier.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\JobDefs\Jobs_FishAndHarvest.xml" />
@@ -109,13 +113,7 @@
     <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Building_AquacultureBasin.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Mote_FishingRod.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs\Mote_Bubble.xml">
+    <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Building_AquacultureBasin.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ThingDefs_Races\Races_Animal_Fish.xml">
@@ -124,11 +122,20 @@
     <Content Include="FishIndustry\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\Patches\FishMeatTexture.xml" />
+    <Content Include="FishIndustry\Patches\Terrain_Natural.xml" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureBasin.png" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureHopper.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPier.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPierSpawner.png" />
-    <Content Include="FishIndustry\Textures\Things\Item\Resource\FishingRod.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\BluebladeFilet.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\MashgonShelled.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\Oyster.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\OysterOpen.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\Pearl.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\SduigglesTentacle.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\SeasnakeFilet.png" />
+    <Content Include="FishIndustry\Textures\Things\Item\Resource\TailteethSteak.png" />
     <Content Include="FishIndustry\Textures\Things\Mote\FishingRodEast.png" />
     <Content Include="FishIndustry\Textures\Things\Mote\FishingRodNorth.png" />
     <Content Include="FishIndustry\Textures\Things\Mote\FishingRodSouth.png" />
@@ -136,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FishIndustry\Textures\Things\Building\AquacultureBasin.pdn" />
+    <None Include="FishIndustry\Textures\Things\Item\Resource\Pearl.pdn" />
     <None Include="FishIndustry\Textures\Things\Mote\FishingRodNorth.pdn" />
     <None Include="FishIndustry\Textures\Things\Mote\FishingRodSouth.pdn" />
     <None Include="FishIndustry\Textures\Things\Mote\FishingRodWest.pdn" />

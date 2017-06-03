@@ -28,21 +28,23 @@ namespace FishIndustry
         public IntVec3 middleCell = new IntVec3(0, 0, 0);
         public IntVec3 bankCell = new IntVec3(0, 0, 0);
 
+        public const float optimalAquaticAreaRadius = 10f;
+        public const float optimalAquaticCellsProportion = 0.5f;
         private const int maxFishStockDefault = 5;
         private int maxFishStock = maxFishStockDefault;
         public int fishStock = 1;
-        private const int fishStockRespawnInterval = (2 * GenDate.TicksPerDay) / maxFishStockDefault;
+        private int fishStockRespawnInterval = (2 * GenDate.TicksPerDay) / maxFishStockDefault;
         private int fishStockRespawnTick = 0;
 
         /// <summary>
         /// Convert the cells under the fishing pier into fishing pier cells (technically just water cells with movespeed = 100%).
         /// </summary>
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, true);
 
-            // Compute max fish stock according to terrain and biome.
-            UpdateMaxFishStock();
+            // Compute max fish stock and respawn period according to terrain and biome.
+            ComputeMaxFishStockAndRespawnPeriod();
 
             bankCell = this.Position + new IntVec3(0, 0, -1).RotatedBy(this.Rotation);
             middleCell = this.Position + new IntVec3(0, 0, 0).RotatedBy(this.Rotation);
@@ -56,12 +58,16 @@ namespace FishIndustry
                 middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorMarshDef);
             }
-            else if (middleCellTerrainDef == TerrainDef.Named("WaterShallow"))
+            else if ((middleCellTerrainDef == TerrainDefOf.WaterShallow)
+                || (middleCellTerrainDef == TerrainDefOf.WaterMovingShallow)
+                || (middleCellTerrainDef == TerrainDefOf.WaterOceanShallow))
             {
                 middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
             }
-            else if (middleCellTerrainDef == TerrainDef.Named("WaterDeep"))
+            else if ((middleCellTerrainDef == TerrainDefOf.WaterDeep)
+                || (middleCellTerrainDef == TerrainDefOf.WaterMovingDeep)
+                || (middleCellTerrainDef == TerrainDefOf.WaterOceanDeep))
             {
                 middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
@@ -73,12 +79,16 @@ namespace FishIndustry
                 riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
             }
-            else if (riverCellTerrainDef == TerrainDef.Named("WaterShallow"))
+            else if ((middleCellTerrainDef == TerrainDefOf.WaterShallow)
+                || (middleCellTerrainDef == TerrainDefOf.WaterMovingShallow)
+                || (middleCellTerrainDef == TerrainDefOf.WaterOceanShallow))
             {
                 riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
             }
-            else if (riverCellTerrainDef == TerrainDef.Named("WaterDeep"))
+            else if ((middleCellTerrainDef == TerrainDefOf.WaterDeep)
+                || (middleCellTerrainDef == TerrainDefOf.WaterMovingDeep)
+                || (middleCellTerrainDef == TerrainDefOf.WaterOceanDeep))
             {
                 riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
@@ -96,7 +106,7 @@ namespace FishIndustry
             {
                 if (this.fishStockRespawnTick == 0)
                 {
-                    this.fishStockRespawnTick = Find.TickManager.TicksGame + (int)((float)fishStockRespawnInterval * Rand.Range(0.8f, 1.2f));
+                    this.fishStockRespawnTick = Find.TickManager.TicksGame + Mathf.CeilToInt((float)this.fishStockRespawnInterval * Rand.Range(0.8f, 1.2f));
                 }
                 if (Find.TickManager.TicksGame >= this.fishStockRespawnTick)
                 {
@@ -107,53 +117,46 @@ namespace FishIndustry
         }
 
         /// <summary>
-        /// Update the max fishing stock according to terrain and biome (to avoid exploits due to terrain changes).
+        /// Compute the max fishing stock and fish respawn rate according to terrain and biome (to avoid exploits due to terrain changes).
         /// </summary>
-        public void UpdateMaxFishStock()
+        public void ComputeMaxFishStockAndRespawnPeriod()
         {
-            int maxFishStockTerrain = maxFishStockDefault;
-
-            // Compute max fish stock according to surrounding aquatic cells.
-            float aquaticCellsNumber = 0;
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.Position, this.def.specialDisplayRadius, true))
-            {
-                if (cell.InBounds(this.Map) == false)
-                {
-                    continue;
-                }
-                if (Util_FishIndustry.IsAquaticTerrain(this.Map, cell))
-                {
-                    aquaticCellsNumber++;
-                }
-            }
-            float aquaticCellsNumberThreshold = (float)(GenRadial.NumCellsInRadius(this.def.specialDisplayRadius)) / 2f;
-            if (aquaticCellsNumber < aquaticCellsNumberThreshold)
-            {
-                maxFishStockTerrain = Mathf.CeilToInt((float)maxFishStockDefault * (aquaticCellsNumber / aquaticCellsNumberThreshold));
-            }
-
             // Compute max fish stock according to biome.
-            int maxFishStockBiome = maxFishStockDefault;
-            if ((this.Map.Biome == BiomeDef.Named("AridShrubland"))
-                || (this.Map.Biome == BiomeDef.Named("Tundra")))
+            this.maxFishStock = maxFishStockDefault;
+            if (this.Map.Biome == BiomeDefOf.BorealForest)
             {
-                maxFishStockBiome = 3;
+                this.maxFishStock = 4;
             }
-            else if ((this.Map.Biome == BiomeDef.Named("IceSheet"))
-                || (this.Map.Biome == BiomeDef.Named("Desert")))
+            else if ((this.Map.Biome == BiomeDefOf.Tundra)
+                || (this.Map.Biome == BiomeDefOf.AridShrubland))
             {
-                maxFishStockBiome = 2;
+                this.maxFishStock = 3;
             }
-            else if ((this.Map.Biome == BiomeDef.Named("SeaIce"))
+            else if ((this.Map.Biome == BiomeDefOf.IceSheet)
+                || (this.Map.Biome == BiomeDefOf.Desert))
+            {
+                this.maxFishStock = 2;
+            }
+            else if ((this.Map.Biome == BiomeDefOf.SeaIce)
                 || (this.Map.Biome == BiomeDef.Named("ExtremeDesert")))
-            {
-                maxFishStockBiome = 1;
-            }
-            this.maxFishStock = Math.Min(maxFishStockTerrain, maxFishStockBiome);
-            if (this.maxFishStock < 1)
             {
                 this.maxFishStock = 1;
             }
+
+            // Compute fish stock respawn period factor according  to surrounding aquatic cells.
+            float aquaticCellsProportion = Util_FishIndustry.GetAquaticCellsProportionInRadius(this.Position, this.Map, Building_FishingPier.optimalAquaticAreaRadius);
+            float fishRespawnFactor = 1f;
+            if (aquaticCellsProportion < optimalAquaticCellsProportion)
+            {
+                fishRespawnFactor = (aquaticCellsProportion / optimalAquaticCellsProportion);
+            }
+            if (fishRespawnFactor <= 0)
+            {
+                // Avoid division by 0.
+                fishRespawnFactor = 0.05f;
+            }
+
+            this.fishStockRespawnInterval = Mathf.CeilToInt((2f * GenDate.TicksPerDay) / ((float)this.maxFishStock * fishRespawnFactor));
         }
 
         /// <summary>
@@ -164,7 +167,7 @@ namespace FishIndustry
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(base.GetInspectString());
 
-            stringBuilder.AppendLine("Fish stock: " + this.fishStock);
+            stringBuilder.Append("Fish stock: " + this.fishStock);
 
             return stringBuilder.ToString();
         }
@@ -176,10 +179,10 @@ namespace FishIndustry
         {
             base.ExposeData();
             // TODO: save it as a TerrainDef if possible.
-            Scribe_Values.LookValue<String>(ref this.middleTerrainCellDefAsString, "middleTerrainCellDefAsString");
-            Scribe_Values.LookValue<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
-            Scribe_Values.LookValue<int>(ref this.fishStock, "fishStock", maxFishStockDefault);
-            Scribe_Values.LookValue<int>(ref this.fishStockRespawnTick, "fishStockRespawnTick", 0);
+            Scribe_Values.Look<String>(ref this.middleTerrainCellDefAsString, "middleTerrainCellDefAsString");
+            Scribe_Values.Look<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
+            Scribe_Values.Look<int>(ref this.fishStock, "fishStock", maxFishStockDefault);
+            Scribe_Values.Look<int>(ref this.fishStockRespawnTick, "fishStockRespawnTick", 0);
         }
 
         /// <summary>

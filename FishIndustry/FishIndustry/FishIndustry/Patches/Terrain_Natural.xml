@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+  
+  <Operation Class="PatchOperationInsert">
+    <xpath>*/TerrainDef[defName = "Mud"]/statBases</xpath>
+    <value>
+      <affordances>
+        <li>Undefined</li>
+      </affordances>
+    </value>
+  </Operation>
+  
+</Patch>

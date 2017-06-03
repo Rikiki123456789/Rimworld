@@ -3,7 +3,9 @@
 
   <IncidentDef>
     <defName>MicroFungus</defName>
-    <targetType>BaseMap</targetType>
+    <label>micro fungus</label>
+    <category>Misc</category>
+    <targetType>MapPlayerHome</targetType>
     <WorkerClass>FishIndustry.IncidentWorker_MicroFungus</WorkerClass>
     <baseChance>1</baseChance>
     <minRefireDays>30</minRefireDays>

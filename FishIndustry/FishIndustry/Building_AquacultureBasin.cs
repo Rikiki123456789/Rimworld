@@ -66,9 +66,9 @@ namespace FishIndustry
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             this.powerComp = base.GetComp<CompPowerTrader>();
 
             // Drawing.
@@ -99,21 +99,21 @@ namespace FishIndustry
             base.ExposeData();
 
             // Breeding parameters.
-            Scribe_Defs.LookDef<PawnKindDef>(ref breedingSpeciesDef, "breedingSpeciesDef");
-            Scribe_Values.LookValue<int>(ref breedingDuratinInTicks, "breedingDuratinInTicks");
-            Scribe_Values.LookValue<int>(ref breedingProgressInTicks, "breedingProgressInTicks");
-            Scribe_Values.LookValue<bool>(ref breedingIsFinished, "breedingIsFinished");
+            Scribe_Defs.Look<PawnKindDef>(ref breedingSpeciesDef, "breedingSpeciesDef");
+            Scribe_Values.Look<int>(ref breedingDuratinInTicks, "breedingDuratinInTicks");
+            Scribe_Values.Look<int>(ref breedingProgressInTicks, "breedingProgressInTicks");
+            Scribe_Values.Look<bool>(ref breedingIsFinished, "breedingIsFinished");
 
             // Food.
-            Scribe_Values.LookValue<int>(ref nextFeedingDateInTicks, "nextFeedingDateInTicks");
-            Scribe_Values.LookValue<bool>(ref foodIsAvailable, "foodIsAvailable");
+            Scribe_Values.Look<int>(ref nextFeedingDateInTicks, "nextFeedingDateInTicks");
+            Scribe_Values.Look<bool>(ref foodIsAvailable, "foodIsAvailable");
 
             // Water quality.
-            Scribe_Values.LookValue<float>(ref waterQuality, "waterQuality");
-            Scribe_Values.LookValue<int>(ref microFungusRemainingDurationInTicks, "microFungusRemainingDurationInTicks");
+            Scribe_Values.Look<float>(ref waterQuality, "waterQuality");
+            Scribe_Values.Look<int>(ref microFungusRemainingDurationInTicks, "microFungusRemainingDurationInTicks");
 
             // Fishes health.
-            Scribe_Values.LookValue<int>(ref fishesHealthInPercent, "fishesHealthInPercent");
+            Scribe_Values.Look<int>(ref fishesHealthInPercent, "fishesHealthInPercent");
         }
         
         // ===================== Main Work Function =====================
@@ -194,7 +194,7 @@ namespace FishIndustry
             bool foodIsAvailable = IsEnoughFoodInHopper();
             if (foodIsAvailable)
             {
-                int foodToConsume = this.def.building.foodCostPerDispense;
+                int foodToConsume = (int)this.def.building.nutritionCostPerDispense;
                 foreach (IntVec3 cell in GenAdj.CellsAdjacentCardinal(this))
                 {
                     Thing food = null;
@@ -256,7 +256,7 @@ namespace FishIndustry
                 if (aquacultureHopper != null && food != null)
                 {
                     availableFoodSum += food.stackCount;
-                    if (availableFoodSum >= this.def.building.foodCostPerDispense)
+                    if (availableFoodSum >= this.def.building.nutritionCostPerDispense)
                     {
                         return true;
                     }
@@ -359,6 +359,7 @@ namespace FishIndustry
         /// </summary>
         public void StartNewBreedCycle(PawnKindDef breedingSpeciesDef)
         {
+            ResetBills();
             this.breedingSpeciesDef = breedingSpeciesDef;
             this.breedingDuratinInTicks = (int)(GenDate.TicksPerDay * (breedingSpeciesDef as PawnKindDef_FishSpecies).breedingDurationInDays);
             this.breedingProgressInTicks = 0;
@@ -368,7 +369,6 @@ namespace FishIndustry
             {
                 this.waterQuality = minWaterQuality;
             }
-
             this.fishesHealthInPercent = 100;
 
             this.breedingSpeciesTexture = MaterialPool.MatFrom(this.breedingSpeciesDef.lifeStages.First().bodyGraphicData.texPath, ShaderDatabase.Transparent);
@@ -378,27 +378,36 @@ namespace FishIndustry
         /// Reset the aquaculture bills if the user has messed with it (cancelled a bill for example).
         /// We need  to set custom Bill_Production_AquacultureBasin to call the StartNewBreedCycle function upon bill completion.
         /// </summary>
-        public void  ResetBillsIfNecessary()
+        public void ResetBillsIfNecessary()
         {
             if (this.billStack.Count != 3)
             {
-                this.billStack.Clear();
-                Bill_Production_AquacultureBasin bill1 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyMashgonEggsRecipeDef);
-                bill1.repeatMode = BillRepeatMode.RepeatCount;
-                bill1.repeatCount = 0;
-                this.billStack.AddBill(bill1);
-
-                Bill_Production_AquacultureBasin bill2 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyBluebladeEggsRecipeDef);
-                bill2.repeatMode = BillRepeatMode.RepeatCount;
-                bill2.repeatCount = 0;
-                this.billStack.AddBill(bill2);
-
-                Bill_Production_AquacultureBasin bill3 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyTailteethEggsRecipeDef);
-                bill3.repeatMode = BillRepeatMode.RepeatCount;
-                bill3.repeatCount = 0;
-                this.billStack.AddBill(bill3);
+                ResetBills();
             }
         }
+
+        /// <summary>
+        /// Reset the aquaculture bills.
+        /// We need  to set custom Bill_Production_AquacultureBasin to call the StartNewBreedCycle function upon bill completion.
+        /// </summary>
+        public void ResetBills()
+        {
+            this.billStack.Clear();
+            Bill_Production_AquacultureBasin bill1 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyMashgonEggsRecipeDef);
+            bill1.repeatMode = BillRepeatModeDefOf.RepeatCount;
+            bill1.repeatCount = 0;
+            this.billStack.AddBill(bill1);
+
+            Bill_Production_AquacultureBasin bill2 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyBluebladeEggsRecipeDef);
+            bill2.repeatMode = BillRepeatModeDefOf.RepeatCount;
+            bill2.repeatCount = 0;
+            this.billStack.AddBill(bill2);
+
+            Bill_Production_AquacultureBasin bill3 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyTailteethEggsRecipeDef);
+            bill3.repeatMode = BillRepeatModeDefOf.RepeatCount;
+            bill3.repeatCount = 0;
+            this.billStack.AddBill(bill3);
+        }        
 
         /// <summary>
         /// Gather the aquaculture basin production and restart a new breeding cycle of the same species.
@@ -432,21 +441,25 @@ namespace FishIndustry
             string bredSpeciesLabel = "";
             string progressLabel = "";
             string problemText = "";
+            bool foodAvailabilityDoesMatter = true;
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(base.GetInspectString());
+            stringBuilder.AppendLine();
 
             if (this.breedingSpeciesDef == null)
             {
                 bredSpeciesLabel = "none";
                 progressLabel = "Progress: 0%";
+                foodAvailabilityDoesMatter = false;
             }
             else
             {
                 bredSpeciesLabel = this.breedingSpeciesDef.label;
                 progressLabel = "Progress: " + ((float)this.breedingProgressInTicks / (float)breedingDuratinInTicks * 100f).ToString("F0") + "%";
             }
-            if (this.foodIsAvailable == false)
+            if (foodAvailabilityDoesMatter
+                && (this.foodIsAvailable == false))
             {
                 problemText = "(no food)";
             }
@@ -468,7 +481,7 @@ namespace FishIndustry
             }
             stringBuilder.AppendLine("Bred species: " + bredSpeciesLabel);
             stringBuilder.AppendLine(progressLabel + " " + problemText);
-            stringBuilder.AppendLine("Water quality/fishes health: " + (this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + "/" + this.fishesHealthInPercent + "%");
+            stringBuilder.Append("Water quality/fishes health: " + (this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + "/" + this.fishesHealthInPercent + "%");
 
             return stringBuilder.ToString();
         }

@@ -21,6 +21,7 @@ namespace FishIndustry
     public class PlaceWorker_FishingPierSpawner : PlaceWorker
     {
         public const int minDistanceBetweenTwoFishingPiers = 15;
+        private static int lastTextThrowTick = 0;
 
         /// <summary>
         /// Check if a new fishing pier can be built at this location.
@@ -30,6 +31,12 @@ namespace FishIndustry
         /// </summary>
         public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
+            // Check this biome contains some fishes.
+            if (Util_FishIndustry.GetFishSpeciesList(this.Map.Biome).NullOrEmpty())
+            {
+                return new AcceptanceReport("No fish lives in this biome.");
+            }
+
             // Check fishing pier bank cell is on a "solid" terrain.
             if (Util_FishIndustry.IsAquaticTerrain(this.Map, loc))
             {
@@ -99,6 +106,30 @@ namespace FishIndustry
                 {
                     return new AcceptanceReport("An other fishing pier frame is too close.");
                 }
+            }
+
+            // Display fish stock respawn rate.
+            if ((Find.TickManager.Paused == false)
+                && (Find.TickManager.TicksGame > lastTextThrowTick + Find.TickManager.TickRateMultiplier * Verse.GenTicks.TicksPerRealSecond))
+            {
+                lastTextThrowTick = Find.TickManager.TicksGame;
+                float fishStockRespawnRateAsFloat = Util_FishIndustry.GetAquaticCellsProportionInRadius(loc + new IntVec3(0, 0, 1).RotatedBy(rot), this.Map, Building_FishingPier.optimalAquaticAreaRadius) / Building_FishingPier.optimalAquaticCellsProportion;
+                int fishStockRespawnRateAsInt = Mathf.RoundToInt(fishStockRespawnRateAsFloat * 100f);
+                if (fishStockRespawnRateAsInt > 100)
+                {
+                    fishStockRespawnRateAsInt = 100;
+                }
+                Color textColor = Color.red;
+                if (fishStockRespawnRateAsInt >= 75)
+                {
+                    textColor = Color.green;
+                }
+                else if (fishStockRespawnRateAsInt >= 25)
+                {
+                    textColor = Color.yellow;
+                }
+                string fishStockRespawnRateAsText = fishStockRespawnRateAsInt + "%";
+                MoteMaker.ThrowText(loc.ToVector3Shifted(), this.Map, fishStockRespawnRateAsText, textColor);
             }
 
             return true;

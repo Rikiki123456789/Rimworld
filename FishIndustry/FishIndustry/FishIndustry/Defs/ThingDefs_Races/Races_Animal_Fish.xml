@@ -70,6 +70,7 @@
       <ComfyTemperatureMin>-5</ComfyTemperatureMin>
       <MarketValue>100</MarketValue>
       <Mass>3</Mass>
+      <LeatherAmount>0</LeatherAmount>
     </statBases>
     <verbs>
       <li>
@@ -180,11 +181,15 @@
       </li>
     </lifeStages>
 
-    <livesInSea>true</livesInSea>
+    <livesInOcean>true</livesInOcean>
     <livesInMarsh>true</livesInMarsh>
-    <catchableDuringDay>true</catchableDuringDay>
-    <catchableDuringNight>true</catchableDuringNight>
+    <livesInRiver>false</livesInRiver>
     <commonality>0.2</commonality>
+    <naturalBiomes>
+      <li>TemperateForest</li>
+      <li>TropicalRainforest</li>
+      <li>AridShrubland</li>
+    </naturalBiomes>
   </PawnKindDef>
 
   <ThingDef ParentName="AnimalThingBase">
@@ -196,6 +201,7 @@
       <ComfyTemperatureMin>-10</ComfyTemperatureMin>
       <MarketValue>80</MarketValue>
       <Mass>4</Mass>
+      <LeatherAmount>0</LeatherAmount>
     </statBases>
     <verbs>
       <li>
@@ -305,9 +311,16 @@
       </li>
     </lifeStages>
 
-    <livesInSea>true</livesInSea>
-    <catchableDuringNight>true</catchableDuringNight>
+    <livesInOcean>true</livesInOcean>
+    <livesInMarsh>false</livesInMarsh>
+    <livesInRiver>true</livesInRiver>
     <commonality>0.75</commonality>
+    <naturalBiomes>
+      <li>Tundra</li>
+      <li>BorealForest</li>
+      <li>TemperateForest</li>
+      <li>TropicalRainforest</li>
+    </naturalBiomes>
   </PawnKindDef>
 
   <!--=================== Fishes that can be bred ===============-->
@@ -321,6 +334,7 @@
       <ComfyTemperatureMin>-20</ComfyTemperatureMin>
       <MarketValue>50</MarketValue>
       <Mass>2</Mass>
+      <LeatherAmount>0</LeatherAmount>
     </statBases>
     <verbs>
       <li>
@@ -432,12 +446,18 @@
       </li>
     </lifeStages>
 
+    <livesInOcean>true</livesInOcean>
     <livesInMarsh>true</livesInMarsh>
-    <catchableDuringDay>true</catchableDuringDay>
-    <catchableDuringNight>true</catchableDuringNight>
+    <livesInRiver>true</livesInRiver>
     <commonality>0.80</commonality>
     <breedQuantity>20</breedQuantity>
     <breedingDurationInDays>2</breedingDurationInDays>
+    <naturalBiomes>
+      <li>BorealForest</li>
+      <li>TemperateForest</li>
+      <li>TropicalRainforest</li>
+      <li>AridShrubland</li>
+    </naturalBiomes>
   </PawnKindDef>
 
   <ThingDef ParentName="AnimalThingBase">
@@ -449,6 +469,7 @@
       <ComfyTemperatureMin>-5</ComfyTemperatureMin>
       <MarketValue>80</MarketValue>
       <Mass>4</Mass>
+      <LeatherAmount>0</LeatherAmount>
     </statBases>
     <verbs>
       <li>
@@ -558,11 +579,22 @@
       </li>
     </lifeStages>
 
-    <livesInSea>true</livesInSea>
-    <catchableDuringDay>true</catchableDuringDay>
+    <livesInOcean>true</livesInOcean>
+    <livesInMarsh>false</livesInMarsh>
+    <livesInRiver>true</livesInRiver>
     <commonality>0.75</commonality>
     <breedQuantity>48</breedQuantity>
     <breedingDurationInDays>4</breedingDurationInDays>
+    <naturalBiomes>
+      <li>SeaIce</li>
+      <li>IceSheet</li>
+      <li>Tundra</li>
+      <li>BorealForest</li>
+      <li>TemperateForest</li>
+      <li>TropicalRainforest</li>
+      <li>AridShrubland</li>
+      <li>Desert</li>
+    </naturalBiomes>
   </PawnKindDef>
 
   <ThingDef ParentName="AnimalThingBase">
@@ -684,12 +716,18 @@
       </li>
     </lifeStages>
 
-    <livesInSea>true</livesInSea>
-    <catchableDuringDay>true</catchableDuringDay>
-    <catchableDuringNight>true</catchableDuringNight>
+    <livesInOcean>true</livesInOcean>
+    <livesInMarsh>false</livesInMarsh>
+    <livesInRiver>true</livesInRiver>
     <commonality>0.05</commonality>
     <breedQuantity>150</breedQuantity>
     <breedingDurationInDays>10</breedingDurationInDays>
+    <naturalBiomes>
+      <li>TemperateForest</li>
+      <li>TropicalRainforest</li>
+      <li>AridShrubland</li>
+      <li>Desert</li>
+    </naturalBiomes>
   </PawnKindDef>
 
 </Defs>

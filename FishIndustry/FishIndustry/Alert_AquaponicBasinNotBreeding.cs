@@ -40,7 +40,7 @@ namespace FishIndustry
         public Alert_AquacultureBasinNotBreeding()
         {
             this.defaultLabel = "Idle aquaculture basin";
-            this.defaultExplanation = "You have an idle aquaculture basin.\n\nYou should supply it some fish eggs to start breeding.\n\nUse the bills tab to order it and check you have an available fisher.";
+            this.defaultExplanation = "You have an idle aquaculture basin.\n\nYou should supply it some fish eggs to start breeding.\n\nUse the bills tab to order it and check you have an available hunter.";
         }
     }
 }

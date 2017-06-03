@@ -48,10 +48,12 @@ namespace FishIndustry
                         IntVec3 storageCell;
                         if (StoreUtility.TryFindBestBetterStoreCellFor(product, this.pawn, this.Map, StoragePriority.Unstored, this.pawn.Faction, out storageCell, true))
                         {
-                            this.pawn.carryTracker.TryStartCarry(product);
-                            curJob.targetB = storageCell;
-                            curJob.targetC = product;
-                            curJob.count = 99999;
+                            this.pawn.Reserve(product, 1);
+                            this.pawn.Reserve(storageCell, 1);
+                            this.pawn.CurJob.SetTarget(TargetIndex.B, storageCell);
+                            this.pawn.CurJob.SetTarget(TargetIndex.A, product);
+                            this.pawn.CurJob.count = 99999;
+                            this.pawn.CurJob.haulMode = HaulMode.ToCellStorage;
                         }
                         else
                         {
@@ -61,11 +63,10 @@ namespace FishIndustry
                 }
             };
             yield return getAquacultureBasinProduction;
-
-            // Reserve the product and storage cell.
-            yield return Toils_Reserve.Reserve(TargetIndex.B);
-            yield return Toils_Reserve.Reserve(TargetIndex.C);
+            
             yield return Toils_Reserve.Release(aquacultureBasinIndex);
+
+            yield return Toils_Haul.StartCarryThing(TargetIndex.A);
 
             Toil carryToCell = Toils_Haul.CarryHauledThingToCell(TargetIndex.B);
             yield return carryToCell;

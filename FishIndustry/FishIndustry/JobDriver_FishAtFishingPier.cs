@@ -156,53 +156,45 @@ namespace FishIndustry
                     if (catchSelectorValue > 0.04f)
                     {
                         // Catch a fish.
+                        bool fishSpotIsOcean = (this.Map.terrainGrid.TerrainAt(fishingPier.fishingSpotCell) == TerrainDefOf.WaterOceanShallow)
+                                            || (this.Map.terrainGrid.TerrainAt(fishingPier.fishingSpotCell) == TerrainDefOf.WaterOceanDeep);
                         bool fishSpotIsMarshy = (this.Map.terrainGrid.TerrainAt(fishingPier.fishingSpotCell) == TerrainDef.Named("Marsh"));
-                        bool isDaytime = (this.Map.skyManager.CurSkyGlow >= 0.4f);
 
                         PawnKindDef caugthFishDef = null;
-                        if (fishSpotIsMarshy && isDaytime)
+                        if (fishSpotIsOcean)
                         {
-                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
-                                             where fishSpecies.livesInMarsh
-                                             where fishSpecies.catchableDuringDay
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
+                                             where fishSpecies.livesInOcean
                                              select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
                         }
-                        else if (fishSpotIsMarshy && !isDaytime)
+                        else if (fishSpotIsMarshy)
                         {
-                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
                                              where fishSpecies.livesInMarsh
-                                             where fishSpecies.catchableDuringNight
-                                             select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
-                        }
-                        else if (!fishSpotIsMarshy && isDaytime)
-                        {
-                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
-                                             where fishSpecies.livesInSea
-                                             where fishSpecies.catchableDuringDay
                                              select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
                         }
                         else
                         {
-                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList()
-                                             where fishSpecies.livesInSea
-                                             where fishSpecies.catchableDuringNight
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
+                                             where fishSpecies.livesInRiver
                                              select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
                         }
                         Pawn caughtFish = PawnGenerator.GeneratePawn(caugthFishDef);
                         GenSpawn.Spawn(caughtFish, this.pawn.Position, this.Map);
-                        HealthUtility.GiveInjuriesToKill(caughtFish);
+                        HealthUtility.DamageUntilDead(caughtFish);
                         foreach (Thing thing in this.pawn.Position.GetThingList(this.Map))
                         {
                             Corpse fishCorpse = thing as Corpse;
                             if (fishCorpse != null)
                             {
                                 fishingCatch = fishCorpse;
+                                fishingCatch.SetForbidden(false);
                             }
                         }
                         if (caughtFish.BodySize >= 0.1f)
                         {
                             fishingPier.fishStock--;
-                            fishingPier.UpdateMaxFishStock();
+                            fishingPier.ComputeMaxFishStockAndRespawnPeriod();
                         }
                     }
                     else if (catchSelectorValue > 0.02)
@@ -221,7 +213,7 @@ namespace FishIndustry
                             Thing treasureSilver = GenSpawn.Spawn(ThingDefOf.Silver, fishingPier.middleCell, this.Map);
                             treasureSilver.stackCount = Rand.RangeInclusive(237, 2154);
                             string eventText = this.pawn.Name.ToStringShort.CapitalizeFirst() + " has found a sunken treasure while fishing! What a good catch!\n";
-                            Find.LetterStack.ReceiveLetter("Sunken treasure!", eventText, LetterType.Good, this.pawn);
+                            Find.LetterStack.ReceiveLetter("Sunken treasure!", eventText, LetterDefOf.Good, this.pawn);
                         }
                         else if (bonusCatchValue < 0.02f)
                         {
@@ -257,7 +249,7 @@ namespace FishIndustry
                             Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
                             Pawn deadMarine = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceSoldier, faction);
                             GenSpawn.Spawn(deadMarine, fishingPier.bankCell, this.Map);
-                            HealthUtility.GiveInjuriesToKill(deadMarine);
+                            HealthUtility.DamageUntilDead(deadMarine);
                             List<Thing> thingsList = deadMarine.Position.GetThingList(this.Map);
                             foreach (Thing thing in thingsList)
                             {
@@ -271,7 +263,7 @@ namespace FishIndustry
                                 }
                             }
                             string eventText = this.pawn.Name.ToStringShort.CapitalizeFirst() + " has cought a dead body while fishing!\n\n'This is really disgusting but look at his gear! This guy was probably a MiningCo. security member. I wonder what happend to him...'\n";
-                            Find.LetterStack.ReceiveLetter("Dead marine", eventText, LetterType.Good, this.pawn);
+                            Find.LetterStack.ReceiveLetter("Dead marine", eventText, LetterDefOf.Good, this.pawn);
                         }
                         else
                         {
@@ -284,10 +276,12 @@ namespace FishIndustry
                     IntVec3 storageCell;
                     if (StoreUtility.TryFindBestBetterStoreCellFor(fishingCatch, this.pawn, this.Map, StoragePriority.Unstored, this.pawn.Faction, out storageCell, true))
                     {
-                        this.pawn.carryTracker.TryStartCarry(fishingCatch);
-                        curJob.targetB = storageCell;
-                        curJob.targetC = fishingCatch;
-                        curJob.count = 99999;
+                        this.pawn.Reserve(fishingCatch, 1);
+                        this.pawn.Reserve(storageCell, 1);
+                        this.pawn.CurJob.SetTarget(TargetIndex.B, storageCell);
+                        this.pawn.CurJob.SetTarget(TargetIndex.A, fishingCatch);
+                        this.pawn.CurJob.count = 1;
+                        this.pawn.CurJob.haulMode = HaulMode.ToCellStorage;
                     }
                     else
                     {
@@ -297,9 +291,7 @@ namespace FishIndustry
             };
             yield return catchFishToil;
 
-            // Reserve the product and storage cell.
-            yield return Toils_Reserve.Reserve(TargetIndex.B);
-            yield return Toils_Reserve.Reserve(TargetIndex.C);
+            yield return Toils_Haul.StartCarryThing(TargetIndex.A);
 
             Toil carryToCell = Toils_Haul.CarryHauledThingToCell(TargetIndex.B);
             yield return carryToCell;
