@@ -1,14 +1,28 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <Patch>
-  
-  <Operation Class="PatchOperationInsert">
-    <xpath>*/TerrainDef[defName = "Mud"]/statBases</xpath>
-    <value>
-      <affordances>
-        <li>Undefined</li>
-      </affordances>
-    </value>
-  </Operation>
+
+<Operation Class="PatchOperationSequence">
+  <success>Always</success>
+  <operations>
+    <li Class="PatchOperationTest">
+      <xpath>/TerrainDefs/TerrainDef[defName = "Mud"]/affordances</xpath>
+      <success>Invert</success>
+    </li>
+    <li Class="PatchOperationAdd">
+      <xpath>/TerrainDefs/TerrainDef[defName = "Mud"]</xpath>
+      <value>
+        <affordances/>
+      </value>
+    </li>
+  </operations>
+</Operation>
+	
+<Operation Class="PatchOperationAdd">
+  <xpath>/TerrainDefs/TerrainDef[defName = "Mud"]/affordances</xpath>
+  <value>
+	<li>Undefined</li>
+  </value>
+</Operation> 
   
 </Patch>
