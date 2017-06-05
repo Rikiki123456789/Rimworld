@@ -3,7 +3,8 @@
 
   <SoundDef>
     <defName>LowDangerAlarm</defName>
-    <eventNames />
+    <context>MapOnly</context>
+    <eventNames/>
     <maxSimultaneous>1</maxSimultaneous>
     <subSounds>
       <li>
@@ -27,7 +28,8 @@
 
   <SoundDef>
     <defName>HighDangerAlarm</defName>
-    <eventNames />
+    <context>MapOnly</context>
+    <eventNames/>
     <maxSimultaneous>1</maxSimultaneous>
     <subSounds>
       <li>

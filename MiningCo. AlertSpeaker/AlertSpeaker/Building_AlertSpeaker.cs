@@ -51,15 +51,15 @@ namespace AlertSpeaker
 
         // Other variables.
         public CompPowerTrader powerComp = null;
-        
+
         // ===================== Setup Work =====================
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
         /// 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             
             glowerComp = this.GetComp<CompGlower>();
             powerComp = this.GetComp<CompPowerTrader>();
@@ -71,11 +71,11 @@ namespace AlertSpeaker
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref lastUpdateTick, "lastUpdateTick", 0);
-            Scribe_Values.LookValue<int>(ref alertStartTick, "alertStartTick", 0);
-            Scribe_Values.LookValue<StoryDanger>(ref previousDangerRate, "previousDangerRate", StoryDanger.None);
-            Scribe_Values.LookValue<StoryDanger>(ref currentDangerRate, "currentDangerRate", StoryDanger.None);
-            Scribe_Values.LookValue<int>(ref nextAlarmSoundTick, "nextAlarmSoundTick", 0);
+            Scribe_Values.Look<int>(ref lastUpdateTick, "lastUpdateTick", 0);
+            Scribe_Values.Look<int>(ref alertStartTick, "alertStartTick", 0);
+            Scribe_Values.Look<StoryDanger>(ref previousDangerRate, "previousDangerRate", StoryDanger.None);
+            Scribe_Values.Look<StoryDanger>(ref currentDangerRate, "currentDangerRate", StoryDanger.None);
+            Scribe_Values.Look<int>(ref nextAlarmSoundTick, "nextAlarmSoundTick", 0);
         }
         
         /// <summary>
@@ -468,7 +468,7 @@ namespace AlertSpeaker
             if ((currentDangerRate == StoryDanger.High)
                 && (this.powerComp.PowerOn))
             {
-                redAlertLightMatrix.SetTRS(this.Position.ToVector3Shifted() + new Vector3(0f, 10f, -0.25f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect, redAlertLightAngle.ToQuat(), redAlertLightScale);
+                redAlertLightMatrix.SetTRS(this.Position.ToVector3Shifted() + new Vector3(0f, 10f, -0.25f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect, (redAlertLightAngle + this.Rotation.AsAngle).ToQuat(), redAlertLightScale);
                 Graphics.DrawMesh(MeshPool.plane10, redAlertLightMatrix, FadedMaterialPool.FadedVersionOf(redAlertLight, redAlertLightIntensity), 0);
             }
 
