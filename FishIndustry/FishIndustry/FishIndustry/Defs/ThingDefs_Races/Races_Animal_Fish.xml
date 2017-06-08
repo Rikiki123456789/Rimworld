@@ -148,6 +148,7 @@
     <combatPower>30</combatPower>
     <wildSpawn_spawnWild>false</wildSpawn_spawnWild>
     <wildSpawn_EcoSystemWeight>0.2</wildSpawn_EcoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -278,6 +279,7 @@
     <combatPower>20</combatPower>
     <wildSpawn_spawnWild>false</wildSpawn_spawnWild>
     <wildSpawn_EcoSystemWeight>0.75</wildSpawn_EcoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -413,6 +415,7 @@
     <combatPower>25</combatPower>
     <wildSpawn_spawnWild>false</wildSpawn_spawnWild>
     <wildSpawn_EcoSystemWeight>0.80</wildSpawn_EcoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -546,6 +549,7 @@
     <combatPower>20</combatPower>
     <wildSpawn_spawnWild>false</wildSpawn_spawnWild>
     <wildSpawn_EcoSystemWeight>0.75</wildSpawn_EcoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
     <lifeStages>
       <li>
         <bodyGraphicData>
@@ -683,6 +687,7 @@
     <combatPower>160</combatPower>
     <wildSpawn_spawnWild>false</wildSpawn_spawnWild>
     <wildSpawn_EcoSystemWeight>0.05</wildSpawn_EcoSystemWeight>
+    <canArriveManhunter>false</canArriveManhunter>
     <lifeStages>
       <li>
         <bodyGraphicData>
