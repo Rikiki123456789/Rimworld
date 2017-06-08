@@ -39,13 +39,12 @@ namespace CampfireParty
         protected Material fireTextureC = MaterialPool.MatFrom("Things/Special/FireC", ShaderDatabase.Transparent);
         protected Matrix4x4[] fireMatrix = new Matrix4x4[fireMaxNumber];
         protected Vector3 fireScale = new Vector3(1f, 1f, 1f);
-        
+
         // ######## SpawnSetup ######## //
 
-        public override void SpawnSetup()
+        public override void SpawnSetup(Map map)
         {
-            base.SpawnSetup();
-
+            base.SpawnSetup(map);
             for (int fireIndex = 0; fireIndex < fireMaxNumber; fireIndex++)
             {
                 this.fireTexture[fireIndex] = null;
@@ -178,25 +177,25 @@ namespace CampfireParty
             // Draw party and beer search area when selected.
             if (Find.Selector.IsSelected(this))
             {
-                DrawPartyAndBeerSearchAreas(this.Position);
+                this.DrawPartyAndBeerSearchAreas();
             }
         }
 
-        public static void DrawPartyAndBeerSearchAreas(IntVec3 pyrePosition)
+        public void DrawPartyAndBeerSearchAreas()
         {
-            List<IntVec3> partyAreaCells = GetPartyAreaCells(pyrePosition);
+            List<IntVec3> partyAreaCells = this.GetPartyAreaCells();
             GenDraw.DrawFieldEdges(partyAreaCells);
-            List<IntVec3> beerSearchAreaCells = GetBeerSearchAreaCells(pyrePosition);
+            List<IntVec3> beerSearchAreaCells = this.GetBeerSearchAreaCells();
             GenDraw.DrawFieldEdges(beerSearchAreaCells);
         }
 
-        protected static List<IntVec3> GetPartyAreaCells(IntVec3 pyrePosition)
+        protected List<IntVec3> GetPartyAreaCells()
         {
-            IEnumerable<IntVec3> cellsInRange = GenRadial.RadialCellsAround(pyrePosition, partyAreaRadius, true);
+            IEnumerable<IntVec3> cellsInRange = GenRadial.RadialCellsAround(this.Position, partyAreaRadius, true);
             List<IntVec3> partyAreaCells = new List<IntVec3>();
             foreach (IntVec3 cell in cellsInRange)
             {
-                if (cell.GetRoom() == pyrePosition.GetRoom())
+                if (cell.GetRoom(this.Map) == this.Position.GetRoom(this.Map))
                 {
                     partyAreaCells.Add(cell);
                 }
@@ -204,9 +203,9 @@ namespace CampfireParty
             return partyAreaCells;
         }
 
-        protected static List<IntVec3> GetBeerSearchAreaCells(IntVec3 pyrePosition)
+        protected List<IntVec3> GetBeerSearchAreaCells()
         {
-            return GenRadial.RadialCellsAround(pyrePosition, beerSearchAreaRadius, true).ToList<IntVec3>();
+            return GenRadial.RadialCellsAround(this.Position, beerSearchAreaRadius, true).ToList<IntVec3>();
         }
 
         public void TryToStartCampfireParty()
@@ -214,9 +213,9 @@ namespace CampfireParty
             // Check there are at least 2 revelers near the pyre.
             int revelersCount = 0;
             List<Pawn> revelers = new List<Pawn>();
-            foreach (Pawn colonist in Find.MapPawns.FreeColonists)
+            foreach (Pawn colonist in Find.VisibleMap.mapPawns.FreeColonists)
             {
-                List<IntVec3> partyAreaCells = GetPartyAreaCells(this.Position);
+                List<IntVec3> partyAreaCells = this.GetPartyAreaCells();
                 if ((partyAreaCells.Contains(colonist.Position))
                     && colonist.Drafted)
                 {
@@ -241,10 +240,10 @@ namespace CampfireParty
                 reveler.jobs.StartJob(job);
             }
             // Start music according to the party style.
-            Find.MusicManagerMap.ForceStartSong(DefDatabase<SongDef>.GetNamed("Moon_Harvest"), false);
+            Find.MusicManagerPlay.ForceStartSong(DefDatabase<SongDef>.GetNamed("Moon_Harvest"), false);
             
             // Spawn the heater/glower.
-            this.pyreFire = GenSpawn.Spawn(Util_CampfireParty.Def_PyreFire, this.Position);
+            this.pyreFire = GenSpawn.Spawn(Util_CampfireParty.Def_PyreFire, this.Position, this.Map);
         }
     }
 }

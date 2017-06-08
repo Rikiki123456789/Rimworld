@@ -3,12 +3,9 @@
 
   <ResearchProjectDef>
     <defName>ResearchForceField</defName>
-    <label>MiningCo.: force field</label>
+    <label>force field</label>
     <description>Local tribes are sometimes not really "cooperative" when an excavation outpost is established in "their" territory.
-Force field generators are perfect to protect your security forces under a rain of arrows and pila.
-    
-- Develop the force field generator.
-    </description>
+Force field generators are perfect to protect your security forces under a rain of arrows and pila.</description>
     <descriptionDiscovered>You have developped the force field generator.
 
 - You can now build force field generators to protect your security forces from incoming projectiles.
@@ -17,12 +14,15 @@ Force field generators are perfect to protect your security forces under a rain 
     <techLevel>Industrial</techLevel>
     <baseCost>3000</baseCost>
     <prerequisites>
-      <li>MicroelectronicsBasics</li>
+      <li>MultiAnalyzer</li>
     </prerequisites>
     <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
     <requiredResearchFacilities>
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
+    <tab>MiningCo</tab>
+    <researchViewX>2</researchViewX>
+    <researchViewY>2</researchViewY>
   </ResearchProjectDef>
   
 </ResearchProjectDefs>

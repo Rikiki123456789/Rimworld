@@ -19,7 +19,10 @@ namespace CaveworldFlora
     /// Remember learning is always better than just copy/paste...</permission>
     public class ClusterPlant : Plant
     {
+        // TODO: use compFlickable instead of spawning glower buildings.
+
         public const float minGrowthToReproduce = 0.6f;
+        private string cachedLabelMouseover = null;
 
         public ThingDef_ClusterPlant clusterPlantProps
         {
@@ -274,7 +277,6 @@ namespace CaveworldFlora
         /// - update the glower if necessary.
         /// - verify the cave plant is in good conditions to growth.
         /// - when the cave plant is too old, damage it over time.
-        /// - when the cave plant is mature, try to reproduce.
         /// </summary>
         public override void TickLong()
         {
@@ -299,15 +301,7 @@ namespace CaveworldFlora
                 }
                 if (this.Dying)
                 {
-                    int amount = Mathf.CeilToInt(1.25f);
-                    base.TakeDamage(new DamageInfo(DamageDefOf.Rotting, amount, -1, null, null, null));
-                }
-                if (!base.Destroyed
-                    && (this.growthInt > minGrowthToReproduce)
-                    && !this.Dying
-                    && Rand.MTBEventOccurs(this.def.plant.reproduceMtbDays, GenDate.TicksPerDay, GenTicks.TickLongInterval))
-                {
-                    GenClusterPlantReproduction.TryToReproduce(this);
+                    base.TakeDamage(new DamageInfo(DamageDefOf.Rotting, 5, -1, null, null, null));
                 }
             }
 
@@ -346,11 +340,12 @@ namespace CaveworldFlora
                     return true;
                 }
                 float temperature = this.Position.GetTemperature(this.Map);
+                bool plantCanGrowHere = this.isOnCavePlantGrower
+                    || ((this.cluster.DestroyedOrNull() == false)
+                       && this.isOnValidNaturalSpot);
                 bool plantIsInHostileConditions = (temperature > this.clusterPlantProps.maxGrowTemperature)
                     || !this.isLightConditionOk
-                    || !(this.isOnCavePlantGrower
-                        || (this.isOnValidNaturalSpot
-                          && (this.cluster.DestroyedOrNull() == false)))
+                    || !plantCanGrowHere
                     || !this.isSymbiosisOk;
                 if (plantIsInHostileConditions)
                 {
@@ -501,6 +496,10 @@ namespace CaveworldFlora
                                 stringBuilder.Append(", too far from rock");
                             }
                         }
+                        if (this.cluster.DestroyedOrNull())
+                        {
+                            stringBuilder.Append(", cluster root removed");
+                        }
                         if (this.clusterPlantProps.isSymbiosisPlant)
                         {
                             if (this.isSymbiosisOk == false)
@@ -513,7 +512,7 @@ namespace CaveworldFlora
             }
             return stringBuilder.ToString();
         }
-        private string cachedLabelMouseover = null;
+
         public override string LabelMouseover
         {
             get

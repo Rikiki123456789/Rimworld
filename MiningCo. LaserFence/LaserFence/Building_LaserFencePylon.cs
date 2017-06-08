@@ -61,9 +61,9 @@ namespace LaserFence
 
         // ######## Spawn setup ######## //
 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
 
             this.powerComp = this.TryGetComp<CompPowerTrader>();
         }
@@ -117,10 +117,10 @@ namespace LaserFence
 
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                Scribe_Values.LookValue<bool>(ref connectionIsAllowedByUser[directionAsInt], "connectionIsAllowedByUser" + directionAsInt, true);
-                Scribe_Values.LookValue<bool>(ref cachedConnectionIsAllowedByUser[directionAsInt], "cachedConnectionIsAllowedByUser" + directionAsInt, true);
-                Scribe_References.LookReference<Building_LaserFencePylon>(ref linkedPylons[directionAsInt], "linkedPylons" + directionAsInt);
-                Scribe_Values.LookValue<int>(ref fenceLength[directionAsInt], "fenceLength" + directionAsInt, 0);
+                Scribe_Values.Look<bool>(ref connectionIsAllowedByUser[directionAsInt], "connectionIsAllowedByUser" + directionAsInt, true);
+                Scribe_Values.Look<bool>(ref cachedConnectionIsAllowedByUser[directionAsInt], "cachedConnectionIsAllowedByUser" + directionAsInt, true);
+                Scribe_References.Look<Building_LaserFencePylon>(ref linkedPylons[directionAsInt], "linkedPylons" + directionAsInt);
+                Scribe_Values.Look<int>(ref fenceLength[directionAsInt], "fenceLength" + directionAsInt, 0);
             }
         }
 

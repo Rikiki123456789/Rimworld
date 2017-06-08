@@ -17,7 +17,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>AlertSpeaker</defName>
     <Label>Alert speaker</Label>
-    <Description>This alert speaker is able to detect intruders. It will warn your colonist of some imminent danger.</Description>
+    <Description>An alert speaker to warn your colonist from incoming threat.</Description>
     <graphicData>
       <texPath>Things/Building/AlertSpeaker</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -58,7 +58,7 @@
       </li>
     </comps>
     <researchPrerequisites>
-      <li>MicroelectronicsBasics</li>
+      <li>ResearchAlertSpeaker</li>
     </researchPrerequisites>
     <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
   </ThingDef>

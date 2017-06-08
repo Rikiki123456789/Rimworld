@@ -6,12 +6,12 @@
     <thingClass>Building</thingClass>
     <soundImpactDefault>BulletImpactWood</soundImpactDefault>
     <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Undefined</terrainAffordanceNeeded>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <graphicData>
       <texPath>Things/Building/DummyTexture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
-    <AltitudeLayer>Floor</AltitudeLayer>
+    <AltitudeLayer>FloorEmplacement</AltitudeLayer>
     <useHitPoints>false</useHitPoints>
     <selectable>false</selectable>
     <Size>(1,1)</Size>
@@ -19,6 +19,7 @@
     <building>
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
+      <canBuildNonEdificesUnder>true</canBuildNonEdificesUnder>
       <deconstructible>false</deconstructible>
       <claimable>false</claimable>
     </building>

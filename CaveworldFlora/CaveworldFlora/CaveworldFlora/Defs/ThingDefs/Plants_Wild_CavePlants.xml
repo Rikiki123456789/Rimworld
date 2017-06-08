@@ -60,7 +60,7 @@
       <soundHarvesting>Harvest_Tree</soundHarvesting>
       <soundHarvestFinish>Harvest_Tree_Finish</soundHarvestFinish>
       <sowWork>1500</sowWork>
-      <harvestWork>800</harvestWork>
+      <harvestWork>1500</harvestWork>
       <harvestDestroys>true</harvestDestroys>
       <harvestedThingDef>WoodLog</harvestedThingDef>
       <harvestYield>50</harvestYield>
@@ -108,7 +108,7 @@
     </plant>
 
     <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
-    <minGrowTemperature>0</minGrowTemperature>
+    <minGrowTemperature>5</minGrowTemperature>
     <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>45</maxOptimalGrowTemperature>
     <maxGrowTemperature>50</maxGrowTemperature>
@@ -167,8 +167,8 @@
     </plant>
 
     <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
-    <minGrowTemperature>0</minGrowTemperature>
-    <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
+    <minGrowTemperature>10</minGrowTemperature>
+    <minOptimalGrowTemperature>15</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
     <maxGrowTemperature>50</maxGrowTemperature>
     <hasStaticGlower>true</hasStaticGlower>
@@ -233,10 +233,10 @@
     </plant>
 
     <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
-    <minGrowTemperature>0</minGrowTemperature>
-    <minOptimalGrowTemperature>15</minOptimalGrowTemperature>
-    <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
-    <maxGrowTemperature>55</maxGrowTemperature>
+    <minGrowTemperature>10</minGrowTemperature>
+    <minOptimalGrowTemperature>20</minOptimalGrowTemperature>
+    <maxOptimalGrowTemperature>50</maxOptimalGrowTemperature>
+    <maxGrowTemperature>60</maxGrowTemperature>
     <hasStaticGlower>false</hasStaticGlower>
     <hasDynamicGlower>false</hasDynamicGlower>
     <growOnlyOnRoughRock>false</growOnlyOnRoughRock>
@@ -364,7 +364,7 @@
     </plant>
 
     <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
-    <minGrowTemperature>0</minGrowTemperature>
+    <minGrowTemperature>10</minGrowTemperature>
     <minOptimalGrowTemperature>20</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>50</maxOptimalGrowTemperature>
     <maxGrowTemperature>60</maxGrowTemperature>
@@ -412,8 +412,8 @@
     </plant>
 
     <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
-    <minGrowTemperature>0</minGrowTemperature>
-    <minOptimalGrowTemperature>5</minOptimalGrowTemperature>
+    <minGrowTemperature>-15</minGrowTemperature>
+    <minOptimalGrowTemperature>0</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>45</maxOptimalGrowTemperature>
     <maxGrowTemperature>50</maxGrowTemperature>
     <hasStaticGlower>true</hasStaticGlower>
@@ -459,7 +459,7 @@
     </plant>
 
     <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
-    <minGrowTemperature>0</minGrowTemperature>
+    <minGrowTemperature>-5</minGrowTemperature>
     <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
     <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
     <maxGrowTemperature>50</maxGrowTemperature>

@@ -36,6 +36,7 @@
     </graphicData>
     <statBases>
       <MarketValue>3.0</MarketValue>
+      <Mass>0.025</Mass>
     </statBases>
     <ingestible>
       <preferability>RawTasty</preferability>
@@ -63,6 +64,7 @@
     </graphicData>
     <statBases>
       <MarketValue>2.0</MarketValue>
+      <Mass>0.03</Mass>
     </statBases>
     <ingestible>
       <foodType>VegetableOrFruit</foodType>
@@ -90,8 +92,9 @@
       <MaxHitPoints>100</MaxHitPoints>
       <MarketValue>5.5</MarketValue>
       <Flammability>1.0</Flammability>
-      <MedicalPotency>0.70</MedicalPotency>
+      <MedicalPotency>0.40</MedicalPotency>
       <DeteriorationRate>10</DeteriorationRate>
+      <Mass>0.1</Mass>
     </statBases>
     <thingCategories>
       <li>Medicine</li>
@@ -114,6 +117,7 @@
     </graphicData>
     <statBases>
       <MarketValue>2.0</MarketValue>
+      <Mass>0.035</Mass>
     </statBases>
     <ingestible>
       <foodType>VegetableOrFruit</foodType>

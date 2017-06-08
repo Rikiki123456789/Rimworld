@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_MobileMineralSonar.cs" />
+    <Compile Include="ResearchMod_MobileMineralSonar.cs" />
     <Compile Include="PlaceWorker_MobileMineralSonar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThingDef_MobileMineralSonar.cs" />
@@ -58,6 +59,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. MMS\About\PublishedFileId.txt" />
+    <Content Include="MiningCo. MMS\Defs\ResearchProjectDefs\ResearchTabs.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MiningCo. MMS\Defs\ThingDefs_Items\Items_MinifiedMobileMineralSonar.xml">
       <SubType>Designer</SubType>
     </Content>

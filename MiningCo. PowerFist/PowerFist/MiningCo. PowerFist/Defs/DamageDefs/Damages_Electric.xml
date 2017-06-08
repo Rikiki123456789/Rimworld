@@ -6,11 +6,9 @@
     <label>electric</label>
     <workerClass>DamageWorker_AddInjury</workerClass>
     <externalViolence>true</externalViolence>
-    <battleWound>true</battleWound>
     <deathMessage>{0} has been electrocuted to death.</deathMessage>
     <hasForcefulImpact>true</hasForcefulImpact>
     <makesBlood>false</makesBlood>
-    <incapChanceMultiplier>2</incapChanceMultiplier>
     <canInterruptJobs>true</canInterruptJobs>
     <hediff>Electric</hediff>
     <hediffSkin>Burn</hediffSkin>

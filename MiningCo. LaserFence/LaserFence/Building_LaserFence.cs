@@ -67,7 +67,7 @@ namespace LaserFence
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_References.LookReference<Building_LaserFencePylon>(ref pylon, "pylon");
+            Scribe_References.Look<Building_LaserFencePylon>(ref pylon, "pylon");
         }
 
         // ######## Properties. ######## //

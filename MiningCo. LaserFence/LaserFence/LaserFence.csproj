@@ -62,10 +62,12 @@
     <Content Include="MiningCo. LaserFence\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. LaserFence\About\PublishedFileId.txt" />
     <Content Include="MiningCo. LaserFence\Defs\JobDefs\Jobs_LaserFence.xml" />
     <Content Include="MiningCo. LaserFence\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. LaserFence\Defs\ResearchProjectDefs\ResearchTabs.xml" />
     <Content Include="MiningCo. LaserFence\Defs\ThingDefs\Building_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>

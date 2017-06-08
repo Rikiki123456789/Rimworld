@@ -32,12 +32,15 @@ namespace MobileMineralSonar
         public const int powerConsumption = 3000;
         public int scanRange = 1;
         public int scanProgress = 0;
-        private const int scanProgressThresholdPerCell = 240;
+        private const int scanProgressThresholdPerCell = 1000;
         public float satelliteDishRotation = 0;
         private bool isInstalled = false;
 
         public List<ThingDef> detectedDefList = null;
-        
+
+        public const int flashPeriodInSeconds = 5;
+        public int nextFlashTick = 0;
+
         // Components references.
         public CompPowerTrader powerComp;
 
@@ -80,15 +83,14 @@ namespace MobileMineralSonar
                 detectionChance = enhancedDetectionChance;
             }
         }
-        
+
         // ===================== Setup Work =====================
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        /// 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             
             detectedDefList = new List<ThingDef>();
             foreach (ThingDef metallicDef in ((ThingDef_MobileMineralSonar)this.def).scannedThingDefs)
@@ -107,9 +109,7 @@ namespace MobileMineralSonar
             scanRangeMatrix40.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale40);
             scanRangeMatrix50.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
             satelliteDishMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), satelliteDishScale);
-
-            TryUpdateScanParameters();
-
+            
             if (this.isInstalled == false)
             {
                 // The MMS has just been moved or is spawned for the first time.
@@ -134,9 +134,10 @@ namespace MobileMineralSonar
                 this.isInstalled = true;
             }
             // Save and load the work variables, so they don't default after loading.
-            Scribe_Values.LookValue<int>(ref scanRange, "scanRange", 1);
-            Scribe_Values.LookValue<int>(ref scanProgress, "scanProgress", 1);
-            Scribe_Values.LookValue<float>(ref satelliteDishRotation, "satelliteDishRotation", 0f);
+            Scribe_Values.Look<int>(ref scanRange, "scanRange", 1);
+            Scribe_Values.Look<int>(ref scanProgress, "scanProgress", 1);
+            Scribe_Values.Look<float>(ref satelliteDishRotation, "satelliteDishRotation", 0f);;
+            Scribe_Values.Look<int>(ref nextFlashTick, "nextFlashTick", 0);
         }
 
         // ===================== Destroy =====================
@@ -158,14 +159,28 @@ namespace MobileMineralSonar
         // ===================== Main Work Function =====================
         /// <summary>
         /// Main function:
-        /// - update the scan range,
-        /// - draw the satellite dish,
-        /// - draw the scan range only when the mobile mineral sonar is selected.
+        /// - update the scan progress,
+        /// - throw a flash to help locate the MMS in the wild every few seconds.
         /// </summary>
         public override void Tick()
         {
             base.Tick();            
             PerformScanUpdate();
+
+            if (Find.TickManager.TicksGame >= this.nextFlashTick)
+            {
+                if (!this.Position.ShouldSpawnMotesAt(this.Map) || this.Map.moteCounter.SaturatedLowPriority)
+                {
+                    return;
+                }
+                MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
+                moteThrown.Scale = 5f;
+                moteThrown.rotationRate = Rand.Range(-3f, 3f);
+                moteThrown.exactPosition = this.Position.ToVector3Shifted();
+                moteThrown.SetVelocity((float)Rand.Range(0, 360), 1.2f);
+                GenSpawn.Spawn(moteThrown, this.Position, this.Map);
+                this.nextFlashTick = Find.TickManager.TicksGame + flashPeriodInSeconds * GenTicks.TicksPerRealSecond * (int)Find.TickManager.CurTimeSpeed;
+            }
         }
                 
         /// <summary>
@@ -358,10 +373,13 @@ namespace MobileMineralSonar
             stringBuilder.AppendLine("Optional power needed/generated/stored:\n"
                 + "(" + powerNeeded.ToString() + ")/" + powerProduction.ToString("F0") + "/" + powerStored.ToString("F0"));
 
-            scanProgressInPercent = ((float)this.scanProgress / (float)(this.scanRange * scanProgressThresholdPerCell)) * 100;
-            stringBuilder.AppendLine("Scan progress: " + ((int)scanProgressInPercent).ToString() + "%");
-
-            stringBuilder.AppendLine("Current/max scan range: " + this.scanRange.ToString() + "/" + maxScanRange.ToString());
+            stringBuilder.Append("Current/max scan range: " + this.scanRange.ToString() + "/" + maxScanRange.ToString());
+            if (this.scanRange < maxScanRange)
+            {
+                scanProgressInPercent = ((float)this.scanProgress / (float)(this.scanRange * scanProgressThresholdPerCell)) * 100;
+                stringBuilder.AppendLine();
+                stringBuilder.Append("Scan progress: " + ((int)scanProgressInPercent).ToString() + "%");
+            }
 
             return stringBuilder.ToString();
         }

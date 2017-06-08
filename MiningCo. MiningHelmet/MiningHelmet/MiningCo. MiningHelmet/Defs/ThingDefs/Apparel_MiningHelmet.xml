@@ -81,6 +81,7 @@
       <Cloth>20</Cloth>
       <Component>1</Component>
     </costList>
+    <generateCommonality>0.2</generateCommonality>
     <apparel>
       <bodyPartGroups>
         <li>UpperHead</li>
@@ -89,7 +90,6 @@
       <layers>
         <li>Overhead</li>
       </layers>
-      <commonality>0.2</commonality>
       <tags>
       </tags>
     </apparel>

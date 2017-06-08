@@ -79,12 +79,13 @@
         <li>ResearchFungiponics</li>
       </sowResearchPrerequisites>
       <sowMinSkill>7</sowMinSkill>
+      <reproduceMtbDays>0.4</reproduceMtbDays>
     </plant>
 
-    <minGrowTemperature>0</minGrowTemperature>
-    <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
-    <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
-    <maxGrowTemperature>50</maxGrowTemperature>
+    <minGrowTemperature>5</minGrowTemperature>
+    <minOptimalGrowTemperature>15</minOptimalGrowTemperature>
+    <maxOptimalGrowTemperature>35</maxOptimalGrowTemperature>
+    <maxGrowTemperature>40</maxGrowTemperature>
     <hasStaticGlower>false</hasStaticGlower>
     <hasDynamicGlower>true</hasDynamicGlower>
     <growOnlyOnRoughRock>true</growOnlyOnRoughRock>
@@ -149,6 +150,7 @@
       <sowResearchPrerequisites>
         <li>ResearchFungiponics</li>
       </sowResearchPrerequisites>
+      <reproduceMtbDays>0.3</reproduceMtbDays>
     </plant>
     
     <minGrowTemperature>0</minGrowTemperature>
@@ -220,11 +222,12 @@
         <li>ResearchFungiponics</li>
       </sowResearchPrerequisites>
       <sowMinSkill>8</sowMinSkill>
+      <reproduceMtbDays>2</reproduceMtbDays>
     </plant>
 
-    <minGrowTemperature>0</minGrowTemperature>
-    <minOptimalGrowTemperature>10</minOptimalGrowTemperature>
-    <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
+    <minGrowTemperature>-5</minGrowTemperature>
+    <minOptimalGrowTemperature>5</minOptimalGrowTemperature>
+    <maxOptimalGrowTemperature>35</maxOptimalGrowTemperature>
     <maxGrowTemperature>50</maxGrowTemperature>
     <hasStaticGlower>false</hasStaticGlower>
     <hasDynamicGlower>true</hasDynamicGlower>
@@ -290,6 +293,7 @@
       <sowResearchPrerequisites>
         <li>ResearchFungiponics</li>
       </sowResearchPrerequisites>
+      <reproduceMtbDays>0.5</reproduceMtbDays>
     </plant>
 
     <minGrowTemperature>0</minGrowTemperature>

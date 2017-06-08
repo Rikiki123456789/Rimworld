@@ -3,12 +3,36 @@
 
   <ThingDef>
     <defName>Cluster</defName>
-    <category>Ethereal</category>
     <label>cluster root</label>
+    <description>Numerous and thick roots of a cave plant. Removing it will doom the entire cluster.</description>
     <thingClass>CaveworldFlora.Cluster</thingClass>
-    <drawerType>None</drawerType>
-    <tickerType>Never</tickerType>
-    <useHitPoints>False</useHitPoints>
+    <category>Plant</category>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <useHitPoints>True</useHitPoints>
+    <statBases>
+      <MaxHitPoints>150</MaxHitPoints>
+      <Beauty>5</Beauty>
+      <Flammability>0.8</Flammability>
+    </statBases>
+    <tickerType>Long</tickerType>
+    <selectable>true</selectable>
+    <neverMultiSelect>True</neverMultiSelect>
+    <drawerType>MapMeshOnly</drawerType>
+    <pathCost>50</pathCost>
+    <passability>PassThroughOnly</passability>
+    <graphicData>
+      <texPath>Things/Plant/Cluster/Cluster</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <hideAtSnowDepth>0.2</hideAtSnowDepth>
+    <plant>
+      <soundHarvesting>Harvest_Standard</soundHarvesting>
+      <soundHarvestFinish>Harvest_Standard_Finish</soundHarvestFinish>
+      <sowWork>3000</sowWork>
+      <harvestWork>3000</harvestWork>
+      <topWindExposure>0.0</topWindExposure>
+      <growDays>20</growDays> <!-- To avoid blights of cluster root. -->
+    </plant>
   </ThingDef>
 
 </ThingDefinitions>

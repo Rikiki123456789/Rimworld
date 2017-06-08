@@ -17,14 +17,17 @@ namespace CaveworldFlora
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class Cluster : Thing
+    public class Cluster : Plant
     {
+
         // Plant def.
         public ThingDef_ClusterPlant plantDef = null;
 
-        // Size.
+        // Size and next reproduction tick.
         public int actualSize = 0;
         public int desiredSize = 0;
+        public int nextGrownTick = 0;
+        public int nextReproductionTick = 0;
 
         // Symbiosis cluster.
         public Cluster symbiosisCluster = null;
@@ -42,6 +45,7 @@ namespace CaveworldFlora
         }
         public void Initialize(ThingDef_ClusterPlant plantDef, int desiredSize)
         {
+            this.Growth = 1f; // For texture dimension.
             this.plantDef = plantDef;
             this.actualSize = 1;
             this.desiredSize = desiredSize;
@@ -73,6 +77,37 @@ namespace CaveworldFlora
             }
         }
 
+        public override void TickLong()
+        {
+            // Grow cluster and spawn symbiosis cluster.
+            if ((Find.TickManager.TicksGame > this.nextGrownTick)
+                && ClusterPlant.IsTemperatureConditionOkAt(this.plantDef, this.Map, this.Position)
+                && ClusterPlant.IsLightConditionOkAt(this.plantDef, this.Map, this.Position))
+            {
+                this.nextGrownTick = Find.TickManager.TicksGame + (int)(this.plantDef.plant.reproduceMtbDays * GenDate.TicksPerDay);
+
+                // Grow cluster.
+                GenClusterPlantReproduction.TryGrowCluster(this);
+
+                // Spawn symbiosis cluster.
+                if ((this.actualSize == this.desiredSize)
+                    && (this.plantDef.symbiosisPlantDefEvolution != null))
+                {
+                    GenClusterPlantReproduction.TrySpawnNewSymbiosisCluster(this);
+                }
+            }
+            
+            // Spawn new cluster.
+            if ((this.actualSize == this.desiredSize)
+                && (Find.TickManager.TicksGame > this.nextReproductionTick)
+                && ClusterPlant.IsTemperatureConditionOkAt(this.plantDef, this.Map, this.Position)
+                && ClusterPlant.IsLightConditionOkAt(this.plantDef, this.Map, this.Position))
+            {
+                GenClusterPlantReproduction.TrySpawnNewClusterAwayFrom(this);
+                this.nextReproductionTick = Find.TickManager.TicksGame + (int)(this.plantDef.plant.reproduceMtbDays * 10f * GenDate.TicksPerDay);
+            }
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
@@ -89,6 +124,8 @@ namespace CaveworldFlora
             }
             Scribe_Values.LookValue<int>(ref this.actualSize, "actualSize");
             Scribe_Values.LookValue<int>(ref this.desiredSize, "desiredSize");
+            Scribe_Values.LookValue<int>(ref this.nextReproductionTick, "nextGrownTick");
+            Scribe_Values.LookValue<int>(ref this.nextReproductionTick, "nextReproductionTick");
 
             Scribe_References.LookReference<Cluster>(ref this.symbiosisCluster, "symbiosisCluster");
         }
@@ -106,33 +143,6 @@ namespace CaveworldFlora
                 this.Destroy();
                 return;
             }
-            this.UpdateClusterPosition();
-        }
-
-        // Only move cluster root to another plant if current position becomes invalid (for example: a building is built over it).
-        protected void UpdateClusterPosition()
-        {
-            Room clusterRoom = this.GetRoom();
-            IntVec3 center = IntVec3.Zero;
-            // We only check with clusterSpawnRadius (+ a small offset). No need to check entire cluster exclusivity area.
-            List<IntVec3> plantsInClusterList = new List<IntVec3>();
-            IEnumerable<IntVec3> cellsInCluster = GenRadial.RadialCellsAround(this.Position, this.plantDef.clusterSpawnRadius + 3f, true);
-            foreach (IntVec3 cell in cellsInCluster)
-            {
-                if ((this.Map.thingGrid.ThingAt(cell, this.plantDef) != null)
-                    && (cell.GetRoom(this.Map) == clusterRoom))
-                {
-                    plantsInClusterList.Add(cell);
-                }
-            }
-            if (plantsInClusterList.Count > 0)
-            {
-                this.Position = plantsInClusterList.RandomElement();
-            }
-            else
-            {
-                this.Destroy();
-            }
         }
 
         public void NotifySymbiosisClusterAdded(Cluster symbiosisCluster)
@@ -146,5 +156,14 @@ namespace CaveworldFlora
             this.symbiosisCluster = null;
             symbiosisCluster.symbiosisCluster = null;
         }
+
+        public override string LabelMouseover
+        {
+            get
+            {
+                return this.def.LabelCap;
+            }
+        }
+
     }
 }

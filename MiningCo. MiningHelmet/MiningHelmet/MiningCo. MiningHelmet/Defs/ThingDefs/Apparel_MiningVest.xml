@@ -36,6 +36,7 @@
       <MiningSpeed>0.05</MiningSpeed>
       <WorkSpeedGlobal>0.05</WorkSpeedGlobal>
     </equippedStatOffsets>
+    <generateCommonality>0.2</generateCommonality>
     <apparel>
       <bodyPartGroups>
         <li>Torso</li>
@@ -47,7 +48,6 @@
       <layers>
         <li>Shell</li>
       </layers>
-      <commonality>0.2</commonality>
       <tags>
       </tags>
     </apparel>

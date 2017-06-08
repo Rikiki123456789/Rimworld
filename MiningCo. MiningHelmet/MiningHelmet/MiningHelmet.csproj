@@ -57,6 +57,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. MiningHelmet\About\Preview.png" />
+    <Content Include="MiningCo. MiningHelmet\About\PublishedFileId.txt" />
     <Content Include="MiningCo. MiningHelmet\Defs\ThingDefs\Apparel_MiningVest.xml">
       <SubType>Designer</SubType>
     </Content>

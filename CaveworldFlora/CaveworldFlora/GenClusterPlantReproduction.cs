@@ -20,42 +20,6 @@ namespace CaveworldFlora
     public static class GenClusterPlantReproduction
     {
         /// <summary>
-        /// Try to spawn another cave plant in the cluster or to spawn a new cluster.
-        /// </summary>
-        public static ClusterPlant TryToReproduce(ClusterPlant plant)
-        {
-            if (plant.cluster == null)
-            {
-                Log.Warning("CaveworldFlora:TryToReproduce: cluster is null at " + plant.Position);
-            }
-
-            // Test if it is growing on a fungiponics basin.
-            if (plant.isOnCavePlantGrower)
-            {
-                return null;
-            }
-
-            if (plant.cluster.actualSize < plant.cluster.desiredSize)
-            {
-                // Cluster is not mature, grow the cluster.
-                return TryGrowCluster(plant.cluster);
-            }
-            else
-            {
-                // Cluster is mature: try to spawn a new cluster and/or a symbiosis cluster.
-                if (plant.clusterPlantProps.isSymbiosisPlant == false)
-                {
-                    return TrySpawnNewClusterAwayFrom(plant.cluster);
-                }
-                if (plant.clusterPlantProps.symbiosisPlantDefEvolution != null)
-                {
-                    TryToSpawnNewSymbiosisCluster(plant.cluster);
-                }
-            }
-            return null;
-        }
-
-        /// <summary>
         /// Try to get a valid cell to spawn a new cluster anywhere on the map.
         /// </summary>
         public static void TryGetRandomClusterSpawnCell(ThingDef_ClusterPlant plantDef, int newDesiredClusterSize, bool checkTemperature, Map map, out IntVec3 spawnCell)
@@ -88,10 +52,14 @@ namespace CaveworldFlora
         /// <summary>
         /// Try to spawn another plant in this cluster.
         /// </summary>
-        public static ClusterPlant TryGrowCluster(Cluster cluster)
+        public static ClusterPlant TryGrowCluster(Cluster cluster, bool checkTemperature = true)
         {
+            if (cluster.actualSize >= cluster.desiredSize)
+            {
+                return null;
+            }
             IntVec3 spawnCell = IntVec3.Invalid;
-            TryGetRandomSpawnCellNearCluster(cluster, out spawnCell);
+            TryGetRandomSpawnCellNearCluster(cluster, checkTemperature, out spawnCell);
             if (spawnCell.IsValid)
             {
                 ClusterPlant newPlant = ThingMaker.MakeThing(cluster.plantDef) as ClusterPlant;
@@ -118,10 +86,10 @@ namespace CaveworldFlora
         /// <summary>
         /// Get a valid cell in this cluster to spawn another cave plant.
         /// </summary>
-        public static void TryGetRandomSpawnCellNearCluster(Cluster cluster, out IntVec3 spawnCell)
+        public static void TryGetRandomSpawnCellNearCluster(Cluster cluster, bool checkTemperature, out IntVec3 spawnCell)
         {
             spawnCell = IntVec3.Invalid;
-
+            
             float maxSpawnDistance = GenRadial.RadiusOfNumCells(cluster.actualSize + 1); // Min radius to hold cluster's plants + new plant.
             maxSpawnDistance += 2f; // Add a margin so the cluster does not have a perfect circle shape.
             Predicate<IntVec3> validator = delegate(IntVec3 cell)
@@ -134,23 +102,12 @@ namespace CaveworldFlora
                 // Check cell is in the same room.
                 Room clusterRoom = cluster.GetRoom();
                 Room cellRoom = cell.GetRoom(cluster.Map);
-                if (clusterRoom == null)
-                {
-                    if (Current.ProgramState == ProgramState.Playing)
-                    {
-                        Log.Warning("clusterRoom at " + cluster.Position + " is null.");
-                        if (cellRoom == null)
-                        {
-                            Log.Message("cellRoom at " + cell + " is null.");
-                        }
-                    }
-                }
                 if ((cellRoom == null)
                     || (cellRoom != clusterRoom))
                 {
                     return false;
                 }
-                return IsValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell);
+                return IsValidPositionToGrowPlant(cluster.plantDef, cluster.Map, cell, checkTemperature);
             };
             bool validCellIsFound = CellFinder.TryFindRandomCellNear(cluster.Position, cluster.Map, (int)maxSpawnDistance, validator, out spawnCell);
             if (validCellIsFound == false)
@@ -282,7 +239,8 @@ namespace CaveworldFlora
                 return false;
             }
             // Check temperature conditions.
-            if (ClusterPlant.IsTemperatureConditionOkAt(plantDef, map, position) == false)
+            if (checkTemperature
+                && (ClusterPlant.IsTemperatureConditionOkAt(plantDef, map, position) == false))
             {
                 return false;
             }
@@ -291,29 +249,34 @@ namespace CaveworldFlora
             {
                 return false;
             }
-            // Check there is no other plant.
-            if (map.thingGrid.ThingAt(position, ThingCategory.Plant) != null)
+            // Check there is no other plant (excepted cluster root).
+            Thing plant = map.thingGrid.ThingAt(position, ThingCategory.Plant);
+            if ((plant != null)
+                && !(plant is Cluster))
             {
                 return false;
             }
             // Check the cell is not blocked by a plant, an item, a pawn, a rock...
-	        List<Thing> thingList = map.thingGrid.ThingsListAt(position);
+            List<Thing> thingList = map.thingGrid.ThingsListAt(position);
 	        for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
 	        {
                 Thing thing = thingList[thingIndex];
+                if (thing is Cluster)
+                {
+                    // A plant can grow on the cluster root.
+                    continue;
+                }
 		        if (thing.def.BlockPlanting)
 		        {
 			        return false;
 		        }
-		        if (plantDef.passability == Traversability.Impassable
-                    && (thing.def.category == ThingCategory.Pawn
-                        || thing.def.category == ThingCategory.Item
-                        || thing.def.category == ThingCategory.Building
-                        || thing.def.category == ThingCategory.Plant))
+		        if (thing.def.category == ThingCategory.Plant
+                    || thing.def.category == ThingCategory.Item
+                    || thing.def.category == ThingCategory.Pawn)
 		        {
 			        return false;
 		        }
-	        }
+            }
             // Check snow level.
             if (GenPlant.SnowAllowsPlanting(position, map) == false)
             {
@@ -322,7 +285,7 @@ namespace CaveworldFlora
             return true;
         }
 
-        public static ClusterPlant TryToSpawnNewSymbiosisCluster(Cluster cluster)
+        public static ClusterPlant TrySpawnNewSymbiosisCluster(Cluster cluster)
         {
             // Check there is not already a symbiosis cluster.
             if (cluster.symbiosisCluster == null)

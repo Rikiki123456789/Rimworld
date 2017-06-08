@@ -111,9 +111,9 @@ namespace ForceField
         /// Initialize instance variables.
         /// </summary>
         /// 
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
 
             this.properties = (ThingDef_FieldGenerator)this.def;
 
@@ -147,8 +147,8 @@ namespace ForceField
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<ForceFieldState>(ref forceFieldState, "forceFieldState", ForceFieldState.Offline);
-            Scribe_Values.LookValue<float>(ref forceFieldCharge, "forceFieldCharge");
+            Scribe_Values.Look<ForceFieldState>(ref forceFieldState, "forceFieldState", ForceFieldState.Offline);
+            Scribe_Values.Look<float>(ref forceFieldCharge, "forceFieldCharge");
         }
 
         public static List<IntVec3> GetCoveredCells(IntVec3 origin, Rot4 rotation)
@@ -572,7 +572,7 @@ namespace ForceField
 
             string stateAsString = GetStateAsString(this.forceFieldState);
             stringBuilder.AppendLine("Status: " + stateAsString);
-            stringBuilder.AppendLine("Force field charge: " + (int)this.forceFieldCharge + "/" + this.properties.forceFieldMaxCharge);
+            stringBuilder.Append("Force field charge: " + (int)this.forceFieldCharge + "/" + this.properties.forceFieldMaxCharge);
 
             return stringBuilder.ToString();
         }

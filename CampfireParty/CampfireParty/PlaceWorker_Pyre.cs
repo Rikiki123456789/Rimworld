@@ -19,7 +19,7 @@ namespace CampfireParty
     /// Remember learning is always better than just copy/paste...</permission>
     public class PlaceWorker_Pyre : PlaceWorker_NotUnderRoof
     {
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
         {
             AcceptanceReport acceptanceReport = base.AllowsPlacing(checkingDef, loc, rot);
             if (acceptanceReport.Accepted == false)

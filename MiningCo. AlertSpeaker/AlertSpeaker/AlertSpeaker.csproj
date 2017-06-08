@@ -57,9 +57,15 @@
     <Content Include="MiningCo. AlertSpeaker\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. AlertSpeaker\About\Preview.png" />
+    <Content Include="MiningCo. AlertSpeaker\About\PublishedFileId.txt" />
     <Content Include="MiningCo. AlertSpeaker\Defs\HeddifsDefs\Hediffs_Adrenaline.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. AlertSpeaker\Defs\ResearchProjectDefs\ResearchProjects_AlertSpeaker.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. AlertSpeaker\Defs\ResearchProjectDefs\ResearchTabs.xml" />
     <Content Include="MiningCo. AlertSpeaker\Defs\SoundDefs\Sounds_AlertSpeaker.xml">
       <SubType>Designer</SubType>
     </Content>

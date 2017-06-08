@@ -25,14 +25,14 @@ namespace CampfireParty
             throw new NotImplementedException();
         }
 
-        protected Toil ToilGetWanderCell(IntVec3 pyrePosition)
+        protected Toil ToilGetWanderCell(Building_Pyre pyre)
         {
             Toil toil = new Toil()
             {
                 initAction = () =>
                 {
                     IntVec3 cell;
-                    bool validCellIsFound = CellFinder.TryFindRandomReachableCellNear(pyrePosition, Building_Pyre.partyAreaRadius, TraverseParms.For(TraverseMode.NoPassClosedDoors, Danger.None), new Predicate<IntVec3>(this.IsValidCellToWander), null, out cell);
+                    bool validCellIsFound = CellFinder.TryFindRandomReachableCellNear(pyre.Position, pyre.Map, Building_Pyre.partyAreaRadius, TraverseParms.For(TraverseMode.NoPassClosedDoors, Danger.None), new Predicate<IntVec3>(this.IsValidCellToWander), null, out cell);
                     if (validCellIsFound)
                     {
                         this.CurJob.targetB = cell;
@@ -68,7 +68,7 @@ namespace CampfireParty
             {
                 return false;
             }
-            if (Find.PawnDestinationManager.DestinationIsReserved(cell))
+            if (Find.VisibleMap.pawnDestinationManager.DestinationIsReserved(cell))
             {
                 return false;
             }
@@ -81,7 +81,7 @@ namespace CampfireParty
             {
                 initAction = () =>
                 {
-                    Find.PawnDestinationManager.UnreserveAllFor(this.pawn);
+                    Find.VisibleMap.pawnDestinationManager.UnreserveAllFor(this.pawn);
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
             };

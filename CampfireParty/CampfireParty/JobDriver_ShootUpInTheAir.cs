@@ -30,7 +30,7 @@ namespace CampfireParty
             }
 
             toilsList.Add(base.ToilGetWanderCell(pyre.Position));
-            Find.PawnDestinationManager.ReserveDestinationFor(this.pawn, this.CurJob.targetB.Cell);
+            Find.VisibleMap.pawnDestinationManager.ReserveDestinationFor(this.pawn, this.CurJob.targetB.Cell);
             toilsList.Add(Toils_Goto.GotoCell(TargetIndex.B, PathEndMode.OnCell));
 
             // Add toils to shoot up in the air.

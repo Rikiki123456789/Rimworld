@@ -3,7 +3,7 @@
 
   <ResearchProjectDef>
     <defName>ResearchMobileMineralSonar</defName>
-    <label>MiningCo.: mobile mineral sonar</label>
+    <label>mobile mineral sonar</label>
     <description>Your miners are getting bored of drilling galleries which never lead to the precious ore pockets. One of them was a deep-space miner in his youth and used to enjoy using MiningCo. sonar devices and spoke about it with a researcher.
 You should give them some time to study the MiSoTech* core concept.
 
@@ -21,11 +21,14 @@ You should give them some time to study the MiSoTech* core concept.
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
+    <tab>MiningCo</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>1</researchViewY>
   </ResearchProjectDef>
 
   <ResearchProjectDef>
     <defName>ResearchMobileMineralSonarEnhancedScan</defName>
-    <label>MiningCo.: mobile mineral sonar: enhanced scan</label>
+    <label>mobile mineral sonar: enhanced scan</label>
     <description>By doing some code refactoring in the MiSoTech* noise reduction algorithms, your researchers could improve the mobile mineral sonar efficiency.
 
 - Improve the MiSoTech* to enhance the mobile mineral sonar efficiency.
@@ -49,10 +52,11 @@ You should give them some time to study the MiSoTech* core concept.
       <li>MultiAnalyzer</li>
     </requiredResearchFacilities>
     <researchMods>
-      <li>
-        <specialAction>MobileMineralSonar.Building_MobileMineralSonar.TryUpdateScanParameters</specialAction>
-      </li>
+      <li Class="MobileMineralSonar.ResearchMod_MobileMineralSonar"></li>
     </researchMods>
+    <tab>MiningCo</tab>
+    <researchViewX>1</researchViewX>
+    <researchViewY>1</researchViewY>
   </ResearchProjectDef>
 
 </ResearchProjectDefs>

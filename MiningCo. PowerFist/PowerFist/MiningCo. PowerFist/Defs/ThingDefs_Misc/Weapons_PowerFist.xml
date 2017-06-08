@@ -55,9 +55,10 @@
       <effectWorking>Smith</effectWorking>
       <soundWorking>Recipe_Smith</soundWorking>
       <recipeUsers>
-        <li>ElectricSmithy</li>
+        <li>TableMachining</li>
       </recipeUsers>
       <unfinishedThingDef>UnfinishedWeapon</unfinishedThingDef>
+      <researchPrerequisite>ResearchPowerFist</researchPrerequisite>
     </recipeMaker>
     <inspectorTabs>
       <li>ITab_Art</li>
@@ -84,7 +85,7 @@
       <Mass>5.0</Mass>
       <MeleeWeapon_DamageAmount>12</MeleeWeapon_DamageAmount>
       <MeleeWeapon_Cooldown>2.2</MeleeWeapon_Cooldown>
-      <MiningSpeed>0.05</MiningSpeed>
+      <MiningSpeed>0.15</MiningSpeed>
     </statBases>
     <equippedAngleOffset>-45</equippedAngleOffset>
     <verbs>

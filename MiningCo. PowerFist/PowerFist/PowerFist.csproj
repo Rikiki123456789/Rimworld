@@ -54,13 +54,20 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="MiningCo. PowerFist\About\About.xml" />
+    <Content Include="MiningCo. PowerFist\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MiningCo. PowerFist\About\Preview.png" />
+    <Content Include="MiningCo. PowerFist\About\PublishedFileId.txt" />
     <Content Include="MiningCo. PowerFist\Assemblies\MiningCo. PowerFist.dll" />
     <Content Include="MiningCo. PowerFist\Defs\DamageDefs\Damages_Electric.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. PowerFist\Defs\HediffDefs\Hediffs_Electric.xml" />
+    <Content Include="MiningCo. PowerFist\Defs\ResearchProjectDefs\ResearchProject_PowerFist.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. PowerFist\Defs\ResearchProjectDefs\ResearchTabs.xml" />
     <Content Include="MiningCo. PowerFist\Defs\Things_Special\PowerFistRepeller.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -73,8 +80,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. PowerFist\Assemblies"
-REM xcopy /Y /i /s "$(ProjectDir)\MiningCo. PowerFist" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. PowerFist"
-xcopy /Y /i /s "$(ProjectDir)\MiningCo. PowerFist" "C:\Users\Temp2\RimWorld1393Win\Mods\MiningCo. PowerFist"</PostBuildEvent>
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. PowerFist" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. PowerFist"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

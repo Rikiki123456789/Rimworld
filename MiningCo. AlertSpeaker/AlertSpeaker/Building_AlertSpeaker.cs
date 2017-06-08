@@ -526,6 +526,5 @@ namespace AlertSpeaker
         {
             soundIsActivated = !soundIsActivated;
         }
-
     }
 }

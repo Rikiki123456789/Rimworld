@@ -1,30 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ThingDefs>
 
-  <ThingDef Name="CavePlantGlowerBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactWood</soundImpactDefault>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Undefined</terrainAffordanceNeeded>
-    <graphicData>
-      <texPath>Things/Building/DummyTexture</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-    </graphicData>
-    <AltitudeLayer>Floor</AltitudeLayer>
-    <useHitPoints>false</useHitPoints>
-    <selectable>false</selectable>
-    <Size>(1,1)</Size>
-    <Passability>Standable</Passability>
-    <building>
-      <isInert>true</isInert>
-      <isEdifice>false</isEdifice>
-      <deconstructible>false</deconstructible>
-      <claimable>false</claimable>
-    </building>
-  </ThingDef>
-
-  <ThingDef ParentName="CavePlantGlowerBase">
+  <ThingDef ParentName="PlantGlowerBase">
     <defName>StoneGrassGlower</defName>
     <label>glowing stone grass</label>
     <Description>Soft light of stone grass.</Description>
@@ -36,7 +13,7 @@
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="CavePlantGlowerBase">
+  <ThingDef ParentName="PlantGlowerBase">
     <defName>GiantLeafGlower</defName>
     <label>glowing giant leaf</label>
     <Description>Energizing light of a juicy giant leaf.</Description>
@@ -48,7 +25,7 @@
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="CavePlantGlowerBase">
+  <ThingDef ParentName="PlantGlowerBase">
     <defName>DevilTongueGlower</defName>
     <label>glowing devil's tongue</label>
     <Description>Crimson light of an open devil's tongue.</Description>
@@ -60,7 +37,7 @@
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="CavePlantGlowerBase">
+  <ThingDef ParentName="PlantGlowerBase">
     <defName>CaveVineGlower</defName>
     <label>glowing cave vine</label>
     <Description>Deem light of a giant cave tree.</Description>
@@ -72,7 +49,7 @@
     </comps>
   </ThingDef>
 
-  <ThingDef ParentName="CavePlantGlowerBase">
+  <ThingDef ParentName="PlantGlowerBase">
     <defName>CaveLaceGlower</defName>
     <label>glowing cave lace</label>
     <Description>Crystal and subtle light of a cave lace.</Description>

@@ -11,8 +11,6 @@ using Verse.Sound;   // Needed when you do something with the Sound
 
 namespace CaveworldFlora
 {
-    // TODO: rework fungus textures when harvested.
-
     /// <summary>
     /// Building_FungiponicsBasin class.
     /// </summary>

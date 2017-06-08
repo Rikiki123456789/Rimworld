@@ -27,7 +27,7 @@ namespace LaserFence
 			}
 		}
 
-		public override bool HasJobOnThing(Pawn pawn, Thing t)
+        public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
 
             if ((t is Building_LaserFencePylon) == false)
@@ -54,7 +54,7 @@ namespace LaserFence
             return false;
 		}
 
-		public override Job JobOnThing(Pawn pawn, Thing t)
+		public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
             Building_LaserFencePylon pylon = t as Building_LaserFencePylon;
             Job job = new Job(DefDatabase<JobDef>.GetNamed("JobDef_SwitchLaserFence"), pylon);
