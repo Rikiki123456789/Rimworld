@@ -98,8 +98,6 @@ namespace LaserFence
 
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            base.Destroy(mode);
-
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
                 if (this.linkedPylons[directionAsInt] != null)
@@ -107,6 +105,7 @@ namespace LaserFence
                     this.DisconnectFromPylon(new Rot4(directionAsInt));
                 }
             }
+            base.Destroy(mode);
         }
 
         // ######## ExposeData ######## //
