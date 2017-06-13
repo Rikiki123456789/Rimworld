@@ -15,7 +15,7 @@ namespace PowerFist
     {
         private const float StunDurationFactor_Standard = 20f;
         private const float StunDurationFactor_EMP = 15f;
-
+        
         protected override bool TryCastShot()
         {
             bool castIsSuccesful = base.TryCastShot();
@@ -33,7 +33,7 @@ namespace PowerFist
                         return castIsSuccesful;
                     }
                     bool casterWearsPowerArmor = IsCasterWearingPowerArmor();
-                    int repelDurationInTicks = (int)repelProperties.repelDurationInTicks; //this.verbProps.meleeDamageBaseAmount; // meleeDamageBaseAmount is the repel duration in ticks.
+                    int repelDurationInTicks = (int)repelProperties.repelDurationInTicks;
                     float maxRepelDistance = 0;
                     float crushDamageFactor = 0;
                     float electricDamageFactor = 0;

@@ -24,12 +24,12 @@ namespace PowerFist
         {
             base.ExposeData();
 
-            Scribe_References.LookReference<Pawn>(ref this.targetPawn, "targetpawn");
-            Scribe_Values.LookValue<IntVec3>(ref this.repelVector, "repelVector");
-            Scribe_Values.LookValue<float>(ref this.repelDistance, "repelDistance");
-            Scribe_Values.LookValue<float>(ref this.repelDurationInTicks, "repelDurationInTicks");
-            Scribe_Values.LookValue<float>(ref this.repelTicks, "repelTicks");
-            Scribe_Values.LookValue<IntVec3>(ref this.initialRepelPosition, "initialRepelPosition");
+            Scribe_References.Look<Pawn>(ref this.targetPawn, "targetpawn");
+            Scribe_Values.Look<IntVec3>(ref this.repelVector, "repelVector");
+            Scribe_Values.Look<float>(ref this.repelDistance, "repelDistance");
+            Scribe_Values.Look<float>(ref this.repelDurationInTicks, "repelDurationInTicks");
+            Scribe_Values.Look<float>(ref this.repelTicks, "repelTicks");
+            Scribe_Values.Look<IntVec3>(ref this.initialRepelPosition, "initialRepelPosition");
         }
 
         public override void Tick()
