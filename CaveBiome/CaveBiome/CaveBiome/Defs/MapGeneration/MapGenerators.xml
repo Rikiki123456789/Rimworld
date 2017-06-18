@@ -3,21 +3,21 @@
 
   <GenStepDef>
     <defName>CaveElevation</defName>
-    <mapGenerator>BasicMapGenerator</mapGenerator>
+    <linkWithMapGenerator>BasicMap</linkWithMapGenerator>
     <order>11</order>
     <genStep Class="CaveBiome.GenStep_CaveElevation"/>
   </GenStepDef>
 
   <GenStepDef>
     <defName>CaveRiver</defName>
-    <mapGenerator>BasicMapGenerator</mapGenerator>
+    <linkWithMapGenerator>BasicMap</linkWithMapGenerator>
     <order>211</order>
     <genStep Class="CaveBiome.GenStep_CaveRiver"/>
   </GenStepDef>
 
   <GenStepDef>
     <defName>CaveRoof</defName>
-    <mapGenerator>BasicMapGenerator</mapGenerator>
+    <linkWithMapGenerator>BasicMap</linkWithMapGenerator>
     <order>212</order>
     <genStep Class="CaveBiome.GenStep_CaveRoof"/>
   </GenStepDef>
@@ -25,14 +25,14 @@
   <!-- Voluntarily override the base GenStep. -->
   <GenStepDef>
     <defName>FindPlayerStartSpot</defName>
-    <mapGenerator>BasicMapGenerator</mapGenerator>
+    <linkWithMapGenerator>BasicMap</linkWithMapGenerator>
     <order>600</order>
     <genStep Class="CaveBiome.GenStep_CaveFindPlayerStartSpot"/>
   </GenStepDef>
 
   <GenStepDef>
-    <defName>GenStep_CaveInitializeWeatherAndLight</defName>
-    <mapGenerator>BasicMapGenerator</mapGenerator>
+    <defName>CaveInitializeWeatherAndLight</defName>
+    <linkWithMapGenerator>BasicMap</linkWithMapGenerator>
     <order>701</order>
     <genStep Class="CaveBiome.GenStep_CaveInitializeWeatherAndLight"/>
   </GenStepDef>
@@ -40,7 +40,7 @@
   <!-- Voluntarily override the base GenStep. -->
   <GenStepDef>
     <defName>Plants</defName>
-    <mapGenerator>BasicMapGenerator</mapGenerator>
+    <linkWithMapGenerator>BasicMap</linkWithMapGenerator>
     <order>800</order>
     <genStep Class="CaveBiome.GenStep_CavePlants"/>
   </GenStepDef>

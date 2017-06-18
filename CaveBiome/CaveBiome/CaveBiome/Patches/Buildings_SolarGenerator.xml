@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/Buildings/ThingDef[defName = "SolarGenerator"]/placeWorkers</xpath>
+        <success>Invert</success>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/Buildings/ThingDef[defName = "SolarGenerator"]</xpath>
+        <value>
+          <placeWorkers/>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/Buildings/ThingDef[defName = "SolarGenerator"]/placeWorkers</xpath>
+    <value>
+      <li>CaveBiome.PlaceWorker_NotInCave</li>
+    </value>
+  </Operation>
+
+</Patch>

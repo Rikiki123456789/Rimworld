@@ -32,8 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.16.6197.26833, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="CaveworldFlora, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -46,8 +45,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="UnityEngine">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
@@ -57,12 +55,9 @@
     <Compile Include="IncidentWorker_FlashstormCave.cs" />
     <Compile Include="PlaceWorker_OnlyInCave.cs" />
     <Compile Include="PlaceWorker_NotInCave.cs" />
-    <Compile Include="Building_PsychicShipPartCopy.cs" />
-    <Compile Include="Building_PoisonShipPartCopy.cs" />
-    <Compile Include="Building_CrashedShipPartCopy.cs" />
     <Compile Include="Building_AnimalCorpsesGenerator.cs" />
     <Compile Include="Building_VillagerCorpsesGenerator.cs" />
-    <Compile Include="IncidentWorker_RefugeePodCrashInCaveInCave.cs" />
+    <Compile Include="IncidentWorker_RefugeePodCrashInCave.cs" />
     <Compile Include="IncidentWorker_ResourcePodCrashInCave.cs" />
     <Compile Include="IncidentWorker_ShipChunkDropInCave.cs" />
     <Compile Include="IncidentWorker_PoisonShipPartCrashInCave.cs" />
@@ -72,7 +67,7 @@
     <Compile Include="Util_CaveBiome.cs" />
     <Compile Include="BiomeWorker_Cave.cs" />
     <Compile Include="GenStep_CavePlants.cs" />
-    <Compile Include="MapCondition_Cave.cs" />
+    <Compile Include="GameCondition_Cave.cs" />
     <Compile Include="GenStep_CaveInitializeWeatherAndLight.cs" />
     <Compile Include="GenStep_FindPlayerStartSpot.cs" />
     <Compile Include="GenStep_CaveRoof.cs" />
@@ -83,16 +78,11 @@
     <Content Include="CaveBiome\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="CaveBiome\About\Preview.png" />
+    <Content Include="CaveBiome\About\PublishedFileId.txt" />
     <Content Include="CaveBiome\Defs\BiomeDefs\Biomes_Cave.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\Incidents\Incidents_Various_Bad.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="CaveBiome\Defs\Incidents\Incidents_ThreatsBig.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="CaveBiome\Defs\Incidents\Incidents_Various_Good.xml" />
     <Content Include="CaveBiome\Defs\MapConditionDefs\MapConditions_Cave.xml" />
     <Content Include="CaveBiome\Defs\MapGeneration\MapGenerators.xml">
       <SubType>Designer</SubType>
@@ -100,23 +90,41 @@
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_Base.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_Mortars.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveRoof.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveWell.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CaveWell.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_CrystalLamp.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_SolarGenerator.xml" />
-    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_ShipPartInCave.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_UnderwaterPowerConduit.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_MinableColdCrystal.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_MortarsCave.xml" />
+    <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Buildings_MortarsLowTrajectory.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Buildings\Building_Special_CorpsesGenerator.xml" />
     <Content Include="CaveBiome\Defs\ThingDefs_Items\Items_Resource_ColdCrystal.xml" />
     <Content Include="CaveBiome\Defs\WeatherDefs\Weathers.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Patches\Incidents_Map_Special.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Patches\Incidents_Map_Misc.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Patches\Incidents_Map_Threats.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Patches\Buildings_SolarGenerator.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Patches\Buildings_Mortars.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="CaveBiome\Patches\Terrain_Water.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="CaveBiome\Textures\Things\Building\DummyTexture.png" />

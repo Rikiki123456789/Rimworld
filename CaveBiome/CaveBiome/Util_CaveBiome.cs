@@ -48,11 +48,11 @@ namespace CaveBiome
             }
         }
 
-        public static MapConditionDef CaveEnvironmentMapConditionDef
+        public static GameConditionDef CaveEnvironmentGameConditionDef
         {
             get
             {
-                return MapConditionDef.Named("CaveEnvironment");
+                return GameConditionDef.Named("CaveEnvironment");
             }
         }
 

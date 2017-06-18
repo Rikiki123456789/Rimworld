@@ -22,8 +22,8 @@ namespace CaveBiome
             // To avoid starting with standard Clear weather, immediately force to reselect a cave biome weather.
             map.weatherDecider.StartNextWeather();
 
-            MapCondition condition = MapConditionMaker.MakeConditionPermanent(Util_CaveBiome.CaveEnvironmentMapConditionDef);
-            map.mapConditionManager.RegisterCondition(condition);
+            GameCondition condition = GameConditionMaker.MakeConditionPermanent(Util_CaveBiome.CaveEnvironmentGameConditionDef);
+            map.gameConditionManager.RegisterCondition(condition);
         }
     }
 }

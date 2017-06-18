@@ -37,8 +37,11 @@ namespace CaveBiome
 
 		public static float glowRadiusCaveWellDay = 10f;
 		public static float glowRadiusCaveWellNight = 0f;
-		
-		public static ColorInt baseGlowColor = new ColorInt(370, 370, 370);
+
+        public const float lightRadiusCaveWellMin = 0f;
+        public const float lightRadiusCaveWellMax = 10f;
+
+        public static ColorInt baseGlowColor = new ColorInt(370, 370, 370);
 		public static ColorInt currentGlowColor = new ColorInt(0, 0, 0);
 
         public MapComponent_CaveWellLight(Map map) : base(map)
@@ -50,8 +53,8 @@ namespace CaveBiome
         {
             base.ExposeData();
 
-            Scribe_Values.LookValue<bool>(ref MapComponent_CaveWellLight.plantsMessageHasBeenSent, "plantsMessageHasBeenSent");
-            Scribe_Values.LookValue<bool>(ref MapComponent_CaveWellLight.growingMessageHasBeenSent, "growingMessageHasBeenSent");
+            Scribe_Values.Look<bool>(ref MapComponent_CaveWellLight.plantsMessageHasBeenSent, "plantsMessageHasBeenSent");
+            Scribe_Values.Look<bool>(ref MapComponent_CaveWellLight.growingMessageHasBeenSent, "growingMessageHasBeenSent");
             if (Scribe.mode == LoadSaveMode.PostLoadInit)
             {
                 MapComponentTick();
@@ -64,53 +67,60 @@ namespace CaveBiome
             {
                 return;
             }
-              // Shut down light when there is an eclipse.
-              /*if (this.map.mapConditionManager.ConditionIsActive(MapConditionDefOf.Eclipse))
-              {
-                  ... // TODO: eclipse.
-              }*/
+
             if (Find.TickManager.TicksGame >= nextLightCheckTick)
             {
-                nextLightCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
-				float gamehour = 24f*GenDate.DayPercent(Find.TickManager.TicksAbs, Find.WorldGrid.LongLatOf(map.Tile).x);
-				//TODO: could refine to accommodate axial tilt, such that high latitudes will have "midnight sun" growing areas... nifty
 
-				float sunriseProgress = Math.Max(0f, gamehour - sunriseBeginHour) / (sunriseEndHour-sunriseBeginHour);
+                nextLightCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
+                float gamehour = GenDate.HoursPerDay * GenDate.DayPercent(Find.TickManager.TicksAbs, Find.WorldGrid.LongLatOf(map.Tile).x); // TODO: could refine to accommodate axial tilt, such that high latitudes will have "midnight sun" growing areas... nifty.
+                float sunriseProgress = Math.Max(0f, gamehour - sunriseBeginHour) / (sunriseEndHour-sunriseBeginHour);
 				float sunsetProgress = Math.Max(0f, gamehour - sunsetBeginHour) / (sunsetEndHour-sunsetBeginHour);
 				float caveWellBrightness = 0.0f;
-				
-				if(gamehour < sunriseBeginHour) {
-					caveWellBrightness = brightnessCaveWellMin;
-					}
-				else if(gamehour < sunriseEndHour) {
-					//Messages.Message("Current gamehour is: " + gamehour + ", sunriseProgress is:" + sunriseProgress, MessageSound.Silent);
-					caveWellBrightness = sunriseProgress*brightnessCaveWellMax;
-					}
-				else if(gamehour < sunsetBeginHour) {
-					caveWellBrightness = brightnessCaveWellMax;
-					}
-				else if(gamehour < sunsetEndHour) {
-					//Messages.Message("Current gamehour is: " + gamehour + ", sunsetProgress is:" + sunsetProgress, MessageSound.Silent);
-					caveWellBrightness = 1 - sunsetProgress*brightnessCaveWellMax;
-					}
-				else {
-					caveWellBrightness = brightnessCaveWellMin;
-					}
-				
-				currentGlowColor.r = (int)(caveWellBrightness*caveWellBrightness * baseGlowColor.r);
-				currentGlowColor.g = (int)(caveWellBrightness*caveWellBrightness * baseGlowColor.g);
-				currentGlowColor.b = (int)(caveWellBrightness*caveWellBrightness * baseGlowColor.b);
+
+                // Shut down light when there is an eclipse.
+                if (this.map.gameConditionManager.ConditionIsActive(GameConditionDefOf.Eclipse))
+                {
+                    caveWellBrightness = 0.0f;
+                }
+                else
+                {
+                    if (gamehour < sunriseBeginHour)
+                    {
+                        caveWellBrightness = brightnessCaveWellMin;
+                    }
+                    else if (gamehour < sunriseEndHour)
+                    {
+                        caveWellBrightness = sunriseProgress * brightnessCaveWellMax;
+                    }
+                    else if (gamehour < sunsetBeginHour)
+                    {
+                        caveWellBrightness = brightnessCaveWellMax;
+                    }
+                    else if (gamehour < sunsetEndHour)
+                    {
+                        caveWellBrightness = 1 - sunsetProgress * brightnessCaveWellMax;
+                    }
+                    else
+                    {
+                        caveWellBrightness = brightnessCaveWellMin;
+                    }
+                }
+
+                currentGlowColor.r = (int)(caveWellBrightness * caveWellBrightness * baseGlowColor.r);
+				currentGlowColor.g = (int)(caveWellBrightness * caveWellBrightness * baseGlowColor.g);
+				currentGlowColor.b = (int)(caveWellBrightness * caveWellBrightness * baseGlowColor.b);
 				
 				List<Thing> caveWellsList = map.listerThings.ThingsOfDef(Util_CaveBiome.CaveWellDef);
-				foreach (Thing caveWell in caveWellsList) {
-					SetWellBrightness(caveWell, caveWellBrightness);
-					}
+                foreach (Thing caveWell in caveWellsList)
+                {
+                    SetCaveWellBrightness(caveWell, caveWellBrightness);
+                }
 				
                 if ((MapComponent_CaveWellLight.plantsMessageHasBeenSent == false)
                     && (gamehour >= sunriseBeginHour + 1))
                 {
                     Find.LetterStack.ReceiveLetter("Cave plants", "In caves, most cave plants can be useful so look around!\n- some plants like giant leafs can be cooked,\n- others like cave vine are hard enough to be used like wood,\n- and some like devil's tongue provide useful fibrous material.\n\nBeware, though! Caves are a hard place to live and some plants may be dangerous.",
-                        LetterType.Good);
+                        LetterDefOf.Good);
                     MapComponent_CaveWellLight.plantsMessageHasBeenSent = true;
                 }
                 if ((MapComponent_CaveWellLight.growingMessageHasBeenSent == false)
@@ -120,45 +130,42 @@ namespace CaveBiome
                         && (MapGenerator.PlayerStartSpot != IntVec3.Zero)) // Checking PlayerStartSpot validity will still raise an error message if it is invalid.
                     {
                         Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
-                            LetterType.Good, new RimWorld.Planet.GlobalTargetInfo(MapGenerator.PlayerStartSpot, this.map));
+                            LetterDefOf.Good, new RimWorld.Planet.GlobalTargetInfo(MapGenerator.PlayerStartSpot, this.map));
                     }
                     else
                     {
                         Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
-                            LetterType.Good);
+                            LetterDefOf.Good);
                     }
                     MapComponent_CaveWellLight.growingMessageHasBeenSent = true;
                 }
             }
         }
 
-		public void InstantiateGlow() {
-			CompProperties compProps = DefDatabase<ThingDef>.GetNamed("CaveWell").CompDefFor<CompGlower>();
-			if(compProps is CompProperties_Glower) {
-				CompProperties_Glower glowerCompProps = (CompProperties_Glower)compProps;
-				baseGlowColor.r = glowerCompProps.glowColor.r;
-				baseGlowColor.g = glowerCompProps.glowColor.g;
-				baseGlowColor.b = glowerCompProps.glowColor.b;
+        public void InstantiateGlow()
+        {
+            CompProperties compProps = DefDatabase<ThingDef>.GetNamed("CaveWell").CompDefFor<CompGlower>();
+            if (compProps is CompProperties_Glower)
+            {
+                CompProperties_Glower glowerCompProps = (CompProperties_Glower)compProps;
+                baseGlowColor.r = glowerCompProps.glowColor.r;
+                baseGlowColor.g = glowerCompProps.glowColor.g;
+                baseGlowColor.b = glowerCompProps.glowColor.b;
 
-				glowRadiusCaveWellDay = glowerCompProps.glowRadius;
-				}
-			}
+                glowRadiusCaveWellDay = glowerCompProps.glowRadius;
+            }
+        }
         
-        public void SetWellBrightness(Thing caveWell, float intensity)
+        public void SetCaveWellBrightness(Thing caveWell, float intensity)
         {
 			CompGlower glowerComp = caveWell.TryGetComp<CompGlower>();
-			if(glowerComp is CompGlower) {
-				if(intensity <= 0f) {
-					glowerComp.Props.glowRadius = glowRadiusCaveWellNight;
-					glowerComp.Props.overlightRadius = glowRadiusCaveWellNight;
-					}
-				else {
-					glowerComp.Props.glowRadius = glowRadiusCaveWellDay;
-					glowerComp.Props.overlightRadius = glowRadiusCaveWellDay;
-					}
-				glowerComp.Props.glowColor = currentGlowColor;
+            if (glowerComp is CompGlower)
+            {
+                glowerComp.Props.glowRadius = intensity * lightRadiusCaveWellMax;
+                glowerComp.Props.overlightRadius = intensity * lightRadiusCaveWellMax;
+                glowerComp.Props.glowColor = currentGlowColor;
                 caveWell.Map.glowGrid.MarkGlowGridDirty(caveWell.Position);
-				}
+            }
         }
     }
 }

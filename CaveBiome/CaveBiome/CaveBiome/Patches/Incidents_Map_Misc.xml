@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/IncidentDef[defName = "Flashstorm"]/workerClass</xpath>
+    <value>
+      <workerClass>CaveBiome.IncidentWorker_FlashstormCave</workerClass>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/IncidentDef[defName = "RefugeePodCrash"]/workerClass</xpath>
+    <value>
+      <workerClass>CaveBiome.IncidentWorker_RefugeePodCrashInCave</workerClass>
+    </value>
+  </Operation>
+  <Operation Class="PatchOperationReplace">
+    <xpath>/Defs/IncidentDef[defName = "ResourcePodCrash"]/workerClass</xpath>
+    <value>
+      <workerClass>CaveBiome.IncidentWorker_ResourcePodCrashInCave</workerClass>
+    </value>
+  </Operation>
+
+</Patch>

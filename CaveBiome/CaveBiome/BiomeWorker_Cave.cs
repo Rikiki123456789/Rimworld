@@ -13,15 +13,16 @@ namespace CaveBiome
     // TODO: add solar panel placed near glowing crystal?
     // TODO: add some insect hives with a limit of size? Modify hive class to limit reproduction?
     // TODO: Try to correct incoming caravans establishing a new colony without visibility.
-    // TODO: add underwater power conduits and bridges?! Oh yeah!
-    // TODO: correct cave well light during eclipse.
     // TODO: correct cave well light inside roofed buildings.
+    // TODO: use patches for mortar/incidents/solarpanels.
+    // TODO: remove shipPartInCave
 
     public class BiomeWorker_Cave : BiomeWorker
     {
         public override float GetScore(Tile tile)
         {
-            if (tile.hilliness != Hilliness.Mountainous)
+            if ((tile.hilliness != Hilliness.Mountainous)
+                && (tile.hilliness != Hilliness.LargeHills))
             {
                 return -100f;
             }

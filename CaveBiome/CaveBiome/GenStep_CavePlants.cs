@@ -26,7 +26,8 @@ namespace CaveBiome
                 return;
             }
             
-            map.regionAndRoomUpdater.Enabled = false;
+            // Enabled it to avoid error while checking new plant can be spawned nearby in same room.
+            map.regionAndRoomUpdater.Enabled = true;
             List<ThingDef_ClusterPlant> wildCavePlants = new List<ThingDef_ClusterPlant>();
             Dictionary<ThingDef_ClusterPlant, float> wildCavePlantsWeighted = new Dictionary<ThingDef_ClusterPlant, float>();
             foreach (ThingDef def in map.Biome.AllWildPlants)
@@ -70,7 +71,6 @@ namespace CaveBiome
                     }
                 }
             }
-            map.regionAndRoomUpdater.Enabled = true;
         }
 
         public static void GrowCluster(ClusterPlant plant, bool clusterIsMature)

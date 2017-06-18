@@ -25,7 +25,7 @@ namespace CaveBiome
                 // Nothing to do.
                 return;
             }
-
+            
             // Get river origin side.
             int riverEntrySideAsInt = Rand.RangeInclusive(2, 3);
             int riverExitSideAsInt = (riverEntrySideAsInt + 2) % 4;
@@ -110,15 +110,19 @@ namespace CaveBiome
                             continue;
                         }
                         TerrainDef terrain = map.terrainGrid.TerrainAt(cell);
-                        // Do not change stony terrains.
+                        // Do not change stony terrains and do not put mud on top of existing water patch.
                         if ((terrain.defName.Contains("Rough") == false)
                             && (terrain != TerrainDefOf.WaterShallow)
-                            && (terrain != TerrainDefOf.WaterDeep))
+                            && (terrain != TerrainDefOf.WaterDeep)
+                            && (terrain != TerrainDefOf.WaterOceanShallow)
+                            && (terrain != TerrainDefOf.WaterOceanDeep)
+                            && (terrain != TerrainDefOf.WaterMovingShallow)
+                            && (terrain != TerrainDefOf.WaterMovingDeep))
                         {
                             map.terrainGrid.SetTerrain(cell, TerrainDef.Named("Mud"));
                         }
                     }
-                    // Generate shallow water and remove building/roof.
+                    // Generate shallow moving water and remove building.
                     foreach (IntVec3 cell in GenRadial.RadialCellsAround(point, width, true))
                     {
                         if (cell.InBounds(map) == false)
@@ -130,14 +134,12 @@ namespace CaveBiome
                         {
                             building.Destroy();
                         }
-                        if (map.roofGrid.Roofed(cell))
-                        {
-                            map.roofGrid.SetRoof(cell, null);
-                        }
                         TerrainDef terrain = map.terrainGrid.TerrainAt(cell);
-                        if (terrain != TerrainDefOf.WaterDeep)
+                        if ((terrain != TerrainDefOf.WaterDeep)
+                            && (terrain != TerrainDefOf.WaterMovingDeep)
+                            &&( terrain != TerrainDefOf.WaterOceanDeep))
                         {
-                            map.terrainGrid.SetTerrain(cell, TerrainDefOf.WaterShallow);
+                            map.terrainGrid.SetTerrain(cell, TerrainDefOf.WaterMovingShallow);
                         }
                     }
                     // Generate deep water.
@@ -149,7 +151,7 @@ namespace CaveBiome
                             {
                                 continue;
                             }
-                            map.terrainGrid.SetTerrain(cell, TerrainDefOf.WaterDeep);
+                            map.terrainGrid.SetTerrain(cell, TerrainDefOf.WaterMovingDeep);
                         }
                     }
                 }
@@ -163,6 +165,7 @@ namespace CaveBiome
             {
                 offset = new IntVec3(0, 0, 8);
             }
+            // Set player start spot.
             MapGenerator.PlayerStartSpot = new IntVec3(riverCoordinates[riverCoordinates.Count / 2]) + offset;
         }
     }

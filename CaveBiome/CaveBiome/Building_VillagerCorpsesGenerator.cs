@@ -51,7 +51,7 @@ namespace CaveBiome
 
         public static void KillAndRotPawn(Pawn pawn, float rotProgressInTicks)
         {
-            HealthUtility.GiveInjuriesToKill(pawn);
+            HealthUtility.DamageUntilDead(pawn);
             foreach (Thing thing in pawn.Position.GetThingList(pawn.MapHeld))
             {
                 if (thing.def.defName.Contains("Corpse"))

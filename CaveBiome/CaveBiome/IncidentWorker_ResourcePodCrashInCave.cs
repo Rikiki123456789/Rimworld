@@ -77,7 +77,7 @@ namespace CaveBiome
             if (intVec.IsValid)
             {
                 DropPodUtility.DropThingsNear(intVec, map, list, 110, false, true, true);
-                Find.LetterStack.ReceiveLetter("LetterLabelCargoPodCrash".Translate(), "CargoPodCrash".Translate(), LetterType.Good, new GlobalTargetInfo(intVec, map), null);
+                Find.LetterStack.ReceiveLetter("LetterLabelCargoPodCrash".Translate(), "CargoPodCrash".Translate(), LetterDefOf.Good, new GlobalTargetInfo(intVec, map), null);
                 return true;
             }
             return false;

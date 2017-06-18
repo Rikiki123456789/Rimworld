@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarBomb"]/placeWorkers</xpath>
+        <success>Invert</success>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarBomb"]</xpath>
+        <value>
+          <placeWorkers/>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarBomb"]/placeWorkers</xpath>
+    <value>
+      <li>CaveBiome.PlaceWorker_NotInCave</li>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarIncendiary"]/placeWorkers</xpath>
+        <success>Invert</success>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarIncendiary"]</xpath>
+        <value>
+          <placeWorkers/>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarIncendiary"]/placeWorkers</xpath>
+    <value>
+      <li>CaveBiome.PlaceWorker_NotInCave</li>
+    </value>
+  </Operation>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationTest">
+        <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarEMP"]/placeWorkers</xpath>
+        <success>Invert</success>
+      </li>
+      <li Class="PatchOperationAdd">
+        <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarEMP"]</xpath>
+        <value>
+          <placeWorkers/>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>/ThingDefs/ThingDef[defName = "Turret_MortarEMP"]/placeWorkers</xpath>
+    <value>
+      <li>CaveBiome.PlaceWorker_NotInCave</li>
+    </value>
+  </Operation>
+
+</Patch>

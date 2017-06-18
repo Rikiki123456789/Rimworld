@@ -7,9 +7,10 @@
     <description>Deep under the surface, millenia after millenia, the wind, water and lava shape gigantic cave networks. Only ways in and out are through labyrinthic endless galleries or bright cave wells. A rich fauna seek shelter and food in these galleries... or just get lost like you.</description>
     <workerClass>CaveBiome.BiomeWorker_Cave</workerClass>
     <animalDensity>3.0</animalDensity>
-    <plantDensity>0.83</plantDensity>
+    <plantDensity>0</plantDensity>
     <texture>World/Biomes/Cave</texture>
     <factionBaseSelectionWeight>0</factionBaseSelectionWeight>
+    <allowRivers>false</allowRivers>
     <pathCost>
       <points>
         <li>(0, 50000)</li>
@@ -94,7 +95,7 @@
     <baseWeatherCommonalities>
       <CaveCalm>18</CaveCalm>
       <CaveStorm>4</CaveStorm>
-      <CaveFog>2</CaveFog>
+      <CaveFog>8</CaveFog>
       <CaveHardSnow>4</CaveHardSnow>
     </baseWeatherCommonalities>
     <wildPlants>

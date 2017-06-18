@@ -29,13 +29,13 @@ namespace CaveBiome
                 return false;
             }
             Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.Spacer);
-			PawnGenerationRequest request = new PawnGenerationRequest(PawnKindDefOf.SpaceRefugee, faction, PawnGenerationContext.NonPlayer, null, false, false, false, false, true, false, 20f, false, true, true, null, null, null, null, null, null);
+            PawnGenerationRequest request = new PawnGenerationRequest(PawnKindDefOf.SpaceRefugee, faction, PawnGenerationContext.NonPlayer, -1, false, false, false, false, true, false, 20f, false, true, true, false, false, null, null, null, null, null, null);
             Pawn pawn = PawnGenerator.GeneratePawn(request);
-            HealthUtility.GiveInjuriesToForceDowned(pawn);
+            HealthUtility.DamageUntilDowned(pawn);
             string label = "LetterLabelRefugeePodCrash".Translate();
             string text = "RefugeePodCrash".Translate();
             PawnRelationUtility.TryAppendRelationsWithColonistsInfo(ref text, ref label, pawn);
-            Find.LetterStack.ReceiveLetter(label, text, LetterType.BadNonUrgent, new GlobalTargetInfo(intVec, map, false), null);
+            Find.LetterStack.ReceiveLetter(label, text, LetterDefOf.BadNonUrgent, new GlobalTargetInfo(intVec, map, false), null);
             DropPodUtility.MakeDropPodAt(intVec, map, new ActiveDropPodInfo
             {
                 SingleContainedThing = pawn,

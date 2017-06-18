@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+  <Operation Class="PatchOperationReplace">
+    <xpath>/IncidentDefs/IncidentDef[defName = "ShipChunkDrop"]/workerClass</xpath>
+    <value>
+      <workerClass>CaveBiome.IncidentWorker_ShipChunkDropInCave</workerClass>
+    </value>
+  </Operation>
+  
+  
+</Patch>

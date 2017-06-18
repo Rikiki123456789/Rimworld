@@ -41,12 +41,9 @@ namespace CaveBiome
                 }
 			}
 
-            // Update regions and rooms to be able to use the CanReachMapEdge function to find goo cave well spots.
-            DeepProfiler.Start("RebuildAllRegionsBeforeCaveWells");
+            // Update regions and rooms to be able to use the CanReachMapEdge function to find good cave well spots.
             map.regionAndRoomUpdater.Enabled = true;
             map.regionAndRoomUpdater.RebuildAllRegionsAndRooms();
-            map.regionAndRoomUpdater.Enabled = false;
-            DeepProfiler.End();
 
             // Get cave wells position.
             caveWellsPosition = GetCaveWellsPosition(map);
@@ -75,11 +72,7 @@ namespace CaveBiome
 
             // TODO: should correct null region error? May be due to artificial buildings. River should avoid this.
             // Update regions and rooms now that cave wells are spawned.
-            DeepProfiler.Start("RebuildAllRegionsAfterCaveWells");
-            map.regionAndRoomUpdater.Enabled = true;
             map.regionAndRoomUpdater.RebuildAllRegionsAndRooms();
-            map.regionAndRoomUpdater.Enabled = false;
-            DeepProfiler.End();
 		}
 
         private static List<IntVec3> GetCaveWellsPosition(Map map)
@@ -205,7 +198,7 @@ namespace CaveBiome
         private static void SpawnRitualStone(Map map, IntVec3 position)
         {
             // Set terrain.
-            SetCellsInRadiusTerrain(map, position, 2.5f, TerrainDef.Named("TileSlate"));
+            SetCellsInRadiusTerrain(map, position, 2.5f, TerrainDef.Named("FlagstoneSlate"));
             // Spawn ritual stone.
             Thing thing = ThingMaker.MakeThing(ThingDef.Named("Sarcophagus"), ThingDef.Named("BlocksSlate"));
             GenSpawn.Spawn(thing, position + new IntVec3(0, 0, -1), map);
@@ -291,12 +284,18 @@ namespace CaveBiome
                 {
                     continue;
                 }
-                if (terrain != TerrainDefOf.WaterDeep)
+                if ((terrain != TerrainDefOf.WaterDeep)
+                    && (terrain != TerrainDefOf.WaterOceanDeep)
+                    && (terrain != TerrainDefOf.WaterMovingDeep))
                 {
-                    // Excepted when adding deep water, do not touch to water/marsh patches.
+                    // Excepted when adding water, do not touch to water/marsh patches.
                     TerrainDef cellTerrain = map.terrainGrid.TerrainAt(cell);
                     if ((cellTerrain == TerrainDefOf.WaterDeep)
+                        || (cellTerrain == TerrainDefOf.WaterMovingDeep)
+                        || (cellTerrain == TerrainDefOf.WaterOceanDeep)
                         || (cellTerrain == TerrainDefOf.WaterShallow)
+                        || (cellTerrain == TerrainDefOf.WaterMovingShallow)
+                        || (cellTerrain == TerrainDefOf.WaterOceanShallow)
                         || (cellTerrain == TerrainDef.Named("Marsh")))
                     {
                         continue;

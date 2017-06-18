@@ -72,7 +72,7 @@ namespace CaveBiome
                     break;
                 }
                 GenExplosion.DoExplosion(spawnCell, map, 3f, DamageDefOf.Flame, null, null, null, null, null, 0f, 1, false, null, 0f, 1);
-                Building_CrashedShipPartCopy building_CrashedShipPart = (Building_CrashedShipPartCopy)GenSpawn.Spawn(this.def.shipPart, spawnCell, map);
+                Building_CrashedShipPart building_CrashedShipPart = (Building_CrashedShipPart)GenSpawn.Spawn(this.def.shipPart, spawnCell, map);
                 building_CrashedShipPart.SetFaction(Faction.OfMechanoids, null);
                 building_CrashedShipPart.pointsLeft = parms.points * ShipPointsFactor;
                 if (building_CrashedShipPart.pointsLeft < IncidentMinimumPoints)
@@ -85,7 +85,7 @@ namespace CaveBiome
             if (num > 0)
             {
                 Find.CameraDriver.shaker.DoShake(1f);
-                Find.LetterStack.ReceiveLetter(this.def.letterLabel, this.def.letterText, this.def.letterType, new TargetInfo(vec, map, false), null);
+                Find.LetterStack.ReceiveLetter(this.def.letterLabel, this.def.letterText, this.def.letterDef, new TargetInfo(vec, map, false), null);
             }
             return num > 0;
         }
