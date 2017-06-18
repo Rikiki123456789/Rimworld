@@ -55,8 +55,8 @@
     <Compile Include="Alert_AquaponicBasinNeedsAquaponicHopper.cs" />
     <Compile Include="Building_AquacultureHopper.cs" />
     <Compile Include="Alert_AquaponicBasinNotBreeding.cs" />
-    <Compile Include="Item_Oyster - Copier.cs" />
     <Compile Include="Item_Oyster.cs" />
+    <Compile Include="PatchOperationCheckForCaveBiome.cs" />
     <Compile Include="IncidentWorker_MicroFungus.cs" />
     <Compile Include="WorkGiver_FillAquaponicHopper.cs" />
     <Compile Include="PlaceWorker_AquacultureHopper.cs" />
