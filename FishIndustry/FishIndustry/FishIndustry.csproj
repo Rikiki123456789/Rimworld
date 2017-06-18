@@ -55,6 +55,7 @@
     <Compile Include="Alert_AquaponicBasinNeedsAquaponicHopper.cs" />
     <Compile Include="Building_AquacultureHopper.cs" />
     <Compile Include="Alert_AquaponicBasinNotBreeding.cs" />
+    <Compile Include="Item_Oyster - Copier.cs" />
     <Compile Include="Item_Oyster.cs" />
     <Compile Include="IncidentWorker_MicroFungus.cs" />
     <Compile Include="WorkGiver_FillAquaponicHopper.cs" />
@@ -123,6 +124,9 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Patches\FishMeatTexture.xml" />
+    <Content Include="FishIndustry\Patches\Races_Animal_Fish_Cave.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="FishIndustry\Patches\Terrain_Natural.xml" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureBasin.png" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureHopper.png" />

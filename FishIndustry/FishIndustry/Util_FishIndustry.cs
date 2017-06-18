@@ -220,12 +220,12 @@ namespace FishIndustry
         public static bool IsAquaticTerrain(Map map, IntVec3 position)
         {
             TerrainDef terrainDef = map.terrainGrid.TerrainAt(position);
-            if ((terrainDef == TerrainDef.Named("WaterShallow"))
-                || (terrainDef == TerrainDef.Named("WaterOceanShallow"))
-                || (terrainDef == TerrainDef.Named("WaterMovingShallow"))
-                || (terrainDef == TerrainDef.Named("WaterDeep"))
-                || (terrainDef == TerrainDef.Named("WaterOceanDeep"))
-                || (terrainDef == TerrainDef.Named("WaterMovingDeep"))
+            if ((terrainDef == TerrainDefOf.WaterShallow)
+                || (terrainDef == TerrainDefOf.WaterOceanShallow)
+                || (terrainDef == TerrainDefOf.WaterMovingShallow)
+                || (terrainDef == TerrainDefOf.WaterDeep)
+                || (terrainDef == TerrainDefOf.WaterOceanDeep)
+                || (terrainDef == TerrainDefOf.WaterMovingDeep)
                 || (terrainDef == TerrainDef.Named("Marsh")))
             {
                 return true;
@@ -270,10 +270,6 @@ namespace FishIndustry
                         fishSpeciesList.Add(fishDef);
                     }
                 }
-            }
-            if (fishSpeciesList.NullOrEmpty())
-            {
-                Log.Warning("FishIndustry: did not found any fish species.");
             }
             return fishSpeciesList;
         }

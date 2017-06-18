@@ -8,22 +8,27 @@ using UnityEngine;   // Always needed
 using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 using Verse.AI;    // Needed when you do something with the AI
-using System.Xml;
 //using Verse.Sound; // Needed when you do something with the Sound
 
 namespace FishIndustry
 {
     /// <summary>
-    /// PatchOperationCheckForCaveBiome class.
+    /// Item_Oyster class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    class PatchOperationCheckForCaveBiome : PatchOperation
+    class Item_Oyster : ThingWithComps
     {
-        protected override bool ApplyWorker(XmlDocument xml)
+        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            return ModsConfig.ActiveModsInLoadOrder.Any(mod => mod.Name == "CaveBiome");
+            // Small chance to spawn a pearl.
+            if (Rand.Value < 0.02f)
+            {
+                GenSpawn.Spawn(Util_FishIndustry.PearlDef, this.Position, this.MapHeld);
+            }
+            base.Destroy(mode);
         }
+
     }
 }
