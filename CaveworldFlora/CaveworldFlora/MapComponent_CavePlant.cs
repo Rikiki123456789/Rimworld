@@ -87,7 +87,7 @@ namespace CaveworldFlora
 
         public override void ExposeData()
         {
-            Scribe_Values.LookValue<int>(ref nextRandomSpawnTick, "nextRandomSpawnTick");
+            Scribe_Values.Look<int>(ref nextRandomSpawnTick, "nextRandomSpawnTick");
         }
     }
 }

@@ -17,7 +17,7 @@
       <shaderType>CutoutPlant</shaderType>
     </graphicData>
     <plant>
-      <harvestDestroys>true</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <soundHarvesting>Harvest_Standard</soundHarvesting>
       <soundHarvestFinish>Harvest_Standard_Finish</soundHarvestFinish>
       <harvestWork>150</harvestWork>
@@ -63,7 +63,7 @@
       <harvestMinGrowth>0.90</harvestMinGrowth>
       <harvestWork>50</harvestWork>
       <harvestTag>Standard</harvestTag>
-      <harvestDestroys>True</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <harvestedThingDef>RawShimmershroom</harvestedThingDef>
       <harvestYield>5</harvestYield>
       <wildCommonalityMaxFraction>0.6</wildCommonalityMaxFraction> <!--Proportion of this cave plant in the world (compared to other cave plants).-->
@@ -135,7 +135,7 @@
       <harvestMinGrowth>0.90</harvestMinGrowth>
       <harvestWork>50</harvestWork>
       <harvestTag>Standard</harvestTag>
-      <harvestDestroys>True</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <harvestedThingDef>RawGlowbulb</harvestedThingDef>
       <harvestYield>8</harvestYield>
       <wildCommonalityMaxFraction>0.3</wildCommonalityMaxFraction> <!--Proportion of this cave plant in the world (compared to other cave plants).-->
@@ -206,7 +206,7 @@
       <harvestMinGrowth>0.90</harvestMinGrowth>
       <harvestWork>100</harvestWork>
       <harvestTag>Standard</harvestTag>
-      <harvestDestroys>True</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <harvestedThingDef>GleamcapStem</harvestedThingDef>
       <harvestYield>2</harvestYield>
       <wildCommonalityMaxFraction>0.1</wildCommonalityMaxFraction> <!--Proportion of this cave plant in the world (compared to other cave plants).-->
@@ -279,7 +279,7 @@
       <harvestMinGrowth>0.90</harvestMinGrowth>
       <harvestWork>100</harvestWork>
       <harvestTag>Standard</harvestTag>
-      <harvestDestroys>True</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <wildCommonalityMaxFraction>0.2</wildCommonalityMaxFraction> <!--Proportion of this cave plant in the world (compared to other cave plants).-->
       <visualSizeRange>
         <min>0.3</min>

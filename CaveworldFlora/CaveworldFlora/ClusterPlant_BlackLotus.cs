@@ -32,8 +32,8 @@ namespace CaveworldFlora
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.nextLongTick, "nextLongTick");
-            Scribe_Values.LookValue<bool>(ref ClusterPlant_BlackLotus.alertHasBeenSent, "alertHasBeenSent");
+            Scribe_Values.Look<int>(ref this.nextLongTick, "nextLongTick");
+            Scribe_Values.Look<bool>(ref ClusterPlant_BlackLotus.alertHasBeenSent, "alertHasBeenSent");
         }
 
         // ===================== Main Work Function =====================
@@ -61,17 +61,14 @@ namespace CaveworldFlora
                         num *= pawn.GetStatValue(StatDefOf.ToxicSensitivity, true);
                         if (num != 0f)
                         {
-                            Rand.PushSeed();
-                            Rand.Seed = pawn.thingIDNumber * 74374237;
-                            float num2 = Mathf.Lerp(0.85f, 1.15f, Rand.Value);
-                            Rand.PopSeed();
+                            float num2 = Mathf.Lerp(0.85f, 1.15f, Rand.ValueSeeded(pawn.thingIDNumber ^ 74374237));
                             num *= num2;
                             HealthUtility.AdjustSeverity(pawn, HediffDefOf.ToxicBuildup, num);
                             if ((ClusterPlant_BlackLotus.alertHasBeenSent == false)
                                 && pawn.IsColonist)
                             {
                                 Find.LetterStack.ReceiveLetter("Black lotus", "One of your colonists has been intoxicated by the effluvium of a black lotus. Beware, those emanations are extremely toxic.",
-                                    LetterType.BadNonUrgent, new RimWorld.Planet.GlobalTargetInfo(pawn));
+                                    LetterDefOf.BadNonUrgent, new RimWorld.Planet.GlobalTargetInfo(pawn));
                                 ClusterPlant_BlackLotus.alertHasBeenSent = true;
                             }
                         }

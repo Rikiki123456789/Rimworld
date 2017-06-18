@@ -31,8 +31,8 @@ namespace CaveworldFlora
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.lastSporeSpawnTick, "lastSporeSpawnTick");
-            Scribe_References.LookReference<GleamcapSporeSpawner>(ref this.sporeSpawner, "sporeSpawner");
+            Scribe_Values.Look<int>(ref this.lastSporeSpawnTick, "lastSporeSpawnTick");
+            Scribe_References.Look<GleamcapSporeSpawner>(ref this.sporeSpawner, "sporeSpawner");
         }
 
         // ===================== Destroy =====================
@@ -74,7 +74,7 @@ namespace CaveworldFlora
                 && (this.isInCryostasis == false)
                 && sporeSpawnOccuredLongAgo
                 && ((Rand.Value < chanceToSpawnSpore)
-                || this.Map.mapConditionManager.ConditionIsActive(MapConditionDefOf.Eclipse)))
+                || this.Map.gameConditionManager.ConditionIsActive(GameConditionDefOf.Eclipse)))
             {
                 this.lastSporeSpawnTick = Find.TickManager.TicksGame;
                 this.sporeSpawner = ThingMaker.MakeThing(Util_CaveworldFlora.gleamcapSporeSpawnerDef) as GleamcapSporeSpawner;

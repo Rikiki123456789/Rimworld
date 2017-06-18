@@ -32,9 +32,9 @@ namespace CaveworldFlora
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
+            base.SpawnSetup(map, respawningAfterLoad);
             this.sporeSpawnEndTick = Find.TickManager.TicksGame + Rand.RangeInclusive(minSporeSpawningDurationInTicks, maxSporeSpawningDurationInTicks);
         }
 
@@ -45,8 +45,8 @@ namespace CaveworldFlora
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.sporeSpawnEndTick, "sporeSpawnEndTick");
-            Scribe_References.LookReference<ClusterPlant_Gleamcap>(ref this.parent, "parentGleamcap");
+            Scribe_Values.Look<int>(ref this.sporeSpawnEndTick, "sporeSpawnEndTick");
+            Scribe_References.Look<ClusterPlant_Gleamcap>(ref this.parent, "parentGleamcap");
         }
         
         // ===================== Main Work Function =====================

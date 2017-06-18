@@ -22,7 +22,7 @@
       <preferability>RawBad</preferability>
     </ingestible>
     <plant>
-      <harvestDestroys>true</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <soundHarvesting>Harvest_Standard</soundHarvesting>
       <soundHarvestFinish>Harvest_Standard_Finish</soundHarvestFinish>
       <harvestWork>190</harvestWork>
@@ -61,7 +61,7 @@
       <soundHarvestFinish>Harvest_Tree_Finish</soundHarvestFinish>
       <sowWork>1500</sowWork>
       <harvestWork>1500</harvestWork>
-      <harvestDestroys>true</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <harvestedThingDef>WoodLog</harvestedThingDef>
       <harvestYield>50</harvestYield>
       <harvestTag>Wood</harvestTag>
@@ -152,7 +152,7 @@
     </ingestible>
     <plant>
       <harvestWork>400</harvestWork>
-      <harvestDestroys>true</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <harvestedThingDef>RawGiantLeaf</harvestedThingDef>
       <harvestTag>Standard</harvestTag>
       <harvestYield>20</harvestYield>
@@ -219,7 +219,7 @@
     </ingestible>
     <plant>
       <harvestWork>400</harvestWork>
-      <harvestDestroys>false</harvestDestroys>
+      <harvestAfterGrowth>0.15</harvestAfterGrowth>
       <harvestedThingDef>Cloth</harvestedThingDef>
       <harvestYield>10</harvestYield>
       <harvestTag>Standard</harvestTag>
@@ -285,7 +285,7 @@
     </ingestible>
     <plant>
       <harvestWork>400</harvestWork>
-      <harvestDestroys>false</harvestDestroys>
+      <harvestAfterGrowth>0.15</harvestAfterGrowth>
       <harvestedThingDef>Cloth</harvestedThingDef>
       <harvestYield>10</harvestYield>
       <harvestTag>Standard</harvestTag>
@@ -350,7 +350,7 @@
     </ingestible>
     <plant>
       <harvestWork>800</harvestWork>
-      <harvestDestroys>true</harvestDestroys>
+      <harvestAfterGrowth>0</harvestAfterGrowth>
       <harvestedThingDef>InsectJelly</harvestedThingDef>
       <harvestYield>20</harvestYield>
       <harvestTag>Standard</harvestTag>

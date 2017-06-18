@@ -90,11 +90,11 @@
     <soundDrop>Standard_Drop</soundDrop>
     <statBases>
       <MaxHitPoints>100</MaxHitPoints>
-      <MarketValue>5.5</MarketValue>
+      <MarketValue>10</MarketValue>
       <Flammability>1.0</Flammability>
-      <MedicalPotency>0.40</MedicalPotency>
-      <DeteriorationRate>10</DeteriorationRate>
-      <Mass>0.1</Mass>
+      <MedicalPotency>0.60</MedicalPotency>
+      <DeteriorationRate>4</DeteriorationRate>
+      <Mass>0.5</Mass>
     </statBases>
     <thingCategories>
       <li>Medicine</li>

@@ -241,10 +241,10 @@ namespace CaveworldFlora
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
-        public override void SpawnSetup(Map map)
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.SpawnSetup(map);
-            this.UpdateGlowerAccordingToGrowth();
+            base.SpawnSetup(map, respawningAfterLoad);
+            //this.UpdateGlowerAccordingToGrowth(); // TODO: disabled to avoid ton of warning messages when getting temperature.
         }
 
         /// <summary>
@@ -253,8 +253,8 @@ namespace CaveworldFlora
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_References.LookReference<Cluster>(ref this.cluster, "cluster");
-            Scribe_References.LookReference<Thing>(ref this.glower, "glower");
+            Scribe_References.Look<Cluster>(ref this.cluster, "cluster");
+            Scribe_References.Look<Thing>(ref this.glower, "glower");
         }
 
         // ===================== Destroy =====================
@@ -432,26 +432,30 @@ namespace CaveworldFlora
             {
                 num = 100.1f;
             }
-            stringBuilder.AppendLine(num.ToString("##0") + "% growth");
+            stringBuilder.Append(num.ToString("##0") + "% growth");
             if (this.LifeStage == PlantLifeStage.Mature)
             {
                 if (this.def.plant.Harvestable)
                 {
-                    stringBuilder.AppendLine("Ready to harvest");
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append("Ready to harvest");
                 }
                 else
                 {
-                    stringBuilder.AppendLine("Mature");
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append("Mature");
                 }
             }
             else if (this.LifeStage == PlantLifeStage.Growing)
             {
                 if (this.isInCryostasis)
                 {
-                    stringBuilder.AppendLine("In cryostasis");
+                    stringBuilder.AppendLine();
+                    stringBuilder.Append("In cryostasis");
                 }
                 else if (this.Dying)
                 {
+                    stringBuilder.AppendLine();
                     stringBuilder.Append("Dying");
                     if (this.Position.GetTemperature(this.Map) > this.clusterPlantProps.maxGrowTemperature)
                     {

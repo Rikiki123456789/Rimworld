@@ -55,12 +55,12 @@ namespace CaveworldFlora
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.LookValue<int>(ref this.nextLongTick, "nextLongTick");
-            Scribe_Values.LookValue<int>(ref this.nextNearbyPawnCheckTick, "nextNearbyPawnCheckTick");
-            Scribe_Values.LookValue<FlowerState>(ref this.flowerState, "flowerState");
-            Scribe_Values.LookValue<int>(ref this.flowerClosingRemainingTicks, "flowerClosingRemainingTicks");
-            Scribe_Values.LookValue<int>(ref this.flowerOpeningTicks, "flowerOpeningTicks");
-            Scribe_Values.LookValue<Vector3>(ref this.flowerScale, "flowerScale");
+            Scribe_Values.Look<int>(ref this.nextLongTick, "nextLongTick");
+            Scribe_Values.Look<int>(ref this.nextNearbyPawnCheckTick, "nextNearbyPawnCheckTick");
+            Scribe_Values.Look<FlowerState>(ref this.flowerState, "flowerState");
+            Scribe_Values.Look<int>(ref this.flowerClosingRemainingTicks, "flowerClosingRemainingTicks");
+            Scribe_Values.Look<int>(ref this.flowerOpeningTicks, "flowerOpeningTicks");
+            Scribe_Values.Look<Vector3>(ref this.flowerScale, "flowerScale");
         }
 
         // ===================== Main Work Function =====================

@@ -115,19 +115,19 @@ namespace CaveworldFlora
             if (Scribe.mode == LoadSaveMode.Saving)
             {
                 plantDefAsString = this.plantDef.defName;
-                Scribe_Values.LookValue<string>(ref plantDefAsString, "plantDefAsString");
+                Scribe_Values.Look<string>(ref plantDefAsString, "plantDefAsString");
             }
             else if (Scribe.mode == LoadSaveMode.LoadingVars)
             {
-                Scribe_Values.LookValue<string>(ref plantDefAsString, "plantDefAsString");
+                Scribe_Values.Look<string>(ref plantDefAsString, "plantDefAsString");
                 this.plantDef = ThingDef.Named(plantDefAsString) as ThingDef_ClusterPlant;
             }
-            Scribe_Values.LookValue<int>(ref this.actualSize, "actualSize");
-            Scribe_Values.LookValue<int>(ref this.desiredSize, "desiredSize");
-            Scribe_Values.LookValue<int>(ref this.nextReproductionTick, "nextGrownTick");
-            Scribe_Values.LookValue<int>(ref this.nextReproductionTick, "nextReproductionTick");
+            Scribe_Values.Look<int>(ref this.actualSize, "actualSize");
+            Scribe_Values.Look<int>(ref this.desiredSize, "desiredSize");
+            Scribe_Values.Look<int>(ref this.nextReproductionTick, "nextGrownTick");
+            Scribe_Values.Look<int>(ref this.nextReproductionTick, "nextReproductionTick");
 
-            Scribe_References.LookReference<Cluster>(ref this.symbiosisCluster, "symbiosisCluster");
+            Scribe_References.Look<Cluster>(ref this.symbiosisCluster, "symbiosisCluster");
         }
         
         public void NotifyPlantAdded()
@@ -165,5 +165,12 @@ namespace CaveworldFlora
             }
         }
 
+        public override string GetInspectString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            stringBuilder.Append(this.plantDef.LabelCap);
+            return stringBuilder.ToString();
+        }
     }
 }
