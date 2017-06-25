@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResearchProjectDefs>
+
+  <ResearchProjectDef>
+    <defName>ResearchSpotlightTurret</defName>
+    <label>spotlight turret</label>
+    <description>Design spotlight turrets to control your perimeter at night or in dark caves.</description>
+    <descriptionDiscovered>You have developped the spotlight turret.
+
+- You can now build spotlight turrets to detect foes in your perimeter.
+    </descriptionDiscovered>
+    <techLevel>Industrial</techLevel>
+    <baseCost>500</baseCost>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <tab>MiningCo</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  
+</ResearchProjectDefs>

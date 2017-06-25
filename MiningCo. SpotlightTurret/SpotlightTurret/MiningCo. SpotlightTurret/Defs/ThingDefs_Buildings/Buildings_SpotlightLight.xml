@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>SpotlightLight</defName>
+    <label>spotlight light</label>
+    <Description>Spotlight light.</Description>
+    <graphicData>
+      <texPath>Things/Building/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>false</selectable>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+    </building>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3.5</glowRadius>
+        <overlightRadius>3</overlightRadius>
+        <glowColor>(255,255,255,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+</ThingDefs>
