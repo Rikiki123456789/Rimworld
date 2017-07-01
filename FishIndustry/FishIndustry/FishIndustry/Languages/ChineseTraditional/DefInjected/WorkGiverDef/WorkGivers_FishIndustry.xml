@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!--[Core] <HunterHunt.label>打獵</HunterHunt.label>-->
+  <!--[Core] <HunterHunt.verb>獵捕</HunterHunt.verb>-->
+  <!--[Core] <HunterHunt.gerund>狩獵</HunterHunt.gerund>-->
+
+  <WorkGiver_HarvestAquacultureBasinProduction.verb>捕撈</WorkGiver_HarvestAquacultureBasinProduction.verb>
+  <WorkGiver_HarvestAquacultureBasinProduction.gerund>捕撈</WorkGiver_HarvestAquacultureBasinProduction.gerund>
+
+  <WorkGiver_DoBillsAtAquacultureBasin.verb>養殖</WorkGiver_DoBillsAtAquacultureBasin.verb>
+  <WorkGiver_DoBillsAtAquacultureBasin.gerund>養殖</WorkGiver_DoBillsAtAquacultureBasin.gerund>
+
+  <FillAquacultureHopper.verb>裝滿</FillAquacultureHopper.verb>
+  <FillAquacultureHopper.gerund>裝滿</FillAquacultureHopper.gerund>
+
+  <WorkGiver_FishAtFishingPier.verb>釣魚</WorkGiver_FishAtFishingPier.verb>
+  <WorkGiver_FishAtFishingPier.gerund>釣魚</WorkGiver_FishAtFishingPier.gerund>
+
+
+</LanguageData>

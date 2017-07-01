@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!--[Core] <HunterHunt.label>狩猎</HunterHunt.label>-->
+  <!--[Core] <HunterHunt.verb>狩猎</HunterHunt.verb>-->
+  <!--[Core] <HunterHunt.gerund>狩猎</HunterHunt.gerund>-->
+
+  <WorkGiver_HarvestAquacultureBasinProduction.verb>捕捞</WorkGiver_HarvestAquacultureBasinProduction.verb>
+  <WorkGiver_HarvestAquacultureBasinProduction.gerund>捕捞</WorkGiver_HarvestAquacultureBasinProduction.gerund>
+
+  <WorkGiver_DoBillsAtAquacultureBasin.verb>养殖</WorkGiver_DoBillsAtAquacultureBasin.verb>
+  <WorkGiver_DoBillsAtAquacultureBasin.gerund>养殖</WorkGiver_DoBillsAtAquacultureBasin.gerund>
+
+  <FillAquacultureHopper.verb>装满</FillAquacultureHopper.verb>
+  <FillAquacultureHopper.gerund>装满</FillAquacultureHopper.gerund>
+
+  <WorkGiver_FishAtFishingPier.verb>钓鱼</WorkGiver_FishAtFishingPier.verb>
+  <WorkGiver_FishAtFishingPier.gerund>钓鱼</WorkGiver_FishAtFishingPier.gerund>
+
+
+</LanguageData>

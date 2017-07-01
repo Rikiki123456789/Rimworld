@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <ResearchAquaculture.label>水產養殖</ResearchAquaculture.label>
+  <ResearchAquaculture.description>漁業提供你所有的技術來自己養殖美味水產品。研究如何用水栽培技術養殖水產品。
+    </ResearchAquaculture.description>
+  <ResearchAquaculture.descriptionDiscovered>你已經研發了一種水栽盆的修改版本:生態養殖槽。
+- 現在你可以建造生態養殖槽養殖水產品了。
+- 水產養殖槽附近必須有送料口來輸送生食。
+    </ResearchAquaculture.descriptionDiscovered>
+
+
+</LanguageData>

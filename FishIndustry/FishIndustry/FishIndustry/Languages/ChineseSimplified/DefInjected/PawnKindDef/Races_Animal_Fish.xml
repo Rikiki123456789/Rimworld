@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Fishes that can only be fished -->
+
+  <PawnKindDefFishSduiggles.label>乌贼</PawnKindDefFishSduiggles.label>
+  <PawnKindDefFishSduiggles.labelPlural>乌贼</PawnKindDefFishSduiggles.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.0.label>乌贼</PawnKindDefFishSduiggles.lifeStages.0.label>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelPlural>乌贼群</PawnKindDefFishSduiggles.lifeStages.0.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelMale>雄性乌贼</PawnKindDefFishSduiggles.lifeStages.0.labelMale>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelMalePlural>雄性乌贼</PawnKindDefFishSduiggles.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelFemale>雌性乌贼</PawnKindDefFishSduiggles.lifeStages.0.labelFemale>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelFemalePlural>雌性乌贼</PawnKindDefFishSduiggles.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.1.label>乌贼</PawnKindDefFishSduiggles.lifeStages.1.label>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelPlural>乌贼</PawnKindDefFishSduiggles.lifeStages.1.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelMale>雄性乌贼</PawnKindDefFishSduiggles.lifeStages.1.labelMale>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelMalePlural>雄性乌贼</PawnKindDefFishSduiggles.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelFemale>雌性乌贼</PawnKindDefFishSduiggles.lifeStages.1.labelFemale>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelFemalePlural>雌性乌贼</PawnKindDefFishSduiggles.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.2.label>乌贼</PawnKindDefFishSduiggles.lifeStages.2.label>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelPlural>乌贼</PawnKindDefFishSduiggles.lifeStages.2.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelMale>雄性乌贼</PawnKindDefFishSduiggles.lifeStages.2.labelMale>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelMalePlural>雄性乌贼</PawnKindDefFishSduiggles.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelFemale>雌性乌贼</PawnKindDefFishSduiggles.lifeStages.2.labelFemale>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelFemalePlural>雌性乌贼</PawnKindDefFishSduiggles.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishSduiggles.labelMale>雄性乌贼</PawnKindDefFishSduiggles.labelMale>
+  <PawnKindDefFishSduiggles.labelMalePlural>雄性乌贼</PawnKindDefFishSduiggles.labelMalePlural>
+  <PawnKindDefFishSduiggles.labelFemale>雌性乌贼</PawnKindDefFishSduiggles.labelFemale>
+  <PawnKindDefFishSduiggles.labelFemalePlural>雌性乌贼</PawnKindDefFishSduiggles.labelFemalePlural>
+
+  <PawnKindDefFishSeasnake.label>海蛇</PawnKindDefFishSeasnake.label>
+  <PawnKindDefFishSeasnake.labelPlural>海蛇</PawnKindDefFishSeasnake.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.0.label>海蛇</PawnKindDefFishSeasnake.lifeStages.0.label>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelPlural>海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelMale>雄性海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelMale>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelMalePlural>雄性海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelFemale>雌性海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelFemale>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelFemalePlural>雌性海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.1.label>海蛇</PawnKindDefFishSeasnake.lifeStages.1.label>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelPlural>海蛇</PawnKindDefFishSeasnake.lifeStages.1.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelMale>雄性海蛇</PawnKindDefFishSeasnake.lifeStages.1.labelMale>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelMalePlural>雄性海蛇</PawnKindDefFishSeasnake.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelFemale>雌性海蛇</PawnKindDefFishSeasnake.lifeStages.1.labelFemale>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelFemalePlural>雌性海蛇</PawnKindDefFishSeasnake.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.2.label>海蛇</PawnKindDefFishSeasnake.lifeStages.2.label>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelPlural>海蛇</PawnKindDefFishSeasnake.lifeStages.2.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelMale>雄性海蛇</PawnKindDefFishSeasnake.lifeStages.2.labelMale>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelMalePlural>雄性海蛇</PawnKindDefFishSeasnake.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelFemale>雌性海蛇</PawnKindDefFishSeasnake.lifeStages.2.labelFemale>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelFemalePlural>雌性海蛇</PawnKindDefFishSeasnake.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishSeasnake.labelMale>雄性海蛇</PawnKindDefFishSeasnake.labelMale>
+  <PawnKindDefFishSeasnake.labelMalePlural>雄性海蛇</PawnKindDefFishSeasnake.labelMalePlural>
+  <PawnKindDefFishSeasnake.labelFemale>雌性海蛇</PawnKindDefFishSeasnake.labelFemale>
+  <PawnKindDefFishSeasnake.labelFemalePlural>雌性海蛇</PawnKindDefFishSeasnake.labelFemalePlural>
+
+
+  <!-- Fishes that can be bred -->
+
+  <PawnKindDefFishMashgon.label>龙虾</PawnKindDefFishMashgon.label>
+  <PawnKindDefFishMashgon.labelPlural>龙虾</PawnKindDefFishMashgon.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.0.label>龙虾</PawnKindDefFishMashgon.lifeStages.0.label>
+  <PawnKindDefFishMashgon.lifeStages.0.labelPlural>龙虾</PawnKindDefFishMashgon.lifeStages.0.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.0.labelMale>雄性龙虾</PawnKindDefFishMashgon.lifeStages.0.labelMale>
+  <PawnKindDefFishMashgon.lifeStages.0.labelMalePlural>雄性龙虾</PawnKindDefFishMashgon.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishMashgon.lifeStages.0.labelFemale>雌性龙虾</PawnKindDefFishMashgon.lifeStages.0.labelFemale>
+  <PawnKindDefFishMashgon.lifeStages.0.labelFemalePlural>雌性龙虾</PawnKindDefFishMashgon.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishMashgon.lifeStages.1.label>龙虾</PawnKindDefFishMashgon.lifeStages.1.label>
+  <PawnKindDefFishMashgon.lifeStages.1.labelPlural>龙虾</PawnKindDefFishMashgon.lifeStages.1.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.1.labelMale>雄性龙虾</PawnKindDefFishMashgon.lifeStages.1.labelMale>
+  <PawnKindDefFishMashgon.lifeStages.1.labelMalePlural>雄性龙虾</PawnKindDefFishMashgon.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishMashgon.lifeStages.1.labelFemale>雌性龙虾</PawnKindDefFishMashgon.lifeStages.1.labelFemale>
+  <PawnKindDefFishMashgon.lifeStages.1.labelFemalePlural>雌性龙虾</PawnKindDefFishMashgon.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishMashgon.lifeStages.2.label>龙虾</PawnKindDefFishMashgon.lifeStages.2.label>
+  <PawnKindDefFishMashgon.lifeStages.2.labelPlural>龙虾</PawnKindDefFishMashgon.lifeStages.2.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.2.labelMale>雄性龙虾</PawnKindDefFishMashgon.lifeStages.2.labelMale>
+  <PawnKindDefFishMashgon.lifeStages.2.labelMalePlural>雄性龙虾</PawnKindDefFishMashgon.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishMashgon.lifeStages.2.labelFemale>雌性龙虾</PawnKindDefFishMashgon.lifeStages.2.labelFemale>
+  <PawnKindDefFishMashgon.lifeStages.2.labelFemalePlural>雌性龙虾</PawnKindDefFishMashgon.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishMashgon.labelMale>雄性龙虾</PawnKindDefFishMashgon.labelMale>
+  <PawnKindDefFishMashgon.labelMalePlural>雄性龙虾</PawnKindDefFishMashgon.labelMalePlural>
+  <PawnKindDefFishMashgon.labelFemale>雌性龙虾</PawnKindDefFishMashgon.labelFemale>
+  <PawnKindDefFishMashgon.labelFemalePlural>雌性龙虾</PawnKindDefFishMashgon.labelFemalePlural>
+
+  <PawnKindDefFishBlueblade.label>蓝刀鱼</PawnKindDefFishBlueblade.label>
+  <PawnKindDefFishBlueblade.labelPlural>蓝刀鱼</PawnKindDefFishBlueblade.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.0.label>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.label>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelPlural>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelMale>雄性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.labelMale>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelMalePlural>雄性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelFemale>雌性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.labelFemale>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelFemalePlural>雌性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.1.label>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.1.label>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelPlural>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.1.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelMale>雄性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.1.labelMale>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelMalePlural>雄性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelFemale>雌性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.1.labelFemale>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelFemalePlural>雌性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.2.label>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.2.label>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelPlural>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.2.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelMale>雄性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.2.labelMale>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelMalePlural>雄性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelFemale>雌性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.2.labelFemale>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelFemalePlural>雌性蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishBlueblade.labelMale>雄性蓝刀鱼</PawnKindDefFishBlueblade.labelMale>
+  <PawnKindDefFishBlueblade.labelMalePlural>雄性蓝刀鱼</PawnKindDefFishBlueblade.labelMalePlural>
+  <PawnKindDefFishBlueblade.labelFemale>雌性蓝刀鱼</PawnKindDefFishBlueblade.labelFemale>
+  <PawnKindDefFishBlueblade.labelFemalePlural>雌性蓝刀鱼</PawnKindDefFishBlueblade.labelFemalePlural>
+
+  <PawnKindDefFishTailteeth.label>尾齿鱼</PawnKindDefFishTailteeth.label>
+  <PawnKindDefFishTailteeth.labelPlural>尾齿鱼</PawnKindDefFishTailteeth.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.0.label>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.label>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelPlural>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelMale>雄性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.labelMale>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelMalePlural>雄性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelFemale>雌性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.labelFemale>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelFemalePlural>雌性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.1.label>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.1.label>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelPlural>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.1.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelMale>雄性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.1.labelMale>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelMalePlural>雄性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelFemale>雌性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.1.labelFemale>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelFemalePlural>雌性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.2.label>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.2.label>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelPlural>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.2.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelMale>雄性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.2.labelMale>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelMalePlural>雄性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelFemale>雌性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.2.labelFemale>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelFemalePlural>雌性尾齿鱼</PawnKindDefFishTailteeth.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishTailteeth.labelMale>雄性尾齿鱼</PawnKindDefFishTailteeth.labelMale>
+  <PawnKindDefFishTailteeth.labelMalePlural>雄性尾齿鱼</PawnKindDefFishTailteeth.labelMalePlural>
+  <PawnKindDefFishTailteeth.labelFemale>雌性尾齿鱼</PawnKindDefFishTailteeth.labelFemale>
+  <PawnKindDefFishTailteeth.labelFemalePlural>雌性尾齿鱼</PawnKindDefFishTailteeth.labelFemalePlural>
+
+
+</LanguageData>
