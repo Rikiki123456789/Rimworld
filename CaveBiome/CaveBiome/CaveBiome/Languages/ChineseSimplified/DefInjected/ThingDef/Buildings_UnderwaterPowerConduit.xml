@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <UnderwaterPowerConduit.label>水下电缆</UnderwaterPowerConduit.label>
+  <UnderwaterPowerConduit.description>基础电缆的增强版。可以铺设于水下。</UnderwaterPowerConduit.description>
+  <UnderwaterPowerConduit_Blueprint.label>水下电缆（蓝图）</UnderwaterPowerConduit_Blueprint.label>
+  <UnderwaterPowerConduit_Frame.label>水下电缆（建造中）</UnderwaterPowerConduit_Frame.label>
+  <UnderwaterPowerConduit_Frame.description>基础电缆的增强版。可以铺设于水下。</UnderwaterPowerConduit_Frame.description>
+
+
+</LanguageData>

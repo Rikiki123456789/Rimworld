@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <CaveCalm.label>平靜</CaveCalm.label>
+  <CaveCalm.description>平靜的洞穴時光。沒有任何懲罰或者加成。</CaveCalm.description>
+
+  <CaveFog.label>霧</CaveFog.label>
+  <CaveFog.description>霧會降低遠程武器的命中率，仿佛不夠黑一樣……洞穴中的整體濕度出奇的高。</CaveFog.description>
+
+  <CaveStorm.label>洞穴暴風雨</CaveStorm.label>
+  <CaveStorm.description>當地表存在強大的暴風雨的時候會引發洞穴暴風雨。大風大大降低人的移動速度。</CaveStorm.description>
+
+  <CaveHardSnow.label>大雪</CaveHardSnow.label>
+  <CaveHardSnow.description>雪會降低遠程武器的命中率，撲滅火焰，同時還會降低移動速度。</CaveHardSnow.description>
+
+
+</LanguageData>

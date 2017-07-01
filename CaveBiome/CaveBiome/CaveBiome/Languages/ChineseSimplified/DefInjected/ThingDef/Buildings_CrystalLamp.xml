@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <CrystalLamp.label>水晶灯</CrystalLamp.label>
+  <CrystalLamp.description>安装在木柱子上的冰冷水晶。照亮一片区域，但这种水晶似乎会吸收周围的热量。</CrystalLamp.description>
+  <CrystalLamp_Blueprint.label>水晶灯（蓝图）</CrystalLamp_Blueprint.label>
+  <CrystalLamp_Blueprint_Install.label>水晶灯（蓝图）</CrystalLamp_Blueprint_Install.label>
+  <CrystalLamp_Frame.label>水晶灯（建造中）</CrystalLamp_Frame.label>
+  <CrystalLamp_Frame.description>安装在木柱子上的冰冷水晶。照亮一片区域，但这种水晶似乎会吸收周围的热量。</CrystalLamp_Frame.description>
+
+
+</LanguageData>
