@@ -99,6 +99,9 @@
     <Content Include="CaveworldFlora\Defs\ThoughtDefs\Thoughts_Memories_CavePlant.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="CaveworldFlora\Languages\English\Keyed\CaveworldFlora_Strings.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="CaveworldFlora\Textures\Things\Building\DummyTexture.png" />
     <Content Include="CaveworldFlora\Textures\Things\Item\Resource\GleamcapStem.png" />
     <Content Include="CaveworldFlora\Textures\Things\Item\Resource\PlantFoodRaw\RawGiantLeaf.png" />

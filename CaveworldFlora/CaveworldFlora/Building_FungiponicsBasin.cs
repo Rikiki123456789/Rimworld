@@ -25,15 +25,15 @@ namespace CaveworldFlora
             ThingDef_ClusterPlant clusterPlantDef = this.GetPlantDefToGrow() as ThingDef_ClusterPlant;
             if (temperature < clusterPlantDef.minGrowTemperature)
             {
-                return "Cannot grow now: too cold.";
+                return "CaveworldFlora.CannotGrowTooCold".Translate();
             }
             else if (temperature > clusterPlantDef.maxGrowTemperature)
             {
-                return "Cannot grow now: too hot.";
+                return "CaveworldFlora.CannotGrowTooHot".Translate();
             }
             else
             {
-                return "Growing.";
+                return "CaveworldFlora.Growing".Translate();
             }
         }
     }

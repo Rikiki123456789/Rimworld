@@ -427,23 +427,21 @@ namespace CaveworldFlora
         public override string GetInspectString()
         {
             StringBuilder stringBuilder = new StringBuilder();
-            float num = this.Growth * 100f;
-            if (num > 100f)
+            stringBuilder.Append("PercentGrowth".Translate(new object[]
             {
-                num = 100.1f;
-            }
-            stringBuilder.Append(num.ToString("##0") + "% growth");
+                    this.GrowthPercentString
+            }));
             if (this.LifeStage == PlantLifeStage.Mature)
             {
                 if (this.def.plant.Harvestable)
                 {
                     stringBuilder.AppendLine();
-                    stringBuilder.Append("Ready to harvest");
+                    stringBuilder.Append("ReadyToHarvest".Translate());
                 }
                 else
                 {
                     stringBuilder.AppendLine();
-                    stringBuilder.Append("Mature");
+                    stringBuilder.Append("Mature".Translate());
                 }
             }
             else if (this.LifeStage == PlantLifeStage.Growing)
@@ -451,33 +449,33 @@ namespace CaveworldFlora
                 if (this.isInCryostasis)
                 {
                     stringBuilder.AppendLine();
-                    stringBuilder.Append("In cryostasis");
+                    stringBuilder.Append("CaveworldFlora.InCryostasis".Translate());
                 }
                 else if (this.Dying)
                 {
                     stringBuilder.AppendLine();
-                    stringBuilder.Append("Dying");
+                    stringBuilder.Append("CaveworldFlora.Dying".Translate());
                     if (this.Position.GetTemperature(this.Map) > this.clusterPlantProps.maxGrowTemperature)
                     {
-                        stringBuilder.Append(", drying");
+                        stringBuilder.Append(", " + "CaveworldFlora.Drying".Translate());
                     }
                     if (this.isLightConditionOk == false)
                     {
                         float light = this.Map.glowGrid.GameGlowAt(this.Position);
                         if (light < this.clusterPlantProps.minLight)
                         {
-                            stringBuilder.Append(", too dark");
+                            stringBuilder.Append(", " + "CaveworldFlora.TooDark".Translate());
                         }
                         else if (light > this.clusterPlantProps.maxLight)
                         {
-                            stringBuilder.Append(", overlit");
+                            stringBuilder.Append(", " + "CaveworldFlora.Overlit".Translate());
                         }
                     }
                     if (this.clusterPlantProps.growOnlyUndeRoof)
                     {
                         if (this.Map.roofGrid.Roofed(this.Position) == false)
                         {
-                            stringBuilder.Append(", unroofed");
+                            stringBuilder.Append(", " + "CaveworldFlora.Unroofed".Translate());
                         }
                     }
                     if (this.isOnCavePlantGrower == false)
@@ -486,29 +484,29 @@ namespace CaveworldFlora
                         {
                             if (this.isOnNaturalRoughRock == false)
                             {
-                                stringBuilder.Append(", unadapted soil");
+                                stringBuilder.Append(", " + "CaveworldFlora.UnadaptedSoil".Translate());
                             }
                         }
                         else if (this.isFertilityConditionOk == false)
                         {
-                            stringBuilder.Append(", unadapted soil");
+                            stringBuilder.Append(", " + "CaveworldFlora.UnadaptedSoil".Translate());
                         }
                         if (this.clusterPlantProps.growOnlyNearNaturalRock)
                         {
                             if (this.isNearNaturalRockBlock == false)
                             {
-                                stringBuilder.Append(", too far from rock");
+                                stringBuilder.Append(", " + "CaveworldFlora.TooFarFromRock".Translate());
                             }
                         }
                         if (this.cluster.DestroyedOrNull())
                         {
-                            stringBuilder.Append(", cluster root removed");
+                            stringBuilder.Append(", " + "CaveworldFlora.ClusterRootRemoved".Translate());
                         }
                         if (this.clusterPlantProps.isSymbiosisPlant)
                         {
                             if (this.isSymbiosisOk == false)
                             {
-                                stringBuilder.Append(", broken symbiosis");
+                                stringBuilder.Append(", " + "CaveworldFlora.BrokenSymbiosis".Translate());
                             }
                         }
                     }
@@ -531,7 +529,7 @@ namespace CaveworldFlora
 			        }));
                     if (this.isInCryostasis)
                     {
-                        stringBuilder.Append(", cryostasis");
+                        stringBuilder.Append(", " + "CaveworldFlora.Cryostasis".Translate());
                     }
                     if (this.Dying)
                     {
