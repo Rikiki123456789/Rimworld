@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Fungiponics Basin -->
+  <CaveworldFlora.CannotGrowTooCold>现在无法种植：过于寒冷。</CaveworldFlora.CannotGrowTooCold>
+  <CaveworldFlora.CannotGrowTooHot>现在无法种植：过于炎热。</CaveworldFlora.CannotGrowTooHot>
+  <CaveworldFlora.Growing>种植中。</CaveworldFlora.Growing>
+  <CaveworldFlora.MustOnRoughRock>菌类农艺盆必须放置在粗糙的岩石上。</CaveworldFlora.MustOnRoughRock>
+  <CaveworldFlora.MustBeRoofed>菌类农艺盆必须放置在屋顶下。</CaveworldFlora.MustBeRoofed>
+  <CaveworldFlora.TooClose>与另一个菌类植物盆过于靠近。</CaveworldFlora.TooClose>
+
+  <!-- Flora Plant -->
+  <CaveworldFlora.InCryostasis>凝冻状态</CaveworldFlora.InCryostasis>
+  <CaveworldFlora.Dying>即将死亡</CaveworldFlora.Dying>
+  <CaveworldFlora.Drying>干燥中</CaveworldFlora.Drying>
+  <CaveworldFlora.TooDark>过于黑暗</CaveworldFlora.TooDark>
+  <CaveworldFlora.Overlit>过于光亮</CaveworldFlora.Overlit>
+  <CaveworldFlora.Unroofed>无屋顶</CaveworldFlora.Unroofed>
+  <CaveworldFlora.UnadaptedSoil>不适合的土壤</CaveworldFlora.UnadaptedSoil>
+  <CaveworldFlora.TooFarFromRock>离岩石过远</CaveworldFlora.TooFarFromRock>
+  <CaveworldFlora.ClusterRootRemoved>排根被移除</CaveworldFlora.ClusterRootRemoved>
+  <CaveworldFlora.BrokenSymbiosis>共生关系被打破</CaveworldFlora.BrokenSymbiosis>
+  <CaveworldFlora.Cryostasis>凝冻状态</CaveworldFlora.Cryostasis>
+
+  <!-- Black Lotus -->
+  <CaveworldFlora.LetterLabelBlackLotus>黑莲花</CaveworldFlora.LetterLabelBlackLotus>
+  <CaveworldFlora.BlackLotus>你的以为殖民者被黑莲花散发的气味熏倒了。当心，这些气体含有剧毒。</CaveworldFlora.BlackLotus>
+
+</LanguageData>

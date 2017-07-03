@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <StoneGrass.label>石草</StoneGrass.label>
+  <StoneGrass.description>這種草只生長在幽深黑暗的洞穴中。發出的微弱光亮使人感到平靜。</StoneGrass.description>
+
+  <GiantLeaf.label>巨人叶</GiantLeaf.label>
+  <GiantLeaf.description>巨大而令人印象深刻的椰子。從地面吸收水分和礦物元素，可以做成湯。</GiantLeaf.description>
+
+
+  <!-- If you experience lags with dynamic devil's tongue, you can remove the following definition and use the commented one just below. -->
+
+  <DevilTongue.label>魔鬼舌</DevilTongue.label>
+  <DevilTongue.description>因其顏色而被當地的部落民稱為「魔鬼的舌頭」。他們還知道當他們的光芒熄滅時，會有某些東西接近……威脅或敵人？</DevilTongue.description>
+
+  <BlackLotus.label>黑蓮花</BlackLotus.label>
+  <BlackLotus.description>一種非常美麗而令人印象深刻的植物，黑蓮花會長出一朵巨大的花。小心它釋放的劇毒。</BlackLotus.description>
+
+  <CaveVine.label>洞穴藤</CaveVine.label>
+  <CaveVine.description>一種盤根錯節的洞穴藤蔓，生長極度緩慢。由於吸收了大量地底礦物，其枝條非常堅硬。</CaveVine.description>
+
+  <CaveLace.label>洞穴網</CaveLace.label>
+  <CaveLace.description>生長快速而中空的藤本植物。其嬌嫩而脆弱的枝條可以輕易透過視線。</CaveLace.description>
+
+
+</LanguageData>
