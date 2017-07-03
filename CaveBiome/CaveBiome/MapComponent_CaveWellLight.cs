@@ -119,7 +119,7 @@ namespace CaveBiome
                 if ((MapComponent_CaveWellLight.plantsMessageHasBeenSent == false)
                     && (gamehour >= sunriseBeginHour + 1))
                 {
-                    Find.LetterStack.ReceiveLetter("Cave plants", "In caves, most cave plants can be useful so look around!\n- some plants like giant leafs can be cooked,\n- others like cave vine are hard enough to be used like wood,\n- and some like devil's tongue provide useful fibrous material.\n\nBeware, though! Caves are a hard place to live and some plants may be dangerous.",
+                    Find.LetterStack.ReceiveLetter("CaveBiome.LetterLabelCavePlants".Translate(), "CaveBiome.CavePlants".Translate(),
                         LetterDefOf.Good);
                     MapComponent_CaveWellLight.plantsMessageHasBeenSent = true;
                 }
@@ -129,12 +129,12 @@ namespace CaveBiome
                     if (MapGenerator.PlayerStartSpot.IsValid
                         && (MapGenerator.PlayerStartSpot != IntVec3.Zero)) // Checking PlayerStartSpot validity will still raise an error message if it is invalid.
                     {
-                        Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
+                        Find.LetterStack.ReceiveLetter("CaveBiome.LetterLabelGrowingInCave".Translate(), "CaveBiome.GrowingInCave".Translate(),
                             LetterDefOf.Good, new RimWorld.Planet.GlobalTargetInfo(MapGenerator.PlayerStartSpot, this.map));
                     }
                     else
                     {
-                        Find.LetterStack.ReceiveLetter("Growing in cave", "The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.",
+                        Find.LetterStack.ReceiveLetter("CaveBiome.LetterLabelGrowingInCave".Translate(), "CaveBiome.GrowingInCave".Translate(),
                             LetterDefOf.Good);
                     }
                     MapComponent_CaveWellLight.growingMessageHasBeenSent = true;

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Place Worker -->
+  <CaveBiome.CanOnlyBuildInCave>This building can only be built in a cave.</CaveBiome.CanOnlyBuildInCave>
+  <CaveBiome.CanNotBuildInCave>This building cannot be built in a cave.</CaveBiome.CanNotBuildInCave>
+
+
+  <!-- Letters -->
+
+  <CaveBiome.LetterLabelCavePlants>Cave plants</CaveBiome.LetterLabelCavePlants>
+  <CaveBiome.CavePlants>In caves, most cave plants can be useful so look around!\n- some plants like giant leafs can be cooked,\n- others like cave vine are hard enough to be used like wood,\n- and some like devil's tongue provide useful fibrous material.\n\nBeware, though! Caves are a hard place to live and some plants may be dangerous.</CaveBiome.CavePlants>
+
+  <CaveBiome.LetterLabelGrowingInCave>Growing in cave</CaveBiome.LetterLabelGrowingInCave>
+  <CaveBiome.GrowingInCave>The sun cannot directly light the cave tunnels. You can however grow some plants in cave wells. Cave wells are natural openings to the surface.</CaveBiome.GrowingInCave>
+
+</LanguageData>
