@@ -5,7 +5,7 @@
   <StoneGrass.description>这种草只生长在幽深黑暗的洞穴中。发出的微弱光亮使人感到平静。</StoneGrass.description>
 
   <GiantLeaf.label>巨人叶</GiantLeaf.label>
-  <GiantLeaf.description>巨大而令人印象深刻的椰子。从地面吸收水分和矿物元素，可以做成汤。</GiantLeaf.description>
+  <GiantLeaf.description>巨大而令人印象深刻的叶子。从地面吸收水分和矿物元素，可以做成汤。</GiantLeaf.description>
 
 
   <!-- If you experience lags with dynamic devil's tongue, you can remove the following definition and use the commented one just below. -->

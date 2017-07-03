@@ -3,11 +3,11 @@
 
   <!-- Mortar bomb turret -->
 
-  <Turret_MortarBombCave.label>迫击炮 （高爆-低轨）</Turret_MortarBombCave.label>
+  <Turret_MortarBombCave.label>迫击炮 （高爆低轨）</Turret_MortarBombCave.label>
   <Turret_MortarBombCave.description>一个发射高爆炮弹的迫击炮。必须有人操纵。受损严重时爆炸。</Turret_MortarBombCave.description>
-  <Turret_MortarBombCave_Blueprint.label>迫击炮 （高爆-低轨）（蓝图）</Turret_MortarBombCave_Blueprint.label>
-  <Turret_MortarBombCave_Blueprint_Install.label>迫击炮 （高爆-低轨）（蓝图）</Turret_MortarBombCave_Blueprint_Install.label>
-  <Turret_MortarBombCave_Frame.label>迫击炮 （高爆-低轨）（建造中）</Turret_MortarBombCave_Frame.label>
+  <Turret_MortarBombCave_Blueprint.label>迫击炮 （高爆低轨）（蓝图）</Turret_MortarBombCave_Blueprint.label>
+  <Turret_MortarBombCave_Blueprint_Install.label>迫击炮 （高爆低轨）（蓝图）</Turret_MortarBombCave_Blueprint_Install.label>
+  <Turret_MortarBombCave_Frame.label>迫击炮 （高爆低轨）（建造中）</Turret_MortarBombCave_Frame.label>
   <Turret_MortarBombCave_Frame.description>一个发射高爆炮弹的迫击炮。必须有人操纵。受损严重时爆炸。</Turret_MortarBombCave_Frame.description>
 
   <Artillery_MortarBombCave.label>高爆迫击炮</Artillery_MortarBombCave.label>
@@ -18,11 +18,11 @@
 
   <!-- Mortar incendiary turret -->
 
-  <Turret_MortarIncendiaryCave.label>迫击炮 （燃烧-低轨）</Turret_MortarIncendiaryCave.label>
+  <Turret_MortarIncendiaryCave.label>迫击炮 （燃烧低轨）</Turret_MortarIncendiaryCave.label>
   <Turret_MortarIncendiaryCave.description>一个发射燃烧炮弹的迫击炮。必须有人操纵。受损严重时爆炸。</Turret_MortarIncendiaryCave.description>
-  <Turret_MortarIncendiaryCave_Blueprint.label>迫击炮 （燃烧-低轨）（蓝图）</Turret_MortarIncendiaryCave_Blueprint.label>
-  <Turret_MortarIncendiaryCave_Blueprint_Install.label>迫击炮 （燃烧-低轨）（蓝图）</Turret_MortarIncendiaryCave_Blueprint_Install.label>
-  <Turret_MortarIncendiaryCave_Frame.label>迫击炮 （燃烧-低轨）（建造中）</Turret_MortarIncendiaryCave_Frame.label>
+  <Turret_MortarIncendiaryCave_Blueprint.label>迫击炮 （燃烧低轨）（蓝图）</Turret_MortarIncendiaryCave_Blueprint.label>
+  <Turret_MortarIncendiaryCave_Blueprint_Install.label>迫击炮 （燃烧低轨）（蓝图）</Turret_MortarIncendiaryCave_Blueprint_Install.label>
+  <Turret_MortarIncendiaryCave_Frame.label>迫击炮 （燃烧低轨）（建造中）</Turret_MortarIncendiaryCave_Frame.label>
   <Turret_MortarIncendiaryCave_Frame.description>一个发射燃烧炮弹的迫击炮。必须有人操纵。受损严重时爆炸。</Turret_MortarIncendiaryCave_Frame.description>
 
   <Artillery_MortarIncendiaryCave.label>燃烧迫击炮</Artillery_MortarIncendiaryCave.label>
@@ -33,11 +33,11 @@
 
   <!-- Mortar EMP -->
 
-  <Turret_MortarEMPCave.label>迫击炮 （EMP-低轨）</Turret_MortarEMPCave.label>
+  <Turret_MortarEMPCave.label>迫击炮 （EMP低轨）</Turret_MortarEMPCave.label>
   <Turret_MortarEMPCave.description>一个发射电磁脉冲（EMP）炮弹的迫击炮。必须有人操纵。受损严重时爆炸。</Turret_MortarEMPCave.description>
-  <Turret_MortarEMPCave_Blueprint.label>迫击炮 （EMP-低轨）（蓝图）</Turret_MortarEMPCave_Blueprint.label>
-  <Turret_MortarEMPCave_Blueprint_Install.label>迫击炮 （EMP-低轨）（蓝图）</Turret_MortarEMPCave_Blueprint_Install.label>
-  <Turret_MortarEMPCave_Frame.label>迫击炮 （EMP-低轨）（建造中）</Turret_MortarEMPCave_Frame.label>
+  <Turret_MortarEMPCave_Blueprint.label>迫击炮 （EMP低轨）（蓝图）</Turret_MortarEMPCave_Blueprint.label>
+  <Turret_MortarEMPCave_Blueprint_Install.label>迫击炮 （EMP低轨）（蓝图）</Turret_MortarEMPCave_Blueprint_Install.label>
+  <Turret_MortarEMPCave_Frame.label>迫击炮 （EMP低轨）（建造中）</Turret_MortarEMPCave_Frame.label>
   <Turret_MortarEMPCave_Frame.description>一个发射电磁脉冲（EMP）炮弹的迫击炮。必须有人操纵。受损严重时爆炸。</Turret_MortarEMPCave_Frame.description>
 
   <Artillery_MortarEMPCave.label>EMP迫击炮</Artillery_MortarEMPCave.label>
