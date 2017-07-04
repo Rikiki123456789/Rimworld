@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
 
-  <AquacultureHopper.label>生态养殖槽料斗</AquacultureHopper.label>
-  <AquacultureHopper.description>储存食物给生态养殖槽提供饲料。如果供电可以制冷，料斗内的食物将不会变质。</AquacultureHopper.description>
-  <AquacultureHopper_Blueprint.label>生态养殖槽料斗（蓝图）</AquacultureHopper_Blueprint.label>
-  <AquacultureHopper_Frame.label>生态养殖槽料斗（建造中）</AquacultureHopper_Frame.label>
-  <AquacultureHopper_Frame.description>储存食物给生态养殖槽提供饲料。如果供电可以制冷，料斗内的食物将不会变质。</AquacultureHopper_Frame.description>
+  <AquacultureHopper.label>生态养殖槽进料口</AquacultureHopper.label>
+  <AquacultureHopper.description>储存食物给生态养殖槽提供饲料。如果供电可以制冷，进料口内的食物将不会变质。</AquacultureHopper.description>
+  <AquacultureHopper_Blueprint.label>生态养殖槽进料口（蓝图）</AquacultureHopper_Blueprint.label>
+  <AquacultureHopper_Frame.label>生态养殖槽进料口（建造中）</AquacultureHopper_Frame.label>
+  <AquacultureHopper_Frame.description>储存食物给生态养殖槽提供饲料。如果供电可以制冷，进料口内的食物将不会变质。</AquacultureHopper_Frame.description>
 
 
 </LanguageData>

@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- PlaceWorker -->
+  <FishIndustry.HopperMustNextToBasin>进料口必须放置在生态养殖槽旁。</FishIndustry.HopperMustNextToBasin>
+  <FishIndustry.FishingPier_InvalidBiome>该生态中没有鱼类。</FishIndustry.FishingPier_InvalidBiome>
+  <FishIndustry.FishingPier_MustTouchBank>渔业码头必须连接着岸边。</FishIndustry.FishingPier_MustTouchBank>
+  <FishIndustry.FishingPier_PierMustOnWater>渔业码头必须放置在水面上方。</FishIndustry.FishingPier_PierMustOnWater>
+  <FishIndustry.FishingPier_ZoneMustOnWater>钓鱼区域必须放置在水面上方。</FishIndustry.FishingPier_ZoneMustOnWater>
+  <FishIndustry.FishingPier_ToClose>离另一个渔业码头太近了。</FishIndustry.FishingPier_ToClose>
+  <FishIndustry.FishingPier_ToCloseBlueprint>离另一个渔业码头的蓝图太近了。</FishIndustry.FishingPier_ToCloseBlueprint>
+  <FishIndustry.FishingPier_ToCloseFrame>离另一个渔业码头的框架太近了。</FishIndustry.FishingPier_ToCloseFrame>
+
+  <!-- Alerts -->
+
+  <FishIndustry.NeedAquacultureHopperLabel>需要生态养殖槽进料口</FishIndustry.NeedAquacultureHopperLabel>
+  <FishIndustry.NeedAquacultureHopperExplanation>你有一个未连接进料口生态养殖槽。\n\n必须要有一个装填了生素食的生态养殖槽进料口供给原料，生态养殖槽才能正常工作。\n\n在生态养殖槽旁建造一个生态养殖槽供进料口。</FishIndustry.NeedAquacultureHopperExplanation>
+
+  <FishIndustry.IdleAquacultureBasinLabel>空闲的生态养殖槽</FishIndustry.IdleAquacultureBasinLabel>
+  <FishIndustry.IdleAquacultureBasinExplanation>你有一个空闲的生态养殖槽\n\n你应该提供一些鱼卵以开始养殖。\n\n使用清单标签进行操作并确保你有一位指派了狩猎工作的殖民者。</FishIndustry.IdleAquacultureBasinExplanation>
+
+  <!-- Message -->
+  <FishIndustry.KillBredSpecies>生态养殖槽中养殖的鱼类死亡。你应该检查其状态。</FishIndustry.KillBredSpecies>
+
+  <!-- Inspect String -->
+  <FishIndustry.ProgressLabel>进度：{0}</FishIndustry.ProgressLabel>
+  <FishIndustry.Problem_NoFood>（缺少食物）</FishIndustry.Problem_NoFood>
+  <FishIndustry.Problem_TooCold>（温度过低）</FishIndustry.Problem_TooCold>
+  <FishIndustry.Problem_TooHot>（温度过高）</FishIndustry.Problem_TooHot>
+  <FishIndustry.Problem_WaterQualityCritical>（水质危急）</FishIndustry.Problem_WaterQualityCritical>
+  <FishIndustry.Problem_MicroFungus>（真菌）</FishIndustry.Problem_MicroFungus>
+  <FishIndustry.BredSpecies>饲养种类：{0}</FishIndustry.BredSpecies>
+  <FishIndustry.WaterQulityFishesHealth>水质/鱼健康状态：{0}</FishIndustry.WaterQulityFishesHealth>
+  <FishIndustry.FishStock>鱼储量：{0}</FishIndustry.FishStock>
+
+  <!-- Letters -->
+
+  <FishIndustry.LetterLabelMicroFungus>真菌</FishIndustry.LetterLabelMicroFungus>
+  <FishIndustry.MicroFungus>部分生态养殖槽感染了奇怪的水生真菌。\n似乎消耗了水中的所有氧气。\n希望鱼能熬过去吧。</FishIndustry.MicroFungus>
+
+  <FishIndustry.LetterLabelSunkenTreasure>水下宝藏！</FishIndustry.LetterLabelSunkenTreasure>
+  <FishIndustry.SunkenTreasure>{0}在钓鱼的时候发现了水下宝藏！意外之喜！\n</FishIndustry.SunkenTreasure>
+
+</LanguageData>
