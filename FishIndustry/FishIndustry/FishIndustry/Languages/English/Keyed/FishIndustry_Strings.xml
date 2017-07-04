@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- PlaceWorker -->
+  <FishIndustry.HopperMustNextToBasin>Aquaculture hopper must be placed next to an aquaculture basin.</FishIndustry.HopperMustNextToBasin>
+  <FishIndustry.FishingPier_InvalidBiome>No fish lives in this biome.</FishIndustry.FishingPier_InvalidBiome>
+  <FishIndustry.FishingPier_MustTouchBank>Fishing pier must touch a bank.</FishIndustry.FishingPier_MustTouchBank>
+  <FishIndustry.FishingPier_PierMustOnWater>Fishing pier must be placed on water.</FishIndustry.FishingPier_PierMustOnWater>
+  <FishIndustry.FishingPier_ZoneMustOnWater>Fishing zone must be placed on water.</FishIndustry.FishingPier_ZoneMustOnWater>
+  <FishIndustry.FishingPier_ToClose>An other fishing pier is too close.</FishIndustry.FishingPier_ToClose>
+  <FishIndustry.FishingPier_ToCloseBlueprint>An other fishing pier blueprint is too close.</FishIndustry.FishingPier_ToCloseBlueprint>
+  <FishIndustry.FishingPier_ToCloseFrame>An other fishing pier frame is too close.</FishIndustry.FishingPier_ToCloseFrame>
+
+  <!-- Alerts -->
+
+  <FishIndustry.NeedAquacultureHopperLabel>Need aquaculture hopper</FishIndustry.NeedAquacultureHopperLabel>
+  <FishIndustry.NeedAquacultureHopperExplanation>You have an aquaculture basin with no aquaculture hopper next to it.\n\nTo work, aquaculture basin must draw from an adjacent aquaculture hopper filled with raw vegetables.\n\nBuild an aquaculture hopper adjacent to the aquaculture basin.</FishIndustry.NeedAquacultureHopperExplanation>
+
+  <FishIndustry.IdleAquacultureBasinLabel>Idle aquaculture basin</FishIndustry.IdleAquacultureBasinLabel>
+  <FishIndustry.IdleAquacultureBasinExplanation>You have an idle aquaculture basin.\n\nYou should supply it some fish eggs to start breeding.\n\nUse the bills tab to order it and check you have an available hunter.</FishIndustry.IdleAquacultureBasinExplanation>
+
+  <!-- Message -->
+  <FishIndustry.KillBredSpecies>Bred fishes have died in an aquaculture basin. You should check its conditions.</FishIndustry.KillBredSpecies>
+
+  <!-- Inspect String -->
+  <FishIndustry.ProgressLabel>Progress: {0}</FishIndustry.ProgressLabel>
+  <FishIndustry.Problem_NoFood>(no food)</FishIndustry.Problem_NoFood>
+  <FishIndustry.Problem_TooCold>(no cold)</FishIndustry.Problem_TooCold>
+  <FishIndustry.Problem_TooHot>(too hot)</FishIndustry.Problem_TooHot>
+  <FishIndustry.Problem_WaterQualityCritical>(water quality critical)</FishIndustry.Problem_WaterQualityCritical>
+  <FishIndustry.Problem_MicroFungus>(micro fungus)</FishIndustry.Problem_MicroFungus>
+  <FishIndustry.BredSpecies>Bred species: {0}</FishIndustry.BredSpecies>
+  <FishIndustry.WaterQulityFishesHealth>Water quality / fishes health: {0}</FishIndustry.WaterQulityFishesHealth>
+  <FishIndustry.FishStock>Fish stock: {0}</FishIndustry.FishStock>
+
+  <!-- Letters -->
+
+  <FishIndustry.LetterLabelMicroFungus>Micro fungus</FishIndustry.LetterLabelMicroFungus>
+  <FishIndustry.MicroFungus>Some of your aquaculture basins have been infected by a strange aquatic fungus.\nIt seems to consume all the water's oxygen.\nLet's hope the fishes will survive this deprivation.</FishIndustry.MicroFungus>
+
+  <FishIndustry.LetterLabelSunkenTreasure>Sunken treasure!</FishIndustry.LetterLabelSunkenTreasure>
+  <FishIndustry.SunkenTreasure>{0} has found a sunken treasure while fishing! What a good catch!\n</FishIndustry.SunkenTreasure>
+
+</LanguageData>

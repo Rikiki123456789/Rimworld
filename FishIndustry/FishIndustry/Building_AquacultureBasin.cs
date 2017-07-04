@@ -351,7 +351,7 @@ namespace FishIndustry
             this.breedingSpeciesDef = null;
             this.breedingIsFinished = false;
             this.breedingProgressInTicks = 0;
-            Messages.Message("Bred fishes have died in an aquaculture basin. You should check its conditions.", this, MessageSound.Negative);
+            Messages.Message("FishIndustry.KillBredSpecies".Translate(), this, MessageSound.Negative);
         }
 
         /// <summary>
@@ -449,39 +449,39 @@ namespace FishIndustry
 
             if (this.breedingSpeciesDef == null)
             {
-                bredSpeciesLabel = "none";
-                progressLabel = "Progress: 0%";
+                bredSpeciesLabel = "NoneLower".Translate();
+                progressLabel = "FishIndustry.ProgressLabel".Translate("0%");
                 foodAvailabilityDoesMatter = false;
             }
             else
             {
                 bredSpeciesLabel = this.breedingSpeciesDef.label;
-                progressLabel = "Progress: " + ((float)this.breedingProgressInTicks / (float)breedingDuratinInTicks * 100f).ToString("F0") + "%";
+                progressLabel = "FishIndustry.ProgressLabel".Translate(((float)this.breedingProgressInTicks / (float)breedingDuratinInTicks * 100f).ToString("F0") + "%");
             }
             if (foodAvailabilityDoesMatter
                 && (this.foodIsAvailable == false))
             {
-                problemText = "(no food)";
+                problemText = "FishIndustry.Problem_NoFood".Translate();
             }
             else if (this.temperature < minWaterTemperature)
             {
-                problemText = "(too cold)";
+                problemText = "FishIndustry.Problem_TooCold".Translate();
             }
             else if (this.temperature > maxWaterTemperature)
             {
-                problemText = "(too hot)";
+                problemText = "FishIndustry.Problem_TooHot".Translate();
             }
             else if (this.waterQuality < minWaterQuality)
             {
-                problemText = "(water quality critical)";
+                problemText = "FishIndustry.Problem_WaterQualityCritical".Translate();
             }
             else if (this.microFungusRemainingDurationInTicks > 0)
             {
-                problemText = "(micro fungus)";
+                problemText = "Problem_MicroFungus".Translate();
             }
-            stringBuilder.AppendLine("Bred species: " + bredSpeciesLabel);
+            stringBuilder.AppendLine("FishIndustry.BredSpecies".Translate(bredSpeciesLabel));
             stringBuilder.AppendLine(progressLabel + " " + problemText);
-            stringBuilder.Append("Water quality/fishes health: " + (this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + "/" + this.fishesHealthInPercent + "%");
+            stringBuilder.Append("FishIndustry.WaterQulityFishesHealth".Translate((this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + " / " + this.fishesHealthInPercent + "%"));
 
             return stringBuilder.ToString();
         }

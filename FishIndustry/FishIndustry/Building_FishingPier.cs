@@ -167,7 +167,7 @@ namespace FishIndustry
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.Append(base.GetInspectString());
 
-            stringBuilder.Append("Fish stock: " + this.fishStock);
+            stringBuilder.Append("FishIndustry.FishStock".Translate(this.fishStock));
 
             return stringBuilder.ToString();
         }

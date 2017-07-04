@@ -212,8 +212,8 @@ namespace FishIndustry
                             fishingCatch.stackCount = Rand.RangeInclusive(58, 289);
                             Thing treasureSilver = GenSpawn.Spawn(ThingDefOf.Silver, fishingPier.middleCell, this.Map);
                             treasureSilver.stackCount = Rand.RangeInclusive(237, 2154);
-                            string eventText = this.pawn.Name.ToStringShort.CapitalizeFirst() + " has found a sunken treasure while fishing! What a good catch!\n";
-                            Find.LetterStack.ReceiveLetter("Sunken treasure!", eventText, LetterDefOf.Good, this.pawn);
+                            Find.LetterStack.ReceiveLetter("FishIndustry.LetterLabelSunkenTreasure".Translate(), "FishIndustry.SunkenTreasure".Translate(this.pawn.Name.ToStringShort.CapitalizeFirst()),
+                                LetterDefOf.Good, this.pawn);
                         }
                         else if (bonusCatchValue < 0.02f)
                         {

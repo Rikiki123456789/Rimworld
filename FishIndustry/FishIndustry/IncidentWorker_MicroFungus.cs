@@ -56,7 +56,7 @@ namespace FishIndustry
             }
             if (aquacultureBasin != null)
             {
-                Find.LetterStack.ReceiveLetter("Micro fungus", "Some of your aquaculture basins have been infected by a strange aquatic fungus.\nIt seems to consume all the water's oxygen.\nLet's hope the fishes will survive this deprivation.", LetterDefOf.BadNonUrgent, aquacultureBasin);
+                Find.LetterStack.ReceiveLetter("FishIndustry.LetterLabelMicroFungus".Translate(), "FishIndustry.MicroFungus".Translate(), LetterDefOf.BadNonUrgent, aquacultureBasin);
             }
             return true;
         }

@@ -34,19 +34,19 @@ namespace FishIndustry
             // Check this biome contains some fishes.
             if (Util_FishIndustry.GetFishSpeciesList(this.Map.Biome).NullOrEmpty())
             {
-                return new AcceptanceReport("No fish lives in this biome.");
+                return new AcceptanceReport("FishIndustry.FishingPier_InvalidBiome".Translate());
             }
 
             // Check fishing pier bank cell is on a "solid" terrain.
             if (Util_FishIndustry.IsAquaticTerrain(this.Map, loc))
             {
-                return new AcceptanceReport("Fishing pier must touch a bank.");
+                return new AcceptanceReport("FishIndustry.FishingPier_MustTouchBank".Translate());
             }
             // Check fishing pier middle and river cells are on water.
             if ((Util_FishIndustry.IsAquaticTerrain(this.Map, loc + new IntVec3(0, 0, 1).RotatedBy(rot)) == false)
                 || (Util_FishIndustry.IsAquaticTerrain(this.Map, loc + new IntVec3(0, 0, 2).RotatedBy(rot)) == false))
             {
-                return new AcceptanceReport("Fishing pier must be placed on water.");
+                return new AcceptanceReport("FishIndustry.FishingPier_PierMustOnWater".Translate());
             }
             // Check fishing zone is on water.
             for (int xOffset = -1; xOffset <= 1; xOffset++)
@@ -55,7 +55,7 @@ namespace FishIndustry
                 {
                     if (Util_FishIndustry.IsAquaticTerrain(this.Map, loc + new IntVec3(xOffset, 0, yOffset).RotatedBy(rot)) == false)
                     {
-                        return new AcceptanceReport("Fishing zone must be placed on water.");
+                        return new AcceptanceReport("FishIndustry.FishingPier_ZoneMustOnWater".Translate());
                     }
                 }
             }
@@ -72,7 +72,7 @@ namespace FishIndustry
                 IEnumerable<Thing> fishingPierInTheArea = fishingPierList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
                 if (fishingPierInTheArea.Count() > 0)
                 {
-                    return new AcceptanceReport("An other fishing pier is too close.");
+                    return new AcceptanceReport("FishIndustry.FishingPier_ToClose".Translate());
                 }
             }
             if (fishingPierSpawnerBlueprintList != null)
@@ -80,7 +80,7 @@ namespace FishIndustry
                 IEnumerable<Thing> fishingPierBlueprintInTheArea = fishingPierSpawnerBlueprintList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
                 if (fishingPierBlueprintInTheArea.Count() > 0)
                 {
-                    return new AcceptanceReport("An other fishing pier blueprint is too close.");
+                    return new AcceptanceReport("FishIndustry.FishingPier_ToCloseBlueprint".Translate());
                 }
             }
             if (fishingPierSpawnerFrameList != null)
@@ -88,7 +88,7 @@ namespace FishIndustry
                 IEnumerable<Thing> fishingPierFrameInTheArea = fishingPierSpawnerFrameList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
                 if (fishingPierFrameInTheArea.Count() > 0)
                 {
-                    return new AcceptanceReport("An other fishing pier frame is too close.");
+                    return new AcceptanceReport("FishIndustry.FishingPier_ToCloseFrame".Translate());
                 }
             }
             if (fishingPierSpawnerOnMudBlueprintList != null)
@@ -96,7 +96,7 @@ namespace FishIndustry
                 IEnumerable<Thing> fishingPierOnMudBlueprintInTheArea = fishingPierSpawnerOnMudBlueprintList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
                 if (fishingPierOnMudBlueprintInTheArea.Count() > 0)
                 {
-                    return new AcceptanceReport("An other fishing pier blueprint is too close.");
+                    return new AcceptanceReport("FishIndustry.FishingPier_ToCloseBlueprint".Translate());
                 }
             }
             if (fishingPierSpawnerOnMudFrameList != null)
@@ -104,7 +104,7 @@ namespace FishIndustry
                 IEnumerable<Thing> fishingPierOnMudFrameInTheArea = fishingPierSpawnerOnMudFrameList.Where(building => loc.InHorDistOf(building.Position, minDistanceBetweenTwoFishingPiers));
                 if (fishingPierOnMudFrameInTheArea.Count() > 0)
                 {
-                    return new AcceptanceReport("An other fishing pier frame is too close.");
+                    return new AcceptanceReport("FishIndustry.FishingPier_ToCloseFrame".Translate());
                 }
             }
 
