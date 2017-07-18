@@ -39,8 +39,7 @@
     </statBases>
     <size>(3,3)</size>
     <costList>
-      <WoodLog>100</WoodLog>
-      <RawPotatoes>50</RawPotatoes>
+      <WoodLog>150</WoodLog>
     </costList>
     <fertility>1.0</fertility>
     <building>

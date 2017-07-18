@@ -84,7 +84,7 @@
     <description>This kind of grass only grows in deep and dark caves. The soft light emanating from a field of stone grass is appeasing.</description>
     <statBases>
       <MaxHitPoints>85</MaxHitPoints>
-      <Beauty>3</Beauty>
+      <Beauty>1</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/StoneGrass</texPath>
@@ -139,7 +139,7 @@
     <description>A giant and very impressive leaf. Gathering water and mineral elements from the ground, it can be prepared as a soup.</description>
     <statBases>
       <MaxHitPoints>85</MaxHitPoints>
-      <Beauty>15</Beauty>
+      <Beauty>2</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/GiantLeaf</texPath>
@@ -200,7 +200,7 @@
     <tickerType>Normal</tickerType>
     <statBases>
       <MaxHitPoints>120</MaxHitPoints>
-      <Beauty>25</Beauty>
+      <Beauty>10</Beauty>
     </statBases>
     <drawerType>MapMeshAndRealTime</drawerType>
     <graphicData>
@@ -266,7 +266,7 @@
     <tickerType>Long</tickerType>
     <statBases>
       <MaxHitPoints>120</MaxHitPoints>
-      <Beauty>25</Beauty>
+      <Beauty>10</Beauty>
     </statBases>
     <drawerType>MapMeshAndRealTime</drawerType>
     <graphicData>
@@ -299,10 +299,10 @@
     </plant>
 
     <growsOnlyInCaveBiome>true</growsOnlyInCaveBiome>
-    <minGrowTemperature>0</minGrowTemperature>
-    <minOptimalGrowTemperature>15</minOptimalGrowTemperature>
-    <maxOptimalGrowTemperature>40</maxOptimalGrowTemperature>
-    <maxGrowTemperature>55</maxGrowTemperature>
+    <minGrowTemperature>10</minGrowTemperature>
+    <minOptimalGrowTemperature>20</minOptimalGrowTemperature>
+    <maxOptimalGrowTemperature>50</maxOptimalGrowTemperature>
+    <maxGrowTemperature>60</maxGrowTemperature>
     <hasStaticGlower>true</hasStaticGlower>
     <hasDynamicGlower>false</hasDynamicGlower>
     <growOnlyOnRoughRock>false</growOnlyOnRoughRock>
@@ -332,7 +332,7 @@
     <tickerType>Rare</tickerType>
     <statBases>
       <MaxHitPoints>250</MaxHitPoints>
-      <Beauty>85</Beauty>
+      <Beauty>25</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/BlackLotus</texPath>
@@ -441,7 +441,7 @@
     <description>A rapid growing and aerial liana. One can almost see through its delicate and fragile branches.</description>
     <thingClass>CaveworldFlora.ClusterPlant</thingClass>
     <statBases>
-      <Beauty>5</Beauty>
+      <Beauty>2</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/CaveLace</texPath>

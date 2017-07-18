@@ -41,7 +41,7 @@
     <statBases>
       <MaxHitPoints>25</MaxHitPoints>
       <Flammability>0.4</Flammability>
-      <Beauty>10</Beauty>
+      <Beauty>5</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/Shimmershroom</texPath>
@@ -113,7 +113,7 @@
     <statBases>
       <MaxHitPoints>65</MaxHitPoints>
       <Flammability>0.4</Flammability>
-      <Beauty>15</Beauty>
+      <Beauty>2</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/Glowbulb</texPath>
@@ -184,7 +184,7 @@
     <statBases>
       <MaxHitPoints>90</MaxHitPoints>
       <Flammability>0.3</Flammability>
-      <Beauty>25</Beauty>
+      <Beauty>4</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/Gleamcap</texPath>
@@ -256,7 +256,7 @@
     <statBases>
       <MaxHitPoints>15</MaxHitPoints>
       <Flammability>0.3</Flammability>
-      <Beauty>35</Beauty>
+      <Beauty>20</Beauty>
     </statBases>
     <graphicData>
       <texPath>Things/Plant/Brightbells</texPath>
