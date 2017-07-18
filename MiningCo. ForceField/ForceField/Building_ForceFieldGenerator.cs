@@ -352,7 +352,7 @@ namespace ForceField
         {
             if (this.forceFieldCharge < this.properties.explosiveRepelCharge)
             {
-                // Force field charge is too low to repell an explosive.
+                // Force field charge is too low to repel an explosive.
                 return;
             }
             this.forceFieldCharge -= this.properties.explosiveRepelCharge;
