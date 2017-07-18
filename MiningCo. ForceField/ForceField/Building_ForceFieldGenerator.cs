@@ -70,6 +70,7 @@ namespace ForceField
         
         public const int drawingPeriodInTicks = 120;
         public int drawingCounterInTicks = 0;
+        public int nextSparkTick = 0;
 
         public float[] matrixFadingCoefficient = new float[5];
         public bool[] matrixIsStartingAbsorbion = new bool[5];
@@ -496,10 +497,15 @@ namespace ForceField
                 }
 
                 // Additional lightning effect.
-                int effectCellIndex = Rand.RangeInclusive(0, 4);
-                if (Rand.Value < (1f / 100))
+                if (Find.TickManager.TicksGame > this.nextSparkTick)
                 {
-                    MoteMaker.ThrowLightningGlow(this.effectCells[effectCellIndex] + new Vector3(Rand.Range(-0.1f, 0.1f), 0f, Rand.Range(-0.1f, 0.1f)), this.Map, 0.2f);
+                    this.nextSparkTick = Find.TickManager.TicksGame + Rand.RangeInclusive(150, 300);
+                    int effectCellIndex = Rand.RangeInclusive(0, 4);
+                    MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("Mote_ElectricalSpark"), null);
+                    moteThrown.Scale = 0.8f;
+                    moteThrown.exactRotation = Rand.Range(0f, 360f);
+                    moteThrown.exactPosition = this.effectCells[effectCellIndex] + new Vector3(Rand.Range(-0.1f, 0.1f), 0f, Rand.Range(-0.1f, 0.1f));
+                    GenSpawn.Spawn(moteThrown, moteThrown.exactPosition.ToIntVec3(), this.Map);
                 }
             }
 
@@ -510,7 +516,11 @@ namespace ForceField
                 {
                     this.matrixAbsorbtionCounterInTicks[matrixIndex] = matrixAbsorbtionDurationInTicks;
                     this.matrixIsStartingAbsorbion[matrixIndex] = false;
-                    MoteMaker.ThrowLightningGlow(this.effectCells[matrixIndex] + new Vector3(Rand.Range(-0.2f, 0.2f), 0f, Rand.Range(-0.2f, 0.2f)), this.Map, 0.2f);
+                    MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
+                    moteThrown.Scale = 4f;
+                    moteThrown.exactRotation = Rand.Range(0f, 360f);
+                    moteThrown.exactPosition = this.effectCells[matrixIndex] + new Vector3(Rand.Range(-0.2f, 0.2f), 0f, Rand.Range(-0.2f, 0.2f));
+                    GenSpawn.Spawn(moteThrown, moteThrown.exactPosition.ToIntVec3(), this.Map);
                 }
                 if (this.matrixAbsorbtionCounterInTicks[matrixIndex] > 0)
                 {
