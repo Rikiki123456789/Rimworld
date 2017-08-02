@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ThingDefs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>MiningTurret</defName>
+    <label>drill turret</label>
+    <description>An advanced automated turret designed to drill nearby ores and designated rocks. Drilling efficiency can be improved by powering and opearting it.</description>
+    <thingClass>MiningTurret.Building_MiningTurret</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Security/TurretImprovised</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(6,6)</drawSize>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+    </graphicData>
+    <size>(3,3)</size>
+    <uiIconPath>Things/Building/MenuIcon_DrillTurret</uiIconPath>
+    <minifiedDef>MinifiedFurniture</minifiedDef>
+    <altitudeLayer>Building</altitudeLayer>
+    <stealable>false</stealable>
+    <rotatable>true</rotatable>
+    <statBases>
+      <MaxHitPoints>250</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <WorkToBuild>10000</WorkToBuild>
+      <Mass>150</Mass>
+      <Beauty>-20</Beauty>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-2)</interactionCellOffset>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>1500</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <fillPercent>0.6</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <hasTooltip>true</hasTooltip>
+    <costList>
+      <Steel>150</Steel>
+      <Component>4</Component>
+    </costList>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Production</designationCategory>
+    <specialDisplayRadius>15</specialDisplayRadius>
+    <building>
+      <ignoreNeedsPower>true</ignoreNeedsPower>
+    </building>
+    <researchPrerequisites>
+      <li>ResearchMiningTurret</li>
+    </researchPrerequisites>
+  </ThingDef>
+</ThingDefs>

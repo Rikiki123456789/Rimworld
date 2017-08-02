@@ -76,8 +76,7 @@ namespace MobileMineralSonar
         // ===================== Static functions =====================
         public static void TryUpdateScanParameters()
         {
-            ResearchProjectDef mmsResearch = ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan");
-            if (Find.ResearchManager.GetProgress(mmsResearch) >= mmsResearch.CostApparent)
+            if (ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan").IsFinished)
             {
                 maxScanRange = enhancedMaxScanRange;
                 detectionChance = enhancedDetectionChance;
@@ -91,7 +90,10 @@ namespace MobileMineralSonar
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            
+
+            // TODO: is it necessary?
+            TryUpdateScanParameters();
+
             detectedDefList = new List<ThingDef>();
             foreach (ThingDef metallicDef in ((ThingDef_MobileMineralSonar)this.def).scannedThingDefs)
             {
@@ -110,12 +112,13 @@ namespace MobileMineralSonar
             scanRangeMatrix50.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
             satelliteDishMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), satelliteDishScale);
             
+            // TODO: is it still necessary?
             if (this.isInstalled == false)
             {
                 // The MMS has just been moved or is spawned for the first time.
                 this.scanRange = 1;
                 this.scanProgress = 0;
-                this.satelliteDishRotation = 0;
+                this.satelliteDishRotation = 0f;
             }
             else
             {

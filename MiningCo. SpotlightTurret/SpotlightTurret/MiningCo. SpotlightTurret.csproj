@@ -51,13 +51,13 @@
     <Compile Include="Building_SpotlightTurret.cs" />
     <Compile Include="Util_SpotlightTurret.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ThingDef_MobileMineralSonar.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MiningCo. SpotlightTurret\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. SpotlightTurret\About\Preview.png" />
+    <Content Include="MiningCo. SpotlightTurret\Defs\HediffDefs\Hediffs_Local_Infections.xml" />
     <Content Include="MiningCo. SpotlightTurret\Defs\ResearchProjectDefs\ResearchProjects_SpotlightTurret.xml" />
     <Content Include="MiningCo. SpotlightTurret\Defs\ResearchProjectDefs\ResearchTabs.xml" />
     <Content Include="MiningCo. SpotlightTurret\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
@@ -93,8 +93,7 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. SpotlightTurret\Assemblies"
-xcopy /Y /i /s "$(ProjectDir)\MiningCo. SpotlightTurret" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. SpotlightTurret"
-REM xcopy /Y /i /s "$(ProjectDir)\MiningCo. SpotlightTurret" "C:\Users\Temp2\RimWorld1557Win\Mods\MiningCo. SpotlightTurret"</PostBuildEvent>
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. SpotlightTurret" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. SpotlightTurret"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

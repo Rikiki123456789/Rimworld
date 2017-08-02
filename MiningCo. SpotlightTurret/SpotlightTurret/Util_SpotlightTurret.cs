@@ -28,5 +28,14 @@ namespace SpotlightTurret
                 return ThingDef.Named("SpotlightLight");
             }
         }
+
+        // Blinded by spotlight hediff.
+        public static HediffDef blindedBySpotlightDef
+        {
+            get
+            {
+                return HediffDef.Named("BlindedBySpotlight");
+            }
+        }
     }
 }

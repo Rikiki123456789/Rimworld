@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DrillTurret</RootNamespace>
+    <AssemblyName>MiningCo. DrillTurret</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.17.6362.34601, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_DrillTurret.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Alert_DrillTurretNotDrilling.cs" />
+    <Compile Include="Util_DrillTurret.cs" />
+    <Compile Include="JobDriver_OperateDrillTurret.cs" />
+    <Compile Include="WorkGiver_OperateDrillTurret.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MiningCo. DrillTurret\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. DrillTurret\About\Preview.png" />
+    <Content Include="MiningCo. DrillTurret\About\PublishedFileId.txt" />
+    <Content Include="MiningCo. DrillTurret\Defs\Effects\Effecter_LaserDrill.xml" />
+    <Content Include="MiningCo. DrillTurret\Defs\JobDefs\Jobs_Work.xml" />
+    <Content Include="MiningCo. DrillTurret\Defs\ResearchProjectDefs\ResearchProjects_DrillTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. DrillTurret\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
+    <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Buildings\Buildings_DrillTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Items\Items_MinifiedDrillTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. DrillTurret\Defs\WorkGiverDefs\WorkGivers.xml" />
+    <Content Include="MiningCo. DrillTurret\Textures\Effects\DrillTurret_LaserBeam.png" />
+    <Content Include="MiningCo. DrillTurret\Textures\Things\Building\MenuIcon_DrillTurret.png" />
+    <Content Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_Off.png" />
+    <Content Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_On.png" />
+    <Content Include="MiningCo. DrillTurret\Textures\Ui\Commands\CommandButton_SwitchMode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MiningCo. DrillTurret\Textures\Things\Building\MenuIcon_DrillTurret.pdn" />
+    <None Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_Off.pdn" />
+    <None Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_On.pdn" />
+    <None Include="MiningCo. DrillTurret\Textures\Ui\Commands\CommandButton_SwitchMode.pdn" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MiningCo. DrillTurret\Assemblies\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. DrillTurret\Assemblies"
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. DrillTurret" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. DrillTurret"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

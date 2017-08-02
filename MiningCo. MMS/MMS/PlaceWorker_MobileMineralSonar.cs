@@ -34,18 +34,8 @@ namespace MobileMineralSonar
                     (mobileMineralSonar as Building_MobileMineralSonar).DrawMaxScanRange();
                 }
             }
-
-            ResearchProjectDef mmsResearch = ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan");
-            if (Find.ResearchManager.GetProgress(mmsResearch) >= mmsResearch.CostApparent)
-            {
-                Material scanRange30 = MaterialPool.MatFrom("Effects/ScanRange30");
-                Vector3 scanRangeScale30 = new Vector3(60f, 1f, 60f);
-                Matrix4x4 scanRangeMatrix30 = default(Matrix4x4);
-                // The 10f offset on Y axis is mandatory to be over the fog of war.
-                scanRangeMatrix30.SetTRS(loc.ToVector3Shifted() + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale30);
-                Graphics.DrawMesh(MeshPool.plane10, scanRangeMatrix30, scanRange30, 0);
-            }
-            else
+            
+            if (ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan").IsFinished)
             {
                 Material scanRange50 = MaterialPool.MatFrom("Effects/ScanRange50");
                 Vector3 scanRangeScale50 = new Vector3(100f, 1f, 100f);
@@ -53,6 +43,15 @@ namespace MobileMineralSonar
                 // The 10f offset on Y axis is mandatory to be over the fog of war.
                 scanRangeMatrix50.SetTRS(loc.ToVector3Shifted() + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
                 Graphics.DrawMesh(MeshPool.plane10, scanRangeMatrix50, scanRange50, 0);
+            }
+            else
+            {
+                Material scanRange30 = MaterialPool.MatFrom("Effects/ScanRange30");
+                Vector3 scanRangeScale30 = new Vector3(60f, 1f, 60f);
+                Matrix4x4 scanRangeMatrix30 = default(Matrix4x4);
+                // The 10f offset on Y axis is mandatory to be over the fog of war.
+                scanRangeMatrix30.SetTRS(loc.ToVector3Shifted() + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale30);
+                Graphics.DrawMesh(MeshPool.plane10, scanRangeMatrix30, scanRange30, 0);
             }
 
             return true;

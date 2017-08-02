@@ -56,7 +56,7 @@
 			<ai_combatDangerous>true</ai_combatDangerous>
     </building>
     <researchPrerequisites>
-      <li>MicroelectronicsBasics</li>
+      <li>ResearchSpotlightTurret</li>
     </researchPrerequisites>
   </ThingDef>
 </ThingDefs>

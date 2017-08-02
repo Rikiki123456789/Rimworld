@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef Name="InfectionBase" Abstract="True">
+    <hediffClass>HediffWithComps</hediffClass>
+    <defaultLabelColor>(0.8, 0.8, 0.35)</defaultLabelColor>
+    <initialSeverity>0.001</initialSeverity>
+    <comps>
+      <li Class="HediffCompProperties_Discoverable">
+        <sendLetterWhenDiscovered>true</sendLetterWhenDiscovered>
+      </li>
+    </comps>
+  </HediffDef>
+
+  <HediffDef ParentName="InfectionBase">
+    <defName>BlindedBySpotlight</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>blinded</label>
+    <makesSickThought>false</makesSickThought>
+    <tendable>false</tendable>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <setMax>0.1</setMax>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.3</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>
+          <min>300</min>
+          <max>360</max>
+        </disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

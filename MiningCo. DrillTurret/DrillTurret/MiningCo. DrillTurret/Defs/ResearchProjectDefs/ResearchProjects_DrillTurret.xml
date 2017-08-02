@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResearchProjectDefs>
+
+  <ResearchProjectDef>
+    <defName>ResearchMiningTurret</defName>
+    <label>drill turret</label>
+    <description>Design drill turrets. Those turrets can be deployed near ore deposits or natural rocks to automatically drill it.</description>
+    <descriptionDiscovered>You have developped the drill turret.
+
+- You can now build drill turrets to automatically mine ore deposits or natural rocks.
+    </descriptionDiscovered>
+    <techLevel>Industrial</techLevel>
+    <baseCost>1000</baseCost>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <tab>MiningCo</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>4</researchViewY>
+  </ResearchProjectDef>
+
+  <ResearchProjectDef>
+    <defName>ResearchMiningTurretEfficientDrilling</defName>
+    <label>drill turret: efficient drilling</label>
+    <description>Improve the maximum drilling efficiency of drill turret (+33%) and quantity of yield resources.</description>
+    <descriptionDiscovered>You have improved the drilling efficiency of drill turrets (+33%).
+    </descriptionDiscovered>
+    <techLevel>Industrial</techLevel>
+    <baseCost>1000</baseCost>
+    <prerequisites>
+      <li>ResearchMiningTurret</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <tab>MiningCo</tab>
+    <researchViewX>1</researchViewX>
+    <researchViewY>4</researchViewY>
+  </ResearchProjectDef>
+
+</ResearchProjectDefs>

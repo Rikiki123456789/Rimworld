@@ -42,7 +42,7 @@ namespace SpotlightTurret
         public LightMode lightMode = LightMode.Conic;
         public const float spotlightMinRange = 5f;
         public const int spotLightRangeRateInTicksIdle = 16;          // Rate at which range is modified by 1 when idle.
-        public const int spotLightRangeRateInTicksIdleTargetting = 8; // Rate at which range is modified by 1 when targetting.
+        public const int spotLightRangeRateInTicksTargetting = 8; // Rate at which range is modified by 1 when targetting.
         public float spotLightRangeBaseOffset = 15f;
         public float spotLightRange = 15f;
         public float spotLightRangeTarget = 15f;
@@ -147,33 +147,43 @@ namespace SpotlightTurret
                 }
             }
 
-            // Target is invalid. Periodically look for a valid one.
-            if ((this.target == null)
-                && (this.lightMode != LightMode.Fixed)
-                && (this.Faction != null)
-                && ((Find.TickManager.TicksGame + this.updateOffsetInTicks) % updatePeriodInTicks == 0))
+            if ((Find.TickManager.TicksGame + this.updateOffsetInTicks) % updatePeriodInTicks == 0)
             {
-                // Look for a new target.
-                this.target = LookForNewTarget();
+                // Target is invalid. Periodically look for a valid one.
+                if ((this.target == null)
+                    && (this.lightMode != LightMode.Fixed)
+                    && (this.Faction != null))
+                {
+                    // Look for a new target.
+                    this.target = LookForNewTarget();
+                    if (this.target != null)
+                    {
+                        SoundDefOf.TurretAcquireTarget.PlayOneShot(new TargetInfo(this.Position, this.Map));
+                    }
+                }
+
+                // Update target rotation and range.
                 if (this.target != null)
                 {
-                    SoundDefOf.TurretAcquireTarget.PlayOneShot(new TargetInfo(this.Position, this.Map));
+                    // Target is valid.
+                    this.spotLightRotationTarget = Mathf.Round((this.target.Position - this.Position).AngleFlat);
+                    ComputeRotationDirection();
+                    this.spotLightRangeTarget = (this.target.Position - this.Position).ToVector3().magnitude;
+                }
+
+                // Blind target if it is facing the spotlight.
+                if ((this.target != null)
+                    && (this.spotLightRotation == this.spotLightRotationTarget)
+                    && (this.spotLightRange == this.spotLightRangeTarget))
+                {
+                    float deltaAngle = ComputeAbsoluteAngleDelta(this.spotLightRotation, this.target.Rotation.AsAngle);
+                    if ((deltaAngle >= 90f)
+                        && (deltaAngle <= 270f))
+                    {
+                        this.target.health.AddHediff(Util_SpotlightTurret.blindedBySpotlightDef);
+                    }
                 }
             }
-
-            // Update target rotation and range.
-            if (this.target != null)
-            {
-                // Target is valid.
-                this.spotLightRotationTarget = Mathf.Round((this.target.Position - this.Position).AngleFlat);
-                ComputeRotationDirection();
-                this.spotLightRangeTarget = (this.target.Position - this.Position).ToVector3().magnitude;
-            }
-            /*else
-            {
-                // Target is invalid.
-                this.spotLightRangeTarget = this.spotLightRangeBaseOffset;
-            }*/
 
             // Idle turn.
             if (this.target == null)
@@ -373,7 +383,7 @@ namespace SpotlightTurret
                 float rangeRate = spotLightRangeRateInTicksIdle;
                 if (this.target != null)
                 {
-                    rangeRate = spotLightRangeRateInTicksIdleTargetting;
+                    rangeRate = spotLightRangeRateInTicksTargetting;
                 }
                 if ((Find.TickManager.TicksGame % rangeRate) == 0)
                 {
@@ -391,7 +401,7 @@ namespace SpotlightTurret
                     }
                 }
             }
-
+            
             if ((this.target == null)
                 && (this.idlePauseTicks == 0)
                 && (this.spotLightRotation == this.spotLightRotationTarget)
@@ -400,8 +410,8 @@ namespace SpotlightTurret
                 // Motion is finished, start pause.
                 this.idlePauseTicks = idlePauseDurationInTicks;
             }
-
-            // Light the area in front of the spotlight.
+            
+            // Light the area in front of the spotlight: can be blocked by wall/building.
             Vector3 lightVector3 = new Vector3(0, 0, this.spotLightRange).RotatedBy(this.spotLightRotation);
             IntVec3 lightIntVec3 = new IntVec3(Mathf.RoundToInt(lightVector3.x), 0, Mathf.RoundToInt(lightVector3.z));
             IntVec3 spotlightTarget = this.Position + lightIntVec3;
