@@ -129,11 +129,12 @@ namespace MiningHelmet
         {
             base.ExposeData();
 
-            Scribe_References.Look<Thing>(ref this.light, "headLight");
+            Scribe_References.Look<Thing>(ref this.light, "light");
             Scribe_Values.Look<bool>(ref this.lightIsOn, "lightIsOn");
             Scribe_Values.Look<LightMode>(ref this.lightMode, "lightMode");
             if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {
+                // TODO: rework this.
                 this.refreshIsNecessary = true;
             }
         }
@@ -145,7 +146,7 @@ namespace MiningHelmet
             IEnumerable<Gizmo> basebuttonList = base.GetGizmos();
             if (basebuttonList != null)
             {
-                resultButtonList = buttonList.Concat(basebuttonList);
+                resultButtonList = basebuttonList.Concat(buttonList);
             }
             else
             {
