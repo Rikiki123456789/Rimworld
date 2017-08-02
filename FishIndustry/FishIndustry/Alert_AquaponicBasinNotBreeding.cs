@@ -22,7 +22,7 @@ namespace FishIndustry
         public override AlertReport GetReport()
         {
             List<Map> maps = Find.Maps;
-            for (int i = 0; i<maps.Count; i++)
+            for (int i = 0; i < maps.Count; i++)
             {
                 foreach (Building_AquacultureBasin aquacultureBasin in maps[i].listerBuildings.AllBuildingsColonistOfClass<Building_AquacultureBasin>())
                 {

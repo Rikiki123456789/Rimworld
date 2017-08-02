@@ -36,7 +36,6 @@ namespace FishIndustry
             Building_FishingPier fishingPier = this.TargetThingA as Building_FishingPier;
             Passion passion = Passion.None;
             const float skillGainPerTick = 0.15f;
-            float skillGainFactor = 0f;
 
             this.AddEndCondition(() =>
             {
@@ -84,20 +83,6 @@ namespace FishIndustry
                     this.fishingRodMote.exactPosition = fishingPier.fishingSpotCell.ToVector3Shifted();
                     this.fishingRodMote.Scale = 1f;
                     GenSpawn.Spawn(this.fishingRodMote, fishingPier.fishingSpotCell, this.Map);
-                    WorkTypeDef fishingWorkDef = WorkTypeDefOf.Hunting;
-                    passion = this.pawn.skills.MaxPassionOfRelevantSkillsFor(fishingWorkDef);
-                    if (passion == Passion.None)
-                    {
-                        skillGainFactor = 0.3f;
-                    }
-                    else if (passion == Passion.Minor)
-                    {
-                        skillGainFactor = 1f;
-                    }
-                    else
-                    {
-                        skillGainFactor = 1.5f;
-                    }
                 },
                 tickAction = () =>
                 {
@@ -109,7 +94,7 @@ namespace FishIndustry
                     {
                         this.pawn.needs.joy.GainJoy(NeedTunings.JoyPerXpForPassionMajor, JoyKindDefOf.Work);
                     }
-                    this.pawn.skills.Learn(SkillDefOf.Shooting, skillGainPerTick * skillGainFactor);
+                    this.pawn.skills.Learn(SkillDefOf.Shooting, skillGainPerTick);
 
                     if (this.ticksLeftThisToil == 1)
                     {
