@@ -47,8 +47,8 @@ namespace FishIndustry
         }
         public Alert_AquacultureBasinNeedsAquacultureHopper()
         {
-            this.defaultLabel = "Need aquaculture hopper";
-            this.defaultExplanation = "You have an aquaculture basin with no aquaculture hopper next to it.\n\nTo work, aquaculture basin must draw from an adjacent aquaculture hopper filled with raw vegetables.\n\nBuild an aquaculture hopper adjacent to the aquaculture basin.";
+            this.defaultLabel = "FishIndustry.NeedAquacultureHopperLabel".Translate();
+            this.defaultExplanation = "FishIndustry.NeedAquacultureHopperExplanation".Translate();
         }
     }
 }

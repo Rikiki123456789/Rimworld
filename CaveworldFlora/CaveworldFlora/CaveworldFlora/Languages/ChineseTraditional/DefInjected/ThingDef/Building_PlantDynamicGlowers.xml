@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <ShimmershroomGlowerSmall.label>發光的微光蘑菇</ShimmershroomGlowerSmall.label>
+  <ShimmershroomGlowerSmall.description>發光的微光蘑菇</ShimmershroomGlowerSmall.description>
+
+  <ShimmershroomGlowerMedium.label>發光的微光蘑菇</ShimmershroomGlowerMedium.label>
+  <ShimmershroomGlowerMedium.description>發光的微光蘑菇</ShimmershroomGlowerMedium.description>
+
+  <ShimmershroomGlowerBig.label>發光的微光蘑菇</ShimmershroomGlowerBig.label>
+  <ShimmershroomGlowerBig.description>發光的微光蘑菇</ShimmershroomGlowerBig.description>
+
+  <GlowbulbGlowerSmall.label>發光的輝光球菇</GlowbulbGlowerSmall.label>
+  <GlowbulbGlowerSmall.description>發光的輝光球菇</GlowbulbGlowerSmall.description>
+
+  <GlowbulbGlowerMedium.label>發光的輝光球菇</GlowbulbGlowerMedium.label>
+  <GlowbulbGlowerMedium.description>發光的輝光球菇</GlowbulbGlowerMedium.description>
+
+  <GlowbulbGlowerBig.label>發光的輝光球菇</GlowbulbGlowerBig.label>
+  <GlowbulbGlowerBig.description>發光的輝光球菇</GlowbulbGlowerBig.description>
+
+  <GleamcapGlowerSmall.label>發光的閃光蓋菇</GleamcapGlowerSmall.label>
+  <GleamcapGlowerSmall.description>發光的閃光蓋菇</GleamcapGlowerSmall.description>
+
+  <GleamcapGlowerMedium.label>發光的閃光蓋菇</GleamcapGlowerMedium.label>
+  <GleamcapGlowerMedium.description>發光的閃光蓋菇</GleamcapGlowerMedium.description>
+
+  <GleamcapGlowerBig.label>發光的閃光蓋菇</GleamcapGlowerBig.label>
+  <GleamcapGlowerBig.description>發光的閃光蓋菇</GleamcapGlowerBig.description>
+
+  <GleamcapSporeSpawner.label>孢子</GleamcapSporeSpawner.label>
+  <GleamcapSporeSpawner.description>用於生成閃光蓋菇孢子的建築。</GleamcapSporeSpawner.description>
+
+
+  <!-- Brightbells -->
+
+  <BrightbellsGlowerSmall.label>發光的明鈴花</BrightbellsGlowerSmall.label>
+  <BrightbellsGlowerSmall.description>發光的明鈴花</BrightbellsGlowerSmall.description>
+
+  <BrightbellsGlowerMedium.label>發光的明鈴花</BrightbellsGlowerMedium.label>
+  <BrightbellsGlowerMedium.description>發光的明鈴花</BrightbellsGlowerMedium.description>
+
+  <BrightbellsGlowerBig.label>發光的明鈴花</BrightbellsGlowerBig.label>
+  <BrightbellsGlowerBig.description>發光的明鈴花</BrightbellsGlowerBig.description>
+
+
+</LanguageData>

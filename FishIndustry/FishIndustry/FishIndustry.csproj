@@ -123,6 +123,7 @@
     <Content Include="FishIndustry\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\Languages\English\Keyed\FishIndustry_Strings.xml" />
     <Content Include="FishIndustry\Patches\FishMeatTexture.xml" />
     <Content Include="FishIndustry\Patches\Races_Animal_Fish_Cave.xml">
       <SubType>Designer</SubType>

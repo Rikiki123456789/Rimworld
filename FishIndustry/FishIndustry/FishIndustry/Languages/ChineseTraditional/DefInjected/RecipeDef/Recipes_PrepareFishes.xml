@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Aquaculture basin breeding -->
+
+  <SupplyMashgonEggs.label>養殖龍蝦</SupplyMashgonEggs.label>
+  <SupplyMashgonEggs.description>提供一些龍蝦卵來養殖。你只需要在沒有魚的時候這樣做，或者你需要改變繁殖的物種。</SupplyMashgonEggs.description>
+  <SupplyMashgonEggs.jobString>提供龍蝦卵中。</SupplyMashgonEggs.jobString>
+
+  <SupplyBluebladeEggs.label>養殖藍刀魚</SupplyBluebladeEggs.label>
+  <SupplyBluebladeEggs.description>提供一些藍刀魚卵來養殖。你只需要在沒有魚的時候這樣做，或者你需要改變繁殖的物種。</SupplyBluebladeEggs.description>
+  <SupplyBluebladeEggs.jobString>提供藍刀魚卵中。</SupplyBluebladeEggs.jobString>
+
+  <SupplyTailteethEggs.label>養殖尾齒魚</SupplyTailteethEggs.label>
+  <SupplyTailteethEggs.description>提供一些尾齒魚卵來養殖。你只需要在沒有魚的時候這樣做，或者你需要改變繁殖的物種。</SupplyTailteethEggs.description>
+  <SupplyTailteethEggs.jobString>提供尾齒魚卵中。</SupplyTailteethEggs.jobString>
+
+
+  <!-- Campfire meal -->
+
+  <GrillFishCampfire.label>烤魚</GrillFishCampfire.label>
+  <GrillFishCampfire.description>烤一條魚讓它可以吃，美味又酥脆！</GrillFishCampfire.description>
+  <GrillFishCampfire.jobString>烤魚中。</GrillFishCampfire.jobString>
+
+
+</LanguageData>

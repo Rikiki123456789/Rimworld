@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <AquacultureHopper.label>生態養殖槽進料口</AquacultureHopper.label>
+  <AquacultureHopper.description>儲存食物給生態養殖槽提供飼料。如果供電可以制冷，進料口內的食物將不會變質。</AquacultureHopper.description>
+  <AquacultureHopper_Blueprint.label>生態養殖槽進料口（藍圖）</AquacultureHopper_Blueprint.label>
+  <AquacultureHopper_Frame.label>生態養殖槽進料口（建造中）</AquacultureHopper_Frame.label>
+  <AquacultureHopper_Frame.description>儲存食物給生態養殖槽提供飼料。如果供電可以制冷，進料口內的食物將不會變質。</AquacultureHopper_Frame.description>
+
+
+</LanguageData>

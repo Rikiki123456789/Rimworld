@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Mortar bomb turret -->
+
+  <Turret_MortarBombCave.label>迫擊炮 （高爆低軌）</Turret_MortarBombCave.label>
+  <Turret_MortarBombCave.description>一個發射高爆炮彈的迫擊炮。必須有人操縱。受損嚴重時爆炸。</Turret_MortarBombCave.description>
+  <Turret_MortarBombCave_Blueprint.label>迫擊炮 （高爆低軌）（藍圖）</Turret_MortarBombCave_Blueprint.label>
+  <Turret_MortarBombCave_Blueprint_Install.label>迫擊炮 （高爆低軌）（藍圖）</Turret_MortarBombCave_Blueprint_Install.label>
+  <Turret_MortarBombCave_Frame.label>迫擊炮 （高爆低軌）（建造中）</Turret_MortarBombCave_Frame.label>
+  <Turret_MortarBombCave_Frame.description>一個發射高爆炮彈的迫擊炮。必須有人操縱。受損嚴重時爆炸。</Turret_MortarBombCave_Frame.description>
+
+  <Artillery_MortarBombCave.label>高爆迫擊炮</Artillery_MortarBombCave.label>
+  <Artillery_MortarBombCave.description>迫擊炮。可以越牆拋射炸彈。精度非常差但是射程非常遠。</Artillery_MortarBombCave.description>
+
+  <Bullet_MortarBombCave.label>高爆迫擊炮彈</Bullet_MortarBombCave.label>
+
+
+  <!-- Mortar incendiary turret -->
+
+  <Turret_MortarIncendiaryCave.label>迫擊炮 （燃燒低軌）</Turret_MortarIncendiaryCave.label>
+  <Turret_MortarIncendiaryCave.description>一個發射燃燒炮彈的迫擊炮。必須有人操縱。受損嚴重時爆炸。</Turret_MortarIncendiaryCave.description>
+  <Turret_MortarIncendiaryCave_Blueprint.label>迫擊炮 （燃燒低軌）（藍圖）</Turret_MortarIncendiaryCave_Blueprint.label>
+  <Turret_MortarIncendiaryCave_Blueprint_Install.label>迫擊炮 （燃燒低軌）（藍圖）</Turret_MortarIncendiaryCave_Blueprint_Install.label>
+  <Turret_MortarIncendiaryCave_Frame.label>迫擊炮 （燃燒低軌）（建造中）</Turret_MortarIncendiaryCave_Frame.label>
+  <Turret_MortarIncendiaryCave_Frame.description>一個發射燃燒炮彈的迫擊炮。必須有人操縱。受損嚴重時爆炸。</Turret_MortarIncendiaryCave_Frame.description>
+
+  <Artillery_MortarIncendiaryCave.label>燃燒迫擊炮</Artillery_MortarIncendiaryCave.label>
+  <Artillery_MortarIncendiaryCave.description>迫擊炮。可以越牆拋射炸彈。精度非常差但是射程非常遠。</Artillery_MortarIncendiaryCave.description>
+
+  <Bullet_MortarIncendiaryCave.label>燃燒迫擊炮彈</Bullet_MortarIncendiaryCave.label>
+
+
+  <!-- Mortar EMP -->
+
+  <Turret_MortarEMPCave.label>迫擊炮 （EMP低軌）</Turret_MortarEMPCave.label>
+  <Turret_MortarEMPCave.description>一個發射電磁脈衝（EMP）炮彈的迫擊炮。必須有人操縱。受損嚴重時爆炸。</Turret_MortarEMPCave.description>
+  <Turret_MortarEMPCave_Blueprint.label>迫擊炮 （EMP低軌）（藍圖）</Turret_MortarEMPCave_Blueprint.label>
+  <Turret_MortarEMPCave_Blueprint_Install.label>迫擊炮 （EMP低軌）（藍圖）</Turret_MortarEMPCave_Blueprint_Install.label>
+  <Turret_MortarEMPCave_Frame.label>迫擊炮 （EMP低軌）（建造中）</Turret_MortarEMPCave_Frame.label>
+  <Turret_MortarEMPCave_Frame.description>一個發射電磁脈衝（EMP）炮彈的迫擊炮。必須有人操縱。受損嚴重時爆炸。</Turret_MortarEMPCave_Frame.description>
+
+  <Artillery_MortarEMPCave.label>EMP迫擊炮</Artillery_MortarEMPCave.label>
+  <Artillery_MortarEMPCave.description>迫擊炮。可以越牆拋射炸彈。精度非常差但是射程非常遠。</Artillery_MortarEMPCave.description>
+
+  <Bullet_MortarEMPCave.label>EMP迫擊炮彈</Bullet_MortarEMPCave.label>
+
+
+</LanguageData>

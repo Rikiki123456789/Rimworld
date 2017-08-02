@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <AquacultureBasin.label>生態養殖槽</AquacultureBasin.label>
+  <AquacultureBasin.description>用來養殖魚類的水槽。需要放在室內。自動調節水溫和水質。需要連接進料口提供飼養魚所需的食物。</AquacultureBasin.description>
+  <AquacultureBasin_Blueprint.label>生態養殖槽（藍圖）</AquacultureBasin_Blueprint.label>
+  <AquacultureBasin_Frame.label>生態養殖槽（建造中）</AquacultureBasin_Frame.label>
+  <AquacultureBasin_Frame.description>用來養殖魚類的水槽。需要放在室內。自動調節水溫和水質。需要連接進料口提供飼養魚所需的食物。.</AquacultureBasin_Frame.description>
+
+
+</LanguageData>

@@ -18,7 +18,7 @@ namespace CaveBiome
             {
                 return true;
             }
-            return new AcceptanceReport("This building can only be built in a cave.");
+            return new AcceptanceReport("CaveBiome.CanOnlyBuildInCave".Translate());
         }
     }
 }

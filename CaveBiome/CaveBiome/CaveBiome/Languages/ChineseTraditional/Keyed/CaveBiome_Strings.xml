@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Place Worker -->
+  <CaveBiome.CanOnlyBuildInCave>此建築只能在洞穴中建造。</CaveBiome.CanOnlyBuildInCave>
+  <CaveBiome.CanNotBuildInCave>此建築無法在洞穴中建造。</CaveBiome.CanNotBuildInCave>
+
+
+  <!-- Letters -->
+
+  <CaveBiome.LetterLabelCavePlants>洞穴植物與菌類</CaveBiome.LetterLabelCavePlants>
+  <CaveBiome.CavePlants>在洞穴中，環顧四周，大多數洞穴植物與菌類都是有用的！\n- 比如巨人葉可以作為烹飪材料\n- 其他的比如洞穴藤可以收穫木材\n- 還有一些比如魔鬼舌可以收穫織物。\n\n儘管如此，仍需當心！洞穴中生存絕非易事，有些植物非常危險。</CaveBiome.CavePlants>
+
+  <CaveBiome.LetterLabelGrowingInCave>在洞穴中種植</CaveBiome.LetterLabelGrowingInCave>
+  <CaveBiome.GrowingInCave>洞穴中不見天日。但你可以在洞井中種植作物。洞井是天然的通向地表的開口。</CaveBiome.GrowingInCave>
+
+</LanguageData>

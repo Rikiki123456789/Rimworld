@@ -16,7 +16,7 @@ namespace CaveBiome
         {
             if (this.Map.Biome == Util_CaveBiome.CaveBiomeDef)
             {
-                return new AcceptanceReport("This building cannot be built in a cave.");
+                return new AcceptanceReport("CaveBiome.CanNotBuildInCave".Translate());
             }
             return true;
         }

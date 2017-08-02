@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <StoneGrassGlower.label>發光的石草</StoneGrassGlower.label>
+  <StoneGrassGlower.description>石草發出的微弱的光。</StoneGrassGlower.description>
+
+  <GiantLeafGlower.label>發光的巨人葉</GiantLeafGlower.label>
+  <GiantLeafGlower.description>多汁的巨人葉發出的明亮的光。</GiantLeafGlower.description>
+
+  <DevilTongueGlower.label>發光的魔鬼舌</DevilTongueGlower.label>
+  <DevilTongueGlower.description>魔鬼舌發出的緋紅的光。</DevilTongueGlower.description>
+
+  <CaveVineGlower.label>發光的洞穴藤</CaveVineGlower.label>
+  <CaveVineGlower.description>巨大的洞穴藤發出的光。</CaveVineGlower.description>
+
+  <CaveLaceGlower.label>發光的洞穴網</CaveLaceGlower.label>
+  <CaveLaceGlower.description>洞穴网發出的水晶般微弱的光。</CaveLaceGlower.description>
+
+
+</LanguageData>

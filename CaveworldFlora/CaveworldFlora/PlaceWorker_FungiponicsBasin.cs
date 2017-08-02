@@ -33,11 +33,11 @@ namespace CaveworldFlora
             {
                 if (ClusterPlant.IsNaturalRoughRockAt(base.Map, cell) == false)
                 {
-                    return new AcceptanceReport("Fungiponics basin must be built on rough rock.");
+                    return new AcceptanceReport("CaveworldFlora.MustOnRoughRock".Translate());
                 }
                 if (base.Map.roofGrid.Roofed(loc) == false)
                 {
-                    return new AcceptanceReport("Fungiponics basin must be roofed.");
+                    return new AcceptanceReport("CaveworldFlora.MustBeRoofed".Translate());
                 }
             }
 
@@ -61,7 +61,7 @@ namespace CaveworldFlora
             {
                 if (basin.Position.InHorDistOf(loc, minDistanceBetweenFungiponicsBasins))
                 {
-                    return new AcceptanceReport("An other fungiponics basin is too close.");
+                    return new AcceptanceReport("CaveworldFlora.TooClose".Translate());
                 }
             }
 

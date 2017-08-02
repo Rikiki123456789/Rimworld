@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <FishBody.label>魚身</FishBody.label>
+  <FishHead.label>魚頭</FishHead.label>
+  <FishMouth.label>魚嘴</FishMouth.label>
+  <LeftGill.label>左鰓</LeftGill.label>
+  <RightGill.label>右鰓</RightGill.label>
+  <LeftFin.label>左鰭</LeftFin.label>
+  <RightFin.label>右鰭</RightFin.label>
+  <DorsalFin.label>背鰭</DorsalFin.label>
+  <VentralFin.label>腹鰭</VentralFin.label>
+  <CaudalFin.label>尾鰭</CaudalFin.label>
+  <SquidBody.label>烏賊身體</SquidBody.label>
+  <SquidHead.label>烏賊頭</SquidHead.label>
+  <SquidMouth.label>烏賊口器</SquidMouth.label>
+  <Tentacle.label>觸手</Tentacle.label>
+
+
+</LanguageData>

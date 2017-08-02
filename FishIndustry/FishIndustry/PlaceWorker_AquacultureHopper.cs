@@ -38,7 +38,7 @@ namespace FishIndustry
                     }
                 }
             }
-            return new AcceptanceReport("Aquaculture hopper must be placed next to an aquaculture basin.");
+            return new AcceptanceReport("FishIndustry.HopperMustNextToBasin".Translate());
         }
     }
 }

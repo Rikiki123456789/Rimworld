@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Fungiponics -->
+
+  <FungiponicsBasin.label>菌類農藝盆</FungiponicsBasin.label>
+  <FungiponicsBasin.description>派生自水栽培植物盆，菌類農藝盆是設計用於種植洞穴菌類。僅需一些有機物就能開始種植。播種蘑菇比較難並且只會按照自己的節奏生長！</FungiponicsBasin.description>
+  <FungiponicsBasin_Blueprint.label>菌類農藝盆（藍圖）</FungiponicsBasin_Blueprint.label>
+  <FungiponicsBasin_Frame.label>菌類農藝盆（建造中）</FungiponicsBasin_Frame.label>
+  <FungiponicsBasin_Frame.description>派生自水栽培植物盆，菌類農藝盆是設計用於種植洞穴菌類。僅需一些有機物就能開始種植。播種蘑菇比較難並且只會按照自己的節奏生長！</FungiponicsBasin_Frame.description>
+
+
+</LanguageData>

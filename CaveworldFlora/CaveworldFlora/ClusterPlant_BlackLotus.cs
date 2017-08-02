@@ -67,7 +67,7 @@ namespace CaveworldFlora
                             if ((ClusterPlant_BlackLotus.alertHasBeenSent == false)
                                 && pawn.IsColonist)
                             {
-                                Find.LetterStack.ReceiveLetter("Black lotus", "One of your colonists has been intoxicated by the effluvium of a black lotus. Beware, those emanations are extremely toxic.",
+                                Find.LetterStack.ReceiveLetter("CaveworldFlora.LetterLabelBlackLotus".Translate(), "CaveworldFlora.BlackLotus".Translate(),
                                     LetterDefOf.BadNonUrgent, new RimWorld.Planet.GlobalTargetInfo(pawn));
                                 ClusterPlant_BlackLotus.alertHasBeenSent = true;
                             }
