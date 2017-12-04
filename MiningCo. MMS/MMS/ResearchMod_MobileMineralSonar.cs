@@ -21,7 +21,6 @@ namespace MobileMineralSonar
     {
         public override void Apply()
         {
-            Log.Message("ResearchMod_MobileMineralSonar");
             Building_MobileMineralSonar.TryUpdateScanParameters();
         }
     }
