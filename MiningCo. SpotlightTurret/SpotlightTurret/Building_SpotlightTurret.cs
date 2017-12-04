@@ -11,6 +11,8 @@ using Verse.Sound;   // Needed when you do something with the Sound
 
 namespace SpotlightTurret
 {
+    // TODO: do not blind target if wearing bionic eye or power armor helmet?
+
     /// <summary>
     /// SpotlightTurret class.
     /// </summary>
