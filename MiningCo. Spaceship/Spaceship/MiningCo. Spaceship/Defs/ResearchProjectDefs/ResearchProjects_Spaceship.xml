@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ResearchMiningCoPartnership</defName>
+    <label>MiningCo. partnership</label>
+    <description>Accept a contract with the renowned MiningCo. company to establish a landing pad in your area.
+    
+- A supply ship will periodically visit you to trade bulk goods at a good price.
+- Allow you to request a special supply ship which carries a lot more resources for a price.
+- Allow you to request MiningCo. air support for a price.
+- Allow MiningCo. to land on to dispatch and pick expedition teams.</description>
+    <techLevel>Industrial</techLevel>
+    <baseCost>50</baseCost>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <requiredResearchBuilding>CommsConsole</requiredResearchBuilding>
+    <tab>MiningCo</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>5</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>

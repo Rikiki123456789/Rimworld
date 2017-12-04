@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DutyDef>
+    <defName>DutyDef_BoardSpaceship</defName>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="Spaceship.JobGiver_BoardSpaceship">
+          <defaultLocomotion>Walk</defaultLocomotion>
+        </li>
+        <li Class="JobGiver_WanderNearDutyLocation">
+          <wanderRadius>3</wanderRadius>
+        </li>
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+
+  <DutyDef>
+    <defName>DutyDef_CarryDownedPawn</defName>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="Spaceship.JobGiver_CarryDownedPawn">
+          <defaultLocomotion>Walk</defaultLocomotion>
+        </li>
+        <li Class="JobGiver_WanderNearDutyLocation">
+          <wanderRadius>3</wanderRadius>
+        </li>
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+
+  <DutyDef>
+    <defName>DutyDef_EscortCarrier</defName>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="ThinkNode_ConditionalCloseToDutyTarget">
+          <maxDistToDutyTarget>10</maxDistToDutyTarget>
+          <subNodes>
+            <li Class="JobGiver_AIDefendSelf">
+              <targetAcquireRadius>25</targetAcquireRadius>
+              <targetKeepRadius>30</targetKeepRadius>
+            </li>
+            <li Class="JobGiver_Idle" />
+          </subNodes>
+        </li>
+        <li Class="Spaceship.JobGiver_RunToCarrier" />
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+  
+</Defs>

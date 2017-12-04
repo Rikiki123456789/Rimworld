@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{714B137A-A3B5-4FB5-8B64-C3FDDC358216}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Spaceship</RootNamespace>
+    <AssemblyName>MiningCo. Spaceship</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.18.6527.35959, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\RimWorld1722Win\RimWorld1722Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\RimWorld1722Win\RimWorld1722Win_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_LandingPad.cs" />
+    <Compile Include="Building_AirStrikeBeacon.cs" />
+    <Compile Include="Building_SpaceshipCargo.cs" />
+    <Compile Include="Building_SpaceshipDamaged.cs" />
+    <Compile Include="Building_SpaceshipDispatcherDrop.cs" />
+    <Compile Include="Building_SpaceshipDispatcherPick.cs" />
+    <Compile Include="Building_SpaceshipMedical.cs" />
+    <Compile Include="Building_SpaceshipDispatcher.cs" />
+    <Compile Include="JobGiver_RunToCarrier.cs" />
+    <Compile Include="LordJob_MiningCoBase.cs" />
+    <Compile Include="PlaceWorker_NotUnderBuilding.cs" />
+    <Compile Include="Trigger_MedicalSpaceshipTakeOffImminent.cs" />
+    <Compile Include="JobGiver_HealColonists.cs" />
+    <Compile Include="LordToilData_HealColonists.cs" />
+    <Compile Include="LordToil_HealColonists.cs" />
+    <Compile Include="LordJob_HealColonists.cs" />
+    <Compile Include="WorldComponent_OrbitalHealing.cs" />
+    <Compile Include="JobDriver_TransferToMedibay.cs" />
+    <Compile Include="WorkGiver_TransferToMedibay.cs" />
+    <Compile Include="HealingPawn.cs" />
+    <Compile Include="SpaceshipKind.cs" />
+    <Compile Include="JobDriver_BoardMedicalSpaceship.cs" />
+    <Compile Include="PlaceWorker_TotallyNotUnderRoof.cs" />
+    <Compile Include="TransitionAction_CancelDispatcherPick.cs" />
+    <Compile Include="Trigger_SpaceshipNotFound.cs" />
+    <Compile Include="Trigger_PawnCannotReachTargetDestination.cs" />
+    <Compile Include="Expedition.cs" />
+    <Compile Include="TransitionAction_CheckExitSpotIsValid.cs" />
+    <Compile Include="LordJob_BoardSpaceship.cs" />
+    <Compile Include="Trigger_HostileToColony.cs" />
+    <Compile Include="LordToilData_EscortDownedPawn.cs" />
+    <Compile Include="JobDriver_CarryDownedPawn.cs" />
+    <Compile Include="Util_DownedPawn.cs" />
+    <Compile Include="JobGiver_CarryDownedPawn.cs" />
+    <Compile Include="LordToil_EscortDownedPawn.cs" />
+    <Compile Include="Trigger_ReachableDownedPawn.cs" />
+    <Compile Include="LordJob_ExitMap.cs" />
+    <Compile Include="JobDriver_BoardSpaceship.cs" />
+    <Compile Include="JobGiver_BoardSpaceship.cs" />
+    <Compile Include="Util_DutyDefOf.cs" />
+    <Compile Include="LordToil_BoardSpaceship.cs" />
+    <Compile Include="LordToilData_BoardSpaceship.cs" />
+    <Compile Include="IncidentWorker_DispatcherPick.cs" />
+    <Compile Include="Util_OrbitalRelay.cs" />
+    <Compile Include="IncidentWorker_DispatcherDrop.cs" />
+    <Compile Include="Util_ThingDefOf.cs" />
+    <Compile Include="Util_LandingPad.cs" />
+    <Compile Include="Util_Spaceship.cs" />
+    <Compile Include="Util_TraderKindDefOf.cs" />
+    <Compile Include="Util_JobDefOf.cs" />
+    <Compile Include="Util_Faction.cs" />
+    <Compile Include="Util_PawnKindDefOf.cs" />
+    <Compile Include="IncidentWorker_DamagedSpaceship.cs" />
+    <Compile Include="MiningCoPawnGenerator.cs" />
+    <Compile Include="WorldComponent_Partnership.cs" />
+    <Compile Include="PlaceWorker_OnlyOneBuilding.cs" />
+    <Compile Include="JobDriver_TradeWithCargoSpaceship.cs" />
+    <Compile Include="WeaponDef.cs" />
+    <Compile Include="FlyingSpaceship.cs" />
+    <Compile Include="JobDriver_UseOrbitalRelayConsole.cs" />
+    <Compile Include="FlyingSpaceshipAirStrike.cs" />
+    <Compile Include="Util_Misc.cs" />
+    <Compile Include="Building_LandingPadBeacon.cs" />
+    <Compile Include="Building_OrbitalRelay.cs" />
+    <Compile Include="Building_Spaceship.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AirStrikeDef.cs" />
+    <Compile Include="FlyingSpaceshipLanding.cs" />
+    <Compile Include="FlyingSpaceshipTakingOff.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MiningCo. Spaceship\Assemblies\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MiningCo. Spaceship\About\About.xml" />
+    <Content Include="MiningCo. Spaceship\About\Preview.png" />
+    <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\AirStrikeDefs.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\AmmoDefs.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\WeaponDefs.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\DutyDefs\Duties_MedicalSpaceship.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\DutyDefs\Duties_Dispatcher.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\FactionDefs\Factions.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\JobDefs\Jobs_SpaceshipAndOrbitalRelay.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Medic.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Officer.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_ShockTrooper.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_HeavyGuard.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Guard.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Scout.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Geologist.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Miner.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Technician.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Base.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs\PawnKinds_Pilot.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\ResearchProjectDefs\ResearchProjects_Spaceship.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\SoundDefs\AirStrike.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\SoundDefs\SpaceshipLanding.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\SoundDefs\SpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\Storyteller\Incidents_Map_Spaceships.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Building_LandingPad.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Building_LandingPadBeacon.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Building_OrbitalRelay.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Building_AirStrikeBeacon.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Building_Base.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Building_Spaceships.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Building_VulcanTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\FlyingStrikeshipAirStrike.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\FlyingSpaceshipLanding.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\FlyingSpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\Defs\ThingDefs\Weapon_VulcanGun.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\TraderKindDefs\TraderKinds_Spaceship.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\Defs\WorkGiverDefs\WorkGivers.xml" />
+    <Content Include="MiningCo. Spaceship\Sounds\AirStrike\credits.txt" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\Building\AirStrikeBeacon\AirStrikeBeacon.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\Building\LandingPadBeacon\DummyTexture.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\Building\LandingPadBeacon\LandingPadBeacon.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\Building\LandingPad\LandingPad.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\MenuIcon_OrbitalRelay.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\OrbitalRelay.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\SatelliteDish.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\MedicalSpaceship\MedicalSpaceship.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\StrikeShip\StrikeShip.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Things\SupplySpaceship\SupplySpaceship.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Ancillary.png" />
+    <Content Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Primary.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MiningCo. Spaceship\Sounds\AirStrike\AirStrike.ogg" />
+    <None Include="MiningCo. Spaceship\Sounds\Spaceship\Landing.ogg" />
+    <None Include="MiningCo. Spaceship\Sounds\Spaceship\TakingOff.ogg" />
+    <None Include="MiningCo. Spaceship\Textures\Things\Building\AirStrikeBeacon\AirStrikeBeacon.pdn" />
+    <None Include="MiningCo. Spaceship\Textures\Things\Building\LandingPadBeacon\LandingPadBeacon.pdn" />
+    <None Include="MiningCo. Spaceship\Textures\Things\Building\LandingPad\LandingPad.pdn" />
+    <None Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\OrbitalRelay.pdn" />
+    <None Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\SatelliteDish.pdn" />
+    <None Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Ancillary.pdn" />
+    <None Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Primary.pdn" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Spaceship\Assemblies"
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. Spaceship" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. Spaceship"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

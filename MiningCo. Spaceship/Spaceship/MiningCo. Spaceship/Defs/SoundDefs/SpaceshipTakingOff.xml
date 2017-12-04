@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <SoundDef>
+    <defName>SpaceshipTakingOff</defName>
+    <context>MapOnly</context>
+    <maxVoices>4</maxVoices>
+    <maxSimultaneous>1</maxSimultaneous>
+    <priorityMode>PrioritizeNewest</priorityMode>
+    <subSounds>
+      <li>
+        <name>UnnamedSubSoundDef</name>
+        <onCamera>False</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Spaceship/TakingOff</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>50</min>
+          <max>50</max>
+        </volumeRange>
+        <pitchRange>
+          <min>0.8</min>
+          <max>1.2</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>
