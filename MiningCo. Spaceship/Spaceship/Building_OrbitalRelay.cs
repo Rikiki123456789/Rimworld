@@ -377,8 +377,7 @@ namespace Spaceship
 
         // Debug gizmo.
         // ===================== Gizmos =====================
-        // TODO
-        public override IEnumerable<Gizmo> GetGizmos()
+        /*public override IEnumerable<Gizmo> GetGizmos()
         {
             IList<Gizmo> buttonList = new List<Gizmo>();
             int groupKeyBase = 700000112;
@@ -408,6 +407,6 @@ namespace Spaceship
         {
             Messages.Message("Set MiningCo. hostile to colony!", MessageTypeDefOf.NegativeEvent);
             Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, -200);
-        }
+        }*/
     }
 }
