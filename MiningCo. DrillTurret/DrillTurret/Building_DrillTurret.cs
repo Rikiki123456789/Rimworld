@@ -37,7 +37,6 @@ namespace MiningTurret
         public CompPowerTrader powerComp;
 
         // Drill efficiency.
-        public const int operationCounterMaxValue = GenTicks.TicksPerRealSecond;
         public bool isManned = false;
         public float operatorEfficiency = 0f;
         public int drillEfficiencyInPercent = 0;
@@ -47,7 +46,8 @@ namespace MiningTurret
         public MiningMode miningMode = MiningMode.OresAndRocks;
 
         // Rotation.
-        public const int turretTopRotationRateInTicks = 4; // Rate at which rotation is changed by 1°.
+        public const int turretTopRotationRatePoweredInTicks = 1; // Rate at which rotation is changed by 1° when powered.
+        public const int turretTopRotationRateUnpoweredInTicks = 4; // Rate at which rotation is changed by 1° when unpowered.
         public float turretTopRotation = 0f;
         public float turretTopRotationTarget = 0f;
         public bool turretTopRotationTurnRight = true;
@@ -270,6 +270,28 @@ namespace MiningTurret
         }
 
         /// <summary>
+        /// Check if a cell contain a valid target to drill for gizmo target selection.
+        /// </summary>
+        public bool IsValidTargetAtForGizmo(IntVec3 position)
+        {
+            if (GenSight.LineOfSight(this.Position, position, this.Map))
+            {
+                Building oreDeposit = position.GetEdifice(this.Map);
+                if ((oreDeposit != null)
+                    && oreDeposit.def.mineable)
+                {
+                    // Look for valid ore deposit or natural rock.
+                    if (oreDeposit.def.building.isResourceRock
+                        || oreDeposit.def.building.isNaturalRock)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Compute the optimal rotation direction.
         /// </summary>
         public void ComputeRotationDirection()
@@ -307,7 +329,12 @@ namespace MiningTurret
         {
             if (this.turretTopRotation != this.turretTopRotationTarget)
             {
-                if ((Find.TickManager.TicksGame % turretTopRotationRateInTicks) == 0)
+                int rotationRate = turretTopRotationRateUnpoweredInTicks;
+                if (this.powerComp.PowerOn)
+                {
+                    rotationRate = turretTopRotationRatePoweredInTicks;
+                }
+                if ((Find.TickManager.TicksGame % rotationRate) == 0)
                 {
                     if (this.turretTopRotationTurnRight)
                     {
@@ -529,7 +556,7 @@ namespace MiningTurret
             targetingParams.canTargetLocations = true;
             targetingParams.validator = delegate (TargetInfo targ)
             {
-                if (IsValidTargetAt(targ.Cell)
+                if (IsValidTargetAtForGizmo(targ.Cell)
                     && targ.Cell.InHorDistOf(this.Position, this.def.specialDisplayRadius))
                 {
                     return true;
@@ -542,6 +569,10 @@ namespace MiningTurret
         public void SetForcedTarget(LocalTargetInfo forcedTarget)
         {
             this.targetPosition = forcedTarget.Cell;
+            if (this.Map.designationManager.DesignationAt(forcedTarget.Cell, DesignationDefOf.Mine) == null)
+            {
+                this.Map.designationManager.AddDesignation(new Designation(forcedTarget, DesignationDefOf.Mine));
+            }
             this.turretTopRotationTarget = Mathf.Repeat(Mathf.Round((this.targetPosition.ToVector3Shifted() - this.Position.ToVector3Shifted()).AngleFlat()), 360f);
             ComputeRotationDirection();
         }
