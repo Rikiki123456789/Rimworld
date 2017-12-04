@@ -456,6 +456,7 @@
     <breedQuantity>20</breedQuantity>
     <breedingDurationInDays>2</breedingDurationInDays>
     <naturalBiomes>
+      <li>Tundra</li>
       <li>BorealForest</li>
       <li>TemperateForest</li>
       <li>TropicalRainforest</li>
