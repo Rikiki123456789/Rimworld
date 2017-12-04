@@ -67,19 +67,16 @@ namespace CaveBiome
             {
                 return;
             }
-
+            
             if (Find.TickManager.TicksGame >= nextLightCheckTick)
             {
-
                 nextLightCheckTick = Find.TickManager.TicksGame + lightCheckPeriodInTicks;
                 float gamehour = GenDate.HoursPerDay * GenDate.DayPercent(Find.TickManager.TicksAbs, Find.WorldGrid.LongLatOf(map.Tile).x); // TODO: could refine to accommodate axial tilt, such that high latitudes will have "midnight sun" growing areas... nifty.
-                float sunriseProgress = Math.Max(0f, gamehour - sunriseBeginHour) / (sunriseEndHour-sunriseBeginHour);
-				float sunsetProgress = Math.Max(0f, gamehour - sunsetBeginHour) / (sunsetEndHour-sunsetBeginHour);
 				float caveWellBrightness = 0.0f;
 
-                // Shut down light when there is an eclipse.
                 if (this.map.gameConditionManager.ConditionIsActive(GameConditionDefOf.Eclipse))
                 {
+                    // Shut down light when there is an eclipse.
                     caveWellBrightness = 0.0f;
                 }
                 else
@@ -90,6 +87,7 @@ namespace CaveBiome
                     }
                     else if (gamehour < sunriseEndHour)
                     {
+                        float sunriseProgress = Math.Max(0f, gamehour - sunriseBeginHour) / (sunriseEndHour - sunriseBeginHour);
                         caveWellBrightness = sunriseProgress * brightnessCaveWellMax;
                     }
                     else if (gamehour < sunsetBeginHour)
@@ -98,6 +96,7 @@ namespace CaveBiome
                     }
                     else if (gamehour < sunsetEndHour)
                     {
+				        float sunsetProgress = Math.Max(0f, gamehour - sunsetBeginHour) / (sunsetEndHour-sunsetBeginHour);
                         caveWellBrightness = 1 - sunsetProgress * brightnessCaveWellMax;
                     }
                     else
