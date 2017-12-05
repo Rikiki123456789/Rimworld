@@ -15,7 +15,6 @@
     <prerequisites>
       <li>MicroelectronicsBasics</li>
     </prerequisites>
-    <requiredResearchBuilding>CommsConsole</requiredResearchBuilding>
     <tab>MiningCo</tab>
     <researchViewX>0</researchViewX>
     <researchViewY>5</researchViewY>
