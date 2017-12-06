@@ -191,10 +191,7 @@ namespace Spaceship
                         + "See you soon partner!\"\n\n"
                         + "-- End of transmission --";
                     Find.LetterStack.ReceiveLetter("Repairs completed", letterText, LetterDefOf.PositiveEvent, new TargetInfo(this.Position, this.Map));
-                    for (int thingIndex = 0; thingIndex < this.things.Count; thingIndex++)
-                    {
-                        SpawnCargoContent(1f);
-                    }
+                    SpawnCargoContent(1f);
                     Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, 10f);
                 }
                 else if (this.HitPoints >= this.initialHitPoints)
@@ -207,10 +204,7 @@ namespace Spaceship
                         + "See you partner!\"\n\n"
                         + "-- End of transmission --";
                     Find.LetterStack.ReceiveLetter("Partial repairs", letterText, LetterDefOf.PositiveEvent, new TargetInfo(this.Position, this.Map));
-                    for (int thingIndex = 0; thingIndex < this.things.Count; thingIndex++)
-                    {
-                        SpawnCargoContent(0.5f);
-                    }
+                    SpawnCargoContent(0.5f);
                     Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, 5f);
                 }
                 else

@@ -45,6 +45,8 @@
       <turretGunDef>Gun_VulcanTurret</turretGunDef>
       <turretBurstCooldownTime>4.0</turretBurstCooldownTime>
       <turretTopGraphicPath>Things/Building/Security/VulcanTurret/VulcanTurret_Top</turretTopGraphicPath>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
     </building>
   </ThingDef>
 

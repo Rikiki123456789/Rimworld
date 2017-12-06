@@ -120,10 +120,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MiningCo. Spaceship\Assemblies\" />
+    <Folder Include="Textures resources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="MiningCo. Spaceship\About\About.xml" />
     <Content Include="MiningCo. Spaceship\About\Preview.png" />
+    <Content Include="MiningCo. Spaceship\About\PublishedFileId.txt" />
     <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\AirStrikeDefs.xml">
       <SubType>Designer</SubType>
     </Content>
