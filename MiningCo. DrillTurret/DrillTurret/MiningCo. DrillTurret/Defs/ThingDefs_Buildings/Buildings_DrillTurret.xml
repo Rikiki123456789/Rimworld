@@ -1,11 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ThingDefs>
+<Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>MiningTurret</defName>
+    <defName>DrillTurret</defName>
     <label>drill turret</label>
     <description>An advanced automated turret designed to drill nearby ores and designated rocks. Drilling efficiency can be improved by powering and opearting it.</description>
-    <thingClass>MiningTurret.Building_MiningTurret</thingClass>
+    <thingClass>DrillTurret.Building_DrillTurret</thingClass>
     <graphicData>
       <texPath>Things/Building/Security/TurretImprovised</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -50,11 +50,9 @@
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <designationCategory>Production</designationCategory>
     <specialDisplayRadius>15</specialDisplayRadius>
-    <building>
-      <ignoreNeedsPower>true</ignoreNeedsPower>
-    </building>
     <researchPrerequisites>
-      <li>ResearchMiningTurret</li>
+      <li>ResearchDrillTurret</li>
     </researchPrerequisites>
   </ThingDef>
-</ThingDefs>
+  
+</Defs>

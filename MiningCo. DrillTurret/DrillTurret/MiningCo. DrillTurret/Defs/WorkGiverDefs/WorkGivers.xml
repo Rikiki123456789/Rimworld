@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<WorkGivers>
+<Defs>
 
   <WorkGiverDef>
     <defName>OperateDrillTurret</defName>
     <label>operate</label>
-    <giverClass>MiningTurret.WorkGiver_OperateDrillTurret</giverClass>
+    <giverClass>DrillTurret.WorkGiver_OperateDrillTurret</giverClass>
     <workType>Mining</workType>
     <priorityInType>110</priorityInType>
     <verb>operate</verb>
@@ -15,4 +15,4 @@
     </requiredCapacities>
   </WorkGiverDef>
   
-</WorkGivers>
+</Defs>

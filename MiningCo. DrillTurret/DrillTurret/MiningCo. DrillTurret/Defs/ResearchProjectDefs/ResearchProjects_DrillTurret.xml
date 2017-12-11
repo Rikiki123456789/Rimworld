@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ResearchProjectDefs>
+<Defs>
 
   <ResearchProjectDef>
-    <defName>ResearchMiningTurret</defName>
+    <defName>ResearchDrillTurret</defName>
     <label>drill turret</label>
-    <description>Design drill turrets. Those turrets can be deployed near ore deposits or natural rocks to automatically drill it.</description>
+    <description>Design drill turrets. Those turrets can be deployed near ore deposits or natural rocks to automatically drill it.
+ A small part of resources are lost though (25%).</description>
     <descriptionDiscovered>You have developped the drill turret.
 
-- You can now build drill turrets to automatically mine ore deposits or natural rocks.
-    </descriptionDiscovered>
+- You can now build drill turrets to automatically mine ore deposits or natural rocks.</descriptionDiscovered>
     <techLevel>Industrial</techLevel>
     <baseCost>1000</baseCost>
     <prerequisites>
@@ -21,15 +21,15 @@
   </ResearchProjectDef>
 
   <ResearchProjectDef>
-    <defName>ResearchMiningTurretEfficientDrilling</defName>
+    <defName>ResearchDrillTurretEfficientDrilling</defName>
     <label>drill turret: efficient drilling</label>
-    <description>Improve the maximum drilling efficiency of drill turret (+33%) and quantity of yield resources.</description>
-    <descriptionDiscovered>You have improved the drilling efficiency of drill turrets (+33%).
-    </descriptionDiscovered>
+    <description>Improve drilling efficiency of drill turret (+25%) and do not waste resources during drilling.</description>
+    <descriptionDiscovered>You have improved the drilling efficiency of drill turrets (+25%).
+ Resources are no more wasted during drilling.</descriptionDiscovered>
     <techLevel>Industrial</techLevel>
     <baseCost>1000</baseCost>
     <prerequisites>
-      <li>ResearchMiningTurret</li>
+      <li>ResearchDrillTurret</li>
     </prerequisites>
     <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
     <tab>MiningCo</tab>
@@ -37,4 +37,4 @@
     <researchViewY>4</researchViewY>
   </ResearchProjectDef>
 
-</ResearchProjectDefs>
+</Defs>

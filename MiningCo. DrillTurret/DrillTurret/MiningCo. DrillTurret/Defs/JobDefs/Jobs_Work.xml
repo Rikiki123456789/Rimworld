@@ -3,7 +3,7 @@
 
   <JobDef>
     <defName>OperateDrillTurret</defName>
-    <driverClass>MiningTurret.JobDriver_OperateDrillTurret</driverClass>
+    <driverClass>DrillTurret.JobDriver_OperateDrillTurret</driverClass>
     <reportString>operating TargetA.</reportString>
   </JobDef>
 

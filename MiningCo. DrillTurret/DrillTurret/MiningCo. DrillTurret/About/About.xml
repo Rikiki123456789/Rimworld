@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-	<name>MiningCo. MiningTurret</name>
+	<name>MiningCo. DrillTurret</name>
 	<author>Rikiki</author>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153946</url>
-	<targetVersion>0.17.1557</targetVersion>
+	<targetVersion>0.18.1722</targetVersion>
 	<description>This mod adds the MiningCo. drill turret. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153947 </description>
 </ModMetaData>
