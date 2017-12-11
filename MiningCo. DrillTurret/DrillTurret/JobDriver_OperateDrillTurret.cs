@@ -21,7 +21,7 @@ namespace DrillTurret
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            const float skillGainPerTick = 0.08f;
+            const float skillGainPerTick = 0.11f;
 
             this.FailOnDespawnedNullOrForbidden(TargetIndex.A);
             this.FailOnBurningImmobile(TargetIndex.A);
