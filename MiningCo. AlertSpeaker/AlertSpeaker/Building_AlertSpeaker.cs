@@ -24,9 +24,9 @@ namespace AlertSpeaker
         // Constants.
         public const float alertSpeakerMaxRange = 6.9f;
         public const int earlyPhaseTicksThreshold = GenDate.TicksPerDay / 4; // Maximum duration the adrenaline boost can last: 1/4 day.
-        public const int latePhaseTicksThreshold = 2 * GenDate.TicksPerDay; // A very prolonged alert may generate stress: 2 days.
 
         // Danger phase.
+        public static int randomTickOffset = 0; // To avoid concomitant CPU load.
         public static int lastUpdateTick = 0;
         public static int alertStartTick = 0;
         public static StoryDanger previousDangerRate = StoryDanger.None;
@@ -43,7 +43,7 @@ namespace AlertSpeaker
         public static Vector3 redAlertLightScale = new Vector3(5f, 1f, 5f);
 
         // Sound parameters.
-        public static bool soundIsActivated = true;
+        public static bool soundIsEnabled = true;
         public static int nextAlarmSoundTick = 0;
         public const int alarmSoundPeriod = 20 * GenTicks.TicksPerRealSecond; // 20 s.
         public static SoundDef lowDangerAlarmSound = SoundDef.Named("LowDangerAlarm");
@@ -60,9 +60,10 @@ namespace AlertSpeaker
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            
-            glowerComp = this.GetComp<CompGlower>();
-            powerComp = this.GetComp<CompPowerTrader>();
+
+            randomTickOffset = Rand.Range(0, GenTicks.TicksPerRealSecond);
+            this.glowerComp = this.GetComp<CompGlower>();
+            this.powerComp = this.GetComp<CompPowerTrader>();
         }
 
         /// <summary>
@@ -71,7 +72,6 @@ namespace AlertSpeaker
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<int>(ref lastUpdateTick, "lastUpdateTick", 0);
             Scribe_Values.Look<int>(ref alertStartTick, "alertStartTick", 0);
             Scribe_Values.Look<StoryDanger>(ref previousDangerRate, "previousDangerRate", StoryDanger.None);
             Scribe_Values.Look<StoryDanger>(ref currentDangerRate, "currentDangerRate", StoryDanger.None);
@@ -79,35 +79,27 @@ namespace AlertSpeaker
         }
         
         /// <summary>
-        /// Checks if the wall supporting the alert speaker is still alive.
+        /// Checks if the wall/rock/edifice supporting the alert speaker is still here.
         /// </summary>
-        public static bool CheckIfSupportingWallIsAlive(Map map, IntVec3 position, Rot4 rotation)
+        public static bool IsSupportAlive(Map map, IntVec3 position, Rot4 rotation)
         {
             IntVec3 wallPosition = position + new IntVec3(0, 0, -1).RotatedBy(rotation);
             
-            // Built wall.
-            if (map.thingGrid.ThingAt(wallPosition, ThingDefOf.Wall) != null)
+            Building building = wallPosition.GetEdifice(map);
+            if ((building != null)
+                && ((building.def == ThingDefOf.Wall)
+                || building.def.building.isNaturalRock
+                || (building.def.fillPercent >= 80)))
             {
                 return true;
             }
-
-            // Natural block.
-            Thing potentialWall = map.thingGrid.ThingAt(wallPosition, ThingCategory.Building);
-            if (potentialWall != null)
-            {
-                if ((potentialWall as Building).def.building.isNaturalRock)
-                {
-                    return true;
-                }
-            }
-            // No wall.
             return false;
         }
         
         /// <summary>
-        /// Get the effect zone cells.
+        /// Get the area of effect zone cells.
         /// </summary>
-        public static List<IntVec3> GetEffectZoneCells(Map map, IntVec3 position)
+        public static List<IntVec3> GetAreaOfEffectCells(Map map, IntVec3 position)
         {
             IEnumerable<IntVec3> cellsInRange = GenRadial.RadialCellsAround(position, Building_AlertSpeaker.alertSpeakerMaxRange, true);
             List<IntVec3> effectZoneCells = new List<IntVec3>();
@@ -123,7 +115,7 @@ namespace AlertSpeaker
 
         // ===================== Main work function =====================
         /// <summary>
-        /// - Check if the supporting wall is still alive.
+        /// - Check if the support is still here.
         /// - Check current threat level.
         /// - Perform adequate treatment when a danger level transition occurs.
         /// - Apply an adrenaline bonus to nearby colonists according to current danger rate.
@@ -137,7 +129,7 @@ namespace AlertSpeaker
                 // This case can occur when the alert speaker has just been uninstalled.
                 return;
             }
-            if (CheckIfSupportingWallIsAlive(this.Map, this.Position, this.Rotation) == false)
+            if (IsSupportAlive(this.Map, this.Position, this.Rotation) == false)
             {
                 this.Destroy(DestroyMode.Deconstruct);
                 return;
@@ -146,10 +138,10 @@ namespace AlertSpeaker
             int tickCounter = Find.TickManager.TicksGame;
             if (tickCounter > lastUpdateTick)
             {
-                // The following treatment is performed only once per tick for all speakers.
                 lastUpdateTick = tickCounter;
-                if ((tickCounter % GenTicks.TicksPerRealSecond) == 0)
+                if ((tickCounter % GenTicks.TicksPerRealSecond) == randomTickOffset)
                 {
+                    // Danger rate is refreshed only once per second for all speakers.
                     previousDangerRate = currentDangerRate;
                     currentDangerRate = this.Map.dangerWatcher.DangerRating;
                     if (currentDangerRate != previousDangerRate)
@@ -161,8 +153,7 @@ namespace AlertSpeaker
                 ComputeDrawingParameters();
             }
 
-            // Update for each speaker.
-            if ((tickCounter % GenTicks.TicksPerRealSecond) == 0)
+            if ((tickCounter % GenTicks.TicksPerRealSecond) == randomTickOffset)
             {
                 if (powerComp.PowerOn)
                 {
@@ -178,8 +169,7 @@ namespace AlertSpeaker
         /// Transition 1: beginning alert.
         ///   => set the alert start tick.
         /// Transition 2: finished alert.
-        ///   => remove any stat bonus/malus and malus thought.
-        ///   => add a bonus thought.
+        ///   => remove any adrenaline hediff.
         /// Transition 3: increased danger rating.
         ///   => convert the small adrenaline boost into medium adrenaline boost.
         /// Transition 4: decreased danger rating.
@@ -248,6 +238,8 @@ namespace AlertSpeaker
                 foreach (Pawn colonist in this.Map.mapPawns.FreeColonists)
                 {
                     if ((colonist.Downed == false)
+                        && (colonist.Dead == false)
+                        && colonist.Awake()
                         && (colonist.GetRoom() == this.GetRoom())
                         && colonist.Position.InHorDistOf(this.Position, alertSpeakerMaxRange))
                     {
@@ -374,7 +366,7 @@ namespace AlertSpeaker
         /// </summary>
         public void PlayOneLowDangerAlarmSound()
         {
-            if (soundIsActivated)
+            if (soundIsEnabled)
             {
                 lowDangerAlarmSound.PlayOneShotOnCamera();
             }
@@ -385,7 +377,7 @@ namespace AlertSpeaker
         /// </summary>
         public void PlayOneHighDangerAlarmSound()
         {
-            if (soundIsActivated)
+            if (soundIsEnabled)
             {
                 highDangerAlarmSound.PlayOneShotOnCamera();
             }
@@ -474,8 +466,8 @@ namespace AlertSpeaker
 
             if (Find.Selector.IsSelected(this))
             {
-                List<IntVec3> cellsInEffectZone = Building_AlertSpeaker.GetEffectZoneCells(this.Map, this.Position);
-                GenDraw.DrawFieldEdges(cellsInEffectZone);
+                List<IntVec3> aoeCells = Building_AlertSpeaker.GetAreaOfEffectCells(this.Map, this.Position);
+                GenDraw.DrawFieldEdges(aoeCells);
             }
         }
 
@@ -489,17 +481,17 @@ namespace AlertSpeaker
             int groupKeyBase = 700000100;
 
             Command_Action soundActivationButton = new Command_Action();
-            if (soundIsActivated)
+            if (soundIsEnabled)
             {
                 soundActivationButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundEnabled");
-                soundActivationButton.defaultDesc = "Deactivate siren sound.";
-                soundActivationButton.defaultLabel = "Siren sound activated.";
+                soundActivationButton.defaultDesc = "Disable siren sound.";
+                soundActivationButton.defaultLabel = "Disable siren sound for all alert speakers.";
             }
             else
             {
                 soundActivationButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundDisabled");
                 soundActivationButton.defaultDesc = "Activate siren sound.";
-                soundActivationButton.defaultLabel = "Siren sound deactivated.";
+                soundActivationButton.defaultLabel = "Enable siren sound for all alert speakers.";
             }
             soundActivationButton.activateSound = SoundDef.Named("Click");
             soundActivationButton.action = new Action(PerformSirenSoundAction);
@@ -524,7 +516,7 @@ namespace AlertSpeaker
         /// </summary>
         public void PerformSirenSoundAction()
         {
-            soundIsActivated = !soundIsActivated;
+            soundIsEnabled = !soundIsEnabled;
         }
     }
 }

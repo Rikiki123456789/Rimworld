@@ -23,19 +23,19 @@ namespace AlertSpeaker
         /// <summary>
         /// Checks if a new alert speaker can be built at this location (must be near a wall) and draw effect area.
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
         {
             // Check it is built near a wall.
-            if (Building_AlertSpeaker.CheckIfSupportingWallIsAlive(this.Map, loc, rot) == false)
+            if (Building_AlertSpeaker.IsSupportAlive(map, loc, rot) == false)
             {
-                return new AcceptanceReport("Alert speaker must be built near a wall.");
+                return new AcceptanceReport("Alert speaker must be built near a wall or tall edifice.");
             }
 
             // Display effect zone.
-            if (loc.GetEdifice(this.Map) == null)
+            if (loc.GetEdifice(map) == null)
             {
-                List<IntVec3> cellsInEffectZone = Building_AlertSpeaker.GetEffectZoneCells(this.Map, loc);
-                GenDraw.DrawFieldEdges(cellsInEffectZone);
+                List<IntVec3> cellsInAoe = Building_AlertSpeaker.GetAreaOfEffectCells(map, loc);
+                GenDraw.DrawFieldEdges(cellsInAoe);
             }
 
             return true;
