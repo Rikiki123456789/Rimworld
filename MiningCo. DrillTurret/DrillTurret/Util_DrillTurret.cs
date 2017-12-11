@@ -8,7 +8,7 @@ using Verse;         // RimWorld universal objects are here
 //using Verse.AI;    // Needed when you do something with the AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
-namespace MiningTurret
+namespace DrillTurret
 {
     /// <summary>
     /// DrillTurret utility class.
@@ -22,7 +22,7 @@ namespace MiningTurret
         {
             get
             {
-                return ThingDef.Named("MiningTurret");
+                return ThingDef.Named("DrillTurret");
             }
         }
 
@@ -34,11 +34,11 @@ namespace MiningTurret
             }
         }
 
-        public static ResearchProjectDef researchMiningTurretEfficientDrillingDef
+        public static ResearchProjectDef researchDrillTurretEfficientDrillingDef
         {
             get
             {
-                return ResearchProjectDef.Named("ResearchMiningTurretEfficientDrilling");
+                return ResearchProjectDef.Named("ResearchDrillTurretEfficientDrilling");
             }
         }
     }

@@ -8,7 +8,7 @@ using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
 using Verse.Sound;   // Needed when you do something with the Sound
 
-namespace MiningTurret
+namespace DrillTurret
 {
     public class WorkGiver_OperateDrillTurret : WorkGiver_Scanner
     {
@@ -65,7 +65,7 @@ namespace MiningTurret
             {
                 return false;
             }
-            return (building as Building_MiningTurret).targetPosition.IsValid;
+            return (building as Building_DrillTurret).targetPosition.IsValid;
         }
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)

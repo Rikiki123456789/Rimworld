@@ -9,7 +9,7 @@ using Verse;         // RimWorld universal objects are here
 //using Verse.AI;    // Needed when you do something with the AI
 //using Verse.Sound; // Needed when you do something with the Sound
 
-namespace MiningTurret
+namespace DrillTurret
 {
     /// <summary>
     /// Alert_DrillTurretNotDrilling class.
@@ -26,12 +26,12 @@ namespace MiningTurret
             {
                 foreach (Building building in maps[i].listerBuildings.AllBuildingsColonistOfDef(Util_DrillTurret.drillTurretDef))
                 {
-                    if (building is Building_MiningTurret)
+                    if (building is Building_DrillTurret)
                     {
-                        Building_MiningTurret miningTurret = building as Building_MiningTurret;
-                        if (miningTurret.targetPosition.IsValid == false)
+                        Building_DrillTurret drillTurret = building as Building_DrillTurret;
+                        if (drillTurret.targetPosition.IsValid == false)
                         {
-                            return AlertReport.CulpritIs(miningTurret);
+                            return AlertReport.CulpritIs(drillTurret);
                         }
                     }
                 }

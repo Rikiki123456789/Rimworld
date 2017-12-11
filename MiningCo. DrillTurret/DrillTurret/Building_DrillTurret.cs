@@ -9,7 +9,7 @@ using Verse;         // RimWorld universal objects are here
 //using Verse.AI;    // Needed when you do something with the AI
 using Verse.Sound;   // Needed when you do something with the Sound
 
-namespace MiningTurret
+namespace DrillTurret
 {
     /// <summary>
     /// Building_DrillTurret class.
@@ -18,10 +18,8 @@ namespace MiningTurret
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
     [StaticConstructorOnStartup]
-    class Building_MiningTurret : Building
+    class Building_DrillTurret : Building
     {
-        // TODO: finish renamming from MiningTurret to DrillTurret.
-        
         public enum MiningMode
         {
             Ores,
@@ -46,11 +44,7 @@ namespace MiningTurret
         public MiningMode miningMode = MiningMode.OresAndRocks;
 
         // Rotation.
-        public const int turretTopRotationRatePoweredInTicks = 1; // Rate at which rotation is changed by 1° when powered.
-        public const int turretTopRotationRateUnpoweredInTicks = 4; // Rate at which rotation is changed by 1° when unpowered.
         public float turretTopRotation = 0f;
-        public float turretTopRotationTarget = 0f;
-        public bool turretTopRotationTurnRight = true;
 
         // Sound.
         public Sustainer laserDrillSoundSustainer = null;
@@ -111,11 +105,9 @@ namespace MiningTurret
             Scribe_Values.Look<IntVec3>(ref this.targetPosition, "targetPosition");
             Scribe_Values.Look<MiningMode>(ref this.miningMode, "MiningMode");
             Scribe_Values.Look<float>(ref this.turretTopRotation, "turretTopRotation");
-            Scribe_Values.Look<float>(ref this.turretTopRotationTarget, "turretTopRotationTarget");
-            Scribe_Values.Look<bool>(ref this.turretTopRotationTurnRight, "turretTopRotationTurnRight");
         }
 
-        // ===================== Mining efficiency function =====================
+        // ===================== Drill efficiency function =====================
         /// <summary>
         /// Set the operator manning efficiency.
         /// </summary>
@@ -128,27 +120,27 @@ namespace MiningTurret
         /// <summary>
         /// Compute the drill efficiency according to the operating miner skill and available power.
         /// </summary>
-        const float researchUnfinishedFactor = 0.75f;
         public float ComputeDrillEfficiency()
         {
             const float baseWeight = 0.25f;
-            const float operatorWeight = 1f - baseWeight;
+            const float operatorWeight = 0.5f;
+            const float researchWeight = 0.25f;
             const float noPowerFactor = 0.5f;
 
             float drillEfficiency = baseWeight;
 
             if (this.isManned)
             {
-                this.isManned = false;
+                this.isManned = false; // Will be set again by the manning pawn's JobDriver.
                 drillEfficiency += operatorWeight * this.operatorEfficiency;
+            }
+            if (Util_DrillTurret.researchDrillTurretEfficientDrillingDef.IsFinished)
+            {
+                drillEfficiency += researchWeight;
             }
             if (powerComp.PowerOn == false)
             {
                 drillEfficiency *= noPowerFactor;
-            }
-            if (Util_DrillTurret.researchMiningTurretEfficientDrillingDef.IsFinished == false)
-            {
-                drillEfficiency *= researchUnfinishedFactor;
             }
 
             return drillEfficiency;
@@ -159,13 +151,13 @@ namespace MiningTurret
         /// Main function:
         /// - look for a target,
         /// - rotate turret top if needed,
-        /// - mine it.
+        /// - drill it.
         /// </summary>
         public override void Tick()
         {
             base.Tick();
 
-            if ((Find.TickManager.TicksGame + this.updateOffsetInTicks) % updatePeriodInTicks == 0)
+            if ((Find.TickManager.TicksGame % updatePeriodInTicks) == this.updateOffsetInTicks)
             {
                 // Check locked target is still valid.
                 if (this.targetPosition.IsValid)
@@ -190,47 +182,32 @@ namespace MiningTurret
 
             if (this.targetPosition.IsValid)
             {
-                // Rotate turret top, drill and maintain effecter.
-                RotateTurretTop();
+                // Drill and maintain effecter.
                 DrillRock();
-                if (this.turretTopRotation == this.turretTopRotationTarget)
-                {
-                    StartOrMaintainLaserDrillEffecter();
-                }
-                else
-                {
-                    StopLaserDrillEffecter();
-                }
-
+                StartOrMaintainLaserDrillEffecter();
             }
             ComputeDrawingParameters();
         }
 
         // ===================== Utility Function =====================
         /// <summary>
-        /// Look for a valid target to mine: ore deposit or natural wall to mine within direct line of sight.
+        /// Look for a valid target to drill: ore deposit or natural wall to mine within direct line of sight.
         /// </summary>
         public void LookForNewTarget(out IntVec3 newTargetPosition)
         {
             newTargetPosition = IntVec3.Invalid;
-            float minimalDistance = 9999f;
 
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.Position, this.def.specialDisplayRadius, false))
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.Position, this.def.specialDisplayRadius, false).InRandomOrder())
             {
                 if (IsValidTargetAt(cell))
                 {
-                    float distance = (cell.ToVector3Shifted() - this.Position.ToVector3Shifted()).magnitude;
-                    if (distance < minimalDistance)
-                    {
-                        minimalDistance = distance;
-                        newTargetPosition = cell;
-                    }
+                    newTargetPosition = cell;
+                    break;
                 }
             }
             if (newTargetPosition.IsValid)
             {
-                this.turretTopRotationTarget = Mathf.Repeat(Mathf.Round((this.targetPosition.ToVector3Shifted() - this.TrueCenter()).AngleFlat()), 360f);
-                ComputeRotationDirection();
+                this.turretTopRotation = Mathf.Repeat(Mathf.Round((this.targetPosition.ToVector3Shifted() - this.TrueCenter()).AngleFlat()), 360f);
             }
         }
 
@@ -245,10 +222,10 @@ namespace MiningTurret
                     || (this.miningMode == MiningMode.OresAndRocks))
                 {
                     // Look for valid ore deposit.
-                    Building oreDeposit = position.GetEdifice(this.Map);
-                    if ((oreDeposit != null)
-                        && oreDeposit.def.building.isResourceRock
-                        && oreDeposit.def.mineable)
+                    Building building = position.GetEdifice(this.Map);
+                    if ((building != null)
+                        && building.def.building.isResourceRock
+                        && building.def.mineable)
                     {
                         return true;
                     }
@@ -265,7 +242,6 @@ namespace MiningTurret
                     }
                 }
             }
-
             return false;
         }
 
@@ -276,13 +252,13 @@ namespace MiningTurret
         {
             if (GenSight.LineOfSight(this.Position, position, this.Map))
             {
-                Building oreDeposit = position.GetEdifice(this.Map);
-                if ((oreDeposit != null)
-                    && oreDeposit.def.mineable)
+                Building building = position.GetEdifice(this.Map);
+                if ((building != null)
+                    && building.def.mineable)
                 {
                     // Look for valid ore deposit or natural rock.
-                    if (oreDeposit.def.building.isResourceRock
-                        || oreDeposit.def.building.isNaturalRock)
+                    if (building.def.building.isResourceRock
+                        || building.def.building.isNaturalRock)
                     {
                         return true;
                     }
@@ -292,107 +268,49 @@ namespace MiningTurret
         }
 
         /// <summary>
-        /// Compute the optimal rotation direction.
-        /// </summary>
-        public void ComputeRotationDirection()
-        {
-            if (this.turretTopRotationTarget >= this.turretTopRotation)
-            {
-                float dif = this.turretTopRotationTarget - this.turretTopRotation;
-                if (dif <= 180f)
-                {
-                    this.turretTopRotationTurnRight = true;
-                }
-                else
-                {
-                    this.turretTopRotationTurnRight = false;
-                }
-            }
-            else
-            {
-                float dif = this.turretTopRotation - this.turretTopRotationTarget;
-                if (dif <= 180f)
-                {
-                    this.turretTopRotationTurnRight = false;
-                }
-                else
-                {
-                    this.turretTopRotationTurnRight = true;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Rotate turret top.
-        /// </summary>
-        public void RotateTurretTop()
-        {
-            if (this.turretTopRotation != this.turretTopRotationTarget)
-            {
-                int rotationRate = turretTopRotationRateUnpoweredInTicks;
-                if (this.powerComp.PowerOn)
-                {
-                    rotationRate = turretTopRotationRatePoweredInTicks;
-                }
-                if ((Find.TickManager.TicksGame % rotationRate) == 0)
-                {
-                    if (this.turretTopRotationTurnRight)
-                    {
-                        this.turretTopRotation = Mathf.Repeat(this.turretTopRotation + 1f, 360f);
-                    }
-                    else
-                    {
-                        this.turretTopRotation = Mathf.Repeat(this.turretTopRotation - 1f, 360f);
-                    }
-                }
-            }
-        }
-
-        /// <summary>
         /// Rotate turret top or drill.
         /// </summary>
         public void DrillRock()
         {
+            const float researchUnfinishedFactor = 0.75f;
             const int damagePerTick = 4;
-            // Drill target when correctly rotated.
-            if (this.turretTopRotation == this.turretTopRotationTarget)
+            Building rock = this.targetPosition.GetEdifice(this.Map);
+            if (rock != null)
             {
-                Building rock = this.targetPosition.GetEdifice(this.Map);
-                if (rock != null)
+                // Drill rock.
+                if ((this.drillEfficiencyInPercent == 100)
+                    || ((Find.TickManager.TicksGame % 100) <= this.drillEfficiencyInPercent))
                 {
-                    // Drill rock.
-                    if ((this.drillEfficiencyInPercent == 100)
-                        || ((Find.TickManager.TicksGame % 100) <= this.drillEfficiencyInPercent))
+                    if (rock.HitPoints > damagePerTick)
                     {
-                        if (rock.HitPoints > damagePerTick)
+                        // Only damage rock.
+                        rock.TakeDamage(new DamageInfo(DamageDefOf.Mining, damagePerTick));
+                    }
+                    else
+                    {
+                        // Drill is finsihed.
+                        if (rock.def.building.isResourceRock
+                            && (rock.def.building.mineableThing != null))
                         {
-                            rock.TakeDamage(new DamageInfo(DamageDefOf.Mining, damagePerTick));
+                            int oreQuantity = rock.def.building.mineableYield;
+                            if (Util_DrillTurret.researchDrillTurretEfficientDrillingDef.IsFinished == false)
+                            {
+                                oreQuantity = Mathf.RoundToInt((float)oreQuantity * researchUnfinishedFactor);
+                            }
+                            Thing ore = ThingMaker.MakeThing(rock.def.building.mineableThing);
+                            ore.stackCount = oreQuantity;
+                            GenSpawn.Spawn(ore, rock.Position, this.Map);
+                            rock.Destroy(DestroyMode.Vanish);
                         }
                         else
                         {
-                            if (rock.def.building.isResourceRock
-                                && (rock.def.building.mineableThing != null))
-                            {
-                                int oreQuantity = rock.def.building.mineableYield;
-                                if (Util_DrillTurret.researchMiningTurretEfficientDrillingDef.IsFinished == false)
-                                {
-                                    oreQuantity = Mathf.RoundToInt((float)oreQuantity * researchUnfinishedFactor);
-                                }
-                                Thing ore = ThingMaker.MakeThing(rock.def.building.mineableThing);
-                                ore.stackCount = oreQuantity;
-                                GenSpawn.Spawn(ore, rock.Position, this.Map);
-                                rock.Destroy(DestroyMode.Vanish);
-                            }
-                            else
-                            {
-                                rock.Destroy(DestroyMode.KillFinalize);
-                            }
+                            rock.Destroy(DestroyMode.KillFinalize);
                         }
-                        if (rock.DestroyedOrNull())
-                        {
-                            ResetTarget();
-                            LookForNewTarget(out this.targetPosition);
-                        }
+                    }
+                    if (rock.DestroyedOrNull())
+                    {
+                        ResetTarget();
+                        LookForNewTarget(out this.targetPosition);
                     }
                 }
             }
@@ -430,9 +348,9 @@ namespace MiningTurret
         /// </summary>
         public void ComputeDrawingParameters()
         {
-            if (this.targetPosition.IsValid
-                && (this.turretTopRotation == this.turretTopRotationTarget))
+            if (this.targetPosition.IsValid)
             {
+                // Drilling laser beam.
                 Vector3 turretTargetVector = (this.targetPosition.ToVector3Shifted() - this.TrueCenter());
                 turretTargetVector.y = 0f;
                 this.laserBeamScale.z = turretTargetVector.magnitude - 0.8f;
@@ -441,6 +359,7 @@ namespace MiningTurret
             }
             else
             {
+                // Idle laser beam.
                 this.laserBeamScale.z = 1.5f;
                 Vector3 positionOffset = new Vector3(0f, 0f, this.laserBeamScale.z / 2f).RotatedBy(this.turretTopRotation);
                 laserBeamMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
@@ -573,8 +492,7 @@ namespace MiningTurret
             {
                 this.Map.designationManager.AddDesignation(new Designation(forcedTarget, DesignationDefOf.Mine));
             }
-            this.turretTopRotationTarget = Mathf.Repeat(Mathf.Round((this.targetPosition.ToVector3Shifted() - this.Position.ToVector3Shifted()).AngleFlat()), 360f);
-            ComputeRotationDirection();
+            this.turretTopRotation = Mathf.Repeat(Mathf.Round((this.targetPosition.ToVector3Shifted() - this.Position.ToVector3Shifted()).AngleFlat()), 360f);
         }
     }
 }

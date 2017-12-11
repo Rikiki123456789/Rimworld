@@ -8,11 +8,16 @@ using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
 using Verse.Sound;   // Needed when you do something with the Sound
 
-namespace MiningTurret
+namespace DrillTurret
 {
     public class JobDriver_OperateDrillTurret : JobDriver
     {
         public TargetIndex drillTurretIndex = TargetIndex.A;
+
+        public override bool TryMakePreToilReservations()
+        {
+            return this.pawn.Reserve(this.TargetThingA, this.job);
+        }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
@@ -22,10 +27,8 @@ namespace MiningTurret
             this.FailOnBurningImmobile(TargetIndex.A);
             this.FailOn(delegate
             {
-                return ((this.CurJob.targetA.Thing as Building_MiningTurret).targetPosition == IntVec3.Invalid);
+                return ((this.TargetThingA as Building_DrillTurret).targetPosition == IntVec3.Invalid);
             });
-
-            yield return Toils_Reserve.Reserve(drillTurretIndex);
 
             yield return Toils_Goto.GotoCell(drillTurretIndex, PathEndMode.InteractionCell);
             
@@ -35,7 +38,7 @@ namespace MiningTurret
                 {
                     Pawn actor = this.GetActor();
                     float miningEfficiency = (float)actor.skills.GetSkill(SkillDefOf.Mining).Level / (float)SkillRecord.MaxLevel;
-                    (this.CurJob.targetA.Thing as Building_MiningTurret).SetOperatorEfficiency(miningEfficiency);
+                    (this.TargetThingA as Building_DrillTurret).SetOperatorEfficiency(miningEfficiency);
                     this.GetActor().skills.Learn(SkillDefOf.Mining, skillGainPerTick);
                 },
                 defaultCompleteMode = ToilCompleteMode.Never
