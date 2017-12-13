@@ -21,7 +21,7 @@ namespace MobileMineralSonar
     {
         public override void Apply()
         {
-            Building_MobileMineralSonar.TryUpdateScanParameters();
+            Building_MobileMineralSonar.ActivateEnhancedScan();
         }
     }
 }

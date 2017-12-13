@@ -34,7 +34,6 @@ namespace MobileMineralSonar
         public int scanProgress = 0;
         private const int scanProgressThresholdPerCell = 1000;
         public float satelliteDishRotation = 0;
-        private bool isInstalled = false;
 
         public List<ThingDef> detectedDefList = null;
 
@@ -74,13 +73,10 @@ namespace MobileMineralSonar
         public Vector3 scanSpotScale = new Vector3(1f, 1f, 1f);
 
         // ===================== Static functions =====================
-        public static void TryUpdateScanParameters()
+        public static void ActivateEnhancedScan()
         {
-            if (ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan").IsFinished)
-            {
-                maxScanRange = enhancedMaxScanRange;
-                detectionChance = enhancedDetectionChance;
-            }
+            maxScanRange = enhancedMaxScanRange;
+            detectionChance = enhancedDetectionChance;
         }
 
         // ===================== Setup Work =====================
@@ -90,10 +86,7 @@ namespace MobileMineralSonar
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-
-            // TODO: is it necessary?
-            TryUpdateScanParameters();
-
+            
             detectedDefList = new List<ThingDef>();
             foreach (ThingDef metallicDef in ((ThingDef_MobileMineralSonar)this.def).scannedThingDefs)
             {
@@ -111,54 +104,25 @@ namespace MobileMineralSonar
             scanRangeMatrix40.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale40);
             scanRangeMatrix50.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
             satelliteDishMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), satelliteDishScale);
-            
-            // TODO: is it still necessary?
-            if (this.isInstalled == false)
-            {
-                // The MMS has just been moved or is spawned for the first time.
-                this.scanRange = 1;
-                this.scanProgress = 0;
-                this.satelliteDishRotation = 0f;
-            }
-            else
-            {
-                this.isInstalled = false;
-            }
+        }
+
+        public override void DeSpawn()
+        {
+            base.DeSpawn();
+            this.scanRange = 1;
+            this.scanProgress = 0;
+            this.satelliteDishRotation = 0f;
         }
         
-        /// <summary>
-        /// Save and load mobile mineral sonar internal state variables (stored in savegame data).
-        /// </summary>
         public override void ExposeData()
         {
             base.ExposeData();
-            if (Scribe.mode != LoadSaveMode.Saving)
-            {
-                this.isInstalled = true;
-            }
-            // Save and load the work variables, so they don't default after loading.
             Scribe_Values.Look<int>(ref scanRange, "scanRange", 1);
             Scribe_Values.Look<int>(ref scanProgress, "scanProgress", 1);
             Scribe_Values.Look<float>(ref satelliteDishRotation, "satelliteDishRotation", 0f);;
             Scribe_Values.Look<int>(ref nextFlashTick, "nextFlashTick", 0);
         }
-
-        // ===================== Destroy =====================
-        /// <summary>
-        /// Destroy the mobile mineral sonar and reset its state when deconstructed.
-        /// </summary>
-        public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
-        {
-            base.Destroy(mode);
-
-            if (mode == DestroyMode.Deconstruct)
-            {
-                this.scanRange = 1;
-                this.scanProgress = 0;
-                this.satelliteDishRotation = 0;
-            }
-        }
-
+        
         // ===================== Main Work Function =====================
         /// <summary>
         /// Main function:
@@ -169,21 +133,7 @@ namespace MobileMineralSonar
         {
             base.Tick();            
             PerformScanUpdate();
-
-            if (Find.TickManager.TicksGame >= this.nextFlashTick)
-            {
-                if (!this.Position.ShouldSpawnMotesAt(this.Map) || this.Map.moteCounter.SaturatedLowPriority)
-                {
-                    return;
-                }
-                MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
-                moteThrown.Scale = 5f;
-                moteThrown.rotationRate = Rand.Range(-3f, 3f);
-                moteThrown.exactPosition = this.Position.ToVector3Shifted();
-                moteThrown.SetVelocity((float)Rand.Range(0, 360), 1.2f);
-                GenSpawn.Spawn(moteThrown, this.Position, this.Map);
-                this.nextFlashTick = Find.TickManager.TicksGame + flashPeriodInSeconds * GenTicks.TicksPerRealSecond * (int)Find.TickManager.CurTimeSpeed;
-            }
+            ThrowFlash();
         }
                 
         /// <summary>
@@ -253,6 +203,23 @@ namespace MobileMineralSonar
                         this.Map.fogGrid.Unfog(thing.Position);
                     }
                 }
+            }
+        }
+        public void ThrowFlash()
+        {
+            if (Find.TickManager.TicksGame >= this.nextFlashTick)
+            {
+                if (!this.Position.ShouldSpawnMotesAt(this.Map) || this.Map.moteCounter.SaturatedLowPriority)
+                {
+                    return;
+                }
+                MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
+                moteThrown.Scale = 5f;
+                moteThrown.rotationRate = Rand.Range(-3f, 3f);
+                moteThrown.exactPosition = this.Position.ToVector3Shifted();
+                moteThrown.SetVelocity((float)Rand.Range(0, 360), 1.2f);
+                GenSpawn.Spawn(moteThrown, this.Position, this.Map);
+                this.nextFlashTick = Find.TickManager.TicksGame + flashPeriodInSeconds * GenTicks.TicksPerRealSecond * (int)Find.TickManager.CurTimeSpeed;
             }
         }
 
@@ -362,6 +329,11 @@ namespace MobileMineralSonar
         /// </summary>
         public override string GetInspectString()
         {
+            if (this.powerComp == null)
+            {
+                return base.GetInspectString();
+            }
+
             StringBuilder stringBuilder = new StringBuilder();
             float powerNeeded = -powerComp.powerOutputInt;
             float powerProduction = 0f;

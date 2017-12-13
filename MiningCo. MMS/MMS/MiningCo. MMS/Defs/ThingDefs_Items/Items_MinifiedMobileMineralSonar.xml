@@ -20,9 +20,9 @@
 
   <ThingDef ParentName="MinifiedBase">
     <defName>MinifiedMobileMineralSonar</defName>
-    <label>MMS (uninstalled)</label>
+    <label>MMS</label>
     <thingCategories>
-      <li>Items</li>
+      <li>Furniture</li>
     </thingCategories>
   </ThingDef>
 
