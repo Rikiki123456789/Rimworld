@@ -20,30 +20,47 @@ namespace LaserFence
     /// Remember learning is always better than just copy/paste...</permission>
     public class Building_LaserFence : Building
     {
-        public Building_LaserFencePylon pylon = null;
+        public const int buildingCheckPeriodInTicks = 30;
+        public const int plantCheckPeriodInTick = GenTicks.TickRareInterval;
         public int nextBuildingCheckTick = 0;
         public int nextPlantCheckTick = 0;
+        public Building_LaserFencePylon pylon = null;
 
-        // ######## Tick ######## //
+        // ===================== Setup work =====================
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
 
+            this.nextBuildingCheckTick = Find.TickManager.TicksGame + Rand.Range(0, buildingCheckPeriodInTicks);
+            this.nextPlantCheckTick = Find.TickManager.TicksGame + Rand.Range(0, plantCheckPeriodInTick);
+        }
+
+
+        public override void ExposeData()
+        {
+            base.ExposeData();
+            Scribe_References.Look<Building_LaserFencePylon>(ref pylon, "pylon");
+        }
+
+        // ===================== Main function =====================
         public override void Tick()
         {
             // Check if a new building is cutting the laser fence.
-            if (Find.TickManager.TicksGame > this.nextBuildingCheckTick)
+            if (Find.TickManager.TicksGame >= this.nextBuildingCheckTick)
             {
-                this.nextBuildingCheckTick = Find.TickManager.TicksGame + (GenTicks.TicksPerRealSecond / 2);
+                this.nextBuildingCheckTick = Find.TickManager.TicksGame + buildingCheckPeriodInTicks;
                 if (this.Position.GetEdifice(this.Map) != null)
                 {
                     if (pylon != null)
                     {
-                        pylon.InformEdificeIsBlocking();
+                        pylon.Notify_EdificeIsBlocking();
                     }
                 }
             }
             // Check if a plant or pawn is in the laser fence path.
-            if (Find.TickManager.TicksGame > this.nextPlantCheckTick)
+            if (Find.TickManager.TicksGame >= this.nextPlantCheckTick)
             {
-                this.nextPlantCheckTick = Find.TickManager.TicksGame + GenTicks.TickRareInterval;
+                this.nextPlantCheckTick = Find.TickManager.TicksGame + plantCheckPeriodInTick;
                 List<Thing> thingList = this.Position.GetThingList(this.Map);
                 for (int thingIndex = thingList.Count - 1; thingIndex >= 0; thingIndex--)
                 {
@@ -60,21 +77,6 @@ namespace LaserFence
                     }
                 }
             }
-        }
-
-        // ######## ExposeData ######## //
-
-        public override void ExposeData()
-        {
-            base.ExposeData();
-            Scribe_References.Look<Building_LaserFencePylon>(ref pylon, "pylon");
-        }
-
-        // ######## Properties. ######## //
-        
-        public override bool ClaimableBy(Faction faction)
-        {
-            return false;
         }
     }
 }

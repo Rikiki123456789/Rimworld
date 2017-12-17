@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<WorkGivers>
+<Defs>
 
   <WorkGiverDef>
     <defName>WorkGiverDef_SwitchLaserFence</defName>
@@ -10,4 +10,4 @@
     <gerund>switching</gerund>
   </WorkGiverDef>
 
-</WorkGivers>
+</Defs>

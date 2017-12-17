@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<Buildings>
+<Defs>
 
   <ThingDef Name="BuildingBase" Abstract="True">
     <category>Building</category>
@@ -16,6 +16,13 @@
   <ThingDef ParentName="BuildingBase">
     <defName>LaserFencePylon</defName>
     <label>laser fence pylon</label>
+    <description> An advanced laser fence pylon.
+   - Will automatically connect to nearby pylons in cardinal directions.
+   - Each fence can be independantly activated or deactivated.
+   - Max range of a laser fence: 4 cells.
+
+Warning! Always wear safety glasses before any maintenance operation. Local wildlife/vegetation may catch fire if directly exposed to the laser.
+    </description>
     <thingClass>LaserFence.Building_LaserFencePylon</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -30,6 +37,7 @@
     <placeWorkers>
       <li>LaserFence.PlaceWorker_LaserFencePylon</li>
     </placeWorkers>
+    <minifiedDef>MinifiedLaserFence</minifiedDef>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <fillPercent>0.6</fillPercent>
@@ -39,13 +47,10 @@
       <WorkToBuild>2000</WorkToBuild>
       <Flammability>0.0</Flammability>
     </statBases>
+    <building>
+      <allowAutoroof>false</allowAutoroof>
+    </building>
     <holdsRoof>false</holdsRoof>
-    <description>An advanced laser fence pylon.
-- Will automatically connect to nearby pylons in each cardinal direction.
-- Each fence can be independantly activated or deactivated.
-- Max range of a laser fence: 4 cells.
-
-Warning! Always wear safety glasses before any maintenance operation. Local wildlife/vegetation may catch fire if directly exposed to the laser.</description>
     <size>(1,1)</size>
     <costList>
       <Component>1</Component>
@@ -74,12 +79,13 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
     <label>laser fence</label>
     <description>An impassable laser fence.</description>
     <thingClass>LaserFence.Building_LaserFence</thingClass>
+    <category>Projectile</category> <!-- To avoid wiping items when being spawned (like a freshly uninstalled pylon). -->
     <graphicData>
-      <texPath>Things/Building/Security/DummyTexture</texPath>
+      <texPath>Things/Building/Security/LaserFence</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
-    <altitudeLayer>Building</altitudeLayer>
+    <altitudeLayer>Projectile</altitudeLayer>
     <passability>Impassable</passability>
     <tickerType>Normal</tickerType>
     <selectable>false</selectable>
@@ -93,9 +99,11 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
       <isInert>true</isInert>
       <isEdifice>false</isEdifice>
       <deconstructible>false</deconstructible>
+      <claimable>false</claimable>
+      <allowAutoroof>false</allowAutoroof>
     </building>
     <size>(1,1)</size>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
   </ThingDef>
 
-</Buildings>
+</Defs>

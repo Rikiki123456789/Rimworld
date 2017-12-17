@@ -20,10 +20,13 @@ namespace LaserFence
     {
         public TargetIndex pylonIndex = TargetIndex.A;
 
+        public override bool TryMakePreToilReservations()
+        {
+            return this.pawn.Reserve(this.TargetA, this.job);
+        }
+
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            yield return Toils_Reserve.Reserve(pylonIndex);
-
             yield return Toils_Goto.GotoCell(pylonIndex, PathEndMode.InteractionCell);
 
             yield return Toils_General.Wait(30);

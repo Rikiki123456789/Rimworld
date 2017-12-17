@@ -23,24 +23,22 @@ namespace LaserFence
 		{
 			get
             {
-                return ThingRequest.ForDef(ThingDef.Named("LaserFencePylon"));
+                return ThingRequest.ForDef(Util_LaserFence.LaserFencePylonDef);
 			}
 		}
 
         public override bool HasJobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
-
-            if ((t is Building_LaserFencePylon) == false)
-            {
-                return false;
-            }
-            if (pawn.CanReserveAndReach(t, PathEndMode.Touch, Danger.Deadly) == false)
-            {
-                return false;
-            }
-
             Building_LaserFencePylon pylon = t as Building_LaserFencePylon;
-            
+            if (pylon == null)
+            {
+                return false;
+            }
+            if (pawn.CanReserveAndReach(pylon, PathEndMode.InteractionCell, Danger.Deadly) == false)
+            {
+                return false;
+            }
+
             if (pawn.Dead
                 || pawn.Downed
                 || pawn.IsBurning())
@@ -57,8 +55,7 @@ namespace LaserFence
 		public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
             Building_LaserFencePylon pylon = t as Building_LaserFencePylon;
-            Job job = new Job(DefDatabase<JobDef>.GetNamed("JobDef_SwitchLaserFence"), pylon);
-            return job;
+            return new Job(Util_LaserFence.SwitchLaserFenceDef, pylon);
 		}
     }
 }
