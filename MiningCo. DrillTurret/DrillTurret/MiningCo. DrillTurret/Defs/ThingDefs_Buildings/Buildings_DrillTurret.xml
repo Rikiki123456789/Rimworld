@@ -16,7 +16,7 @@
     </graphicData>
     <size>(3,3)</size>
     <uiIconPath>Things/Building/MenuIcon_DrillTurret</uiIconPath>
-    <minifiedDef>MinifiedFurniture</minifiedDef>
+    <minifiedDef>MinifiedDrillTurret</minifiedDef>
     <altitudeLayer>Building</altitudeLayer>
     <stealable>false</stealable>
     <rotatable>true</rotatable>
