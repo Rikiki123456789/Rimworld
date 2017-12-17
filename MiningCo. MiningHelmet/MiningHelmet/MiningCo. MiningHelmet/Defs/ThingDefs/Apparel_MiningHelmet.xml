@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ThingDefs>
+<Defs>
 
   <ThingDef Name="ApparelBase" Abstract="True">
     <thingClass>Apparel</thingClass>
@@ -86,7 +86,7 @@
       <bodyPartGroups>
         <li>UpperHead</li>
       </bodyPartGroups>
-      <worngraphicPath>Things/Apparel/MiningHelmet/MiningHelmet</worngraphicPath>
+      <wornGraphicPath>Things/Apparel/MiningHelmet/MiningHelmet</wornGraphicPath>
       <layers>
         <li>Overhead</li>
       </layers>
@@ -95,4 +95,4 @@
     </apparel>
   </ThingDef>
   
-</ThingDefs>
+</Defs>

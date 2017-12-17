@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ThingDefs>
+<Defs>
 
   <ThingDef ParentName="ApparelMakeableBase">
     <defName>MiningVest</defName>
@@ -44,13 +44,14 @@
         <li>Arms</li>
         <li>Legs</li>
       </bodyPartGroups>
-      <worngraphicPath>Things/Apparel/MiningVest/MiningVest</worngraphicPath>
+      <wornGraphicPath>Things/Apparel/MiningVest/MiningVest</wornGraphicPath>
       <layers>
         <li>Shell</li>
       </layers>
       <tags>
       </tags>
-    </apparel>
+    
+  </apparel>
   </ThingDef>
 
-</ThingDefs>
+</Defs>

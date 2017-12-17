@@ -13,15 +13,15 @@ using Verse;         // RimWorld universal objects are here
 namespace MiningHelmet
 {
     /// <summary>
-    /// MiningHelmet utility class.
+    /// Util_MiningLight class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public static class Util_MiningHelmet
+    public static class Util_MiningLight
     {
-        // Mining helmet glower.
-        public static ThingDef miningLightDef
+        // Mining light glower.
+        public static ThingDef MiningLightDef
         {
             get
             {

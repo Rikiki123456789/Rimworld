@@ -27,102 +27,19 @@ namespace MiningHelmet
             ForcedOff
         }
 
+        public const int updatePeriodInTicks = GenTicks.TicksPerRealSecond;
+        public int nextUpdateTick = 0;
+
         public Thing light;
         public bool lightIsOn = false;
         public bool refreshIsNecessary = false;
         public LightMode lightMode = LightMode.Automatic;
 
-        /// <summary>
-        /// Perform the main treatment:
-        /// - switch on the light if the pawn is awake and under a natural roof or in the open dark and mining,
-        /// - switch off the headlight otherwise.
-        /// </summary>
-        public override void Tick()
+        // ===================== Setup work =====================
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
-            base.Tick();
-            
-            // Only tick once a second when light is off.
-            if ((this.lightIsOn == false)
-                && (Find.TickManager.TicksGame % GenTicks.TicksPerRealSecond != 0))
-            {
-                return;
-            }
-            
-            // Apparel on ground or wearer is sleeping.
-            if ((this.Wearer == null)
-                || this.Wearer.InBed())
-            {
-                SwitchOffLight();
-                return;
-            }
-            
-            if (this.lightMode == LightMode.ForcedOn)
-            {
-                SwitchOnLight();
-                return;
-            }
-            else if (this.lightMode == LightMode.ForcedOff)
-            {
-                SwitchOffLight();
-                return;
-            }
-
-            // Automatic mode.
-            // Colonist is mining.
-            if ((this.Wearer.CurJob != null)
-                && (this.Wearer.CurJob.def == JobDefOf.Mine))
-            {
-                SwitchOnLight();
-                return;
-            }
-            
-            // Colonist is under a natural roof.
-            if ((this.Wearer.Map != null)
-                && this.Wearer.MapHeld.roofGrid.Roofed(this.Wearer.Position)
-                && this.Wearer.MapHeld.roofGrid.RoofAt(this.Wearer.Position).isNatural)
-            {
-                SwitchOnLight();
-                return;
-            }
-            
-            // Other cases.
-            SwitchOffLight();
-        }
-
-        public void SwitchOnLight()
-        {
-            IntVec3 newPosition = this.Wearer.DrawPos.ToIntVec3();
-
-            // Switch off previous light if pawn moved.
-            if (((this.light.DestroyedOrNull() == false)
-                && (newPosition != this.light.Position))
-                || this.refreshIsNecessary)
-            {
-                SwitchOffLight();
-                this.refreshIsNecessary = false;
-            }
-
-            // Try to spawn a new light.
-            if (this.light.DestroyedOrNull())
-            {
-                Thing potentialLight = newPosition.GetFirstThing(this.Wearer.Map, Util_MiningHelmet.miningLightDef);
-                if (potentialLight == null)
-                {
-                    this.light = GenSpawn.Spawn(Util_MiningHelmet.miningLightDef, newPosition, this.Wearer.Map);
-                }
-                // else another light is already here.
-            }
-            this.lightIsOn = true;
-        }
-
-        public void SwitchOffLight()
-        {
-            if (this.light.DestroyedOrNull() == false)
-            {
-                this.light.Destroy();
-                this.light = null;
-            }
-            this.lightIsOn = false;
+            base.SpawnSetup(map, respawningAfterLoad);
+            this.nextUpdateTick = Find.TickManager.TicksGame + Rand.Range(0, updatePeriodInTicks);
         }
 
         public override void ExposeData()
@@ -132,13 +49,108 @@ namespace MiningHelmet
             Scribe_References.Look<Thing>(ref this.light, "light");
             Scribe_Values.Look<bool>(ref this.lightIsOn, "lightIsOn");
             Scribe_Values.Look<LightMode>(ref this.lightMode, "lightMode");
-            if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
+            /*if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
             {
                 // TODO: rework this.
                 this.refreshIsNecessary = true;
+            }*/
+        }
+
+        // ===================== Main function =====================
+        /// <summary>
+        /// Perform the main treatment:
+        /// - respect on/off forced mode if active,
+        /// - switch on the light if the pawn is awake and under a natural roof or in the dark,
+        /// - switch off the headlight otherwise.
+        /// </summary>
+        public override void Tick()
+        {
+            base.Tick();
+            
+            // Only tick once a second when light is off.
+            if (this.lightIsOn
+                || (Find.TickManager.TicksGame >= this.nextUpdateTick))
+            {
+                bool lightShouldBeOn = ComputeLightState();
+                if (lightShouldBeOn)
+                {
+                    SwitchOnLight();
+                }
+                else
+                {
+                    SwitchOffLight();
+                }
             }
         }
 
+        public bool ComputeLightState()
+        {
+            // Apparel on ground or wearer is dead/downed/sleeping.
+            if ((this.Wearer == null)
+                || this.Wearer.Dead
+                || this.Wearer.Downed
+                || (this.Wearer.Awake() == false))
+            {
+                return false;
+            }
+
+            // Forced light mode.
+            if (this.lightMode == LightMode.ForcedOn)
+            {
+                return true;
+            }
+            if (this.lightMode == LightMode.ForcedOff)
+            {
+                return false;
+            }
+
+            // Automatic mode.
+            if ((this.Wearer.Map != null)
+                && (this.Wearer.Map.glowGrid.PsychGlowAt(this.Wearer.Position) <= PsychGlow.Lit))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public void SwitchOnLight()
+        {
+            IntVec3 newPosition = this.Wearer.DrawPos.ToIntVec3();
+
+            // Switch off previous light if pawn moved.
+            if (((this.light != null)
+                && (newPosition != this.light.Position))
+                || this.refreshIsNecessary)
+            {
+                SwitchOffLight();
+                this.refreshIsNecessary = false;
+            }
+
+            // Try to spawn a new light.
+            if (this.light == null)
+            {
+                Thing potentialLight = newPosition.GetFirstThing(this.Wearer.Map, Util_MiningLight.MiningLightDef);
+                if (potentialLight == null)
+                {
+                    this.light = GenSpawn.Spawn(Util_MiningLight.MiningLightDef, newPosition, this.Wearer.Map);
+                }
+                // else another light is already here.
+            }
+            this.lightIsOn = true;
+        }
+
+        public void SwitchOffLight()
+        {
+            if (this.light != null)
+            {
+                this.light.Destroy();
+                this.light = null;
+            }
+            this.lightIsOn = false;
+        }
+
+        // ===================== Gizmos =====================
         public override IEnumerable<Gizmo> GetGizmos()
         {
             IEnumerable<Gizmo> buttonList = GetWornGizmos();
@@ -178,7 +190,7 @@ namespace MiningHelmet
             }
             lightModeButton.defaultDesc = "Switch mode.";
             lightModeButton.activateSound = SoundDef.Named("Click");
-            lightModeButton.action = new Action(PerformLigthModeAction);
+            lightModeButton.action = new Action(SwitchLigthMode);
             lightModeButton.groupKey = groupKeyBase + 1;
             buttonList.Add(lightModeButton);
 
@@ -188,7 +200,7 @@ namespace MiningHelmet
         /// <summary>
         /// Switch light mode.
         /// </summary>
-        public void PerformLigthModeAction()
+        public void SwitchLigthMode()
         {
             switch (this.lightMode)
             {
