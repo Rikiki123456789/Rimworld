@@ -32,7 +32,6 @@ namespace MiningHelmet
 
         public Thing light;
         public bool lightIsOn = false;
-        public bool refreshIsNecessary = false;
         public LightMode lightMode = LightMode.Automatic;
 
         // ===================== Setup work =====================
@@ -49,11 +48,6 @@ namespace MiningHelmet
             Scribe_References.Look<Thing>(ref this.light, "light");
             Scribe_Values.Look<bool>(ref this.lightIsOn, "lightIsOn");
             Scribe_Values.Look<LightMode>(ref this.lightMode, "lightMode");
-            /*if (Scribe.mode == LoadSaveMode.ResolvingCrossRefs)
-            {
-                // TODO: rework this.
-                this.refreshIsNecessary = true;
-            }*/
         }
 
         // ===================== Main function =====================
@@ -71,15 +65,20 @@ namespace MiningHelmet
             if (this.lightIsOn
                 || (Find.TickManager.TicksGame >= this.nextUpdateTick))
             {
-                bool lightShouldBeOn = ComputeLightState();
-                if (lightShouldBeOn)
-                {
-                    SwitchOnLight();
-                }
-                else
-                {
-                    SwitchOffLight();
-                }
+                RefreshLightState();
+            }
+        }
+
+        public void RefreshLightState()
+        {
+            bool lightShouldBeOn = ComputeLightState();
+            if (lightShouldBeOn)
+            {
+                SwitchOnLight();
+            }
+            else
+            {
+                SwitchOffLight();
             }
         }
 
@@ -106,7 +105,10 @@ namespace MiningHelmet
 
             // Automatic mode.
             if ((this.Wearer.Map != null)
-                && (this.Wearer.Map.glowGrid.PsychGlowAt(this.Wearer.Position) <= PsychGlow.Lit))
+                && ((this.Wearer.Position.Roofed(this.Wearer.Map)
+                    && (this.Wearer.Map.glowGrid.PsychGlowAt(this.Wearer.Position) <= PsychGlow.Lit))
+                || ((this.Wearer.Position.Roofed(this.Wearer.Map) == false)
+                    && (this.Wearer.Map.glowGrid.PsychGlowAt(this.Wearer.Position) < PsychGlow.Overlit))))
             {
                 return true;
             }
@@ -119,16 +121,14 @@ namespace MiningHelmet
             IntVec3 newPosition = this.Wearer.DrawPos.ToIntVec3();
 
             // Switch off previous light if pawn moved.
-            if (((this.light != null)
+            if ((this.light.DestroyedOrNull() == false)
                 && (newPosition != this.light.Position))
-                || this.refreshIsNecessary)
             {
                 SwitchOffLight();
-                this.refreshIsNecessary = false;
             }
 
             // Try to spawn a new light.
-            if (this.light == null)
+            if (this.light.DestroyedOrNull())
             {
                 Thing potentialLight = newPosition.GetFirstThing(this.Wearer.Map, Util_MiningLight.MiningLightDef);
                 if (potentialLight == null)
@@ -142,7 +142,7 @@ namespace MiningHelmet
 
         public void SwitchOffLight()
         {
-            if (this.light != null)
+            if (this.light.DestroyedOrNull() == false)
             {
                 this.light.Destroy();
                 this.light = null;
@@ -214,6 +214,7 @@ namespace MiningHelmet
                     this.lightMode = LightMode.Automatic;
                     break;
             }
+            RefreshLightState();
         }
     }
 }
