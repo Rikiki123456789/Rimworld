@@ -26,21 +26,21 @@ namespace ForceField
         /// Checks if a new force field generator can be built at this location.
         /// - must not be too near from another force field generator (or it would perturb other fields).
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Thing thingToIgnore = null)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
         {
             // Check if another force field generator is not too close.
             List<Thing> forceFieldGeneratorList = new List<Thing>();
-            IEnumerable<Thing> list = this.Map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator"));
+            IEnumerable<Thing> list = map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator"));
             foreach (Thing generator in list)
             {
                 forceFieldGeneratorList.Add(generator);
             }
-            list = this.Map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").blueprintDef);
+            list = map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").blueprintDef);
             foreach (Thing generator in list)
             {
                 forceFieldGeneratorList.Add(generator);
             }
-            list = this.Map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").frameDef);
+            list = map.listerThings.ThingsOfDef(ThingDef.Named("ForceFieldGenerator").frameDef);
             foreach (Thing generator in list)
             {
                 forceFieldGeneratorList.Add(generator);
@@ -50,7 +50,7 @@ namespace ForceField
             {
                 if (generator.Position.InHorDistOf(loc, minDistanceBetweenTwoForceFieldGenerators))
                 {
-                    return new AcceptanceReport("An other force field generator is too close (would generate perturbations).");
+                    return new AcceptanceReport("An other force field generator is too close (it would generate perturbations).");
                 }
             }
 

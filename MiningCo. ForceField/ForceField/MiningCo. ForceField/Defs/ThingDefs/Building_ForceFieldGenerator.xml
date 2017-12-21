@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ThingDefs>
+<Defs>
 
   <ThingDef Name="BuildingBase" Abstract="True">
     <category>Building</category>
@@ -18,7 +18,7 @@
     <label>force field generator</label>
     <description>This defensive building will charge up and sustain a forward force field. It is able to absorb or repel incoming projectiles until it is completely discharged. Once discharged, the generator needs some time to reinitialize. When powered down, the generator will send back a part of its energy to the power net.</description>
     <thingClass>ForceField.Building_ForceFieldGenerator</thingClass>
-    <TickerType>Normal</TickerType>
+    <tickerType>Normal</tickerType>
     <graphicData>
       <texPath>Things/Building/Security/ForceFieldGenerator</texPath>
       <graphicClass>Graphic_Single</graphicClass>
@@ -32,7 +32,7 @@
     </placeWorkers>
     <castEdgeShadows>true</castEdgeShadows>
     <fillPercent>0.5</fillPercent>
-    <UseHitPoints>true</UseHitPoints>
+    <useHitPoints>true</useHitPoints>
     <statBases>
       <WorkToBuild>10000</WorkToBuild>
       <MaxHitPoints>300</MaxHitPoints>
@@ -81,4 +81,4 @@
     <explosiveRepelCharge>40</explosiveRepelCharge>
   </ThingDef>
 
-</ThingDefs>
+</Defs>

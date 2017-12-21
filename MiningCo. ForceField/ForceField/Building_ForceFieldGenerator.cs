@@ -337,7 +337,7 @@ namespace ForceField
                 }
                 SoundInfo soundInfo = SoundInfo.InMap(new TargetInfo(projectileWithAngle.projectile.Position, this.Map), MaintenanceType.None);
                 SoundDefOf.Thunder_OnMap.PlayOneShot(soundInfo);
-                GenExplosion.DoExplosion(projectileWithAngle.projectile.Position, this.Map, 1.9f, DamageDefOf.Flame, null, null, null);
+                GenExplosion.DoExplosion(projectileWithAngle.projectile.Position, this.Map, 1.9f, DamageDefOf.Flame, projectileWithAngle.projectile);
                 projectileWithAngle.projectile.Destroy();
                 ActivateMatrixAbsorbtionEffect(projectileWithAngle.projectile.ExactPosition);
             }
