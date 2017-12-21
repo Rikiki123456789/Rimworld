@@ -146,15 +146,22 @@
       <li Class="StockGenerator_Tag">
         <tradeTag>MiningHelmet</tradeTag>
         <countRange>
-          <min>0</min>
+          <min>2</min>
+          <max>6</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_Tag">
+        <tradeTag>MiningVest</tradeTag>
+        <countRange>
+          <min>2</min>
           <max>6</max>
         </countRange>
       </li>
       <li Class="StockGenerator_Tag">
         <tradeTag>PowerFist</tradeTag>
         <countRange>
-          <min>0</min>
-          <max>3</max>
+          <min>1</min>
+          <max>4</max>
         </countRange>
       </li>
     </stockGenerators>

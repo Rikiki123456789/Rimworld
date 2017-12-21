@@ -104,8 +104,7 @@ namespace Spaceship
                 },
                 triggers =
                 {
-                    new Trigger_PawnCannotReachTargetDestination(),
-                    new Trigger_SpaceshipNotFound()
+                    new Trigger_PawnCannotReachTargetDestination()
                 },
                 postActions =
                 {
