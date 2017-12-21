@@ -48,10 +48,10 @@
       <layers>
         <li>Shell</li>
       </layers>
-      <tags>
-      </tags>
-    
-  </apparel>
+    </apparel>
+    <tradeTags>
+      <li>MiningVest</li>
+    </tradeTags>
   </ThingDef>
 
 </Defs>

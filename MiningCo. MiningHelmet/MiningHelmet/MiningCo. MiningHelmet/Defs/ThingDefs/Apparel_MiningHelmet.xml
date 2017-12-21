@@ -93,6 +93,9 @@
       <tags>
       </tags>
     </apparel>
+    <tradeTags>
+      <li>MiningHelmet</li>
+    </tradeTags>
   </ThingDef>
   
 </Defs>
