@@ -32,9 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.16.6198.16321, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>..\..\..\RimWorld1722Win\RimWorld1722Win_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -42,9 +41,8 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine">
+      <HintPath>..\..\..\RimWorld1722Win\RimWorld1722Win_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -66,6 +64,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. PowerFist\Defs\HediffDefs\Hediffs_Electric.xml" />
+    <Content Include="MiningCo. PowerFist\Defs\Maneuvers\Maneuvers.xml" />
     <Content Include="MiningCo. PowerFist\Defs\ResearchProjectDefs\ResearchProject_PowerFist.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -76,6 +75,7 @@
     <Content Include="MiningCo. PowerFist\Defs\ThingDefs_Misc\Weapons_PowerFist.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. PowerFist\Defs\ToolCapacityDefs\ToolCapacity.xml" />
     <Content Include="MiningCo. PowerFist\Textures\Things\Item\Resource\ColdCrystal.png" />
     <Content Include="MiningCo. PowerFist\Textures\Things\Special\DummyTexture.png" />
   </ItemGroup>

@@ -19,7 +19,8 @@ namespace PowerFist
         public float repelDurationInTicks = 0;
         public float repelTicks = 0;
         public IntVec3 initialRepelPosition = IntVec3.Zero;
-
+        
+        // ===================== Setup work =====================
         public override void ExposeData()
         {
             base.ExposeData();
@@ -32,6 +33,7 @@ namespace PowerFist
             Scribe_Values.Look<IntVec3>(ref this.initialRepelPosition, "initialRepelPosition");
         }
 
+        // ===================== Main function =====================
         public override void Tick()
         {
             this.repelTicks++;
@@ -189,8 +191,7 @@ namespace PowerFist
 
         protected bool IsTerrainBlockingAt(IntVec3 position)
         {
-            bool terrainIsBlocking = (position.GetTerrain(this.Map).passability == Traversability.Impassable);
-            return terrainIsBlocking;
+            return (position.GetTerrain(this.Map).passability == Traversability.Impassable);
         }
         
         protected bool IsDiagonalVector(IntVec3 repelVector)

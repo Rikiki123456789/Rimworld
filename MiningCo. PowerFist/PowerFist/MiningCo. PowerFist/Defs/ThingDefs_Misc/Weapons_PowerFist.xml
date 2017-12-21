@@ -83,19 +83,32 @@
     <statBases>
       <WorkToMake>50000</WorkToMake>
       <Mass>5.0</Mass>
-      <MeleeWeapon_DamageAmount>12</MeleeWeapon_DamageAmount>
-      <MeleeWeapon_Cooldown>2.2</MeleeWeapon_Cooldown>
       <MiningSpeed>0.15</MiningSpeed>
     </statBases>
-    <equippedAngleOffset>-45</equippedAngleOffset>
-    <verbs>
+    <tools>
       <li>
-        <verbClass>PowerFist.Verb_MeleeAttackWithRepel</verbClass>
-        <hasStandardCommand>true</hasStandardCommand>
-        <meleeDamageDef>Blunt</meleeDamageDef>
+        <label>ram</label>
+        <labelUsedInLogging>false</labelUsedInLogging>
+        <capacities>
+          <li>Push</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>2.2</cooldownTime>
       </li>
-    </verbs>
-
+      <li>
+        <label>piston</label>
+        <capacities>
+          <li>Poke</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>
+    </tools>
+    <equippedAngleOffset>-45</equippedAngleOffset>
+    <tradeTags>
+      <li>PowerFist</li>
+    </tradeTags>
+    
     <!-- Power fist properties. -->
     <repelDurationInTicks>20</repelDurationInTicks>
     <bodySizeSmall>0.5</bodySizeSmall>

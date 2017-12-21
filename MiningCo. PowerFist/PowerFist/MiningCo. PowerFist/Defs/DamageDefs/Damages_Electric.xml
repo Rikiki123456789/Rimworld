@@ -13,7 +13,6 @@
     <hediff>Electric</hediff>
     <hediffSkin>Burn</hediffSkin>
     <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
-    <hasChanceToAdditionallyDamageInnerSolidParts>false</hasChanceToAdditionallyDamageInnerSolidParts>
     <impactSoundType>Electric</impactSoundType>
     <armorCategory>Electric</armorCategory>
   </DamageDef>

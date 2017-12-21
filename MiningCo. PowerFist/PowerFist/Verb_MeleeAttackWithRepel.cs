@@ -29,7 +29,7 @@ namespace PowerFist
                     ThingDef_PowerFist repelProperties = this.ownerEquipment.def as ThingDef_PowerFist;
                     if (repelProperties == null)
                     {
-                        Log.Warning("MiningCo. PowerFist: cannot cast ownerEquipment into ThingWithCompsWithRepel.");
+                        Log.Warning("MiningCo. PowerFist: cannot cast ownerEquipment def into ThingDef_PowerFist.");
                         return castIsSuccesful;
                     }
                     bool casterWearsPowerArmor = IsCasterWearingPowerArmor();
@@ -40,7 +40,7 @@ namespace PowerFist
                     float stunDurationInTicks = 0;
                     float empDurationInTicks = 0;
 
-                    // Compute repel max distance and stun duration according to the target size. Flying squirrels!!! :-D
+                    // Compute repel max distance and stun duration according to the target size. Flying squirrels!!! :D
                     if (casterWearsPowerArmor)
                     {
                         crushDamageFactor = repelProperties.crushDamageFactorWithPowerArmor;
@@ -84,12 +84,12 @@ namespace PowerFist
                         float repelDistance = 0f;
                         ThingDef obstacleDef = null;
                         PowerFistRepeller repeller = GenSpawn.Spawn(Util_PowerFist.PowerFistRepellerDef, targetPawn.Position, targetPawn.Map) as PowerFistRepeller;
-                        repeller.Notify_BeginRepel(targetPawn, vector, (int)maxRepelDistance, repelDurationInTicks, out repelDistance,  out obstacleDef);
+                        repeller.Notify_BeginRepel(targetPawn, vector, Mathf.FloorToInt(maxRepelDistance), repelDurationInTicks, out repelDistance, out obstacleDef);
                         if (obstacleDef != null)
                         {
                             Vector3 motePosition = targetPawn.Position.ToVector3Shifted() + vector.ToVector3() * repelDistance;
                             MoteMaker.ThrowText(motePosition, targetPawn.Map, "Crushed", Color.red);
-                            int extraDamage = Mathf.RoundToInt(this.ownerEquipment.def.statBases.GetStatValueFromList(StatDefOf.MeleeWeapon_DamageAmount, 5) * crushDamageFactor);
+                            int extraDamage = Mathf.RoundToInt(this.ownerEquipment.def.statBases.GetStatValueFromList(StatDefOf.MeleeWeapon_AverageDPS, 5f) * crushDamageFactor);
                             DamageInfo infos = new DamageInfo(DamageDefOf.Blunt, extraDamage, vector.AngleFlat, this.caster, null, obstacleDef);
                             targetPawn.TakeDamage(infos);
                         }
@@ -110,7 +110,7 @@ namespace PowerFist
                             targetPawn.stances.stunner.Notify_DamageApplied(infos, true);
                             MoteMaker.ThrowExplosionInteriorMote(targetPawn.Position.ToVector3Shifted(), targetPawn.Map, ThingDef.Named("Mote_ElectricalSpark"));
 
-                            int extraDamage = Mathf.RoundToInt(this.ownerEquipment.def.statBases.GetStatValueFromList(StatDefOf.MeleeWeapon_DamageAmount, 5) * electricDamageFactor);
+                            int extraDamage = Mathf.RoundToInt(this.ownerEquipment.def.statBases.GetStatValueFromList(StatDefOf.MeleeWeapon_AverageDPS, 5) * electricDamageFactor);
                             DamageInfo infos2 = new DamageInfo(Util_PowerFist.ElectricDamageDef, extraDamage, vector.AngleFlat, this.caster, null, this.ownerEquipment.def);
                             targetPawn.TakeDamage(infos2);
                         }
