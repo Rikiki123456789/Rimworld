@@ -20,8 +20,17 @@ namespace SpotlightTurret
     /// Remember learning is always better than just copy/paste...</permission>
     public static class Util_SpotlightTurret
     {
+        // Spotlight turret.
+        public static ThingDef SpotlightTurretDef
+        {
+            get
+            {
+                return ThingDef.Named("SpotlightTurret");
+            }
+        }
+
         // Spotlight turret glower.
-        public static ThingDef spotlightLightDef
+        public static ThingDef SpotlightLightDef
         {
             get
             {
@@ -30,7 +39,7 @@ namespace SpotlightTurret
         }
 
         // Blinded by spotlight hediff.
-        public static HediffDef blindedBySpotlightDef
+        public static HediffDef BlindedBySpotlightDef
         {
             get
             {
