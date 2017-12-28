@@ -45,12 +45,14 @@ namespace SpotlightTurret
         public const float spotlightMinRange = 5f;
         public const int spotLightRangeRateInTicksIdle = 16;      // Ticks necessary to change range by 1 when idle.
         public const int spotLightRangeRateInTicksTargetting = 8; // Ticks necessary to change range by 1 when targetting.
+        public int spotLightRangeRateInTicks = spotLightRangeRateInTicksIdle;
         public float spotLightRangeBaseOffset = 15f;
         public float spotLightRange = 15f;
         public float spotLightRangeTarget = 15f;
 
         public const int spotLightRotationRateInTicksIdle = 4;       // Ticks between 1° rotation when idle.
         public const int spotLightRotationRateInTicksTargetting = 1; // Ticks between 1° rotation when targetting.
+        public int spotLightRotationRateInTicks = spotLightRotationRateInTicksIdle;
         public float spotLightRotationBaseOffset = 0f;
         public float spotLightRotation = 0f;
         public float spotLightRotationTarget = 0f;
@@ -61,7 +63,6 @@ namespace SpotlightTurret
 
         // Synchronization.
         public static int nextGroupId = 1;
-        public bool isPowered = false;
         public int groupId = 0;
         public bool groupIdJustChanged = false;
 
@@ -84,16 +85,14 @@ namespace SpotlightTurret
             base.SpawnSetup(map, respawningAfterLoad);
 
             this.powerComp = base.GetComp<CompPowerTrader>();
-            this.isPowered = this.powerComp.PowerOn;
             this.nextTargetSearchTick = Rand.Range(0, targetSearchPeriodInTicks);
 
-            if (this.groupId >= nextGroupId)
-            {
-                nextGroupId = this.groupId + 1;
-            }
+            FindNextGroupId();
 
+            this.spotLightRotation = this.Rotation.AsAngle;
             spotlightMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, this.spotLightRotation.ToQuat(), spotlightScale);
-            this.powerComp.powerStartedAction = 
+            this.powerComp.powerStartedAction = OnPoweredOn;
+            this.powerComp.powerStoppedAction = OnPoweredOff;
         }
 
         /// <summary>
@@ -116,6 +115,8 @@ namespace SpotlightTurret
             Scribe_References.Look<Pawn>(ref this.target, "target");
             Scribe_References.Look<Thing>(ref this.light, "light");
             Scribe_Values.Look<LightMode>(ref this.lightMode, "lightMode");
+            Scribe_Values.Look<int>(ref this.spotLightRangeRateInTicks, "spotLightRangeRateInTicks");
+            Scribe_Values.Look<int>(ref this.spotLightRotationRateInTicks, "spotLightRotationRateInTicks");
             Scribe_Values.Look<float>(ref this.spotLightRotationBaseOffset, "spotLightRotationBaseOffset");
             Scribe_Values.Look<float>(ref this.spotLightRotation, "spotLightRotation");
             Scribe_Values.Look<float>(ref this.spotLightRotationTarget, "spotLightRotationTarget");
@@ -141,22 +142,9 @@ namespace SpotlightTurret
             // Check if turret is powered.
             if (powerComp.PowerOn == false)
             {
-                SwitchOffLight();
-                ResetLight();
-                this.target = null;
-                this.isPowered = false;
                 return;
             }
-
-            if (this.isPowered == false)
-            {
-                this.isPowered = true;
-                if (this.groupId > 0)
-                {
-                    SynchronizeTurretsInGroup();
-                }
-            }
-
+            
             // Check locked target is still valid.
             if (this.target != null)
             {
@@ -165,12 +153,7 @@ namespace SpotlightTurret
                     || (IsPawnValidTarget(this.target) == false))
                 {
                     // Target is no more valid.
-                    this.target = null;
-                }
-                else
-                {
-                    // Reset idle tick counter.
-                    this.idlePauseTicks = idlePauseDurationInTicks;
+                    StopTargetting();
                 }
             }
 
@@ -184,10 +167,10 @@ namespace SpotlightTurret
                     && (this.Faction != null))
                 {
                     // Look for a new target.
-                    this.target = LookForNewTarget();
-                    if (this.target != null)
+                    Pawn newTarget = LookForNewTarget();
+                    if (newTarget != null)
                     {
-                        SoundDefOf.TurretAcquireTarget.PlayOneShot(new TargetInfo(this.Position, this.Map));
+                        StartTargetting(newTarget);
                     }
                 }
 
@@ -225,6 +208,47 @@ namespace SpotlightTurret
         }
 
         // ===================== Utility Function =====================
+        /// <summary>
+        /// Action when powered on.
+        /// </summary>
+        public void OnPoweredOn()
+        {
+            SynchronizeTurretsInGroup();
+        }
+
+        /// <summary>
+        /// Action when powered off.
+        /// </summary>
+        public void OnPoweredOff()
+        {
+            StopTargetting();
+            SwitchOffLight();
+            StartNewIdleMotion();
+            this.target = null;
+        }
+
+        /// <summary>
+        /// Reset rotation and range rates.
+        /// </summary>
+        public void StopTargetting()
+        {
+            this.target = null;
+            this.spotLightRotationRateInTicks = spotLightRotationRateInTicksIdle;
+            this.spotLightRangeRateInTicks = spotLightRangeRateInTicksIdle;
+            SynchronizeTurretsInGroup();
+        }
+
+        /// <summary>
+        /// Set rotation and range rates.
+        /// </summary>
+        public void StartTargetting(Pawn newTarget)
+        {
+            this.target = newTarget;
+            this.spotLightRotationRateInTicks = spotLightRotationRateInTicksTargetting;
+            this.spotLightRangeRateInTicks = spotLightRangeRateInTicksTargetting;
+            SoundDefOf.TurretAcquireTarget.PlayOneShot(new TargetInfo(this.Position, this.Map));
+        }
+
         /// <summary>
         /// Look for a valid target to light: an hostile pawn within direct line of sight.
         /// </summary>
@@ -292,29 +316,24 @@ namespace SpotlightTurret
         }
         
         /// <summary>
-        /// Reset the light and immediately start an idle turn.
-        /// </summary>
-        public void ResetLight()
-        {
-            this.spotLightRotationTarget = this.spotLightRotation;
-            this.spotLightRangeTarget = this.spotLightRange;
-            this.idlePauseTicks = 1;
-        }
-        
-        /// <summary>
         /// Synchronize a group of turrets (instantaneously reset their light rotation).
         /// </summary>
         public void SynchronizeTurretsInGroup()
         {
+            if (this.groupId == 0)
+            {
+                return;
+            }
             foreach (Building building in this.Map.listerBuildings.AllBuildingsColonistOfDef(Util_SpotlightTurret.SpotlightTurretDef))
             {
                 Building_SpotlightTurret turret = building as Building_SpotlightTurret;
                 if ((turret != null)
-                    && (turret.Faction == this.Faction)
                     && (turret.groupId == this.groupId)
+                    && (turret.target == null)
+                    && (turret.Faction == this.Faction)
                     && turret.powerComp.PowerOn)
                 {
-                    turret.spotLightRotation = 0;
+                    turret.spotLightRotation = turret.Rotation.AsAngle;
                     turret.spotLightRange = spotlightMinRange;
                     turret.StartNewIdleMotion();
                 }
@@ -411,18 +430,11 @@ namespace SpotlightTurret
             // Update spotlight rotation.
             if (this.spotLightRotation != this.spotLightRotationTarget)
             {
-                float rotationRate = spotLightRotationRateInTicksIdle;
-                if (this.target != null)
+                int rotationRate = this.spotLightRotationRateInTicks;
+                float deltaAngle = ComputeAbsoluteAngleDelta(this.spotLightRotation, this.spotLightRotationTarget);
+                if (deltaAngle < 20f)
                 {
-                    rotationRate = spotLightRotationRateInTicksTargetting;
-                }
-                else
-                {
-                    float deltaAngle = ComputeAbsoluteAngleDelta(this.spotLightRotation, this.spotLightRotationTarget);
-                    if (deltaAngle < 20f)
-                    {
-                        rotationRate *= 2; // Speed up rotation when far from target rotation.
-                    }
+                    rotationRate *= 2; // Slow down rotation when reaching target rotation.
                 }
                 if ((Find.TickManager.TicksGame % rotationRate) == 0)
                 {
@@ -440,12 +452,7 @@ namespace SpotlightTurret
             // Update spotlight range.
             if (this.spotLightRange != this.spotLightRangeTarget)
             {
-                float rangeRate = spotLightRangeRateInTicksIdle;
-                if (this.target != null)
-                {
-                    rangeRate = spotLightRangeRateInTicksTargetting;
-                }
-                if ((Find.TickManager.TicksGame % rangeRate) == 0)
+                if ((Find.TickManager.TicksGame % this.spotLightRangeRateInTicks) == 0)
                 {
                     if (Mathf.Abs(this.spotLightRangeTarget - this.spotLightRange) < 1f)
                     {
@@ -630,7 +637,6 @@ namespace SpotlightTurret
         public void SwitchLigthMode()
         {
             this.groupId = 0;
-            ResetLight();
             switch (this.lightMode)
             {
                 case LightMode.Automatic:
@@ -643,6 +649,7 @@ namespace SpotlightTurret
                     this.lightMode = LightMode.Automatic;
                     break;
             }
+            StartNewIdleMotion();
         }
 
         /// <summary>
@@ -651,7 +658,14 @@ namespace SpotlightTurret
         public void AddSpotlightBaseRotationLeftOffset()
         {
             this.spotLightRotationBaseOffset = Mathf.Repeat(this.spotLightRotationBaseOffset - 10f, 360f);
-            ResetLight();
+            if (this.groupId > 0)
+            {
+                SynchronizeTurretsInGroup();
+            }
+            else
+            {
+                StartNewIdleMotion();
+            }
         }
 
         /// <summary>
@@ -660,7 +674,14 @@ namespace SpotlightTurret
         public void AddSpotlightBaseRotationRightOffset()
         {
             this.spotLightRotationBaseOffset = Mathf.Repeat(this.spotLightRotationBaseOffset + 10f, 360f);
-            ResetLight();
+            if (this.groupId > 0)
+            {
+                SynchronizeTurretsInGroup();
+            }
+            else
+            {
+                StartNewIdleMotion();
+            }
         }
 
         /// <summary>
@@ -671,8 +692,12 @@ namespace SpotlightTurret
             if (this.spotLightRangeBaseOffset > spotlightMinRange)
             {
                 this.spotLightRangeBaseOffset -= 1f;
+                this.spotLightRangeTarget = this.spotLightRangeBaseOffset;
             }
-            ResetLight();
+            if (this.groupId > 0)
+            {
+                SynchronizeTurretsInGroup();
+            }
         }
 
         /// <summary>
@@ -683,8 +708,12 @@ namespace SpotlightTurret
             if (this.spotLightRangeBaseOffset < Mathf.Round(this.def.specialDisplayRadius))
             {
                 this.spotLightRangeBaseOffset += 1f;
+                this.spotLightRangeTarget = this.spotLightRangeBaseOffset;
             }
-            ResetLight();
+            if (this.groupId > 0)
+            {
+                SynchronizeTurretsInGroup();
+            }
         }
 
         /// <summary>
@@ -711,7 +740,7 @@ namespace SpotlightTurret
 
         public void SetForcedTarget(LocalTargetInfo forcedTarget)
         {
-            this.target = forcedTarget.Thing as Pawn;
+            StartTargetting(forcedTarget.Thing as Pawn);
         }
 
         /// <summary>
@@ -719,10 +748,8 @@ namespace SpotlightTurret
         /// </summary>
         public void SetNewTurretsGroup()
         {
-            Log.Warning("SynchronizeSelectedTurrets for " + this.ToString());
             if (this.groupIdJustChanged)
             {
-                Log.Message(this.ToString() + " just changed.");
                 return;
             }
 
@@ -742,17 +769,42 @@ namespace SpotlightTurret
             {
                 for (int turretIndex = 0; turretIndex < turretsInGroup.Count; turretIndex++)
                 {
-                    Log.Message("Set group " + nextGroupId + " to " + turretsInGroup[turretIndex].ToString());
                     turretsInGroup[turretIndex].groupId = nextGroupId;
                     turretsInGroup[turretIndex].lightMode = LightMode.Conic;
                     turretsInGroup[turretIndex].groupIdJustChanged = true;
                 }
                 SynchronizeTurretsInGroup();
-                nextGroupId++;
-                if (nextGroupId == 5) // TODO: set it to 100?
+                FindNextGroupId();
+            }
+        }
+
+        public void FindNextGroupId()
+        {
+            const int maxIdValue = 1000;
+            for (int id = 1; id <= 1000; id++)
+            {
+                if (id == maxIdValue)
                 {
+                    Log.Warning("MiningCo. spotlight turret: found no free group ID. Resetting to 1.");
                     nextGroupId = 1;
-                };
+                    return;
+                }
+                bool idIsFree = true;
+                foreach (Thing thing in this.Map.listerThings.ThingsOfDef(Util_SpotlightTurret.SpotlightTurretDef))
+                {
+                    Building_SpotlightTurret turret = thing as Building_SpotlightTurret;
+                    if ((turret != null)
+                        && (turret.groupId == id))
+                    {
+                        idIsFree = false;
+                        break;
+                    }
+                }
+                if (idIsFree)
+                {
+                    nextGroupId = id;
+                    break;
+                }
             }
         }
 
@@ -762,11 +814,7 @@ namespace SpotlightTurret
         /// </summary>
         public override void Draw()
         {
-            if (this.groupIdJustChanged)
-            {
-                Log.Warning("Ressting groupIdJustChanged for " + this.ToString()); // TODO debug.
-            }
-            this.groupIdJustChanged = false; // This is done in the draw function so we can change the group of a turret several times even if the game is paused.
+            this.groupIdJustChanged = false; // This is done in the draw function so we can change the group of a turret several times even when the game is paused.
             base.Draw();
             spotlightMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, this.spotLightRotation.ToQuat(), spotlightScale);
             if (this.powerComp.PowerOn)

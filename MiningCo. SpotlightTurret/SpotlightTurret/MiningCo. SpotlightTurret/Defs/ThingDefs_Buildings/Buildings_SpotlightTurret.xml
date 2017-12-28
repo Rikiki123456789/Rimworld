@@ -52,9 +52,6 @@
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <designationCategory>Security</designationCategory>
     <specialDisplayRadius>30</specialDisplayRadius>
-    <building>
-			<ai_combatDangerous>true</ai_combatDangerous>
-    </building>
     <researchPrerequisites>
       <li>ResearchSpotlightTurret</li>
     </researchPrerequisites>
