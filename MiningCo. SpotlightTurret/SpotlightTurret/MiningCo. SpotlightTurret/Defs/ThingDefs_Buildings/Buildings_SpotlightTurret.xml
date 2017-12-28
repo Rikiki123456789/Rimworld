@@ -20,11 +20,11 @@
     <stealable>false</stealable>
     <rotatable>true</rotatable>
     <statBases>
-      <MaxHitPoints>100</MaxHitPoints>
+      <MaxHitPoints>150</MaxHitPoints>
       <Flammability>1.0</Flammability>
       <WorkToBuild>1500</WorkToBuild>
       <Mass>25</Mass>
-      <Beauty>-10</Beauty>
+      <Beauty>-5</Beauty>
     </statBases>
     <tickerType>Normal</tickerType>
     <comps>
