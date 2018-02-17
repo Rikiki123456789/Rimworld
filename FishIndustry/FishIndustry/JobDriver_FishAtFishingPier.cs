@@ -290,7 +290,6 @@ namespace FishIndustry
                                              select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
                         }
                         Pawn caughtFish = PawnGenerator.GeneratePawn(caugthFishDef);
-                        GenSpawn.Spawn(caughtFish, this.pawn.Position, this.Map);
                         ExecutionUtility.DoExecutionByCut(this.pawn, caughtFish);
                         Corpse corpse = caughtFish.ParentHolder as Corpse;
                         GenSpawn.Spawn(corpse, this.pawn.Position, this.Map);
