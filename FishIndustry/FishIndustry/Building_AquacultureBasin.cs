@@ -26,7 +26,7 @@ namespace FishIndustry
 
         // Breeding parameters.
         public PawnKindDef breedingSpeciesDef = null;
-        public int breedingDuratinInTicks = 0;
+        public int breedingDurationInTicks = 0;
         public int breedingProgressInTicks = 0;
         public bool breedingIsFinished = false;
 
@@ -36,11 +36,8 @@ namespace FishIndustry
         public bool foodIsAvailable = false;
 
         // Water quality.
-        public const float minWaterTemperature = 0;
-        public const float maxWaterTemperature = 40;
-        public float temperature = 0f;
         public const float maxWaterQuality = GenDate.TicksPerDay / 2;
-        public const float minWaterQuality = maxWaterQuality / 10f; // Fishes will die if water quality last under this limit for too long.
+        public const float minWaterQuality = maxWaterQuality / 10f; // Fishes will die if water quality lasts under this limit for too long.
         public const float waterQualityVariationPerRareTick = maxWaterQuality / GenTicks.TickRareInterval; // Quality completely degrades in 0.5 day.
         public float waterQuality = 2f * minWaterQuality; // Determine the breeding rate.
         public int microFungusRemainingDurationInTicks = 0;
@@ -62,7 +59,6 @@ namespace FishIndustry
         public float microFungusFadingFactor = 1f;
 
         // ===================== Setup Work =====================
-
         /// <summary>
         /// Initialize instance variables.
         /// </summary>
@@ -74,15 +70,15 @@ namespace FishIndustry
             // Drawing.
             if (this.breedingSpeciesDef != null)
             {
-                if (this.breedingSpeciesDef == Util_FishIndustry.MashgonDef)
+                if (this.breedingSpeciesDef == Util_FishIndustry.MashgonPawnKindDef)
                 {
                     this.breedingSpeciesTexture = mashgonTexture;
                 }
-                else if (this.breedingSpeciesDef == Util_FishIndustry.BluebladeDef)
+                else if (this.breedingSpeciesDef == Util_FishIndustry.BluebladePawnKindDef)
                 {
                     this.breedingSpeciesTexture = bluebladeTexture;
                 }
-                else if (this.breedingSpeciesDef == Util_FishIndustry.TailteethDef)
+                else if (this.breedingSpeciesDef == Util_FishIndustry.TailteethPawnKindDef)
                 {
                     this.breedingSpeciesTexture = tailTeethTexture;
                 }
@@ -100,7 +96,7 @@ namespace FishIndustry
 
             // Breeding parameters.
             Scribe_Defs.Look<PawnKindDef>(ref breedingSpeciesDef, "breedingSpeciesDef");
-            Scribe_Values.Look<int>(ref breedingDuratinInTicks, "breedingDuratinInTicks");
+            Scribe_Values.Look<int>(ref breedingDurationInTicks, "breedingDuratinInTicks");
             Scribe_Values.Look<int>(ref breedingProgressInTicks, "breedingProgressInTicks");
             Scribe_Values.Look<bool>(ref breedingIsFinished, "breedingIsFinished");
 
@@ -120,7 +116,7 @@ namespace FishIndustry
         /// <summary>
         /// Breed some fishes:
         /// - update the remaining microfungus infestation duration.
-        /// - try to get some food from an adjacent aquaculture hopper.
+        /// - try to get some food from an adjacent hopper.
         /// - update the water quality.
         /// - update the bred fishes health.
         /// - reset the bills if necessary.
@@ -147,16 +143,14 @@ namespace FishIndustry
                         && (this.breedingIsFinished == false))
                     {
                         float waterQualityFactor = this.waterQuality / maxWaterQuality;
-                        this.breedingProgressInTicks += (int)(250f * waterQualityFactor);
-                        if (this.breedingProgressInTicks >= this.breedingDuratinInTicks)
+                        this.breedingProgressInTicks += (int)(GenTicks.TickRareInterval * waterQualityFactor);
+                        if (this.breedingProgressInTicks >= this.breedingDurationInTicks)
                         {
-                            this.breedingProgressInTicks = this.breedingDuratinInTicks;
+                            this.breedingProgressInTicks = this.breedingDurationInTicks;
                             this.breedingIsFinished = true;
                         }
                     }
                 }
-
-                ResetBillsIfNecessary();
             }
             ComputeDrawingParameters();
         }
@@ -176,7 +170,7 @@ namespace FishIndustry
                 if ((this.foodIsAvailable == false)
                     || (Find.TickManager.TicksGame >= this.nextFeedingDateInTicks))
                 {
-                    this.foodIsAvailable = GetFoodFromAquacultureHopper();
+                    this.foodIsAvailable = ConsumeFoodFromHoppers();
                     this.nextFeedingDateInTicks = Find.TickManager.TicksGame + foodDispensePeriodInTicks;
                 }
             }
@@ -187,42 +181,39 @@ namespace FishIndustry
         }
 
         /// <summary>
-        /// Check if there is enough food in one of the adjacent aquaculture hoppers and consume it if available.
+        /// Check if there is enough food in the adjacent hoppers and consume it if available.
         /// </summary>
-        public bool GetFoodFromAquacultureHopper()
+        public bool ConsumeFoodFromHoppers()
         {
-            bool foodIsAvailable = IsEnoughFoodInHopper();
+            bool foodIsAvailable = IsEnoughFoodInHoppers();
             if (foodIsAvailable)
             {
-                int foodToConsume = (int)this.def.building.nutritionCostPerDispense;
+                float foodToConsume = this.def.building.nutritionCostPerDispense;
                 foreach (IntVec3 cell in GenAdj.CellsAdjacentCardinal(this))
                 {
                     Thing food = null;
-                    Thing aquacultureHopper = null;
+                    Thing hopper = null;
                     List<Thing> thingList = cell.GetThingList(this.Map);
                     for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
                     {
                         Thing currentThing = thingList[thingIndex];
-                        if (currentThing.def == Util_FishIndustry.AquacultureHopperDef)
+                        if (currentThing.def == ThingDefOf.Hopper)
                         {
-                            aquacultureHopper = currentThing;
+                            hopper = currentThing;
                         }
-                        if (currentThing.def.IsNutritionGivingIngestible)
+                        if (IsAcceptableFeedstock(currentThing.def))
                         {
                             food = currentThing;
                         }
                     }
-                    if (aquacultureHopper != null && food != null)
+                    if (hopper != null && food != null)
                     {
-                        if (food.stackCount >= foodToConsume)
+                        int maxCountToConsume = Mathf.Min(food.stackCount, Mathf.CeilToInt(foodToConsume / food.def.ingestible.nutrition));
+                        food.SplitOff(maxCountToConsume);
+                        foodToConsume -= maxCountToConsume * food.def.ingestible.nutrition;
+                        if (foodToConsume <= 0)
                         {
-                            food.SplitOff(foodToConsume);
                             return true;
-                        }
-                        else
-                        {
-                            foodToConsume -= food.stackCount;
-                            food.SplitOff(food.stackCount);
                         }
                     }
                 }
@@ -231,32 +222,32 @@ namespace FishIndustry
         }
 
         /// <summary>
-        /// Check if there is enough food in the adjacent aquaculture hoppers.
+        /// Check if there is enough food in the adjacent hoppers.
         /// </summary>
-        public bool IsEnoughFoodInHopper()
+        public bool IsEnoughFoodInHoppers()
         {
-            int availableFoodSum = 0;
+            float foodSum = 0;
             foreach (IntVec3 cell in GenAdj.CellsAdjacentCardinal(this))
             {
                 Thing food = null;
-                Thing aquacultureHopper = null;
+                Thing hopper = null;
                 List<Thing> thingList = cell.GetThingList(this.Map);
                 for (int thingIndex = 0; thingIndex < thingList.Count; thingIndex++)
                 {
                     Thing currentThing = thingList[thingIndex];
-                    if (currentThing.def == Util_FishIndustry.AquacultureHopperDef)
+                    if (currentThing.def == ThingDefOf.Hopper)
                     {
-                        aquacultureHopper = currentThing;
+                        hopper = currentThing;
                     }
                     if (IsAcceptableFeedstock(currentThing.def))
                     {
                         food = currentThing;
                     }
                 }
-                if (aquacultureHopper != null && food != null)
+                if (hopper != null && food != null)
                 {
-                    availableFoodSum += food.stackCount;
-                    if (availableFoodSum >= this.def.building.nutritionCostPerDispense)
+                    foodSum += (float)food.stackCount * food.def.ingestible.nutrition;
+                    if (foodSum >= this.def.building.nutritionCostPerDispense)
                     {
                         return true;
                     }
@@ -267,8 +258,14 @@ namespace FishIndustry
 
         public static bool IsAcceptableFeedstock(ThingDef def)
         {
-            return def.IsNutritionGivingIngestible && def.ingestible.preferability != FoodPreferability.Undefined && (def.ingestible.foodType & FoodTypeFlags.Plant) != FoodTypeFlags.Plant && (def.ingestible.foodType & FoodTypeFlags.Tree) != FoodTypeFlags.Tree;
+            return def.IsNutritionGivingIngestible
+                && (def.ingestible.preferability != FoodPreferability.Undefined)
+                && ((def.ingestible.foodType == FoodTypeFlags.Seed)
+                    || (def.ingestible.foodType == FoodTypeFlags.Meat)
+                    || (def.ingestible.foodType == FoodTypeFlags.VegetableOrFruit)
+                    || (def.ingestible.foodType == FoodTypeFlags.AnimalProduct));
         }
+
         /// <summary>
         /// Update the water quality:
         /// - water quality decrease when aquaculture basin is unpowered or temperature is not in optimal range.
@@ -278,48 +275,21 @@ namespace FishIndustry
         {
             if (this.microFungusRemainingDurationInTicks > 0)
             {
-                this.waterQuality = 0f;
-                return;
+                this.waterQuality -= 6f * waterQualityVariationPerRareTick;
             }
-
-            this.temperature = this.Position.GetTemperature(this.Map);
-            bool temperatureIsInOptimalRange = (this.temperature >= minWaterTemperature) && (this.temperature <= maxWaterTemperature);
-            if (this.powerComp.PowerOn)
+            else if (this.powerComp.PowerOn)
             {
-                if (temperatureIsInOptimalRange)
-                {
-                    this.waterQuality += 3f * waterQualityVariationPerRareTick;
-                }
-                else
-                {
-                    this.waterQuality -= waterQualityVariationPerRareTick;
-                }
+                this.waterQuality += 3f * waterQualityVariationPerRareTick;
             }
             else
             {
-                if (temperatureIsInOptimalRange)
-                {
-                    this.waterQuality -= waterQualityVariationPerRareTick;
-                }
-                else
-                {
-                    this.waterQuality -= 2 * waterQualityVariationPerRareTick;
-                }
+                this.waterQuality -= waterQualityVariationPerRareTick;
             }
-
-            // Saturation.
-            if (this.waterQuality > maxWaterQuality)
-            {
-                this.waterQuality = maxWaterQuality;
-            }
-            if (this.waterQuality < 0f)
-            {
-                this.waterQuality = 0f;
-            }
+            this.waterQuality = Mathf.Clamp(this.waterQuality, 0, maxWaterQuality);
         }
 
         /// <summary>
-        /// Update the fishes heatlh. Health decreases when:
+        /// Update the fishes health. Health decreases when:
         /// - water quality is too bad.
         /// - there is no food available.
         /// </summary>
@@ -351,17 +321,17 @@ namespace FishIndustry
             this.breedingSpeciesDef = null;
             this.breedingIsFinished = false;
             this.breedingProgressInTicks = 0;
-            Messages.Message("FishIndustry.KillBredSpecies".Translate(), this, MessageSound.Negative);
+            Messages.Message("FishIndustry.KillBredSpecies".Translate(), this, MessageTypeDefOf.NegativeEvent);
         }
 
         /// <summary>
         /// Start a new breeding cycle of the given species.
         /// </summary>
-        public void StartNewBreedCycle(PawnKindDef breedingSpeciesDef)
+        public void StartNewBreedingCycle(PawnKindDef breedingSpeciesDef)
         {
-            ResetBills();
+            RemoveAllBills();
             this.breedingSpeciesDef = breedingSpeciesDef;
-            this.breedingDuratinInTicks = (int)(GenDate.TicksPerDay * (breedingSpeciesDef as PawnKindDef_FishSpecies).breedingDurationInDays);
+            this.breedingDurationInTicks = (int)(GenDate.TicksPerDay * (breedingSpeciesDef as PawnKindDef_FishSpecies).breedingDurationInDays);
             this.breedingProgressInTicks = 0;
             this.breedingIsFinished = false;
 
@@ -375,40 +345,13 @@ namespace FishIndustry
         }
 
         /// <summary>
-        /// Reset the aquaculture bills if the user has messed with it (cancelled a bill for example).
-        /// We need  to set custom Bill_Production_AquacultureBasin to call the StartNewBreedCycle function upon bill completion.
+        /// Remove any pending bill.
         /// </summary>
-        public void ResetBillsIfNecessary()
-        {
-            if (this.billStack.Count != 3)
-            {
-                ResetBills();
-            }
-        }
-
-        /// <summary>
-        /// Reset the aquaculture bills.
-        /// We need  to set custom Bill_Production_AquacultureBasin to call the StartNewBreedCycle function upon bill completion.
-        /// </summary>
-        public void ResetBills()
+        public void RemoveAllBills()
         {
             this.billStack.Clear();
-            Bill_Production_AquacultureBasin bill1 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyMashgonEggsRecipeDef);
-            bill1.repeatMode = BillRepeatModeDefOf.RepeatCount;
-            bill1.repeatCount = 0;
-            this.billStack.AddBill(bill1);
-
-            Bill_Production_AquacultureBasin bill2 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyBluebladeEggsRecipeDef);
-            bill2.repeatMode = BillRepeatModeDefOf.RepeatCount;
-            bill2.repeatCount = 0;
-            this.billStack.AddBill(bill2);
-
-            Bill_Production_AquacultureBasin bill3 = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyTailteethEggsRecipeDef);
-            bill3.repeatMode = BillRepeatModeDefOf.RepeatCount;
-            bill3.repeatCount = 0;
-            this.billStack.AddBill(bill3);
-        }        
-
+        }
+        
         /// <summary>
         /// Gather the aquaculture basin production and restart a new breeding cycle of the same species.
         /// </summary>
@@ -417,7 +360,7 @@ namespace FishIndustry
             Thing product = ThingMaker.MakeThing(this.breedingSpeciesDef.race.race.meatDef);
             
             product.stackCount = ((PawnKindDef_FishSpecies)this.breedingSpeciesDef).breedQuantity;
-            StartNewBreedCycle(this.breedingSpeciesDef);
+            StartNewBreedingCycle(this.breedingSpeciesDef);
 
             return product;
         }
@@ -427,12 +370,145 @@ namespace FishIndustry
         /// </summary>
         public void StartMicroFungusInfestation(int infestationDuration)
         {
-            this.waterQuality = 0;
             this.microFungusRemainingDurationInTicks = infestationDuration;
         }
 
-        // ===================== Inspection pannel functions =====================
+        // ===================== Gizmos =====================
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            int groupKeyBase = 700000113;
 
+            IList<Gizmo> buttonList = new List<Gizmo>();
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                buttonList.Add(gizmo);
+            }
+
+            Bill bill = null;
+            if (this.BillStack.Count > 0)
+            {
+                bill = this.BillStack.Bills.First();
+            }
+            buttonList.Add(GetBreedButton("FishIndustry.FishLabelPluralMashgon".Translate(), "FishIndustry.FishDescriptionMashgon".Translate(), Util_FishIndustry.MashgonTexturePath, Util_FishIndustry.MashgonPawnKindDef,
+                bill, Util_FishIndustry.SupplyMashgonEggsRecipeDef, RequestMashgonBreeding, groupKeyBase + 1));
+
+            buttonList.Add(GetBreedButton("FishIndustry.FishLabelPluralBlueblade".Translate(), "FishIndustry.FishDescriptionBlueblade".Translate(), Util_FishIndustry.BluebladeTexturePath, Util_FishIndustry.BluebladePawnKindDef,
+                bill, Util_FishIndustry.SupplyBluebladeEggsRecipeDef, RequestBluebladeBreeding, groupKeyBase + 2));
+
+            buttonList.Add(GetBreedButton("FishIndustry.FishLabelPluralTailteeth".Translate(), "FishIndustry.FishDescriptionTailteeth".Translate(), Util_FishIndustry.TailteethTexturePath, Util_FishIndustry.TailteethPawnKindDef,
+                bill, Util_FishIndustry.SupplyTailteethEggsRecipeDef, RequestTailteethBreeding, groupKeyBase + 3));
+
+            return buttonList;
+        }
+
+        public Command_Action GetBreedButton(string fishLabelPlural, string speciesDescription, string buttonTexturePath, PawnKindDef fishSpecies,
+            Bill currentActiveBill, RecipeDef supplyEggsRecipe, Action actionOnClick, int keyOffset)
+        {
+            Command_Action breedButton = new Command_Action();
+            breedButton.icon = ContentFinder<Texture2D>.Get(buttonTexturePath);
+            if (this.breedingSpeciesDef == fishSpecies)
+            {
+                breedButton.defaultLabel = "FishIndustry.Breeding".Translate() + fishLabelPlural;
+                breedButton.defaultDesc = "FishIndustry.BasinIsBreeding".Translate() + fishLabelPlural + ". " + speciesDescription;
+                breedButton.action = RemoveAllBills;
+            }
+            else if ((currentActiveBill != null)
+                && (currentActiveBill.recipe == supplyEggsRecipe))
+            {
+                breedButton.defaultLabel = "FishIndustry.WaitingForEggs".Translate();
+                breedButton.defaultDesc = "FishIndustry.ClickToCancel".Translate() + fishLabelPlural + ". " + "FishIndustry.EnsureHaveHunterAndEggs".Translate();
+                breedButton.action = RemoveAllBills;
+            }
+            else
+            {
+                breedButton.defaultLabel = "FishIndustry.Breed".Translate() + fishLabelPlural;
+                breedButton.defaultDesc = "FishIndustry.ClickToStart".Translate() + fishLabelPlural + ". " + speciesDescription + " " + "FishIndustry.EnsureHaveHunterAndEggs".Translate();
+                breedButton.action = actionOnClick;
+            }
+            breedButton.activateSound = SoundDef.Named("Click");
+            breedButton.groupKey = keyOffset;
+            return breedButton;
+        }
+
+        public void RequestMashgonBreeding()
+        {
+            RemoveAllBills();
+            Bill_Production_AquacultureBasin bill = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyMashgonEggsRecipeDef);
+            bill.repeatMode = BillRepeatModeDefOf.RepeatCount;
+            bill.repeatCount = 1;
+            this.billStack.AddBill(bill);
+            bool eggIsFound = false;
+            foreach (Thing meat in this.Map.listerThings.ThingsOfDef(Util_FishIndustry.MashgonMeatDef))
+            {
+                if (meat.IsInAnyStorage())
+                {
+                    eggIsFound = true;
+                    break;
+                }
+            }
+            if (eggIsFound)
+            {
+                Messages.Message("FishIndustry.BreedingRequestedMashgon".Translate(), this, MessageTypeDefOf.SilentInput);
+            }
+            else
+            {
+                Messages.Message("FishIndustry.BreedingRequestedButNoEggsMashgon".Translate(), this, MessageTypeDefOf.NeutralEvent);
+            }
+        }
+
+        public void RequestBluebladeBreeding()
+        {
+            RemoveAllBills();
+            Bill_Production_AquacultureBasin bill = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyBluebladeEggsRecipeDef);
+            bill.repeatMode = BillRepeatModeDefOf.RepeatCount;
+            bill.repeatCount = 1;
+            this.billStack.AddBill(bill);
+            bool eggIsFound = false;
+            foreach (Thing meat in this.Map.listerThings.ThingsOfDef(Util_FishIndustry.BluebladeMeatDef))
+            {
+                if (meat.IsInAnyStorage())
+                {
+                    eggIsFound = true;
+                    break;
+                }
+            }
+            if (eggIsFound)
+            {
+                Messages.Message("FishIndustry.BreedingRequestedBlueblade".Translate(), this, MessageTypeDefOf.SilentInput);
+            }
+            else
+            {
+                Messages.Message("FishIndustry.BreedingRequestedButNoEggsBlueblade".Translate(), this, MessageTypeDefOf.NeutralEvent);
+            }
+        }
+
+        public void RequestTailteethBreeding()
+        {
+            RemoveAllBills();
+            Bill_Production_AquacultureBasin bill = new Bill_Production_AquacultureBasin(Util_FishIndustry.SupplyTailteethEggsRecipeDef);
+            bill.repeatMode = BillRepeatModeDefOf.RepeatCount;
+            bill.repeatCount = 1;
+            this.billStack.AddBill(bill);
+            bool eggIsFound = false;
+            foreach (Thing meat in this.Map.listerThings.ThingsOfDef(Util_FishIndustry.TailteethMeatDef))
+            {
+                if (meat.IsInAnyStorage())
+                {
+                    eggIsFound = true;
+                    break;
+                }
+            }
+            if (eggIsFound)
+            {
+                Messages.Message("FishIndustry.BreedingRequestedTailteeth".Translate(), this, MessageTypeDefOf.SilentInput);
+            }
+            else
+            {
+                Messages.Message("FishIndustry.BreedingRequestedButNoEggsTailteeth".Translate(), this, MessageTypeDefOf.NeutralEvent);
+            }
+        }
+
+        // ===================== Inspection pannel functions =====================
         /// <summary>
         /// Get the string displayed in the inspection panel.
         /// </summary>
@@ -456,20 +532,12 @@ namespace FishIndustry
             else
             {
                 bredSpeciesLabel = this.breedingSpeciesDef.label;
-                progressLabel = "FishIndustry.ProgressLabel".Translate(((float)this.breedingProgressInTicks / (float)breedingDuratinInTicks * 100f).ToString("F0") + "%");
+                progressLabel = "FishIndustry.ProgressLabel".Translate(((float)this.breedingProgressInTicks / (float)breedingDurationInTicks * 100f).ToString("F0") + "%");
             }
             if (foodAvailabilityDoesMatter
                 && (this.foodIsAvailable == false))
             {
                 problemText = "FishIndustry.Problem_NoFood".Translate();
-            }
-            else if (this.temperature < minWaterTemperature)
-            {
-                problemText = "FishIndustry.Problem_TooCold".Translate();
-            }
-            else if (this.temperature > maxWaterTemperature)
-            {
-                problemText = "FishIndustry.Problem_TooHot".Translate();
             }
             else if (this.waterQuality < minWaterQuality)
             {
@@ -477,11 +545,11 @@ namespace FishIndustry
             }
             else if (this.microFungusRemainingDurationInTicks > 0)
             {
-                problemText = "Problem_MicroFungus".Translate();
+                problemText = "FishIndustry.Problem_MicroFungus".Translate();
             }
             stringBuilder.AppendLine("FishIndustry.BredSpecies".Translate(bredSpeciesLabel));
             stringBuilder.AppendLine(progressLabel + " " + problemText);
-            stringBuilder.Append("FishIndustry.WaterQulityFishesHealth".Translate((this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + " / " + this.fishesHealthInPercent + "%"));
+            stringBuilder.Append("FishIndustry.WaterQualityFishesHealth".Translate((this.waterQuality / maxWaterQuality * 100f).ToString("F0") + "%" + "/" + this.fishesHealthInPercent + "%"));
 
             return stringBuilder.ToString();
         }
@@ -513,7 +581,6 @@ namespace FishIndustry
                     ThrowBubble();
                 }
             }
-
         }
 
         /// <summary>

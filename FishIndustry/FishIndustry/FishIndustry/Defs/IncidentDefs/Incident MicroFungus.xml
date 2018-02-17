@@ -5,8 +5,10 @@
     <defName>MicroFungus</defName>
     <label>micro fungus</label>
     <category>Misc</category>
-    <targetType>MapPlayerHome</targetType>
-    <WorkerClass>FishIndustry.IncidentWorker_MicroFungus</WorkerClass>
+    <targetTypes>
+      <li>MapPlayerHome</li>
+    </targetTypes>
+    <workerClass>FishIndustry.IncidentWorker_MicroFungus</workerClass>
     <baseChance>1</baseChance>
     <minRefireDays>30</minRefireDays>
     <durationDays>

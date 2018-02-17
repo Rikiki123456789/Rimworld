@@ -1,12 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<JobDefs>
+<Defs>
 
   <JobDef>
 		<defName>JobDef_FishAtFishingPier</defName>
 		<driverClass>FishIndustry.JobDriver_FishAtFishingPier</driverClass>
-		<reportString>Fishing at TargetA.</reportString>
+		<reportString>Fishing on pier.</reportString>
     <alwaysShowWeapon>false</alwaysShowWeapon>
 	</JobDef>
+
+  <JobDef>
+    <defName>JobDef_FishAtFishingZone</defName>
+    <driverClass>FishIndustry.JobDriver_FishAtFishingZone</driverClass>
+    <reportString>Fishing.</reportString>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+  </JobDef>
 
   <JobDef>
     <defName>JobDef_HarvestAquacultureBasinProduction</defName>
@@ -15,4 +22,4 @@
     <alwaysShowWeapon>false</alwaysShowWeapon>
   </JobDef>
 
-</JobDefs>
+</Defs>

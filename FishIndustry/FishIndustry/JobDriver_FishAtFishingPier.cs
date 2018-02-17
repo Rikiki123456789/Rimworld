@@ -19,44 +19,113 @@ namespace FishIndustry
     /// </summary>
     public class JobDriver_FishAtFishingPier : JobDriver
     {
+        public const int cornCountToAttractFishes = 5;
+
         public TargetIndex fishingPierIndex = TargetIndex.A;
         public Mote fishingRodMote = null;
 
-        public override void ExposeData()
+        public override bool TryMakePreToilReservations()
         {
-            base.ExposeData();
+            return this.pawn.Reserve(this.TargetA, this.job);
+        }
+
+        public bool FishingForbiddenOrPierDestroyedOrNoFish()
+        {
+            Building_FishingPier fishingPier = this.TargetThingA as Building_FishingPier;
+            if ((fishingPier == null)
+                || fishingPier.IsBurning()
+                || fishingPier.IsForbidden(fishingPier.Faction)
+                || (fishingPier.allowFishing == false)
+                || (fishingPier.fishStock == 0))
+            {
+                return true;
+            }
+            return false;
         }
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            const float baseFishingDuration = 2000f;
-
-            int fishingDuration = (int)baseFishingDuration;
-            float catchSomethingThreshold = 0f;
-            Building_FishingPier fishingPier = this.TargetThingA as Building_FishingPier;
-            Passion passion = Passion.None;
+            const float baseFishingDuration = 1600f;
+            const float catchSuccessRateOnPier = 0.90f;
             const float skillGainPerTick = 0.15f;
 
-            this.AddEndCondition(() =>
-            {
-                var targ = this.pawn.jobs.curJob.GetTarget(fishingPierIndex).Thing;
-                if (targ is Building && !targ.Spawned)
-                    return JobCondition.Incompletable;
-                return JobCondition.Ongoing;
-            });
+            int fishingDuration = (int)baseFishingDuration;
+            Building_FishingPier fishingPier = this.TargetThingA as Building_FishingPier;
+            Passion passion = Passion.None;
+            int thrownCornCount = 0;
+            int nextCornThrowTick = 0;
 
-            this.FailOnBurningImmobile(fishingPierIndex); // Bill giver or product burning in carry phase.
+            this.FailOnBurningImmobile(fishingPierIndex);
 
+            // Drawing.
             this.rotateToFace = TargetIndex.B;
+            this.pawn.CurJob.SetTarget(TargetIndex.C, fishingPier.riverCell);
+            TargetIndex riverCellIndex = TargetIndex.C;
 
-            yield return Toils_Reserve.Reserve(fishingPierIndex);
-
+            // Compute fishing duration.
             float fishingSkillLevel = 0f;
             fishingSkillLevel = this.pawn.skills.AverageOfRelevantSkillsFor(WorkTypeDefOf.Hunting);
             float fishingSkillDurationFactor = fishingSkillLevel / 20f;
             fishingDuration = (int)(baseFishingDuration * (1.5f  - fishingSkillDurationFactor));
 
-            yield return Toils_Goto.GotoThing(fishingPierIndex, fishingPier.riverCell).FailOnDespawnedOrNull(fishingPierIndex);
+            yield return Toils_Goto.GotoThing(fishingPierIndex, fishingPier.riverCell).FailOn(FishingForbiddenOrPierDestroyedOrNoFish);
+
+            Toil attractfishesToil = new Toil()
+            {
+                tickAction = () =>
+                {
+                    if (fishingPier.allowUsingCorn == false)
+                    {
+                        this.ReadyForNextToil();
+                        return;
+                    }
+                    if (Find.TickManager.TicksGame >= nextCornThrowTick)
+                    {
+                        nextCornThrowTick = Find.TickManager.TicksGame + 3 * GenTicks.TicksPerRealSecond;
+                        // Look for corn in inventory.
+                        Thing corn = null;
+                        foreach (Thing thing in this.pawn.inventory.innerContainer)
+                        {
+                            if (thing.def == Util_FishIndustry.RawCornDef)
+                            {
+                                corn = thing;
+                                break;
+                            }
+                        }
+                        if ((corn == null)
+                            || (thrownCornCount >= cornCountToAttractFishes))
+                        {
+                            fishingDuration -= Mathf.CeilToInt((float)fishingDuration * 0.75f * ((float)thrownCornCount / (float)cornCountToAttractFishes));
+                            this.ReadyForNextToil();
+                            return;
+                        }
+                        // Throw corn grains.
+                        thrownCornCount++;
+                        this.pawn.inventory.innerContainer.Take(corn, 1);
+                        for (int cornGrainIndex = 0; cornGrainIndex < 5; cornGrainIndex++)
+                        {
+                            if (!this.pawn.Position.ShouldSpawnMotesAt(this.pawn.Map) || this.pawn.Map.moteCounter.Saturated)
+                            {
+                                break;
+                            }
+                            float speed = Rand.Range(1.5f, 3f);
+                            Vector3 targetPosition = this.pawn.Position.ToVector3Shifted() + new Vector3(0f, 0f, 2f).RotatedBy(fishingPier.Rotation.AsAngle) + Vector3Utility.RandomHorizontalOffset(1.5f);
+                            targetPosition.y = this.pawn.DrawPos.y;
+                            MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_Stone, null);
+                            moteThrown.Scale = 0.2f;
+                            moteThrown.rotationRate = (float)Rand.Range(-300, 300);
+                            moteThrown.exactPosition = this.pawn.DrawPos;
+                            moteThrown.SetVelocity((targetPosition - moteThrown.exactPosition).AngleFlat(), speed);
+                            moteThrown.airTimeLeft = (float)Mathf.RoundToInt((moteThrown.exactPosition - targetPosition).MagnitudeHorizontal() / speed);
+                            GenSpawn.Spawn(moteThrown, this.pawn.Position, this.pawn.Map);
+                            MoteMaker.MakeWaterSplash(targetPosition, this.pawn.Map, 1.8f, 0.5f);
+                        }
+                    }
+                },
+                defaultDuration = fishingDuration,
+                defaultCompleteMode = ToilCompleteMode.Delay
+            };
+            yield return attractfishesToil.FailOn(FishingForbiddenOrPierDestroyedOrNoFish);
             
             Toil fishToil = new Toil()
             {
@@ -95,41 +164,24 @@ namespace FishIndustry
                         this.pawn.needs.joy.GainJoy(NeedTunings.JoyPerXpForPassionMajor, JoyKindDefOf.Work);
                     }
                     this.pawn.skills.Learn(SkillDefOf.Shooting, skillGainPerTick);
-
-                    if (this.ticksLeftThisToil == 1)
+                    
+                    if (this.fishingRodMote != null)
                     {
-                        if (this.fishingRodMote != null)
-                        {
-                            this.fishingRodMote.Destroy();
-                        }
+                        this.fishingRodMote.Maintain();
                     }
                 },
                 defaultDuration = fishingDuration,
                 defaultCompleteMode = ToilCompleteMode.Delay
             };
-            yield return fishToil.WithProgressBarToilDelay(fishingPierIndex);
+            yield return fishToil.WithProgressBarToilDelay(riverCellIndex).FailOn(FishingForbiddenOrPierDestroyedOrNoFish);
             
-            Toil computeChanceToCatchToil = new Toil()
-            {
-                initAction = () =>
-                {
-                    catchSomethingThreshold = fishingSkillLevel / 20f;
-                    // Reframe min and max chance (min 5%, max 75 % chance of success).
-                    Mathf.Clamp(catchSomethingThreshold, 0.05f, 0.75f);
-                },
-                defaultCompleteMode = ToilCompleteMode.Instant
-            };
-            yield return computeChanceToCatchToil;
-
             Toil catchFishToil = new Toil()
             {
                 initAction = () =>
                 {
-                    Job curJob = this.pawn.jobs.curJob;
                     Thing fishingCatch = null;
 
-                    // 90% chance to successfully catch something.
-                    bool catchIsSuccessful = (Rand.Value >= 0.1f);
+                    bool catchIsSuccessful = (Rand.Value <= catchSuccessRateOnPier);
                     if (catchIsSuccessful == false)
                     {
                         MoteMaker.ThrowMetaIcon(this.pawn.Position, this.Map, ThingDefOf.Mote_IncapIcon);
@@ -138,56 +190,8 @@ namespace FishIndustry
                     }
 
                     float catchSelectorValue = Rand.Value;
-                    if (catchSelectorValue > 0.04f)
-                    {
-                        // Catch a fish.
-                        bool fishSpotIsOcean = (this.Map.terrainGrid.TerrainAt(fishingPier.fishingSpotCell) == TerrainDefOf.WaterOceanShallow)
-                                            || (this.Map.terrainGrid.TerrainAt(fishingPier.fishingSpotCell) == TerrainDefOf.WaterOceanDeep);
-                        bool fishSpotIsMarshy = (this.Map.terrainGrid.TerrainAt(fishingPier.fishingSpotCell) == TerrainDef.Named("Marsh"));
 
-                        PawnKindDef caugthFishDef = null;
-                        if (fishSpotIsOcean)
-                        {
-                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
-                                             where fishSpecies.livesInOcean
-                                             select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
-                        }
-                        else if (fishSpotIsMarshy)
-                        {
-                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
-                                             where fishSpecies.livesInMarsh
-                                             select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
-                        }
-                        else
-                        {
-                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
-                                             where fishSpecies.livesInRiver
-                                             select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
-                        }
-                        Pawn caughtFish = PawnGenerator.GeneratePawn(caugthFishDef);
-                        GenSpawn.Spawn(caughtFish, this.pawn.Position, this.Map);
-                        HealthUtility.DamageUntilDead(caughtFish);
-                        foreach (Thing thing in this.pawn.Position.GetThingList(this.Map))
-                        {
-                            Corpse fishCorpse = thing as Corpse;
-                            if (fishCorpse != null)
-                            {
-                                fishingCatch = fishCorpse;
-                                fishingCatch.SetForbidden(false);
-                            }
-                        }
-                        if (caughtFish.BodySize >= 0.1f)
-                        {
-                            fishingPier.fishStock--;
-                            fishingPier.ComputeMaxFishStockAndRespawnPeriod();
-                        }
-                    }
-                    else if (catchSelectorValue > 0.02)
-                    {
-                        fishingCatch = GenSpawn.Spawn(Util_FishIndustry.OysterDef, this.pawn.Position, this.Map);
-                        fishingCatch.stackCount = Rand.RangeInclusive(5, 27);
-                    }
-                    else
+                    if (catchSelectorValue < 0.02)
                     {
                         float bonusCatchValue = Rand.Value;
                         if (bonusCatchValue < 0.01f)
@@ -198,7 +202,7 @@ namespace FishIndustry
                             Thing treasureSilver = GenSpawn.Spawn(ThingDefOf.Silver, fishingPier.middleCell, this.Map);
                             treasureSilver.stackCount = Rand.RangeInclusive(237, 2154);
                             Find.LetterStack.ReceiveLetter("FishIndustry.LetterLabelSunkenTreasure".Translate(), "FishIndustry.SunkenTreasure".Translate(this.pawn.Name.ToStringShort.CapitalizeFirst()),
-                                LetterDefOf.Good, this.pawn);
+                                LetterDefOf.PositiveEvent, this.pawn);
                         }
                         else if (bonusCatchValue < 0.02f)
                         {
@@ -233,22 +237,17 @@ namespace FishIndustry
 
                             Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
                             Pawn deadMarine = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceSoldier, faction);
-                            GenSpawn.Spawn(deadMarine, fishingPier.bankCell, this.Map);
                             HealthUtility.DamageUntilDead(deadMarine);
-                            List<Thing> thingsList = deadMarine.Position.GetThingList(this.Map);
-                            foreach (Thing thing in thingsList)
+                            Corpse corpse = deadMarine.ParentHolder as Corpse;
+                            CompRottable rotComp = corpse.TryGetComp<CompRottable>();
+                            if (rotComp != null)
                             {
-                                if (thing.def.defName.Contains("Corpse"))
-                                {
-                                    CompRottable rotComp = thing.TryGetComp<CompRottable>();
-                                    if (rotComp != null)
-                                    {
-                                        rotComp.RotProgress = 20f * GenDate.TicksPerDay; // 20 days so the corpse is dessicated.
-                                    }
-                                }
+                                rotComp.RotProgress = 20f * GenDate.TicksPerDay; // 20 days so the corpse is dessicated.
                             }
+                            GenSpawn.Spawn(corpse, fishingPier.bankCell, this.Map);
+                            // TODO: set it as a translatble string.
                             string eventText = this.pawn.Name.ToStringShort.CapitalizeFirst() + " has cought a dead body while fishing!\n\n'This is really disgusting but look at his gear! This guy was probably a MiningCo. security member. I wonder what happend to him...'\n";
-                            Find.LetterStack.ReceiveLetter("Dead marine", eventText, LetterDefOf.Good, this.pawn);
+                            Find.LetterStack.ReceiveLetter("Dead marine", eventText, LetterDefOf.PositiveEvent, this.pawn);
                         }
                         else
                         {
@@ -256,16 +255,60 @@ namespace FishIndustry
                             fishingCatch = GenSpawn.Spawn(ThingDefOf.Gold, this.pawn.Position, this.Map);
                             fishingCatch.stackCount = Rand.RangeInclusive(1, 7);
                         }
-                        // TODO: add chance to get hurt by a tailteeth (missing finger or even hand!).
+                    }
+                    else if (catchSelectorValue < 0.04)
+                    {
+                        // Find oysters.
+                        fishingCatch = GenSpawn.Spawn(Util_FishIndustry.OysterDef, this.pawn.Position, this.Map);
+                        fishingCatch.stackCount = Rand.RangeInclusive(2, 9);
+                    }
+                    else
+                    {
+                        // Catch a fish.
+                        IntVec3 fishSpot = fishingPier.aquaticCells.RandomElement();
+                        bool fishSpotIsOcean = (this.Map.terrainGrid.TerrainAt(fishSpot) == TerrainDefOf.WaterOceanShallow)
+                                            || (this.Map.terrainGrid.TerrainAt(fishSpot) == TerrainDefOf.WaterOceanDeep);
+                        bool fishSpotIsMarshy = (this.Map.terrainGrid.TerrainAt(fishSpot) == TerrainDef.Named("Marsh"));
+
+                        PawnKindDef caugthFishDef = null;
+                        if (fishSpotIsOcean)
+                        {
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
+                                             where fishSpecies.livesInOcean
+                                             select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
+                        }
+                        else if (fishSpotIsMarshy)
+                        {
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
+                                             where fishSpecies.livesInMarsh
+                                             select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
+                        }
+                        else
+                        {
+                            caugthFishDef = (from fishSpecies in Util_FishIndustry.GetFishSpeciesList(this.Map.Biome)
+                                             where fishSpecies.livesInRiver
+                                             select fishSpecies).RandomElementByWeight((PawnKindDef_FishSpecies def) => def.commonality);
+                        }
+                        Pawn caughtFish = PawnGenerator.GeneratePawn(caugthFishDef);
+                        GenSpawn.Spawn(caughtFish, this.pawn.Position, this.Map);
+                        ExecutionUtility.DoExecutionByCut(this.pawn, caughtFish);
+                        Corpse corpse = caughtFish.ParentHolder as Corpse;
+                        GenSpawn.Spawn(corpse, this.pawn.Position, this.Map);
+                        fishingCatch = corpse;
+                        fishingCatch.SetForbidden(false);
+                        if (caughtFish.BodySize >= 0.1f)
+                        {
+                            fishingPier.fishStock--;
+                        }
                     }
                     IntVec3 storageCell;
                     if (StoreUtility.TryFindBestBetterStoreCellFor(fishingCatch, this.pawn, this.Map, StoragePriority.Unstored, this.pawn.Faction, out storageCell, true))
                     {
-                        this.pawn.Reserve(fishingCatch, 1);
-                        this.pawn.Reserve(storageCell, 1);
+                        this.pawn.Reserve(fishingCatch, this.job);
+                        this.pawn.Reserve(storageCell, this.job);
                         this.pawn.CurJob.SetTarget(TargetIndex.B, storageCell);
                         this.pawn.CurJob.SetTarget(TargetIndex.A, fishingCatch);
-                        this.pawn.CurJob.count = 1;
+                        this.pawn.CurJob.count = 9999;
                         this.pawn.CurJob.haulMode = HaulMode.ToCellStorage;
                     }
                     else
@@ -282,8 +325,6 @@ namespace FishIndustry
             yield return carryToCell;
 
             yield return Toils_Haul.PlaceHauledThingInCell(TargetIndex.B, carryToCell, true);
-
-            yield return Toils_Reserve.Release(fishingPierIndex);
         }
     }
-}
+} 

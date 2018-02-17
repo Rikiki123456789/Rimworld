@@ -28,23 +28,38 @@ namespace FishIndustry
         public IntVec3 middleCell = new IntVec3(0, 0, 0);
         public IntVec3 bankCell = new IntVec3(0, 0, 0);
 
-        public const float optimalAquaticAreaRadius = 10f;
-        public const float optimalAquaticCellsProportion = 0.5f;
-        private const int maxFishStockDefault = 5;
-        private int maxFishStock = maxFishStockDefault;
-        public int fishStock = 1;
-        private int fishStockRespawnInterval = (2 * GenDate.TicksPerDay) / maxFishStockDefault;
-        private int fishStockRespawnTick = 0;
+        // Parameters.
+        public bool allowFishing = true;
+        public bool allowUsingCorn = true;
 
+        public const float baseFishSpawnMtbPier = 5f * GenDate.TicksPerDay;
+        public List<IntVec3> aquaticCells = new List<IntVec3>();
+        
+        public const float aquaticAreaRadius = 10f;
+        public int oceanCellsCount = 0;
+        public int riverCellsCount = 0;
+        public int marshCellsCount = 0;
+        public bool isAffectedByBiome = false;
+        public bool isAffectedByToxicFallout = false;
+        public bool isAffectedByBadTemperature = false;
+        public int maxFishStock = -1; // Will be updated in GetInspectString if set to -1.
+        public int fishStock = 1;
+
+        public int viableCellsCount
+        {
+            get
+            {
+                return (this.oceanCellsCount + this.riverCellsCount + this.marshCellsCount);
+            }
+        }
+
+        // ===================== Setup Work =====================
         /// <summary>
         /// Convert the cells under the fishing pier into fishing pier cells (technically just water cells with movespeed = 100%).
         /// </summary>
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, true);
-
-            // Compute max fish stock and respawn period according to terrain and biome.
-            ComputeMaxFishStockAndRespawnPeriod();
 
             bankCell = this.Position + new IntVec3(0, 0, -1).RotatedBy(this.Rotation);
             middleCell = this.Position + new IntVec3(0, 0, 0).RotatedBy(this.Rotation);
@@ -96,83 +111,6 @@ namespace FishIndustry
         }
 
         /// <summary>
-        /// Periodically resplenishes the fish stock if necessary.
-        /// </summary>
-        public override void TickRare()
-        {
-            base.TickRare();
-
-            if (this.fishStock < this.maxFishStock)
-            {
-                if (this.fishStockRespawnTick == 0)
-                {
-                    this.fishStockRespawnTick = Find.TickManager.TicksGame + Mathf.CeilToInt((float)this.fishStockRespawnInterval * Rand.Range(0.8f, 1.2f));
-                }
-                if (Find.TickManager.TicksGame >= this.fishStockRespawnTick)
-                {
-                    this.fishStock++;
-                    this.fishStockRespawnTick = 0;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Compute the max fishing stock and fish respawn rate according to terrain and biome (to avoid exploits due to terrain changes).
-        /// </summary>
-        public void ComputeMaxFishStockAndRespawnPeriod()
-        {
-            // Compute max fish stock according to biome.
-            this.maxFishStock = maxFishStockDefault;
-            if (this.Map.Biome == BiomeDefOf.BorealForest)
-            {
-                this.maxFishStock = 4;
-            }
-            else if ((this.Map.Biome == BiomeDefOf.Tundra)
-                || (this.Map.Biome == BiomeDefOf.AridShrubland))
-            {
-                this.maxFishStock = 3;
-            }
-            else if ((this.Map.Biome == BiomeDefOf.IceSheet)
-                || (this.Map.Biome == BiomeDefOf.Desert))
-            {
-                this.maxFishStock = 2;
-            }
-            else if ((this.Map.Biome == BiomeDefOf.SeaIce)
-                || (this.Map.Biome == BiomeDef.Named("ExtremeDesert")))
-            {
-                this.maxFishStock = 1;
-            }
-
-            // Compute fish stock respawn period factor according  to surrounding aquatic cells.
-            float aquaticCellsProportion = Util_FishIndustry.GetAquaticCellsProportionInRadius(this.Position, this.Map, Building_FishingPier.optimalAquaticAreaRadius);
-            float fishRespawnFactor = 1f;
-            if (aquaticCellsProportion < optimalAquaticCellsProportion)
-            {
-                fishRespawnFactor = (aquaticCellsProportion / optimalAquaticCellsProportion);
-            }
-            if (fishRespawnFactor <= 0)
-            {
-                // Avoid division by 0.
-                fishRespawnFactor = 0.05f;
-            }
-
-            this.fishStockRespawnInterval = Mathf.CeilToInt((2f * GenDate.TicksPerDay) / ((float)this.maxFishStock * fishRespawnFactor));
-        }
-
-        /// <summary>
-        /// Get the inspection string.
-        /// </summary>
-        public override string GetInspectString()
-        {
-            StringBuilder stringBuilder = new StringBuilder();
-            stringBuilder.Append(base.GetInspectString());
-
-            stringBuilder.Append("FishIndustry.FishStock".Translate(this.fishStock));
-
-            return stringBuilder.ToString();
-        }
-
-        /// <summary>
         /// Saves and loads internal state variables (stored in savegame data).
         /// </summary>
         public override void ExposeData()
@@ -181,8 +119,9 @@ namespace FishIndustry
             // TODO: save it as a TerrainDef if possible.
             Scribe_Values.Look<String>(ref this.middleTerrainCellDefAsString, "middleTerrainCellDefAsString");
             Scribe_Values.Look<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
-            Scribe_Values.Look<int>(ref this.fishStock, "fishStock", maxFishStockDefault);
-            Scribe_Values.Look<int>(ref this.fishStockRespawnTick, "fishStockRespawnTick", 0);
+            Scribe_Values.Look<int>(ref this.fishStock, "fishStock");
+            Scribe_Values.Look<bool>(ref this.allowFishing, "allowFishing");
+            Scribe_Values.Look<bool>(ref this.allowUsingCorn, "allowUsingCorn");
         }
 
         /// <summary>
@@ -193,6 +132,163 @@ namespace FishIndustry
             this.Map.terrainGrid.SetTerrain(middleCell, TerrainDef.Named(middleTerrainCellDefAsString));
             this.Map.terrainGrid.SetTerrain(riverCell, TerrainDef.Named(riverTerrainCellDefAsString));
             base.Destroy(mode);
+        }
+
+        // ===================== Main Work Function =====================
+        /// <summary>
+        /// Periodically resplenishes the fish stock if possible.
+        /// </summary>
+        public override void TickRare()
+        {
+            base.TickRare();
+
+            // Update zone properties.
+            UpdateAquaticCellsAround();
+            Util_Zone_Fishing.UpdateZoneProperties(this.Map, this.aquaticCells, ref this.oceanCellsCount, ref this.riverCellsCount, ref this.marshCellsCount,
+                ref this.isAffectedByBiome, ref this.isAffectedByToxicFallout, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
+
+            // Udpdate fish stock. 
+            if ((this.fishStock < this.maxFishStock)
+                && viableCellsCount > 0)
+            {
+                float fishSpawnRateFactor = 1f;
+                Util_Zone_Fishing.UpdateFishSpawnRateFactor(this.Map, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount,
+                    this.isAffectedByToxicFallout, this.isAffectedByBadTemperature, ref fishSpawnRateFactor);
+                float fishSpawnMtb = baseFishSpawnMtbPier * fishSpawnRateFactor;
+                int missingFishesCount = this.maxFishStock - this.fishStock;
+                for (int missingFishIndex = 0; missingFishIndex < missingFishesCount; missingFishIndex++)
+                {
+                    bool fishShouldBeSpawned = Rand.MTBEventOccurs(fishSpawnMtb, 1, MapComponent_FishingZone.updatePeriodInTicks);
+                    if (fishShouldBeSpawned)
+                    {
+                        this.fishStock++;
+                    }
+                }
+            }
+            else if (this.fishStock > this.maxFishStock)
+            {
+                int surplusFishesCount = this.fishStock - this.maxFishStock;
+                this.fishStock -= surplusFishesCount;
+            }
+        }
+
+        // ===================== Other Functions =====================
+        public void UpdateAquaticCellsAround()
+        {
+            this.aquaticCells.Clear();
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.Position, aquaticAreaRadius, false))
+            {
+                if ((cell.InBounds(this.Map) == false)
+                    || (cell.GetRoom(this.Map) != this.GetRoom()))
+                {
+                    continue;
+                }
+                if (Util_Zone_Fishing.IsAquaticTerrain(this.Map, cell))
+                {
+                    this.aquaticCells.Add(cell);
+                }
+            }
+        }
+
+        // ===================== Gizmos =====================
+        public override IEnumerable<Gizmo> GetGizmos()
+        {
+            int groupKeyBase = 700000115;
+
+            IList<Gizmo> buttonList = new List<Gizmo>();
+            foreach (Gizmo gizmo in base.GetGizmos())
+            {
+                buttonList.Add(gizmo);
+            }
+            Command_Toggle allowFishingButton = new Command_Toggle();
+            allowFishingButton.icon = ContentFinder<Texture2D>.Get(Util_FishIndustry.BluebladeTexturePath);
+            allowFishingButton.defaultLabel = "FishIndustry.AllowFishingLabel".Translate();
+            allowFishingButton.defaultDesc = "FishIndustry.AllowFishingDesc".Translate();
+            allowFishingButton.isActive = (() => this.allowFishing);
+            allowFishingButton.toggleAction = delegate
+            {
+                this.allowFishing = !this.allowFishing;
+            };
+            allowFishingButton.groupKey = groupKeyBase + 1;
+            buttonList.Add(allowFishingButton);
+
+            Command_Toggle allowUsingCornButton = new Command_Toggle();
+            allowUsingCornButton.icon = ContentFinder<Texture2D>.Get(ThingDef.Named("RawCorn").graphicData.texPath);
+            allowUsingCornButton.defaultLabel = "FishIndustry.AllowUsingCornLabel".Translate();
+            allowUsingCornButton.defaultDesc = "FishIndustry.AllowUsingCornDesc".Translate();
+            allowUsingCornButton.isActive = (() => this.allowUsingCorn);
+            allowUsingCornButton.toggleAction = delegate
+            {
+                this.allowUsingCorn = !this.allowUsingCorn;
+            };
+            allowUsingCornButton.groupKey = groupKeyBase + 2;
+            buttonList.Add(allowUsingCornButton);
+
+            return buttonList;
+        }
+
+        // ===================== Inspection pannel functions =====================
+        /// <summary>
+        /// Get the inspection string.
+        /// </summary>
+        /// 
+        public override string GetInspectString()
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            if (Util_FishIndustry.GetFishSpeciesList(this.Map.Biome).NullOrEmpty())
+            {
+                stringBuilder.Append("FishIndustry.FishingPier_InvalidBiome".Translate());
+                return stringBuilder.ToString();
+            }
+            
+            if (this.maxFishStock < 0)
+            {
+                // Update after a savegame loading for example.
+                UpdateAquaticCellsAround();
+                Util_Zone_Fishing.UpdateZoneProperties(this.Map, this.aquaticCells, ref this.oceanCellsCount, ref this.riverCellsCount, ref this.marshCellsCount,
+                    ref this.isAffectedByBiome, ref this.isAffectedByToxicFallout, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
+            }
+            // Fish stock.
+            stringBuilder.Append("FishIndustry.FishStock".Translate(this.fishStock));
+            // Status.
+            stringBuilder.AppendLine();
+            if (this.viableCellsCount < Util_Zone_Fishing.minCellsToSpawnFish)
+            {
+                stringBuilder.Append("FishIndustry.NotViableNow".Translate());
+            }
+            else
+            {
+                stringBuilder.Append("FishIndustry.SpeciesInZone".Translate() + Util_Zone_Fishing.GetSpeciesInZoneText(this.Map, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount));
+            }
+            // Affections.
+            if (this.aquaticCells.Count < Util_Zone_Fishing.minCellsToSpawnFish)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.Append("FishIndustry.TooSmallZone".Translate());
+            }
+            if (this.isAffectedByBiome
+                || this.isAffectedByToxicFallout
+                || this.isAffectedByBadTemperature)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.Append("FishIndustry.AffectedBy".Translate());
+                StringBuilder effects = new StringBuilder();
+                if (this.isAffectedByBiome)
+                {
+                    effects.Append("FishIndustry.AffectedByBiome".Translate());
+                }
+                if (this.isAffectedByToxicFallout)
+                {
+                    effects.AppendWithComma("FishIndustry.AffectedByToxicFallout".Translate());
+                }
+                if (this.isAffectedByBadTemperature)
+                {
+                    effects.AppendWithComma("FishIndustry.AffectedByBadTemperature".Translate());
+                }
+                stringBuilder.Append(effects);
+            }
+            return stringBuilder.ToString();
         }
     }
 }

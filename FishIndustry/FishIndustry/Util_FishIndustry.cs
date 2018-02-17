@@ -20,7 +20,6 @@ namespace FishIndustry
     /// Remember learning is always better than just copy/paste...</permission>
     public static class Util_FishIndustry
     {
-        // TODO: organize researches for a nicer tree.
         // TODO: add aquariums for sduiggles
 
         // Building.
@@ -50,13 +49,6 @@ namespace FishIndustry
             get
             {
                 return (ThingDef.Named("AquacultureBasin"));
-            }
-        }
-        public static ThingDef AquacultureHopperDef
-        {
-            get
-            {
-                return (ThingDef.Named("AquacultureHopper"));
             }
         }
 
@@ -144,7 +136,7 @@ namespace FishIndustry
             }
         }
 
-        // Sea products.
+        // ThingDef.
         public static ThingDef OysterDef
         {
             get
@@ -161,13 +153,91 @@ namespace FishIndustry
             }
         }
         
+        public static ThingDef RawCornDef
+        {
+            get
+            {
+                return (ThingDef.Named("RawCorn"));
+            }
+        }
+        
         // Job.
-        public static string JobDefName_FishAtFishingPier = "JobDef_FishAtFishingPier";
+        public static JobDef FishAtFishingPierJobDef
+        {
+            get
+            {
+                return DefDatabase<JobDef>.GetNamed("JobDef_FishAtFishingPier");
+            }
+        }
 
-        public static string JobDefName_HarvestAquacultureBasinProduction = "JobDef_HarvestAquacultureBasinProduction";
+        public static JobDef FishAtFishingZoneJobDef
+        {
+            get
+            {
+                return DefDatabase<JobDef>.GetNamed("JobDef_FishAtFishingZone");
+            }
+        }
 
-        // Breedable fishes def.
-        public static PawnKindDef MashgonDef
+        public static JobDef HarvestAquacultureBasinProductionJobDef
+        {
+            get
+            {
+                return DefDatabase<JobDef>.GetNamed("JobDef_HarvestAquacultureBasinProduction");
+            }
+        }
+
+        // Fishes def.
+        public static ThingDef MashgonDef
+        {
+            get
+            {
+                return (ThingDef.Named("Mashgon"));
+            }
+        }
+
+        public static ThingDef BluebladeDef
+        {
+            get
+            {
+                return (ThingDef.Named("Blueblade"));
+            }
+        }
+
+        public static ThingDef TailteethDef
+        {
+            get
+            {
+                return (ThingDef.Named("Tailteeth"));
+            }
+        }
+
+        // Fishes meat def.
+        public static ThingDef MashgonMeatDef
+        {
+            get
+            {
+                return (ThingDef.Named(MashgonDef.defName + "_Meat"));
+            }
+        }
+
+        public static ThingDef BluebladeMeatDef
+        {
+            get
+            {
+                return (ThingDef.Named(BluebladeDef.defName + "_Meat"));
+            }
+        }
+
+        public static ThingDef TailteethMeatDef
+        {
+            get
+            {
+                return (ThingDef.Named(TailteethDef.defName + "_Meat"));
+            }
+        }
+
+        // Breedable fishes PawnKindDef.
+        public static PawnKindDef MashgonPawnKindDef
         {
             get
             {
@@ -175,7 +245,7 @@ namespace FishIndustry
             }
         }
 
-        public static PawnKindDef BluebladeDef
+        public static PawnKindDef BluebladePawnKindDef
         {
             get
             {
@@ -183,7 +253,7 @@ namespace FishIndustry
             }
         }
 
-        public static PawnKindDef TailteethDef
+        public static PawnKindDef TailteethPawnKindDef
         {
             get
             {
@@ -215,46 +285,7 @@ namespace FishIndustry
                 return PawnKindDef.Named("PawnKindDefFishTailteeth").lifeStages.First().bodyGraphicData.texPath;
             }
         }
-
-        // Util functions.
-        public static bool IsAquaticTerrain(Map map, IntVec3 position)
-        {
-            TerrainDef terrainDef = map.terrainGrid.TerrainAt(position);
-            if ((terrainDef == TerrainDefOf.WaterShallow)
-                || (terrainDef == TerrainDefOf.WaterOceanShallow)
-                || (terrainDef == TerrainDefOf.WaterMovingShallow)
-                || (terrainDef == TerrainDefOf.WaterDeep)
-                || (terrainDef == TerrainDefOf.WaterOceanDeep)
-                || (terrainDef == TerrainDefOf.WaterMovingDeep)
-                || (terrainDef == TerrainDef.Named("Marsh")))
-            {
-                return true;
-            }
-            return false;
-        }
-
-        public static float GetAquaticCellsProportionInRadius(IntVec3 position, Map map, float radius)
-        {
-            if (radius <= 0)
-            {
-                return 0f;
-            }
-            float aquaticCellsNumber = 0;
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, radius, true))
-            {
-                if (cell.InBounds(map) == false)
-                {
-                    continue;
-                }
-                if (IsAquaticTerrain(map, cell))
-                {
-                    aquaticCellsNumber++;
-                }
-            }
-            float aquaticCellsNumberProportion = aquaticCellsNumber / (float)GenRadial.NumCellsInRadius(radius);
-            return aquaticCellsNumberProportion;
-        }
-
+        
         // Fishes lists.
         public static List<PawnKindDef_FishSpecies> GetFishSpeciesList(BiomeDef biome)
         {

@@ -1,0 +1,9 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ResearchTabDef>
+		<defName>FishIndustry</defName>
+		<label>Fish industry</label>
+	</ResearchTabDef>
+
+</Defs>

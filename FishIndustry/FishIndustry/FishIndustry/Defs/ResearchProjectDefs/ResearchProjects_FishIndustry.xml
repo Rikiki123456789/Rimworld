@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ResearchProjectDefs>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ResearchFishingPier</defName>
+    <label>Fishing pier</label>
+    <description>Learn to build solid piers over water. Can be used to relax or fish from a safe place.</description>
+    <baseCost>800</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tab>FishIndustry</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>0</researchViewY>
+  </ResearchProjectDef>
 
   <ResearchProjectDef>
     <defName>ResearchAquaculture</defName>
@@ -8,15 +19,16 @@
     </description>
     <descriptionDiscovered>You have developped a modified version of the hydroponic basin: the aquaculture basin.
 - You can now build the aquaculture basin to breed seafood.
-- Aquaculture basins must be supplied some raw food from an adjacent hopper.
+- Aquaculture basins must be supplied some raw food to operate.
     </descriptionDiscovered>
     <baseCost>1400</baseCost>
     <techLevel>Industrial</techLevel>
     <prerequisites>
       <li>Hydroponics</li>
     </prerequisites>
-    <researchViewX>3</researchViewX>
-    <researchViewY>0.5</researchViewY>
+    <tab>FishIndustry</tab>
+    <researchViewX>1</researchViewX>
+    <researchViewY>0</researchViewY>
   </ResearchProjectDef>
   
-</ResearchProjectDefs>
+</Defs>

@@ -3,7 +3,7 @@
 <Patch>
 
   <!--<Operation Class="PatchOperationReplace">
-    <xpath>*/ThingDef[defName = "ThingDefFishSduiggles_Meat"]/graphicData</xpath>
+    <xpath>*/ThingDef[defName = "Sduiggles_Meat"]/graphicData</xpath>
     <value>
       <graphicData>
         <texPath>Things/Item/Resource/SduigglesTentacle</texPath>
@@ -13,14 +13,14 @@
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>*/ThingDef[defName = "ThingDefFishSeasnake_Meat"]/graphicData/texPath</xpath>
+    <xpath>*/ThingDef[defName = "Seasnake_Meat"]/graphicData/texPath</xpath>
     <value>
       <texPath>Things/Item/Resource/SeasnakeFilet</texPath>
     </value>
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>*/ThingDef[defName = "ThingDefFishMashgon_Meat"]/graphicData/texPath</xpath>
+    <xpath>*/ThingDef[defName = "Mashgon_Meat"]/graphicData/texPath</xpath>
     <value>
       <texPath>Things/Item/Resource/MashgonShelled</texPath>
     </value>
@@ -34,7 +34,7 @@
   </Operation>
 
   <Operation Class="PatchOperationReplace">
-    <xpath>*/ThingDef[defName = "ThingDefFishTailteeth_Meat"]/graphicData/texPath</xpath>
+    <xpath>*/ThingDef[defName = "Tailteeth_Meat"]/graphicData/texPath</xpath>
     <value>
       <texPath>Things/Item/Resource/TailteethSteak</texPath>
     </value>

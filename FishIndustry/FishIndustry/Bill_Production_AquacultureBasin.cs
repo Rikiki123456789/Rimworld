@@ -23,8 +23,7 @@ namespace FishIndustry
         public Bill_Production_AquacultureBasin()
 		{
 		}
-        public Bill_Production_AquacultureBasin(RecipeDef recipe)
-            : base(recipe)
+        public Bill_Production_AquacultureBasin(RecipeDef recipe) : base(recipe)
         {
         }
 
@@ -35,6 +34,12 @@ namespace FishIndustry
             Building_AquacultureBasin aquacultureBasin = this.billStack.billGiver as Building_AquacultureBasin;
             if (aquacultureBasin != null)
             {
+                if ((aquacultureBasin.BillStack.Count == 0)
+                    || (aquacultureBasin.BillStack.Bills.First().recipe != this.recipe))
+                {
+                    return;
+                }
+
                 // Get the supplied species def and start a new breed cycle in the aquaculture basin.
                 Thing fishCorpse = ingredients.First();
                 if (fishCorpse != null)
@@ -43,19 +48,19 @@ namespace FishIndustry
                     string fishCorpseAsString = fishCorpse.ToString();
                     if (fishCorpseAsString.Contains("Mashgon"))
                     {
-                        fishKind = Util_FishIndustry.MashgonDef;
+                        fishKind = Util_FishIndustry.MashgonPawnKindDef;
                     }
                     else if (fishCorpseAsString.Contains("Blueblade"))
                     {
-                        fishKind = Util_FishIndustry.BluebladeDef;
+                        fishKind = Util_FishIndustry.BluebladePawnKindDef;
                     }
                     else if (fishCorpseAsString.Contains("Tailteeth"))
                     {
-                        fishKind = Util_FishIndustry.TailteethDef;
+                        fishKind = Util_FishIndustry.TailteethPawnKindDef;
                     }
                     if (fishKind != null)
                     {
-                        aquacultureBasin.StartNewBreedCycle(fishKind);
+                        aquacultureBasin.StartNewBreedingCycle(fishKind);
                     }
                     else
                     {

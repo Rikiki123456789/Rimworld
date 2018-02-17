@@ -28,7 +28,7 @@ namespace FishIndustry
             return colonyHasAquacultureBasin;
         }
 
-        public override bool TryExecute(IncidentParms parms)
+        protected override bool TryExecuteWorker(IncidentParms parms)
         {
             Map map = (Map)parms.target;
             Building_AquacultureBasin aquacultureBasin = null;
@@ -56,7 +56,7 @@ namespace FishIndustry
             }
             if (aquacultureBasin != null)
             {
-                Find.LetterStack.ReceiveLetter("FishIndustry.LetterLabelMicroFungus".Translate(), "FishIndustry.MicroFungus".Translate(), LetterDefOf.BadNonUrgent, aquacultureBasin);
+                Find.LetterStack.ReceiveLetter("FishIndustry.LetterLabelMicroFungus".Translate(), "FishIndustry.MicroFungus".Translate(), LetterDefOf.NegativeEvent, aquacultureBasin);
             }
             return true;
         }

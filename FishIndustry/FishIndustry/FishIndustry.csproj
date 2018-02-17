@@ -32,7 +32,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.16.6198.16597, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.18.6527.37396, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -52,16 +52,20 @@
     <Compile Include="Building_FishingPier.cs" />
     <Compile Include="Building_FishingPierSpawner.cs" />
     <Compile Include="Bill_Production_AquacultureBasin.cs" />
-    <Compile Include="Alert_AquaponicBasinNeedsAquaponicHopper.cs" />
-    <Compile Include="Building_AquacultureHopper.cs" />
-    <Compile Include="Alert_AquaponicBasinNotBreeding.cs" />
+    <Compile Include="Alert_AquacultureBasinNeedsHopper.cs" />
+    <Compile Include="Alert_AquacultureBasinNotBreeding.cs" />
+    <Compile Include="JobDriver_FishAtFishingZone.cs" />
+    <Compile Include="Util_Zone_Fishing.cs" />
+    <Compile Include="WorkGiver_FishingZone.cs" />
+    <Compile Include="Util_PlaceWorker.cs" />
+    <Compile Include="MapComponent_FishingZone.cs" />
+    <Compile Include="Zone_Fishing.cs" />
+    <Compile Include="Designator_ZoneAdd_Fishing.cs" />
     <Compile Include="Item_Oyster.cs" />
     <Compile Include="PatchOperationCheckForCaveBiome.cs" />
     <Compile Include="IncidentWorker_MicroFungus.cs" />
-    <Compile Include="WorkGiver_FillAquaponicHopper.cs" />
-    <Compile Include="PlaceWorker_AquacultureHopper.cs" />
     <Compile Include="JobDriver_HarvestAquacultureBasinProduction.cs" />
-    <Compile Include="WorkGiver_AquaponicBasin.cs" />
+    <Compile Include="WorkGiver_AquacultureBasin.cs" />
     <Compile Include="PawnKindDef_FishSpecies.cs" />
     <Compile Include="JobDriver_FishAtFishingPier.cs" />
     <Compile Include="PlaceWorker_FishingPierSpawner.cs" />
@@ -86,6 +90,7 @@
     <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchTabs.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Item_Oyster.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -98,9 +103,6 @@
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_FishingRod.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Building_AquacultureHopper.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Building_FishingPier.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -108,7 +110,7 @@
     <Content Include="FishIndustry\Defs\RecipeDefs\Recipes_PrepareFishes.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchProjects_Aquaculture.xml">
+    <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchProjects_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
@@ -123,14 +125,18 @@
     <Content Include="FishIndustry\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Languages\English\Keyed\FishIndustry_Strings.xml" />
+    <Content Include="FishIndustry\Languages\English\Keyed\FishIndustry_Strings.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Patches\DesignationCategories.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="FishIndustry\Patches\FishMeatTexture.xml" />
     <Content Include="FishIndustry\Patches\Races_Animal_Fish_Cave.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Patches\Terrain_Natural.xml" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureBasin.png" />
-    <Content Include="FishIndustry\Textures\Things\Building\AquacultureHopper.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPier.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPierSpawner.png" />
     <Content Include="FishIndustry\Textures\Things\Item\Resource\BluebladeFilet.png" />
@@ -156,7 +162,9 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\FishIndustry\Assemblies"
-xcopy /Y /i /s $(ProjectDir)\FishIndustry "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\FishIndustry"</PostBuildEvent>
+
+REM xcopy /Y /i /s $(ProjectDir)\FishIndustry "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\FishIndustry"
+xcopy /Y /i /s "$(ProjectDir)\FishIndustry" "C:\Users\Temp2\RimWorld1722Win\Mods\FishIndustry"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

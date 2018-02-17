@@ -29,6 +29,5 @@ namespace FishIndustry
             }
             base.Destroy(mode);
         }
-
     }
 }

@@ -12,32 +12,32 @@ using Verse;         // RimWorld universal objects are here
 namespace FishIndustry
 {
     /// <summary>
-    /// Alert_AquacultureBasinNeedsAquacultureHopper class.
+    /// Alert_AquacultureBasinNeedsHopper class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
     /// Remember learning is always better than just copy/paste...</permission>
-    public class Alert_AquacultureBasinNeedsAquacultureHopper : Alert
+    public class Alert_AquacultureBasinNeedsHopper : Alert
     {
         public override AlertReport GetReport()
         {
             List<Map> maps = Find.Maps;
             for (int i = 0; i < maps.Count; i++)
             {
-                foreach (Building_AquacultureBasin aquacultureBasin in maps[i].listerBuildings.AllBuildingsColonistOfClass<Building_AquacultureBasin>())
+                foreach (Building aquacultureBasin in maps[i].listerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef))
                 {
-                    bool aquacultureHopperIsFound = false;
+                    bool hopperIsFound = false;
                     foreach (IntVec3 adjacentCell in GenAdj.CellsAdjacentCardinal(aquacultureBasin))
                     {
-                        Thing potentialAquacultureHopper = adjacentCell.GetEdifice(maps[i]);
-                        if ((potentialAquacultureHopper != null)
-                            && (potentialAquacultureHopper.def == Util_FishIndustry.AquacultureHopperDef))
+                        Thing edifice = adjacentCell.GetEdifice(maps[i]);
+                        if ((edifice != null)
+                            && (edifice.def == ThingDefOf.Hopper))
                         {
-                            aquacultureHopperIsFound = true;
+                            hopperIsFound = true;
                             break;
                         }
                     }
-                    if (aquacultureHopperIsFound == false)
+                    if (hopperIsFound == false)
                     {
                         return AlertReport.CulpritIs(aquacultureBasin);
                     }
@@ -45,10 +45,10 @@ namespace FishIndustry
             }
             return AlertReport.Inactive;
         }
-        public Alert_AquacultureBasinNeedsAquacultureHopper()
+        public Alert_AquacultureBasinNeedsHopper()
         {
-            this.defaultLabel = "FishIndustry.NeedAquacultureHopperLabel".Translate();
-            this.defaultExplanation = "FishIndustry.NeedAquacultureHopperExplanation".Translate();
+            this.defaultLabel = "FishIndustry.NeedHopperLabel".Translate();
+            this.defaultExplanation = "FishIndustry.NeedHopperExplanation".Translate();
         }
     }
 }

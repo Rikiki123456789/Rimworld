@@ -6,11 +6,11 @@
     <success>Always</success>
     <operations>
       <li Class="PatchOperationTest">
-        <xpath>/TerrainDefs/TerrainDef[defName = "Mud"]/affordances</xpath>
+        <xpath>/Defs/TerrainDef[defName = "Mud"]/affordances</xpath>
         <success>Invert</success>
       </li>
       <li Class="PatchOperationAdd">
-        <xpath>/TerrainDefs/TerrainDef[defName = "Mud"]</xpath>
+        <xpath>/Defs/TerrainDef[defName = "Mud"]</xpath>
         <value>
           <affordances/>
         </value>
@@ -19,7 +19,7 @@
   </Operation>
 	
   <Operation Class="PatchOperationAdd">
-    <xpath>/TerrainDefs/TerrainDef[defName = "Mud"]/affordances</xpath>
+    <xpath>/Defs/TerrainDef[defName = "Mud"]/affordances</xpath>
     <value>
 	    <li>Undefined</li>
     </value>

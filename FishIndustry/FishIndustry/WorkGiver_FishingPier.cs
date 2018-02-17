@@ -43,17 +43,12 @@ namespace FishIndustry
             }
             Building_FishingPier fishingPier = t as Building_FishingPier;
 
-            if (fishingPier.IsBurning())
+            if (fishingPier.IsBurning()
+                || (fishingPier.allowFishing == false))
             {
                 return false;
             }
-            if (Util_FishIndustry.IsAquaticTerrain(fishingPier.Map, fishingPier.fishingSpotCell) == false)
-            {
-                return false;
-            }
-            if (pawn.Dead
-                || pawn.Downed
-                || pawn.IsBurning())
+            if (Util_Zone_Fishing.IsAquaticTerrain(fishingPier.Map, fishingPier.fishingSpotCell) == false)
             {
                 return false;
             }
@@ -73,9 +68,40 @@ namespace FishIndustry
             Job job = new Job();
             Building_FishingPier fishingPier = t as Building_FishingPier;
 
-            job = new Job(DefDatabase<JobDef>.GetNamed(Util_FishIndustry.JobDefName_FishAtFishingPier), fishingPier, fishingPier.fishingSpotCell);
+            if ((fishingPier.allowUsingCorn)
+                && (HasFoodToAttractFishes(pawn) == false))
+            {
+                Predicate <Thing> predicate = delegate(Thing cornStack)
+                {
+                    return (cornStack.IsForbidden(pawn.Faction) == false)
+                        && (cornStack.stackCount >= 4 * JobDriver_FishAtFishingPier.cornCountToAttractFishes);
+                };
+                TraverseParms traverseParams = TraverseParms.For(pawn, Danger.Some, TraverseMode.ByPawn, false);
+                Thing corn = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map, ThingRequest.ForDef(Util_FishIndustry.RawCornDef), Verse.AI.PathEndMode.ClosestTouch, traverseParams, 9999f, predicate);
+                if (corn != null)
+                {
+                    return new Job(JobDefOf.TakeInventory, corn)
+                    {
+                        count = 4 * JobDriver_FishAtFishingPier.cornCountToAttractFishes
+                    };
+                }
+            }
+            job = new Job(Util_FishIndustry.FishAtFishingPierJobDef, fishingPier, fishingPier.fishingSpotCell);
 
             return job;
 		}
+
+        public bool HasFoodToAttractFishes(Pawn fisher)
+        {
+            foreach (Thing thing in fisher.inventory.innerContainer)
+            {
+                if ((thing.def == Util_FishIndustry.RawCornDef)
+                    && (thing.stackCount >= JobDriver_FishAtFishingPier.cornCountToAttractFishes))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
     }
 }

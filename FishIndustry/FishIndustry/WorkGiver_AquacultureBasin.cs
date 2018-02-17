@@ -66,8 +66,7 @@ namespace FishIndustry
             Job job = new Job();
             Building_AquacultureBasin aquacultureBasin = t as Building_AquacultureBasin;
 
-            job = new Job(DefDatabase<JobDef>.GetNamed(Util_FishIndustry.JobDefName_HarvestAquacultureBasinProduction), aquacultureBasin);
-
+            job = new Job(Util_FishIndustry.HarvestAquacultureBasinProductionJobDef, aquacultureBasin);
             return job;
 		}
     }

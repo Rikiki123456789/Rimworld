@@ -21,10 +21,13 @@ namespace FishIndustry
     {
         public TargetIndex aquacultureBasinIndex = TargetIndex.A;
 
+        public override bool TryMakePreToilReservations()
+        {
+            return this.pawn.Reserve(this.TargetA, this.job);
+        }
+
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            yield return Toils_Reserve.Reserve(aquacultureBasinIndex);
-
             Building_AquacultureBasin aquacultureBasin = this.TargetThingA as Building_AquacultureBasin;
             yield return Toils_Goto.GotoThing(aquacultureBasinIndex, PathEndMode.InteractionCell);
 
@@ -48,8 +51,8 @@ namespace FishIndustry
                         IntVec3 storageCell;
                         if (StoreUtility.TryFindBestBetterStoreCellFor(product, this.pawn, this.Map, StoragePriority.Unstored, this.pawn.Faction, out storageCell, true))
                         {
-                            this.pawn.Reserve(product, 1);
-                            this.pawn.Reserve(storageCell, 1);
+                            this.pawn.Reserve(product, this.job);
+                            this.pawn.Reserve(storageCell, this.job, 1);
                             this.pawn.CurJob.SetTarget(TargetIndex.B, storageCell);
                             this.pawn.CurJob.SetTarget(TargetIndex.A, product);
                             this.pawn.CurJob.count = 99999;
