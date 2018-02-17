@@ -163,8 +163,7 @@
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\FishIndustry\Assemblies"
 
-REM xcopy /Y /i /s $(ProjectDir)\FishIndustry "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\FishIndustry"
-xcopy /Y /i /s "$(ProjectDir)\FishIndustry" "C:\Users\Temp2\RimWorld1722Win\Mods\FishIndustry"</PostBuildEvent>
+xcopy /Y /i /s $(ProjectDir)\FishIndustry "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\FishIndustry"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

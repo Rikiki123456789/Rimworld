@@ -20,7 +20,7 @@ namespace FishIndustry
     /// Remember learning is always better than just copy/paste...</permission>
     class Zone_Fishing : Zone
     {
-        public const float baseFishSpawnMtbZone = 7f * GenDate.TicksPerDay;
+        public const float baseFishSpawnMtbZone = 9f * GenDate.TicksPerDay;
 
         public int nextUpdateTick = 0;
 
