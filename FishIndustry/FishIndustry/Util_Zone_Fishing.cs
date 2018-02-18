@@ -31,7 +31,11 @@ namespace FishIndustry
                 || (terrainDef == TerrainDefOf.WaterDeep)
                 || (terrainDef == TerrainDefOf.WaterOceanDeep)
                 || (terrainDef == TerrainDefOf.WaterMovingDeep)
-                || (terrainDef == TerrainDef.Named("Marsh")))
+                || (terrainDef == TerrainDef.Named("Marsh"))
+                // Patch for bridge mod compatibility.
+                || terrainDef.defName.Contains("WaterShallow")
+                || terrainDef.defName.Contains("WaterDeep")
+                || terrainDef.defName.Contains("Marsh"))
             {
                 return true;
             }

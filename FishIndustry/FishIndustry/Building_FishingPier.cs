@@ -68,44 +68,40 @@ namespace FishIndustry
 
             // On first spawning, save the terrain defs and apply the fishing pier equivalent.
             TerrainDef middleCellTerrainDef = map.terrainGrid.TerrainAt(middleCell);
+            middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
             if (middleCellTerrainDef == TerrainDef.Named("Marsh"))
             {
-                middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorMarshDef);
             }
             else if ((middleCellTerrainDef == TerrainDefOf.WaterShallow)
                 || (middleCellTerrainDef == TerrainDefOf.WaterMovingShallow)
                 || (middleCellTerrainDef == TerrainDefOf.WaterOceanShallow))
             {
-                middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
             }
             else if ((middleCellTerrainDef == TerrainDefOf.WaterDeep)
                 || (middleCellTerrainDef == TerrainDefOf.WaterMovingDeep)
                 || (middleCellTerrainDef == TerrainDefOf.WaterOceanDeep))
             {
-                middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
             }
 
             TerrainDef riverCellTerrainDef = map.terrainGrid.TerrainAt(riverCell);
+            riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
             if (riverCellTerrainDef == TerrainDef.Named("Marsh"))
             {
-                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
             }
             else if ((middleCellTerrainDef == TerrainDefOf.WaterShallow)
                 || (middleCellTerrainDef == TerrainDefOf.WaterMovingShallow)
                 || (middleCellTerrainDef == TerrainDefOf.WaterOceanShallow))
             {
-                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
             }
             else if ((middleCellTerrainDef == TerrainDefOf.WaterDeep)
                 || (middleCellTerrainDef == TerrainDefOf.WaterMovingDeep)
                 || (middleCellTerrainDef == TerrainDefOf.WaterOceanDeep))
             {
-                riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
                 map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
             }            
         }
@@ -178,8 +174,8 @@ namespace FishIndustry
             this.aquaticCells.Clear();
             foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.Position, aquaticAreaRadius, false))
             {
-                if ((cell.InBounds(this.Map) == false)
-                    || (cell.GetRoom(this.Map) != this.GetRoom()))
+                // Same room cannot be checked for deep water.
+                if (cell.InBounds(this.Map) == false)
                 {
                     continue;
                 }
