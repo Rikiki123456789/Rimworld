@@ -22,6 +22,11 @@ namespace Spaceship
             {
                 IntVec3 targetDestination = (lord.LordJob as LordJob_MiningCoBase).targetDestination;
                 // Look for a reachable unreserved downed pawn.
+                if (lord.ownedPawns.NullOrEmpty())
+                {
+                    Log.Message("MiningCo. Spaceship: no pawn in lord."); // TODO: debug.
+                    return false;
+                }
                 Pawn pawnToRescue = Util_DownedPawn.GetRandomReachableDownedPawn(lord.ownedPawns.RandomElement());
                 if (pawnToRescue == null)
                 {

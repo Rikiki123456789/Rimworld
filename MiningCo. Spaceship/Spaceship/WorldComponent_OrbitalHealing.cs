@@ -167,35 +167,35 @@ namespace Spaceship
 
         public void Notify_PawnStartingOrbitalHealing(Pawn pawn, Map originMap)
         {
-            int removedHediffsCount = RemoveTreatableHediffs(pawn);
+            int removedHediffsCount = HealTreatableHediffs(pawn);
             int healDurationInTicks = removedHediffsCount * healDurationPerHediffInTicks;
-            healDurationInTicks = Math.Max(healDurationInTicks, 5 * GenDate.TicksPerDay);
+            healDurationInTicks = Math.Min(healDurationInTicks, 5 * GenDate.TicksPerDay);
             HealingPawn attendedPawn = new HealingPawn(pawn, originMap, Find.TickManager.TicksGame + healDurationInTicks);
             this.healingPawns.Add(attendedPawn);
         }
 
-        public int RemoveTreatableHediffs(Pawn pawn)
+        public int HealTreatableHediffs(Pawn pawn)
         {
-            int removedHediffsCount = 0;
-            List<Hediff> hediffToRemoveList = new List<Hediff>();
+            int healedHediffsCount = 0;
+            List<Hediff> hediffToHealList = new List<Hediff>();
             foreach (Hediff hediff in pawn.health.hediffSet.hediffs)
             {
                 if (IsTreatableHediff(hediff))
                 {
-                    hediffToRemoveList.Add(hediff);
+                    hediffToHealList.Add(hediff);
                     if ((hediff.def == HediffDefOf.Carcinoma)
                         || (hediff.def == HediffDefOf.Plague))
                     {
-                        removedHediffsCount += 10;
+                        healedHediffsCount += 10;
                     }
                 }
             }
-            removedHediffsCount = hediffToRemoveList.Count;
-            foreach (Hediff hediff in hediffToRemoveList)
+            healedHediffsCount = hediffToHealList.Count;
+            foreach (Hediff hediff in hediffToHealList)
             {
-                pawn.health.RemoveHediff(hediff);
+                hediff.Heal(hediff.Severity);
             }
-            return removedHediffsCount;
+            return healedHediffsCount;
         }
 
         public bool TrySendPawnBackToSurface(HealingPawn attendedPawn)

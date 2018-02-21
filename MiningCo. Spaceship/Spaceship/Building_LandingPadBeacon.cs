@@ -59,6 +59,11 @@ namespace Spaceship
         {
             base.Tick();
 
+            if (Settings.landingPadLightIsEnabled == false)
+            {
+                return;
+            }
+
             if (this.landingPad.powerComp.PowerOn)
             {
                 if (this.wasPoweredLastTick == false)

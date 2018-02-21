@@ -31,7 +31,6 @@
             <max>50</max>
           </countRange>
         </li>
-        <!-- TODO: add MMS here. -->
       </subOptionsChooseOne>
     </inventoryOptions>
   </PawnKindDef>

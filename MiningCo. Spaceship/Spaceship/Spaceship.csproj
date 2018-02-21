@@ -56,6 +56,8 @@
     <Compile Include="Building_SpaceshipDispatcherPick.cs" />
     <Compile Include="Building_SpaceshipMedical.cs" />
     <Compile Include="Building_SpaceshipDispatcher.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="JobGiver_RunToCarrier.cs" />
     <Compile Include="LordJob_MiningCoBase.cs" />
     <Compile Include="PlaceWorker_NotUnderBuilding.cs" />

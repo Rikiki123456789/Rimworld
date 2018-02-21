@@ -12,7 +12,6 @@ using Verse.Sound;    // Needed when you do something with the Sound
 
 namespace Spaceship
 {
-    // TODO: add patch to traderKind for drill turret, mining helmet and vest, laser fence, forcefield...
     // TODO: add a chance for the ship to crash (nearby tile with pirate around after some times).
     // TODO: cannot build ship buildings in cave biome (add NotinCave place worker).
     // TODO: add event witgh pirates in hijacked cargo spaceship.
