@@ -267,11 +267,11 @@ namespace FishIndustry
                 }
                 if (this.isAffectedByToxicFallout)
                 {
-                    effects.AppendWithSeparator("FishIndustry.AffectedByToxicFallout".Translate(), "FishIndustry.AffectedBySeparator".Translate());
+                    effects.AppendWithComma("FishIndustry.AffectedByToxicFallout".Translate());
                 }
                 if (this.isAffectedByBadTemperature)
                 {
-                    effects.AppendWithSeparator("FishIndustry.AffectedByBadTemperature".Translate(), "FishIndustry.AffectedBySeparator".Translate());
+                    effects.AppendWithComma("FishIndustry.AffectedByBadTemperature".Translate());
                 }
                 stringBuilder.Append(effects);
             }
