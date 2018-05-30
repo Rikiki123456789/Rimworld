@@ -24,7 +24,8 @@ namespace Spaceship
                 // Look for a reachable unreserved downed pawn.
                 if (lord.ownedPawns.NullOrEmpty())
                 {
-                    Log.Message("MiningCo. Spaceship: no pawn in lord."); // TODO: debug.
+                    Log.Message("MiningCo. Spaceship: no pawn in lord.");
+                    lord.Cleanup();
                     return false;
                 }
                 Pawn pawnToRescue = Util_DownedPawn.GetRandomReachableDownedPawn(lord.ownedPawns.RandomElement());

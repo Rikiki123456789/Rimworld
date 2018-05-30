@@ -24,7 +24,7 @@ namespace Spaceship
         public const int cargoRequestedSupplyLandingDuration = GenDate.TicksPerDay;
         public static IntRange damagedSpaceshipLandingDuration = new IntRange(8 * GenDate.TicksPerDay, 12 * GenDate.TicksPerDay);
         public const int dispatcherDropDurationInTicks = 2 * GenDate.TicksPerHour;
-        public const int dispatcherPickDurationInTicks = 18 * GenDate.TicksPerHour;
+        public const int dispatcherPickDurationInTicks = 2 * GenDate.TicksPerDay;
         public const int medicalSupplyLandingDuration = GenDate.TicksPerDay;
 
         // Landing and taking off.

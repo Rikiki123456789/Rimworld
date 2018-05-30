@@ -14,7 +14,7 @@ namespace Spaceship
 {
     // TODO: add a chance for the ship to crash (nearby tile with pirate around after some times).
     // TODO: cannot build ship buildings in cave biome (add NotinCave place worker).
-    // TODO: add event witgh pirates in hijacked cargo spaceship.
+    // TODO: add event with pirates in hijacked cargo spaceship.
     // TODO: Should medics rescue downed colonist?
 
     public abstract class Building_Spaceship : Building, IThingHolder

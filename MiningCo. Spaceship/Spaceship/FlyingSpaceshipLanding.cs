@@ -117,32 +117,32 @@ namespace Spaceship
                     case SpaceshipKind.CargoRequested:
                         // Spawn cargo spaceship.
                         Building_SpaceshipCargo cargoSpaceship = ThingMaker.MakeThing(Util_Spaceship.SpaceshipCargo) as Building_SpaceshipCargo;
-                        cargoSpaceship.InitializeData_Cargo(Faction.OfPlayer, this.HitPoints, this.landingDuration, this.spaceshipKind);
+                        cargoSpaceship.InitializeData_Cargo(Util_Faction.MiningCoFaction, this.HitPoints, this.landingDuration, this.spaceshipKind);
                         spaceship = GenSpawn.Spawn(cargoSpaceship, this.landingPadPosition, this.Map, this.landingPadRotation) as Building_Spaceship;
                         break;
                     case SpaceshipKind.Damaged:
                         // Spawn damaged spaceship.
                         Building_SpaceshipDamaged damagedSpaceship = ThingMaker.MakeThing(Util_Spaceship.SpaceshipDamaged) as Building_SpaceshipDamaged;
-                        damagedSpaceship.InitializeData_Damaged(this.Faction, this.HitPoints, this.landingDuration, this.spaceshipKind, this.HitPoints);
+                        damagedSpaceship.InitializeData_Damaged(Util_Faction.MiningCoFaction, this.HitPoints, this.landingDuration, this.spaceshipKind, this.HitPoints);
                         // Do not set faction to player. It will be done when repair materials are delivered.
                         spaceship = GenSpawn.Spawn(damagedSpaceship, this.landingPadPosition, this.Map, this.landingPadRotation) as Building_Spaceship;
                         break;
                     case SpaceshipKind.DispatcherDrop:
                         // Spawn dispatcher spaceship.
                         Building_SpaceshipDispatcherDrop dispatcherSpaceshipDrop = ThingMaker.MakeThing(Util_Spaceship.SpaceshipDispatcherDrop) as Building_SpaceshipDispatcherDrop;
-                        dispatcherSpaceshipDrop.InitializeData_DispatcherDrop(Faction.OfPlayer, this.HitPoints, this.landingDuration, this.spaceshipKind);
+                        dispatcherSpaceshipDrop.InitializeData_DispatcherDrop(Util_Faction.MiningCoFaction, this.HitPoints, this.landingDuration, this.spaceshipKind);
                         spaceship = GenSpawn.Spawn(dispatcherSpaceshipDrop, this.landingPadPosition, this.Map, this.landingPadRotation) as Building_Spaceship;
                         break;
                     case SpaceshipKind.DispatcherPick:
                         // Spawn dispatcher spaceship.
                         Building_SpaceshipDispatcherPick dispatcherSpaceshipPick = ThingMaker.MakeThing(Util_Spaceship.SpaceshipDispatcherPick) as Building_SpaceshipDispatcherPick;
-                        dispatcherSpaceshipPick.InitializeData_DispatcherPick(Faction.OfPlayer, this.HitPoints, this.landingDuration, this.spaceshipKind);
+                        dispatcherSpaceshipPick.InitializeData_DispatcherPick(Util_Faction.MiningCoFaction, this.HitPoints, this.landingDuration, this.spaceshipKind);
                         spaceship = GenSpawn.Spawn(dispatcherSpaceshipPick, this.landingPadPosition, this.Map, this.landingPadRotation) as Building_Spaceship;
                         break;
                     case SpaceshipKind.Medical:
                         // Spawn medical spaceship.
                         Building_SpaceshipMedical medicalSpaceship = ThingMaker.MakeThing(Util_Spaceship.SpaceshipMedical) as Building_SpaceshipMedical;
-                        medicalSpaceship.InitializeData_Medical(Faction.OfPlayer, this.HitPoints, this.landingDuration, this.spaceshipKind);
+                        medicalSpaceship.InitializeData_Medical(Util_Faction.MiningCoFaction, this.HitPoints, this.landingDuration, this.spaceshipKind);
                         spaceship = GenSpawn.Spawn(medicalSpaceship, this.landingPadPosition, this.Map, this.landingPadRotation) as Building_Spaceship;
                         break;
                     default:

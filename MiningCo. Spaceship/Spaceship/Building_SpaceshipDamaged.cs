@@ -145,7 +145,7 @@ namespace Spaceship
             UpdateAvailableMaterials();
             if (AreNeededMaterialsAvailable() == false)
             {
-                Messages.Message("Not enough materials to perform repairs.", this, MessageTypeDefOf.RejectInput);
+                Messages.Message("Not enough materials near spaceship to perform repairs.", this, MessageTypeDefOf.RejectInput);
                 return;
             }
             this.repairsAreStarted = true;
