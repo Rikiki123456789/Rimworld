@@ -65,6 +65,7 @@ namespace MiningHelmet
             if (this.lightIsOn
                 || (Find.TickManager.TicksGame >= this.nextUpdateTick))
             {
+                this.nextUpdateTick = Find.TickManager.TicksGame + updatePeriodInTicks;
                 RefreshLightState();
             }
         }
