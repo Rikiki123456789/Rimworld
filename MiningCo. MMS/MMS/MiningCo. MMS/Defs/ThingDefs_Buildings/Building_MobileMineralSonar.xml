@@ -2,21 +2,10 @@
 
 <Defs>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase" Class="MobileMineralSonar.ThingDef_MobileMineralSonar">
     <defName>MobileMineralSonar</defName>
     <label>mobile mineral sonar</label>
+    <description>Slowly scans the surrounding area to detect mineral ores. Works drastically faster when powered.</description>
     <thingClass>MobileMineralSonar.Building_MobileMineralSonar</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -26,11 +15,14 @@
     </graphicData>
     <uiIconPath>Things/Building/MenuIcon_MobileMineralSonar</uiIconPath>
     <designationCategory>Misc</designationCategory>
-    <minifiedDef>MinifiedMobileMineralSonar</minifiedDef>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsMisc</li>
+    </thingCategories>
     <altitudeLayer>Building</altitudeLayer>
     <costList>
       <Steel>50</Steel>
-      <Component>5</Component>
+      <ComponentIndustrial>5</ComponentIndustrial>
     </costList>
     <useHitPoints>True</useHitPoints>
     <size>(1,1)</size>
@@ -48,7 +40,7 @@
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
+        <shortCircuitInRain>false</shortCircuitInRain>
         <basePowerConsumption>3000</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable"/>
@@ -58,7 +50,7 @@
     </placeWorkers>
     <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
     <tradeTags>
-      <li>Exotic</li>
+      <li>ExoticMisc</li>
     </tradeTags>
 
     <scannedThingDefs>
@@ -67,7 +59,7 @@
       <li>MineableGold</li>
       <li>MineableUranium</li>
       <li>MineablePlasteel</li>
-      <li>MineableComponents</li>
+      <li>MineableComponentsIndustrial</li>
       <li>AncientCryptosleepCasket</li>
     </scannedThingDefs>
   </ThingDef>

@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.17.6362.34601, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.18.6527.35959, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -62,9 +62,7 @@
     <Content Include="MiningCo. MMS\Defs\ResearchProjectDefs\ResearchTabs.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. MMS\Defs\ThingDefs_Items\Items_MinifiedMobileMineralSonar.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="MiningCo. MMS\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
     <Content Include="MiningCo. MMS\Defs\ResearchProjectDefs\ResearchProjects_MobileMineralSonar.xml">
       <SubType>Designer</SubType>
     </Content>

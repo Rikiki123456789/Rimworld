@@ -106,9 +106,9 @@ namespace MobileMineralSonar
             satelliteDishMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), satelliteDishScale);
         }
 
-        public override void DeSpawn()
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            base.DeSpawn();
+            base.DeSpawn(mode);
             this.scanRange = 1;
             this.scanProgress = 0;
             this.satelliteDishRotation = 0f;
@@ -329,29 +329,14 @@ namespace MobileMineralSonar
         /// </summary>
         public override string GetInspectString()
         {
-            if (this.powerComp == null)
-            {
-                return base.GetInspectString();
-            }
-
             StringBuilder stringBuilder = new StringBuilder();
-            float powerNeeded = -powerComp.powerOutputInt;
-            float powerProduction = 0f;
-            float powerStored = 0f;
-            float scanProgressInPercent = 0;
 
-            if (powerComp.PowerNet != null)
-            {
-                powerProduction = powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick;
-                powerStored = powerComp.PowerNet.CurrentStoredEnergy();
-            }
-            stringBuilder.AppendLine("Optional power needed/generated/stored:\n"
-                + "(" + powerNeeded.ToString() + ")/" + powerProduction.ToString("F0") + "/" + powerStored.ToString("F0"));
-
-            stringBuilder.Append("Current/max scan range: " + this.scanRange.ToString() + "/" + maxScanRange.ToString());
+            stringBuilder.Append(base.GetInspectString());
+            stringBuilder.AppendLine();
+            stringBuilder.Append("Current/max scan range: " + this.scanRange.ToString() + " / " + maxScanRange.ToString());
             if (this.scanRange < maxScanRange)
             {
-                scanProgressInPercent = ((float)this.scanProgress / (float)(this.scanRange * scanProgressThresholdPerCell)) * 100;
+                float scanProgressInPercent = ((float)this.scanProgress / (float)(this.scanRange * scanProgressThresholdPerCell)) * 100;
                 stringBuilder.AppendLine();
                 stringBuilder.Append("Scan progress: " + ((int)scanProgressInPercent).ToString() + "%");
             }
