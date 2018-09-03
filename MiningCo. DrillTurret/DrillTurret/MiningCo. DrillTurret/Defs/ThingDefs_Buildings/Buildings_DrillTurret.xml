@@ -4,10 +4,10 @@
   <ThingDef ParentName="BuildingBase">
     <defName>DrillTurret</defName>
     <label>drill turret</label>
-    <description>An advanced automated turret designed to drill nearby ores and designated rocks. Drilling efficiency can be improved by powering and opearting it.</description>
+    <description>An advanced automated turret. Can drill nearby ores and designated rocks. Drilling efficiency can be improved by powering and operating it.</description>
     <thingClass>DrillTurret.Building_DrillTurret</thingClass>
     <graphicData>
-      <texPath>Things/Building/Security/TurretImprovised</texPath>
+      <texPath>Things/Building/Security/TurretMini_Base</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(6,6)</drawSize>
       <damageData>
@@ -16,7 +16,10 @@
     </graphicData>
     <size>(3,3)</size>
     <uiIconPath>Things/Building/MenuIcon_DrillTurret</uiIconPath>
-    <minifiedDef>MinifiedDrillTurret</minifiedDef>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsProduction</li>
+    </thingCategories>
     <altitudeLayer>Building</altitudeLayer>
     <stealable>false</stealable>
     <rotatable>true</rotatable>
@@ -45,7 +48,7 @@
     <hasTooltip>true</hasTooltip>
     <costList>
       <Steel>150</Steel>
-      <Component>4</Component>
+      <ComponentIndustrial>4</ComponentIndustrial>
     </costList>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <designationCategory>Production</designationCategory>

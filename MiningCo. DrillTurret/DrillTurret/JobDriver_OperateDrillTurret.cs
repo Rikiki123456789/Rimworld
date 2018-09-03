@@ -13,8 +13,8 @@ namespace DrillTurret
     public class JobDriver_OperateDrillTurret : JobDriver
     {
         public TargetIndex drillTurretIndex = TargetIndex.A;
-
-        public override bool TryMakePreToilReservations()
+        
+        public override bool TryMakePreToilReservations(bool errorOnFail)
         {
             return this.pawn.Reserve(this.TargetThingA, this.job);
         }

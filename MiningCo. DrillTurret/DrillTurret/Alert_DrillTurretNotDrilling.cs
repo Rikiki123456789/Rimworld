@@ -43,6 +43,7 @@ namespace DrillTurret
         {
             this.defaultLabel = "Idle drill turret";
             this.defaultExplanation = "You have an idle drill turret. You should maybe move it or designate more rocks to drill.";
+            this.defaultPriority = AlertPriority.Medium;
         }
     }
 }

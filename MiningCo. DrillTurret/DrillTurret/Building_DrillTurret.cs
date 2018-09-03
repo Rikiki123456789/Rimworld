@@ -79,9 +79,9 @@ namespace DrillTurret
         /// <summary>
         /// Reset target when turret is despawned (when minified for example).
         /// </summary>
-        public override void DeSpawn()
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
-            base.DeSpawn();
+            base.DeSpawn(mode);
             ResetTarget();
         }
 
@@ -335,7 +335,7 @@ namespace DrillTurret
         {
             if (this.laserDrillEffecter == null)
             {
-                this.laserDrillEffecter = new Effecter(EffecterDef.Named("LaserDrill"));
+                this.laserDrillEffecter = new Effecter(DefDatabase<EffecterDef>.GetNamed("LaserDrill"));
             }
             else
             {

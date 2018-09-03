@@ -4,11 +4,7 @@
   <ResearchProjectDef>
     <defName>ResearchDrillTurret</defName>
     <label>drill turret</label>
-    <description>Design drill turrets. Those turrets can be deployed near ore deposits or natural rocks to automatically drill it.
- A small part of resources are lost though (25%).</description>
-    <descriptionDiscovered>You have developped the drill turret.
-
-- You can now build drill turrets to automatically mine ore deposits or natural rocks.</descriptionDiscovered>
+    <description>Design drill turrets. Those turrets can be deployed near ore deposits or natural rocks to automatically drill it. A small part of resources are lost though (25%).</description>
     <techLevel>Industrial</techLevel>
     <baseCost>1000</baseCost>
     <prerequisites>
@@ -24,8 +20,6 @@
     <defName>ResearchDrillTurretEfficientDrilling</defName>
     <label>drill turret: efficient drilling</label>
     <description>Improve drilling efficiency of drill turret (+25%) and do not waste resources during drilling.</description>
-    <descriptionDiscovered>You have improved the drilling efficiency of drill turrets (+25%).
- Resources are no more wasted during drilling.</descriptionDiscovered>
     <techLevel>Industrial</techLevel>
     <baseCost>1000</baseCost>
     <prerequisites>

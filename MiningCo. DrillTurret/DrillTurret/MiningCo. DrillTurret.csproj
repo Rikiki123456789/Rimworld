@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.18.6527.37396, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=0.18.6527.35959, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -69,9 +69,6 @@
     <Content Include="MiningCo. DrillTurret\Defs\ResearchProjectDefs\ResearchTabs.xml" />
     <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
     <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Buildings\Buildings_DrillTurret.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Items\Items_MinifiedDrillTurret.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. DrillTurret\Defs\WorkGiverDefs\WorkGivers.xml" />

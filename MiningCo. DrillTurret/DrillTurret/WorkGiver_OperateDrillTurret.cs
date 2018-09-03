@@ -33,7 +33,7 @@ namespace DrillTurret
             return pawn.Map.listerBuildings.AllBuildingsColonistOfDef(Util_DrillTurret.drillTurretDef).Cast<Thing>();
         }
 
-        public override bool ShouldSkip(Pawn pawn)
+        public override bool ShouldSkip(Pawn pawn, bool forced = false)
         {
             if (pawn.Map.listerBuildings.AllBuildingsColonistOfDef(Util_DrillTurret.drillTurretDef).Count() == 0)
             {
