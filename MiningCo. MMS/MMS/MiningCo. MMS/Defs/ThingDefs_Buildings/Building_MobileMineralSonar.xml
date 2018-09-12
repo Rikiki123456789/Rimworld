@@ -14,6 +14,7 @@
       <drawSize>(3,3)</drawSize>
     </graphicData>
     <uiIconPath>Things/Building/MenuIcon_MobileMineralSonar</uiIconPath>
+    <uiIconScale>2.5</uiIconScale>
     <designationCategory>Misc</designationCategory>
     <minifiedDef>MinifiedThing</minifiedDef>
     <thingCategories>
