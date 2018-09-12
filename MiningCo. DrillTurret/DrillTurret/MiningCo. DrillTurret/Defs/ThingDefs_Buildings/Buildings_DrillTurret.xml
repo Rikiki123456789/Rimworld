@@ -13,9 +13,13 @@
       <damageData>
         <rect>(0.2,0.2,0.6,0.6)</rect>
       </damageData>
+      <shadowData>
+        <volume>(1.0,0.35,1.0)</volume>
+      </shadowData>
     </graphicData>
     <size>(3,3)</size>
     <uiIconPath>Things/Building/MenuIcon_DrillTurret</uiIconPath>
+    <uiIconScale>1.2</uiIconScale>
     <minifiedDef>MinifiedThing</minifiedDef>
     <thingCategories>
       <li>BuildingsProduction</li>
@@ -44,7 +48,7 @@
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.6</fillPercent>
-    <castEdgeShadows>true</castEdgeShadows>
+    <castEdgeShadows>false</castEdgeShadows>
     <hasTooltip>true</hasTooltip>
     <costList>
       <Steel>150</Steel>

@@ -29,7 +29,7 @@ namespace DrillTurret
 
         // ===================== Variables =====================
         public const int updatePeriodInTicks = 30;
-        public int updateOffsetInTicks = 0;
+        public int nextUpdateTick = 0;
 
         // Components references.
         public CompPowerTrader powerComp;
@@ -71,7 +71,11 @@ namespace DrillTurret
             base.SpawnSetup(map, respawningAfterLoad);
 
             this.powerComp = base.GetComp<CompPowerTrader>();
-            this.updateOffsetInTicks = Rand.RangeInclusive(0, updatePeriodInTicks);
+            if (respawningAfterLoad == false)
+            {
+                this.nextUpdateTick = Find.TickManager.TicksGame + Rand.RangeInclusive(0, updatePeriodInTicks);
+                this.turretTopRotation = this.Rotation.AsAngle;
+            }
 
             turretTopMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), turretTopScale);
         }
@@ -157,8 +161,10 @@ namespace DrillTurret
         {
             base.Tick();
 
-            if ((Find.TickManager.TicksGame % updatePeriodInTicks) == this.updateOffsetInTicks)
+            if (Find.TickManager.TicksGame >= this.nextUpdateTick)
             {
+                this.nextUpdateTick = Find.TickManager.TicksGame + updatePeriodInTicks;
+                
                 // Check locked target is still valid.
                 if (this.targetPosition.IsValid)
                 {
@@ -207,7 +213,7 @@ namespace DrillTurret
             }
             if (newTargetPosition.IsValid)
             {
-                this.turretTopRotation = Mathf.Repeat(Mathf.Round((this.targetPosition.ToVector3Shifted() - this.TrueCenter()).AngleFlat()), 360f);
+                this.turretTopRotation = Mathf.Repeat((this.targetPosition.ToVector3Shifted() - this.TrueCenter()).AngleFlat(), 360f);
             }
         }
 
@@ -343,50 +349,7 @@ namespace DrillTurret
             }
         }
 
-        /// <summary>
-        /// Compute the laser beam parameters.
-        /// </summary>
-        public void ComputeDrawingParameters()
-        {
-            if (this.targetPosition.IsValid)
-            {
-                // Drilling laser beam.
-                Vector3 turretTargetVector = (this.targetPosition.ToVector3Shifted() - this.TrueCenter());
-                turretTargetVector.y = 0f;
-                this.laserBeamScale.z = turretTargetVector.magnitude - 0.8f;
-                Vector3 positionOffset = turretTargetVector / 2f;
-                laserBeamMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
-            }
-            else
-            {
-                // Idle laser beam.
-                this.laserBeamScale.z = 1.5f;
-                Vector3 positionOffset = new Vector3(0f, 0f, this.laserBeamScale.z / 2f).RotatedBy(this.turretTopRotation);
-                laserBeamMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
-            }
-        }
-
-        /// <summary>
-        /// Draw the turret top, a laser beam when drilling and a line to the targeted rock.
-        /// </summary>
-        public override void Draw()
-        {
-            base.Draw();
-            this.turretTopMatrix.SetTRS(base.DrawPos + 1.1f * Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), this.turretTopScale);
-            Graphics.DrawMesh(MeshPool.plane10, this.turretTopMatrix, turretTopOnTexture, 0);
-            Graphics.DrawMesh(MeshPool.plane10, this.laserBeamMatrix, laserBeamTexture, 0);
-
-            if (Find.Selector.IsSelected(this)
-                && (this.targetPosition.IsValid))
-            {
-                Vector3 lineOrigin = this.TrueCenter();
-                Vector3 lineTarget = this.targetPosition.ToVector3Shifted();
-                lineTarget.y = Altitudes.AltitudeFor(AltitudeLayer.MetaOverlays);
-                lineOrigin.y = lineTarget.y;
-                GenDraw.DrawLineBetween(lineOrigin, lineTarget, targetLineTexture);
-            }
-        }
-
+        // ===================== Inspect string =====================
         public override string GetInspectString()
         {
             StringBuilder stringBuilder = new StringBuilder(base.GetInspectString());
@@ -395,6 +358,7 @@ namespace DrillTurret
             return stringBuilder.ToString();
         }
 
+        // ===================== Gizmos =====================
         public override IEnumerable<Gizmo> GetGizmos()
         {
             IList<Gizmo> buttonList = new List<Gizmo>();
@@ -492,7 +456,55 @@ namespace DrillTurret
             {
                 this.Map.designationManager.AddDesignation(new Designation(forcedTarget, DesignationDefOf.Mine));
             }
-            this.turretTopRotation = Mathf.Repeat(Mathf.Round((this.targetPosition.ToVector3Shifted() - this.Position.ToVector3Shifted()).AngleFlat()), 360f);
+            this.turretTopRotation = Mathf.Repeat((this.targetPosition.ToVector3Shifted() - this.TrueCenter()).AngleFlat(), 360f);
+            ComputeDrawingParameters();
         }
+
+        // ===================== Drawing =====================
+        /// <summary>
+        /// Compute the laser beam parameters.
+        /// </summary>
+        public void ComputeDrawingParameters()
+        {
+            this.laserBeamScale.x = 0.2f + 0.8f * (float)this.drillEfficiencyInPercent / 100f;
+            if (this.targetPosition.IsValid)
+            {
+                // Drilling laser beam.
+                Vector3 turretTargetVector = (this.targetPosition.ToVector3Shifted() - this.TrueCenter());
+                turretTargetVector.y = 0f;
+                this.laserBeamScale.z = turretTargetVector.magnitude - 0.8f;
+                Vector3 positionOffset = turretTargetVector / 2f;
+                laserBeamMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
+            }
+            else
+            {
+                // Idle laser beam.
+                this.laserBeamScale.z = 1.5f;
+                Vector3 positionOffset = new Vector3(0f, 0f, this.laserBeamScale.z / 2f).RotatedBy(this.turretTopRotation);
+                laserBeamMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
+            }
+        }
+
+        /// <summary>
+        /// Draw the turret top, a laser beam when drilling and a line to the targeted rock.
+        /// </summary>
+        public override void Draw()
+        {
+            base.Draw();
+            this.turretTopMatrix.SetTRS(base.DrawPos + 1.1f * Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), this.turretTopScale);
+            Graphics.DrawMesh(MeshPool.plane10, this.turretTopMatrix, turretTopOnTexture, 0);
+            Graphics.DrawMesh(MeshPool.plane10, this.laserBeamMatrix, laserBeamTexture, 0);
+
+            if (Find.Selector.IsSelected(this)
+                && (this.targetPosition.IsValid))
+            {
+                Vector3 lineOrigin = this.TrueCenter();
+                Vector3 lineTarget = this.targetPosition.ToVector3Shifted();
+                lineTarget.y = Altitudes.AltitudeFor(AltitudeLayer.MetaOverlays);
+                lineOrigin.y = lineTarget.y;
+                GenDraw.DrawLineBetween(lineOrigin, lineTarget, targetLineTexture);
+            }
+        }
+
     }
 }
