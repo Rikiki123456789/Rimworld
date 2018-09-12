@@ -2,13 +2,9 @@
 <Defs>
 
   <ResearchProjectDef>
-    <defName>ResearchSpotlightTurret</defName>
-    <label>spotlight turret</label>
-    <description>Design spotlight turrets to control your perimeter at night or in dark caves.</description>
-    <descriptionDiscovered>You have developped the spotlight turret.
-
-- You can now build spotlight turrets to detect foes in your perimeter.
-    </descriptionDiscovered>
+    <defName>ResearchProjector</defName>
+    <label>projector</label>
+    <description>Design projector tower and turret to control your perimeter at night or in dark caves.</description>
     <techLevel>Industrial</techLevel>
     <baseCost>500</baseCost>
     <prerequisites>

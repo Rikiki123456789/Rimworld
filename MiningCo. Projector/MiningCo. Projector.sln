@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningCo. SpotlightTurret", "SpotlightTurret\MiningCo. SpotlightTurret.csproj", "{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}"
+# Visual C# Express 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningCo. Projector", "Projector\MiningCo. Projector.csproj", "{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

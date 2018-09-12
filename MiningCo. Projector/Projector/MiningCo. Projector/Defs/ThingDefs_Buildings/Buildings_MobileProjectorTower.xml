@@ -1,0 +1,69 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>ProjectorTower</defName>
+    <label>projector tower</label>
+    <description>A projector mounted on a high metallic tower. Can automatically lock onto a nearby hostile even over walls. Cannot be built under a roof.</description>
+    <thingClass>Projector.Building_MobileProjectorTower</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Security/ProjectorTower_Base</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <damageData>
+        <rect>(0.0,0.0,0.9,0.9)</rect>
+      </damageData>
+      <shadowData>
+        <volume>(0.5,1.0,0.5)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
+    </graphicData>
+    <uiIconPath>Things/Building/Security/MenuIcon_ProjectorTower</uiIconPath>
+    <uiIconScale>0.8</uiIconScale>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
+    <altitudeLayer>Building</altitudeLayer>
+    <stealable>false</stealable>
+    <rotatable>true</rotatable>
+    <statBases>
+      <MaxHitPoints>200</MaxHitPoints>
+      <Flammability>1.0</Flammability>
+      <WorkToBuild>1500</WorkToBuild>
+      <Mass>50</Mass>
+      <Beauty>-10</Beauty>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>150</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+    </comps>
+    <passability>PassThroughOnly</passability>
+    <pathCost>75</pathCost>
+    <fillPercent>0.9</fillPercent>
+    <castEdgeShadows>true</castEdgeShadows>
+    <hasTooltip>true</hasTooltip>
+    <costList>
+      <Steel>75</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Security</designationCategory>
+    <constructionSkillPrerequisite>5</constructionSkillPrerequisite>
+    <specialDisplayRadius>30</specialDisplayRadius>
+    <researchPrerequisites>
+      <li>ResearchProjector</li>
+    </researchPrerequisites>
+    <placeWorkers>
+      <li>PlaceWorker_NotUnderRoof</li>
+      <li>Projector.PlaceWorker_DrawProjector</li>
+    </placeWorkers>
+  </ThingDef>
+  
+</Defs>

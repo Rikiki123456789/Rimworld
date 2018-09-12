@@ -2,11 +2,11 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>SpotlightLight</defName>
-    <label>spotlight light</label>
-    <description>Spotlight light.</description>
+    <defName>MobileProjectorLight</defName>
+    <label>projector light</label>
+    <description>Projector light.</description>
     <graphicData>
-      <texPath>Things/Building/DummyTexture</texPath>
+      <texPath>Things/Building/Security/DummyTexture</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <selectable>false</selectable>

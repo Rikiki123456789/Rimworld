@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>Projector</defName>
+    <label>projector</label>
+    <description>An electrical projector that lights an area in front of it. Ideal to light pathways.</description>
+    <thingClass>Projector.Building_FixedProjector</thingClass>
+    <graphicData>
+      <texPath>Things/Building/Furniture/Projector</texPath>
+      <graphicClass>Graphic_Multi</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+    </graphicData>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsFurniture</li>
+    </thingCategories>
+    <altitudeLayer>Building</altitudeLayer>
+    <stealable>false</stealable>
+    <rotatable>true</rotatable>
+    <statBases>
+      <MaxHitPoints>100</MaxHitPoints>
+      <Flammability>0.5</Flammability>
+      <WorkToBuild>200</WorkToBuild>
+      <Mass>20</Mass>
+      <Beauty>0</Beauty>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>50</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+    </comps>
+    <passability>PassThroughOnly</passability>
+    <pathCost>40</pathCost>
+    <fillPercent>0.9</fillPercent>
+    <castEdgeShadows>false</castEdgeShadows>
+    <hasTooltip>true</hasTooltip>
+    <costList>
+      <Steel>40</Steel>
+    </costList>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+    <designationCategory>Furniture</designationCategory>
+    <placeWorkers>
+      <li>Projector.PlaceWorker_DrawLightedCells</li>
+    </placeWorkers>
+  </ThingDef>
+  
+</Defs>

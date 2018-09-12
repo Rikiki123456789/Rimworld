@@ -2,20 +2,28 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>SpotlightTurret</defName>
-    <label>spotlight turret</label>
-    <description>A spothlight mounted on a turret. Can automatically lock onto a nearby hostile.</description>
-    <thingClass>SpotlightTurret.Building_SpotlightTurret</thingClass>
+    <defName>ProjectorTurret</defName>
+    <label>projector turret</label>
+    <description>A projector mounted on a turret chassis. Can automatically lock onto a nearby hostile. Can be built under roof.</description>
+    <thingClass>Projector.Building_MobileProjectorTurret</thingClass>
     <graphicData>
-      <texPath>Things/Building/Security/TurretImprovised</texPath>
+      <texPath>Things/Building/Security/TurretMini_Base</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(3,3)</drawSize>
       <damageData>
         <rect>(0.2,0.2,0.6,0.6)</rect>
       </damageData>
+      <shadowData>
+        <volume>(0.27,0.25,0.27)</volume>
+        <offset>(0,0,0)</offset>
+      </shadowData>
     </graphicData>
-    <uiIconPath>Things/Building/MenuIcon_SpotlightTurret</uiIconPath>
-    <minifiedDef>MinifiedFurniture</minifiedDef>
+    <uiIconPath>Things/Building/Security/MenuIcon_ProjectorTurret</uiIconPath>
+    <uiIconScale>2.5</uiIconScale>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
     <altitudeLayer>Building</altitudeLayer>
     <stealable>false</stealable>
     <rotatable>true</rotatable>
@@ -31,7 +39,7 @@
       <li Class="CompProperties_Forbiddable"/>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <basePowerConsumption>150</basePowerConsumption>
+        <basePowerConsumption>100</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable"/>
       <li Class="CompProperties_Breakdownable"/>
@@ -39,22 +47,22 @@
     <passability>PassThroughOnly</passability>
     <pathCost>50</pathCost>
     <fillPercent>0.4</fillPercent>
-    <castEdgeShadows>true</castEdgeShadows>
+    <castEdgeShadows>false</castEdgeShadows>
     <hasTooltip>true</hasTooltip>
-    <stuffCategories>
-      <li>Metallic</li>
-    </stuffCategories>
-    <costStuffCount>25</costStuffCount>
     <costList>
       <Steel>50</Steel>
-      <Component>1</Component>
+      <ComponentIndustrial>1</ComponentIndustrial>
     </costList>
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <designationCategory>Security</designationCategory>
-    <specialDisplayRadius>30</specialDisplayRadius>
+    <constructionSkillPrerequisite>3</constructionSkillPrerequisite>
+    <specialDisplayRadius>25</specialDisplayRadius>
     <researchPrerequisites>
-      <li>ResearchSpotlightTurret</li>
+      <li>ResearchProjector</li>
     </researchPrerequisites>
+    <placeWorkers>
+      <li>Projector.PlaceWorker_DrawProjector</li>
+    </placeWorkers>
   </ThingDef>
   
 </Defs>

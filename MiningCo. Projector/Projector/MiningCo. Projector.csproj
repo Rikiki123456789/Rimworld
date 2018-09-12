@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Projector</RootNamespace>
+    <AssemblyName>MiningCo. Projector</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=0.19.6814.14826, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Building_MobileProjectorTower.cs" />
+    <Compile Include="Alert_ProjectorTowerRoofed.cs" />
+    <Compile Include="Building_MobileProjector.cs" />
+    <Compile Include="Building_MobileProjectorTurret.cs" />
+    <Compile Include="Building_FixedProjector.cs" />
+    <Compile Include="PlaceWorker_DrawLightedCells.cs" />
+    <Compile Include="PlaceWorker_DrawProjector.cs" />
+    <Compile Include="Util_Projector.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MiningCo. Projector\About\About.xml" />
+    <Content Include="MiningCo. Projector\About\Preview.png" />
+    <Content Include="MiningCo. Projector\About\PublishedFileId.txt" />
+    <Content Include="MiningCo. Projector\Defs\HediffDefs\Hediffs_Blinded.xml" />
+    <Content Include="MiningCo. Projector\Defs\ResearchProjectDefs\ResearchProjects_Projector.xml" />
+    <Content Include="MiningCo. Projector\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
+    <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_MobileProjectorLight.xml" />
+    <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_MobileProjectorTurret.xml" />
+    <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_MobileProjectorTower.xml" />
+    <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_FixedProjector.xml" />
+    <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_FixedProjectorLight.xml" />
+    <Content Include="MiningCo. Projector\Textures\Things\Building\Security\DummyTexture.png" />
+    <Content Include="MiningCo. Projector\Textures\Things\Building\Security\MenuIcon_ProjectorTower.png" />
+    <Content Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_Base.png" />
+    <Content Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_LightEffect.png" />
+    <Content Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_ProjectorOff.png" />
+    <Content Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_ProjectorOn.png" />
+    <Content Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_DecreaseRange.png" />
+    <Content Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_IncreaseRange.png" />
+    <Content Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_SwitchMode.png" />
+    <Content Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_Synchronize.png" />
+    <Content Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_TurnLeft.png" />
+    <Content Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_TurnRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MiningCo. Projector\About\Thumbs.db" />
+    <None Include="MiningCo. Projector\Textures\Things\Building\Security\MenuIcon_ProjectorTurret.pdn" />
+    <None Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_Base.pdn" />
+    <None Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_LightEffect.pdn" />
+    <None Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_ProjectorOff.pdn" />
+    <None Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_ProjectorOn.pdn" />
+    <None Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_SwitchMode.pdn" />
+    <None Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_Synchronize.pdn" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MiningCo. Projector\Assemblies\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Projector\Assemblies"
+
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. Projector" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. Projector"
+REM xcopy /Y /i /s "$(ProjectDir)\MiningCo. Projector" "C:\Users\Temp2\RimWorld2009Win64\Mods\MiningCo. Projector"
+</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
