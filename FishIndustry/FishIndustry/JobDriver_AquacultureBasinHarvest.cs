@@ -17,11 +17,11 @@ namespace FishIndustry
     /// <summary>
     /// Order a pawn to go and harvest aquaculture basin's production.
     /// </summary>
-    public class JobDriver_HarvestAquacultureBasinProduction : JobDriver
+    public class JobDriver_AquacultureBasinHarvest : JobDriver
     {
         public TargetIndex aquacultureBasinIndex = TargetIndex.A;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetA, this.job);
         }
@@ -46,6 +46,13 @@ namespace FishIndustry
                     }
                     else
                     {
+                        while (product.stackCount > product.def.stackLimit)
+                        {
+                            Thing meatStack = ThingMaker.MakeThing(product.def);
+                            meatStack.stackCount = product.def.stackLimit;
+                            GenPlace.TryPlaceThing(meatStack, this.GetActor().Position, this.Map, ThingPlaceMode.Near);
+                            product.stackCount -= product.def.stackLimit;
+                        }
                         GenSpawn.Spawn(product, aquacultureBasin.InteractionCell, this.Map);
 
                         IntVec3 storageCell;

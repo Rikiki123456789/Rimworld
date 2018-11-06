@@ -20,21 +20,21 @@ namespace FishIndustry
     public class JobDriver_FishAtFishingZone : JobDriver
     {
         public PathEndMode pathEndMode = PathEndMode.OnCell;
-        public TargetIndex fishingSpotIndex = TargetIndex.A;
+        public TargetIndex fishPositionIndex = TargetIndex.A;
         public Mote fishingRodMote = null;
-        public IntVec3 cardinalDir = IntVec3.Invalid;
+        public IntVec3 cardinalDir = IntVec3.Invalid; // Used to display the mote and rotate the pawn.
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetLocA, this.job);
         }
 
-        public bool FishingForbiddenOrNoFishAtTargetLocA()
+        public bool FishingForbiddenOrInvalidSpot()
         {
-            Zone_Fishing fishingZone = this.Map.zoneManager.ZoneAt(this.TargetLocA) as Zone_Fishing;
+            Zone_Fishing fishingZone = this.Map.zoneManager.ZoneAt(this.TargetB.Cell) as Zone_Fishing;
             if ((fishingZone == null)
                 || (fishingZone.allowFishing == false)
-                || (fishingZone.fishesPosition.Contains(this.TargetLocA) == false))
+                || (fishingZone.fishingSpots.Contains(this.TargetLocA) == false))
             {
                 return true;
             }
@@ -54,63 +54,58 @@ namespace FishIndustry
             const float catchSuccessRateInZone = 0.70f;
 
             int fishingDuration = (int)baseFishingDuration;
-            Passion passion = Passion.None;
 
             // Compute fishing duration.
             float fishingSkillLevel = 0f;
             fishingSkillLevel = this.pawn.skills.AverageOfRelevantSkillsFor(WorkTypeDefOf.Hunting);
             float fishingSkillDurationFactor = fishingSkillLevel / 20f;
             fishingDuration = (int)(baseFishingDuration * (1.5f  - fishingSkillDurationFactor));
-
-            // Compute pawn rotation.
-            if (cardinalDir == IntVec3.Invalid)
-            {
-                cardinalDir = GenAdj.CardinalDirections.RandomElement();
-                foreach (IntVec3 direction in GenAdj.CardinalDirections.InRandomOrder())
-                {
-                    if (Util_Zone_Fishing.IsAquaticTerrain(this.Map, this.TargetLocA + direction))
-                    {
-                        cardinalDir = direction;
-                        break;
-                    }
-                }
-                this.pawn.CurJob.SetTarget(TargetIndex.B, this.TargetLocA + cardinalDir);
-                this.rotateToFace = TargetIndex.B;
-            }
-
-            yield return Toils_Goto.GotoCell(this.TargetLocA, this.pathEndMode).FailOn(FishingForbiddenOrNoFishAtTargetLocA);
             
-            Toil fishToil = new Toil()
+            Toil faceWaterToil = new Toil()
             {
                 initAction = () =>
                 {
+                    // Compute pawn rotation during fishing.
+                    foreach (IntVec3 offset in GenAdj.CardinalDirections.InRandomOrder())
+                    {
+                        IntVec3 adjacentCell = this.TargetLocA + offset;
+                        Zone_Fishing fishingZone = adjacentCell.GetZone(this.Map) as Zone_Fishing;
+                        if ((fishingZone != null)
+                            && fishingZone.fishingSpots.Contains(this.TargetLocA))
+                        {
+                            this.cardinalDir = offset;
+                            this.pawn.CurJob.SetTarget(TargetIndex.B, adjacentCell);
+                            this.rotateToFace = TargetIndex.B;
+                            break;
+                        }
+                    }
                 },
+                defaultCompleteMode = ToilCompleteMode.Instant
+            };
+            yield return faceWaterToil;
+            
+            yield return Toils_Goto.GotoCell(this.TargetLocA, this.pathEndMode).FailOn(FishingForbiddenOrInvalidSpot);
+
+            Toil fishToil = new Toil()
+            {
                 tickAction = () =>
                 {
-                    if (passion == Passion.Minor)
-                    {
-                        this.pawn.needs.joy.GainJoy(NeedTunings.JoyPerXpForPassionMinor, JoyKindDefOf.Work);
-                    }
-                    else if (passion == Passion.Major)
-                    {
-                        this.pawn.needs.joy.GainJoy(NeedTunings.JoyPerXpForPassionMajor, JoyKindDefOf.Work);
-                    }
                     this.pawn.skills.Learn(SkillDefOf.Shooting, skillGainPerTick);
 
                     // Spawn mote or maintain it.
                     if (this.fishingRodMote.DestroyedOrNull())
                     {
-                        IntVec3 motePosition = this.TargetLocA + cardinalDir;
+                        IntVec3 motePosition = this.TargetB.Cell;
                         ThingDef moteDef = null;
-                        if (cardinalDir == new IntVec3(0, 0, 1))
+                        if (cardinalDir == IntVec3.North)
                         {
                             moteDef = Util_FishIndustry.MoteFishingRodNorthDef;
                         }
-                        else if (cardinalDir == new IntVec3(1, 0, 0))
+                        else if (cardinalDir == IntVec3.East)
                         {
                             moteDef = Util_FishIndustry.MoteFishingRodEastDef;
                         }
-                        else if (cardinalDir == new IntVec3(0, 0, -1))
+                        else if (cardinalDir == IntVec3.South)
                         {
                             moteDef = Util_FishIndustry.MoteFishingRodSouthDef;
                         }
@@ -131,7 +126,7 @@ namespace FishIndustry
                 defaultDuration = fishingDuration,
                 defaultCompleteMode = ToilCompleteMode.Delay
             };
-            yield return fishToil.WithProgressBarToilDelay(this.fishingSpotIndex).FailOn(FishingForbiddenOrNoFishAtTargetLocA); ;
+            yield return fishToil.WithProgressBarToilDelay(this.fishPositionIndex, true).FailOn(FishingForbiddenOrInvalidSpot);
             
             Toil catchFishToil = new Toil()
             {
@@ -154,7 +149,7 @@ namespace FishIndustry
                     {
                         // Get hurt by a tailteeth.
                         this.pawn.TakeDamage(new DamageInfo(DamageDefOf.Bite, Rand.Range(5, 12)));
-                        Messages.Message(this.pawn.NameStringShort + "FishIndustry.FisherBitten".Translate(), this.pawn, MessageTypeDefOf.NegativeHealthEvent);
+                        Messages.Message(this.pawn.Name.ToStringShort + "FishIndustry.FisherBitten".Translate(), this.pawn, MessageTypeDefOf.NegativeHealthEvent);
                         this.pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
                         return;
                     }
@@ -198,11 +193,11 @@ namespace FishIndustry
                         fishingCatch.SetForbidden(false);
                         if (caughtFish.BodySize >= 0.1f)
                         {
-                            Zone_Fishing fishingZone = this.Map.zoneManager.ZoneAt(this.TargetLocA) as Zone_Fishing;
+                            Zone_Fishing fishingZone = this.TargetB.Cell.GetZone(this.Map) as Zone_Fishing;
                             if ((fishingZone != null)
-                                && fishingZone.fishesPosition.Contains(this.TargetLocA))
+                                && fishingZone.fishingSpots.Contains(this.TargetLocA))
                             {
-                                fishingZone.fishesPosition.Remove(this.TargetLocA);
+                                fishingZone.fishingSpots.Remove(this.TargetLocA);
                             }
                         }
                     }

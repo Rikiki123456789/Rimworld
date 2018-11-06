@@ -32,9 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.18.6527.37396, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=1.0.6864.30166, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\Assembly-CSharp.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,17 +44,20 @@
     <Reference Include="System.Xml" />
     <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin_Data\Managed\UnityEngine.dll</HintPath>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_AquacultureBasin.cs" />
     <Compile Include="Building_FishingPier.cs" />
     <Compile Include="Building_FishingPierSpawner.cs" />
-    <Compile Include="Bill_Production_AquacultureBasin.cs" />
     <Compile Include="Alert_AquacultureBasinNeedsHopper.cs" />
     <Compile Include="Alert_AquacultureBasinNotBreeding.cs" />
+    <Compile Include="Controller.cs" />
+    <Compile Include="JobDriver_AquacultureBasinMaintain.cs" />
+    <Compile Include="JobDriver_AquacultureBasinChangeSpecies.cs" />
     <Compile Include="JobDriver_FishAtFishingZone.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="Util_Zone_Fishing.cs" />
     <Compile Include="WorkGiver_FishingZone.cs" />
     <Compile Include="Util_PlaceWorker.cs" />
@@ -64,11 +67,11 @@
     <Compile Include="Item_Oyster.cs" />
     <Compile Include="PatchOperationCheckForCaveBiome.cs" />
     <Compile Include="IncidentWorker_MicroFungus.cs" />
-    <Compile Include="JobDriver_HarvestAquacultureBasinProduction.cs" />
+    <Compile Include="JobDriver_AquacultureBasinHarvest.cs" />
     <Compile Include="WorkGiver_AquacultureBasin.cs" />
     <Compile Include="PawnKindDef_FishSpecies.cs" />
     <Compile Include="JobDriver_FishAtFishingPier.cs" />
-    <Compile Include="PlaceWorker_FishingPierSpawner.cs" />
+    <Compile Include="PlaceWorker_FishingPier.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util_FishIndustry.cs" />
     <Compile Include="WorkGiver_FishingPier.cs" />
@@ -91,13 +94,19 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_Fish.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Items_Resource_Base.xml" />
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Items_Resource_Stuff_Leather.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Item_Oyster.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Item_Pearl.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_Bubble.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_FishingRod.xml">
@@ -113,12 +122,11 @@
     <Content Include="FishIndustry\Defs\ResearchProjectDefs\ResearchProjects_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Building_AquacultureBasin.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_Base.xml" />
+    <Content Include="FishIndustry\Defs\ThingDefs_Races\Races_Animal_Base.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs_Races\Races_Animal_Fish.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -135,15 +143,11 @@
     <Content Include="FishIndustry\Patches\Races_Animal_Fish_Cave.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Patches\Terrain_Natural.xml" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureBasin.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPier.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPierSpawner.png" />
     <Content Include="FishIndustry\Textures\Things\Item\Resource\BluebladeFilet.png" />
     <Content Include="FishIndustry\Textures\Things\Item\Resource\MashgonShelled.png" />
-    <Content Include="FishIndustry\Textures\Things\Item\Resource\Oyster.png" />
-    <Content Include="FishIndustry\Textures\Things\Item\Resource\OysterOpen.png" />
-    <Content Include="FishIndustry\Textures\Things\Item\Resource\Pearl.png" />
     <Content Include="FishIndustry\Textures\Things\Item\Resource\SduigglesTentacle.png" />
     <Content Include="FishIndustry\Textures\Things\Item\Resource\SeasnakeFilet.png" />
     <Content Include="FishIndustry\Textures\Things\Item\Resource\TailteethSteak.png" />
@@ -154,7 +158,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FishIndustry\Textures\Things\Building\AquacultureBasin.pdn" />
-    <None Include="FishIndustry\Textures\Things\Item\Resource\Pearl.pdn" />
     <None Include="FishIndustry\Textures\Things\Mote\FishingRodNorth.pdn" />
     <None Include="FishIndustry\Textures\Things\Mote\FishingRodSouth.pdn" />
     <None Include="FishIndustry\Textures\Things\Mote\FishingRodWest.pdn" />

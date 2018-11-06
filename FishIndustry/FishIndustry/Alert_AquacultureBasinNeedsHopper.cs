@@ -15,8 +15,7 @@ namespace FishIndustry
     /// Alert_AquacultureBasinNeedsHopper class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class Alert_AquacultureBasinNeedsHopper : Alert
     {
         public override AlertReport GetReport()
@@ -45,6 +44,7 @@ namespace FishIndustry
             }
             return AlertReport.Inactive;
         }
+
         public Alert_AquacultureBasinNeedsHopper()
         {
             this.defaultLabel = "FishIndustry.NeedHopperLabel".Translate();

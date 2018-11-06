@@ -2,22 +2,10 @@
 
 <Defs>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>AquacultureBasin</defName>
     <label>aquaculture basin</label>
-    <description>A basin designed to breed fishes. Water quality and temperature are auto-regulated with proper power supply. You need to provide raw food with a hopper to feed the bred fishes.</description>
+    <description>A basin designed to breed fishes. Water quality and temperature are auto-regulated with proper power supply. However, you need to provide raw food with a hopper to feed the bred fishes. Ensuring a regular maintenance of the basin will improve the fishes' growth.</description>
     <thingClass>FishIndustry.Building_AquacultureBasin</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -49,7 +37,7 @@
     </comps>
     <costList>
       <Steel>200</Steel>
-      <Component>3</Component>
+      <ComponentIndustrial>3</ComponentIndustrial>
     </costList>
     <useHitPoints>true</useHitPoints>
     <statBases>
@@ -64,14 +52,6 @@
     <hasInteractionCell>True</hasInteractionCell>
     <interactionCellOffset>(-1,0,-2)</interactionCellOffset>
     <surfaceType>Item</surfaceType>
-    <recipes>
-      <li>SupplyMashgonEggs</li>
-      <li>SupplyBluebladeEggs</li>
-      <li>SupplyTailteethEggs</li>
-    </recipes>
-    <inspectorTabs>
-      <li>ITab_Bills</li>
-    </inspectorTabs>
     <building>
       <nutritionCostPerDispense>1.0</nutritionCostPerDispense>
       <wantsHopperAdjacent>true</wantsHopperAdjacent>

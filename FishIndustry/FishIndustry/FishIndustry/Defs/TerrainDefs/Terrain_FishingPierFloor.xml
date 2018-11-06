@@ -2,25 +2,6 @@
 <Defs>
 
   <TerrainDef>
-    <defName>FishingPierFloorDeepWater</defName>
-    <label>Fishing pier floor</label>
-    <texturePath>Terrain/Surfaces/WaterDeepRamp</texturePath>
-    <waterDepthShader>Map/WaterDepth</waterDepthShader>
-    <edgeType>Water</edgeType>
-    <renderPrecedence>393</renderPrecedence>
-    <pathCost>0</pathCost>
-    <acceptFilth>false</acceptFilth>
-    <fertility>0</fertility>
-    <avoidWander>false</avoidWander>
-    <changeable>false</changeable>
-    <holdSnow>true</holdSnow>
-    <takeSplashes>false</takeSplashes>
-    <tags>
-      <li>Water</li>
-    </tags>
-  </TerrainDef>
-
-  <TerrainDef>
     <defName>FishingPierFloorShallowWater</defName>
     <label>Fishing pier floor</label>
     <texturePath>Terrain/Surfaces/WaterShallowRamp</texturePath>
@@ -51,7 +32,7 @@
     <avoidWander>false</avoidWander>
     <changeable>false</changeable>
     <holdSnow>true</holdSnow>
-  
-</TerrainDef>
+
+  </TerrainDef>
 
 </Defs>

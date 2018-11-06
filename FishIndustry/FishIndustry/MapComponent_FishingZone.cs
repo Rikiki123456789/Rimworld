@@ -16,8 +16,7 @@ namespace FishIndustry
     /// MapComponent_FishingZone class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     class MapComponent_FishingZone : MapComponent
     {
         public const int updatePeriodInTicks = GenTicks.TickRareInterval;

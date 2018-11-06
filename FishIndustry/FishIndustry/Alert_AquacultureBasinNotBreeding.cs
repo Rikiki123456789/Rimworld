@@ -15,8 +15,7 @@ namespace FishIndustry
     /// Alert_AquacultureBasinNotBreeding class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class Alert_AquacultureBasinNotBreeding : Alert
     {
         public override AlertReport GetReport()
@@ -28,7 +27,7 @@ namespace FishIndustry
                 {
                     if (aquacultureBasin.powerComp.PowerOn
                         && (aquacultureBasin.IsForbidden(Faction.OfPlayer) == false)
-                        && (aquacultureBasin.breedingSpeciesDef == null)
+                        && (aquacultureBasin.speciesDef == null)
                         && (aquacultureBasin.microFungusRemainingDurationInTicks == 0))
                     {
                         return AlertReport.CulpritIs(aquacultureBasin);
@@ -37,6 +36,7 @@ namespace FishIndustry
             }
             return AlertReport.Inactive;
         }
+
         public Alert_AquacultureBasinNotBreeding()
         {
             this.defaultLabel = "FishIndustry.IdleAquacultureBasinLabel".Translate();

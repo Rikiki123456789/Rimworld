@@ -19,12 +19,12 @@ namespace FishIndustry
     /// </summary>
     public class JobDriver_FishAtFishingPier : JobDriver
     {
-        public const int cornCountToAttractFishes = 5;
+        public const int grainCountToAttractFishes = 5;
 
         public TargetIndex fishingPierIndex = TargetIndex.A;
         public Mote fishingRodMote = null;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetA, this.job);
         }
@@ -32,7 +32,7 @@ namespace FishIndustry
         public bool FishingForbiddenOrPierDestroyedOrNoFish()
         {
             Building_FishingPier fishingPier = this.TargetThingA as Building_FishingPier;
-            if ((fishingPier == null)
+            if ((fishingPier.DestroyedOrNull())
                 || fishingPier.IsBurning()
                 || fishingPier.IsForbidden(fishingPier.Faction)
                 || (fishingPier.allowFishing == false)
@@ -51,7 +51,6 @@ namespace FishIndustry
 
             int fishingDuration = (int)baseFishingDuration;
             Building_FishingPier fishingPier = this.TargetThingA as Building_FishingPier;
-            Passion passion = Passion.None;
             int thrownCornCount = 0;
             int nextCornThrowTick = 0;
 
@@ -74,7 +73,7 @@ namespace FishIndustry
             {
                 tickAction = () =>
                 {
-                    if (fishingPier.allowUsingCorn == false)
+                    if (fishingPier.allowUsingGrain == false)
                     {
                         this.ReadyForNextToil();
                         return;
@@ -93,9 +92,9 @@ namespace FishIndustry
                             }
                         }
                         if ((corn == null)
-                            || (thrownCornCount >= cornCountToAttractFishes))
+                            || (thrownCornCount >= grainCountToAttractFishes))
                         {
-                            fishingDuration -= Mathf.CeilToInt((float)fishingDuration * 0.75f * ((float)thrownCornCount / (float)cornCountToAttractFishes));
+                            fishingDuration -= Mathf.CeilToInt((float)fishingDuration * 0.75f * ((float)thrownCornCount / (float)grainCountToAttractFishes));
                             this.ReadyForNextToil();
                             return;
                         }
@@ -155,14 +154,6 @@ namespace FishIndustry
                 },
                 tickAction = () =>
                 {
-                    if (passion == Passion.Minor)
-                    {
-                        this.pawn.needs.joy.GainJoy(NeedTunings.JoyPerXpForPassionMinor, JoyKindDefOf.Work);
-                    }
-                    else if (passion == Passion.Major)
-                    {
-                        this.pawn.needs.joy.GainJoy(NeedTunings.JoyPerXpForPassionMajor, JoyKindDefOf.Work);
-                    }
                     this.pawn.skills.Learn(SkillDefOf.Shooting, skillGainPerTick);
                     
                     if (this.fishingRodMote != null)
@@ -235,8 +226,8 @@ namespace FishIndustry
                                 qualityComp.SetQuality(QualityCategory.Masterwork, ArtGenerationContext.Outsider);
                             }
 
-                            Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.SpacerHostile);
-                            Pawn deadMarine = PawnGenerator.GeneratePawn(PawnKindDefOf.SpaceSoldier, faction);
+                            Faction faction = Find.FactionManager.FirstFactionOfDef(FactionDefOf.AncientsHostile);
+                            Pawn deadMarine = PawnGenerator.GeneratePawn(PawnKindDefOf.AncientSoldier, faction);
                             HealthUtility.DamageUntilDead(deadMarine);
                             Corpse corpse = deadMarine.ParentHolder as Corpse;
                             CompRottable rotComp = corpse.TryGetComp<CompRottable>();
@@ -245,9 +236,8 @@ namespace FishIndustry
                                 rotComp.RotProgress = 20f * GenDate.TicksPerDay; // 20 days so the corpse is dessicated.
                             }
                             GenSpawn.Spawn(corpse, fishingPier.bankCell, this.Map);
-                            // TODO: set it as a translatble string.
-                            string eventText = this.pawn.Name.ToStringShort.CapitalizeFirst() + " has cought a dead body while fishing!\n\n'This is really disgusting but look at his gear! This guy was probably a MiningCo. security member. I wonder what happend to him...'\n";
-                            Find.LetterStack.ReceiveLetter("Dead marine", eventText, LetterDefOf.PositiveEvent, this.pawn);
+                            string eventText = "FishIndustry.LetterDescDeadMarine".Translate(this.pawn.Name.ToStringShort.CapitalizeFirst());
+                            Find.LetterStack.ReceiveLetter("FishIndustry.LetterLabelDeadMarine".Translate(), eventText, LetterDefOf.PositiveEvent, this.pawn);
                         }
                         else
                         {

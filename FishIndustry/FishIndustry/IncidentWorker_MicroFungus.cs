@@ -16,14 +16,12 @@ namespace FishIndustry
     /// IncidentWorker_MicroFungus class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class IncidentWorker_MicroFungus : IncidentWorker
     {
-
-        protected override bool CanFireNowSub(IIncidentTarget target)
+        protected override bool CanFireNowSub(IncidentParms parms)
         {
-            Map map = (Map)target;
+            Map map = (Map)parms.target;
             bool colonyHasAquacultureBasin = map.listerBuildings.AllBuildingsColonistOfDef(Util_FishIndustry.AquacultureBasinDef).Count() > 0;
             return colonyHasAquacultureBasin;
         }

@@ -16,8 +16,7 @@ namespace FishIndustry
     /// Util_PlaceWorker utility class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public static class Util_PlaceWorker
     {
         public const int minDistanceBetweenTwoFishingSpots = 15;
@@ -27,10 +26,8 @@ namespace FishIndustry
             // Check if another fishing pier is not too close (mind the test on "fishing pier" def and "fishing pier spawner" blueprint and frame defs.
             List<Thing> fishingPiers = new List<Thing>();
             fishingPiers.AddRange(map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierDef));
-            fishingPiers.AddRange(map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.blueprintDef));
-            fishingPiers.AddRange(map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerDef.frameDef));
-            fishingPiers.AddRange(map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerOnMudDef.blueprintDef));
-            fishingPiers.AddRange(map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierSpawnerOnMudDef.frameDef));
+            fishingPiers.AddRange(map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierDef.blueprintDef));
+            fishingPiers.AddRange(map.listerThings.ThingsOfDef(Util_FishIndustry.FishingPierDef.frameDef));
             foreach (Thing thing in fishingPiers)
             {
                 if (thing.Position.InHorDistOf(position, distance))

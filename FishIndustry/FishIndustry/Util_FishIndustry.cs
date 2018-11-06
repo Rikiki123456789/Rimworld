@@ -16,8 +16,7 @@ namespace FishIndustry
     /// FishIndustry utility class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public static class Util_FishIndustry
     {
         // TODO: add aquariums for sduiggles
@@ -30,20 +29,6 @@ namespace FishIndustry
                 return (ThingDef.Named("FishingPier"));
             }
         }
-        public static ThingDef FishingPierSpawnerDef
-        {
-            get
-            {
-                return (ThingDef.Named("FishingPierSpawner"));
-            }
-        }
-        public static ThingDef FishingPierSpawnerOnMudDef
-        {
-            get
-            {
-                return (ThingDef.Named("FishingPierSpawnerOnMud"));
-            }
-        }
         public static ThingDef AquacultureBasinDef
         {
             get
@@ -52,29 +37,6 @@ namespace FishIndustry
             }
         }
 
-        // Recipe.
-        public static RecipeDef SupplyMashgonEggsRecipeDef
-        {
-            get
-            {
-                return (DefDatabase<RecipeDef>.GetNamed("SupplyMashgonEggs"));
-            }
-        }
-        public static RecipeDef SupplyBluebladeEggsRecipeDef
-        {
-            get
-            {
-                return (DefDatabase<RecipeDef>.GetNamed("SupplyBluebladeEggs"));
-            }
-        }
-        public static RecipeDef SupplyTailteethEggsRecipeDef
-        {
-            get
-            {
-                return (DefDatabase<RecipeDef>.GetNamed("SupplyTailteethEggs"));
-            }
-        }
-        
         // Terrain.
         public static TerrainDef FishingPierFloorDeepWaterDef
         {
@@ -136,6 +98,49 @@ namespace FishIndustry
             }
         }
 
+        public static ThingDef MoteFishMashgonEastDef
+        {
+            get
+            {
+                return (ThingDef.Named("Mote_FishMashgonEast"));
+            }
+        }
+        public static ThingDef MoteFishMashgonWestDef
+        {
+            get
+            {
+                return (ThingDef.Named("Mote_FishMashgonWest"));
+            }
+        }
+        public static ThingDef MoteFishBluebladeEastDef
+        {
+            get
+            {
+                return (ThingDef.Named("Mote_FishBluebladeEast"));
+            }
+        }
+        public static ThingDef MoteFishBluebladeWestDef
+        {
+            get
+            {
+                return (ThingDef.Named("Mote_FishBluebladeWest"));
+            }
+        }
+        public static ThingDef MoteFishTailteethEastDef
+        {
+            get
+            {
+                return (ThingDef.Named("Mote_FishTailteethEast"));
+            }
+        }
+        public static ThingDef MoteFishTailteethWestDef
+        {
+            get
+            {
+                return (ThingDef.Named("Mote_FishTailteethWest"));
+            }
+        }
+
         // ThingDef.
         public static ThingDef OysterDef
         {
@@ -161,6 +166,14 @@ namespace FishIndustry
             }
         }
         
+        public static ThingDef RawRiceDef
+        {
+            get
+            {
+                return (ThingDef.Named("RawRice"));
+            }
+        }
+        
         // Job.
         public static JobDef FishAtFishingPierJobDef
         {
@@ -178,11 +191,27 @@ namespace FishIndustry
             }
         }
 
-        public static JobDef HarvestAquacultureBasinProductionJobDef
+        public static JobDef AquacultureBasinHarvestJobDef
         {
             get
             {
-                return DefDatabase<JobDef>.GetNamed("JobDef_HarvestAquacultureBasinProduction");
+                return DefDatabase<JobDef>.GetNamed("JobDef_AquacultureBasinHarvest");
+            }
+        }
+
+        public static JobDef AquacultureBasinChangeSpeciesJobDef
+        {
+            get
+            {
+                return DefDatabase<JobDef>.GetNamed("JobDef_AquacultureBasinChangeSpecies");
+            }
+        }
+
+        public static JobDef AquacultureBasinMaintainJobDef
+        {
+            get
+            {
+                return DefDatabase<JobDef>.GetNamed("JobDef_AquacultureBasinMaintain");
             }
         }
 
@@ -216,7 +245,7 @@ namespace FishIndustry
         {
             get
             {
-                return (ThingDef.Named(MashgonDef.defName + "_Meat"));
+                return (ThingDef.Named(MashgonDef.defName + "Meat_"));
             }
         }
 
@@ -224,7 +253,7 @@ namespace FishIndustry
         {
             get
             {
-                return (ThingDef.Named(BluebladeDef.defName + "_Meat"));
+                return (ThingDef.Named(BluebladeDef.defName + "Meat_"));
             }
         }
 
@@ -232,7 +261,7 @@ namespace FishIndustry
         {
             get
             {
-                return (ThingDef.Named(TailteethDef.defName + "_Meat"));
+                return (ThingDef.Named(TailteethDef.defName + "Meat_"));
             }
         }
 
@@ -270,11 +299,27 @@ namespace FishIndustry
             }
         }
 
+        public static string MashgonTexturePathWithChangeIcon
+        {
+            get
+            {
+                return "Ui/Gizmos/MashgonWithChangeIcon";
+            }
+        }
+
         public static string BluebladeTexturePath
         {
             get
             {
                 return PawnKindDef.Named("PawnKindDefFishBlueblade").lifeStages.First().bodyGraphicData.texPath;
+            }
+        }
+
+        public static string BluebladeTexturePathWithChangeIcon
+        {
+            get
+            {
+                return "Ui/Gizmos/BluebladeWithChangeIcon";
             }
         }
 
@@ -285,9 +330,27 @@ namespace FishIndustry
                 return PawnKindDef.Named("PawnKindDefFishTailteeth").lifeStages.First().bodyGraphicData.texPath;
             }
         }
-        
+
+        public static string TailteethTexturePathWithChangeIcon
+        {
+            get
+            {
+                return "Ui/Gizmos/TailteethWithChangeIcon";
+            }
+        }
+
         // Fishes lists.
+        public static Dictionary<BiomeDef, List<PawnKindDef_FishSpecies>> fishSpeciesListDico = new Dictionary<BiomeDef, List<PawnKindDef_FishSpecies>>();
         public static List<PawnKindDef_FishSpecies> GetFishSpeciesList(BiomeDef biome)
+        {
+            if (fishSpeciesListDico.ContainsKey(biome) == false)
+            {
+                fishSpeciesListDico.Add(biome, BuildFishSpeciesListForMap(biome));
+            }
+            return fishSpeciesListDico.TryGetValue(biome);
+        }
+
+        public static List<PawnKindDef_FishSpecies> BuildFishSpeciesListForMap(BiomeDef biome)
         {
             List<PawnKindDef_FishSpecies> fishSpeciesList = new List<PawnKindDef_FishSpecies>();
             
@@ -296,7 +359,8 @@ namespace FishIndustry
                 if (def is PawnKindDef_FishSpecies)
                 {
                     PawnKindDef_FishSpecies fishDef = def as PawnKindDef_FishSpecies;
-                    if (fishDef.naturalBiomes.Contains(biome))
+                    if ((Settings.biomeRestrictionsIsEnabled == false)
+                        || fishDef.naturalBiomes.Contains(biome))
                     {
                         fishSpeciesList.Add(fishDef);
                     }

@@ -35,12 +35,14 @@
           <depth>Inside</depth>
         </li>
         <li>
-          <def>LeftKidney</def>
+          <def>Kidney</def>
+          <customLabel>left kidney</customLabel>
           <coverage>0.03</coverage>
           <depth>Inside</depth>
         </li>
         <li>
-          <def>RightKidney</def>
+          <def>Kidney</def>
+          <customLabel>right kidney</customLabel>
           <coverage>0.03</coverage>
           <depth>Inside</depth>
         </li>
@@ -66,11 +68,13 @@
               </parts>
             </li>
             <li>
-              <def>LeftEye</def>
+              <def>Eye</def>
+              <customLabel>left eye</customLabel>
               <coverage>0.15</coverage>
             </li>
             <li>
-              <def>RightEye</def>
+              <def>Eye</def>
+              <customLabel>right eye</customLabel>
               <coverage>0.15</coverage>
             </li>
             <li>
@@ -139,7 +143,8 @@
           <depth>Inside</depth>
         </li>
         <li>
-          <def>RightKidney</def>
+          <def>Kidney</def>
+          <customLabel>right kidney</customLabel>
           <coverage>0.03</coverage>
           <depth>Inside</depth>
         </li>
@@ -165,11 +170,13 @@
               </parts>
             </li>
             <li>
-              <def>LeftEye</def>
+              <def>Eye</def>
+              <customLabel>left eye</customLabel>
               <coverage>0.15</coverage>
             </li>
             <li>
-              <def>RightEye</def>
+              <def>Eye</def>
+              <customLabel>right eye</customLabel>
               <coverage>0.15</coverage>
             </li>
             <li>

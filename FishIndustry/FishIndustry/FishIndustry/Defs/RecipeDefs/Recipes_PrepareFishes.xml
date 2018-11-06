@@ -1,95 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <!--=================== Aquaculture basin breeding ===============-->
-  
-  <RecipeDef>
-    <defName>SupplyMashgonEggs</defName>
-    <label>supply mashgon eggs</label>
-    <description>Supply some eggs of a mashgon to breed. You only need to do it when there is no fish in the basin or you want to change the bred species.</description>
-    <jobString>Supplying mashgon eggs.</jobString>
-    <workAmount>300</workAmount>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Mashgon_Meat</li>
-          </thingDefs>
-        </filter>
-        <count>1</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Mashgon_Meat</li>
-      </thingDefs>
-      <specialFiltersToDisallow>
-        <li>AllowRotten</li>
-      </specialFiltersToDisallow>
-    </fixedIngredientFilter>
-    <products>
-      <Mashgon_Meat>1</Mashgon_Meat>
-    </products>
-  </RecipeDef>
-
-  <RecipeDef>
-    <defName>SupplyBluebladeEggs</defName>
-    <label>supply blueblade eggs</label>
-    <description>Supply some eggs of a blueblade to breed. You only need to do it when there is no fish in the basin or you want to change the bred species.</description>
-    <jobString>Supplying blueblade eggs.</jobString>
-    <workAmount>300</workAmount>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Blueblade_Meat</li>
-          </thingDefs>
-        </filter>
-        <count>1</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Blueblade_Meat</li>
-      </thingDefs>
-      <specialFiltersToDisallow>
-        <li>AllowRotten</li>
-      </specialFiltersToDisallow>
-    </fixedIngredientFilter>
-    <products>
-      <Blueblade_Meat>1</Blueblade_Meat>
-    </products>
-  </RecipeDef>
-
-  <RecipeDef>
-    <defName>SupplyTailteethEggs</defName>
-    <label>supply tailteeth eggs</label>
-    <description>Supply some eggs of a tailteeth to breed. You only need to do it when there is no fish in the basin or you want to change the bred species.</description>
-    <jobString>Supplying tailteeth eggs.</jobString>
-    <workAmount>300</workAmount>
-    <ingredients>
-      <li>
-        <filter>
-          <thingDefs>
-            <li>Tailteeth_Meat</li>
-          </thingDefs>
-        </filter>
-        <count>1</count>
-      </li>
-    </ingredients>
-    <fixedIngredientFilter>
-      <thingDefs>
-        <li>Tailteeth_Meat</li>
-      </thingDefs>
-      <specialFiltersToDisallow>
-        <li>AllowRotten</li>
-      </specialFiltersToDisallow>
-    </fixedIngredientFilter>
-    <products>
-      <Tailteeth_Meat>1</Tailteeth_Meat>
-    </products>
-  </RecipeDef>
-
   <!--=================== Campfire meal ===============-->
   
   <RecipeDef>
@@ -116,8 +27,8 @@
     </products>
     <fixedIngredientFilter>
       <thingDefs>
-        <li>Blueblade_Corpse</li>
-        <li>Seasnake_Corpse</li>
+        <li>Corpse_Blueblade</li>
+        <li>Corpse_Seasnake</li>
       </thingDefs>
       <specialFiltersToDisallow>
         <li>AllowRotten</li>

@@ -16,12 +16,12 @@ namespace FishIndustry
     /// Building_FishingPier class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     class Building_FishingPier : Building_WorkTable
     {
-        public string riverTerrainCellDefAsString;
-        public string middleTerrainCellDefAsString;
+        public string bankCellTerrainDefAsString;
+        public string middleCellTerrainDefAsString;
+        public string riverCellTerrainDefAsString;
 
         public IntVec3 fishingSpotCell = new IntVec3(0, 0, 0);
         public IntVec3 riverCell = new IntVec3(0, 0, 0);
@@ -30,7 +30,7 @@ namespace FishIndustry
 
         // Parameters.
         public bool allowFishing = true;
-        public bool allowUsingCorn = true;
+        public bool allowUsingGrain = true;
 
         public const float baseFishSpawnMtbPier = 6f * GenDate.TicksPerDay;
         public List<IntVec3> aquaticCells = new List<IntVec3>();
@@ -53,6 +53,10 @@ namespace FishIndustry
             }
         }
 
+        // Inspect string.
+        public string cachedSpeciesInZone = "";
+        public float cachedFishSpawnMtb = 0;
+
         // ===================== Setup Work =====================
         /// <summary>
         /// Convert the cells under the fishing pier into fishing pier cells (technically just water cells with movespeed = 100%).
@@ -66,44 +70,42 @@ namespace FishIndustry
             riverCell = this.Position + new IntVec3(0, 0, 1).RotatedBy(this.Rotation);
             fishingSpotCell = this.Position + new IntVec3(0, 0, 2).RotatedBy(this.Rotation);
 
-            // On first spawning, save the terrain defs and apply the fishing pier equivalent.
-            TerrainDef middleCellTerrainDef = map.terrainGrid.TerrainAt(middleCell);
-            middleTerrainCellDefAsString = middleCellTerrainDef.ToString();
-            if (middleCellTerrainDef == TerrainDef.Named("Marsh"))
+            if (respawningAfterLoad == false)
             {
-                map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorMarshDef);
-            }
-            else if ((middleCellTerrainDef == TerrainDefOf.WaterShallow)
-                || (middleCellTerrainDef == TerrainDefOf.WaterMovingShallow)
-                || (middleCellTerrainDef == TerrainDefOf.WaterOceanShallow))
-            {
-                map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
-            }
-            else if ((middleCellTerrainDef == TerrainDefOf.WaterDeep)
-                || (middleCellTerrainDef == TerrainDefOf.WaterMovingDeep)
-                || (middleCellTerrainDef == TerrainDefOf.WaterOceanDeep))
-            {
-                map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
-            }
+                // On first spawning, save the terrain defs and apply the fishing pier equivalent.
+                TerrainDef bankCellTerrainDef = map.terrainGrid.TerrainAt(bankCell);
+                bankCellTerrainDefAsString = bankCellTerrainDef.ToString();
+                if (bankCellTerrainDef == TerrainDef.Named("Marsh"))
+                {
+                    map.terrainGrid.SetTerrain(bankCell, Util_FishIndustry.FishingPierFloorMarshDef);
+                }
+                else
+                {
+                    map.terrainGrid.SetTerrain(bankCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
+                }
 
-            TerrainDef riverCellTerrainDef = map.terrainGrid.TerrainAt(riverCell);
-            riverTerrainCellDefAsString = riverCellTerrainDef.ToString();
-            if (riverCellTerrainDef == TerrainDef.Named("Marsh"))
-            {
-                map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
+                TerrainDef middleCellTerrainDef = map.terrainGrid.TerrainAt(middleCell);
+                middleCellTerrainDefAsString = middleCellTerrainDef.ToString();
+                if (middleCellTerrainDef == TerrainDef.Named("Marsh"))
+                {
+                    map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorMarshDef);
+                }
+                else
+                {
+                    map.terrainGrid.SetTerrain(middleCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
+                }
+
+                TerrainDef riverCellTerrainDef = map.terrainGrid.TerrainAt(riverCell);
+                riverCellTerrainDefAsString = middleCellTerrainDef.ToString();
+                if (riverCellTerrainDef == TerrainDef.Named("Marsh"))
+                {
+                    map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorMarshDef);
+                }
+                else
+                {
+                    map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
+                }
             }
-            else if ((middleCellTerrainDef == TerrainDefOf.WaterShallow)
-                || (middleCellTerrainDef == TerrainDefOf.WaterMovingShallow)
-                || (middleCellTerrainDef == TerrainDefOf.WaterOceanShallow))
-            {
-                map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorShallowWaterDef);
-            }
-            else if ((middleCellTerrainDef == TerrainDefOf.WaterDeep)
-                || (middleCellTerrainDef == TerrainDefOf.WaterMovingDeep)
-                || (middleCellTerrainDef == TerrainDefOf.WaterOceanDeep))
-            {
-                map.terrainGrid.SetTerrain(riverCell, Util_FishIndustry.FishingPierFloorDeepWaterDef);
-            }            
         }
 
         /// <summary>
@@ -112,12 +114,12 @@ namespace FishIndustry
         public override void ExposeData()
         {
             base.ExposeData();
-            // TODO: save it as a TerrainDef if possible.
-            Scribe_Values.Look<String>(ref this.middleTerrainCellDefAsString, "middleTerrainCellDefAsString");
-            Scribe_Values.Look<String>(ref this.riverTerrainCellDefAsString, "riverTerrainCellDefAsString");
+            Scribe_Values.Look<String>(ref this.bankCellTerrainDefAsString, "bankTerrainCellDefAsString");
+            Scribe_Values.Look<String>(ref this.middleCellTerrainDefAsString, "middleTerrainCellDefAsString");
+            Scribe_Values.Look<String>(ref this.riverCellTerrainDefAsString, "riverTerrainCellDefAsString");
             Scribe_Values.Look<int>(ref this.fishStock, "fishStock");
             Scribe_Values.Look<bool>(ref this.allowFishing, "allowFishing");
-            Scribe_Values.Look<bool>(ref this.allowUsingCorn, "allowUsingCorn");
+            Scribe_Values.Look<bool>(ref this.allowUsingGrain, "allowUsingGrain");
         }
 
         /// <summary>
@@ -125,8 +127,9 @@ namespace FishIndustry
         /// </summary>
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
-            this.Map.terrainGrid.SetTerrain(middleCell, TerrainDef.Named(middleTerrainCellDefAsString));
-            this.Map.terrainGrid.SetTerrain(riverCell, TerrainDef.Named(riverTerrainCellDefAsString));
+            this.Map.terrainGrid.SetTerrain(bankCell, TerrainDef.Named(bankCellTerrainDefAsString));
+            this.Map.terrainGrid.SetTerrain(middleCell, TerrainDef.Named(middleCellTerrainDefAsString));
+            this.Map.terrainGrid.SetTerrain(riverCell, TerrainDef.Named(riverCellTerrainDefAsString));
             base.Destroy(mode);
         }
 
@@ -139,22 +142,23 @@ namespace FishIndustry
             base.TickRare();
 
             // Update zone properties.
-            UpdateAquaticCellsAround();
+            UpdateCells();
             Util_Zone_Fishing.UpdateZoneProperties(this.Map, this.aquaticCells, ref this.oceanCellsCount, ref this.riverCellsCount, ref this.marshCellsCount,
                 ref this.isAffectedByBiome, ref this.isAffectedByToxicFallout, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
+            this.cachedSpeciesInZone = Util_Zone_Fishing.GetSpeciesInZoneText(this.Map.Biome, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount);
 
             // Udpdate fish stock. 
             if ((this.fishStock < this.maxFishStock)
                 && viableCellsCount > 0)
             {
-                float fishSpawnRateFactor = 1f;
-                Util_Zone_Fishing.UpdateFishSpawnRateFactor(this.Map, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount,
-                    this.isAffectedByToxicFallout, this.isAffectedByBadTemperature, ref fishSpawnRateFactor);
-                float fishSpawnMtb = baseFishSpawnMtbPier * fishSpawnRateFactor;
+                float fishSpawnRateFactor = 0f;
+                Util_Zone_Fishing.ComputeFishSpawnRateFactor(this.Map, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount,
+                    this.isAffectedByToxicFallout, this.isAffectedByBadTemperature, out fishSpawnRateFactor);
+                cachedFishSpawnMtb = baseFishSpawnMtbPier * fishSpawnRateFactor;
                 int missingFishesCount = this.maxFishStock - this.fishStock;
                 for (int missingFishIndex = 0; missingFishIndex < missingFishesCount; missingFishIndex++)
                 {
-                    bool fishShouldBeSpawned = Rand.MTBEventOccurs(fishSpawnMtb, 1, MapComponent_FishingZone.updatePeriodInTicks);
+                    bool fishShouldBeSpawned = Rand.MTBEventOccurs(cachedFishSpawnMtb, 1, MapComponent_FishingZone.updatePeriodInTicks);
                     if (fishShouldBeSpawned)
                     {
                         this.fishStock++;
@@ -169,10 +173,13 @@ namespace FishIndustry
         }
 
         // ===================== Other Functions =====================
-        public void UpdateAquaticCellsAround()
+        /// <summary>
+        /// Update valid aquatic cells around the fishing pier.
+        /// </summary>
+        public void UpdateCells()
         {
             this.aquaticCells.Clear();
-            foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.Position, aquaticAreaRadius, false))
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(this.fishingSpotCell, aquaticAreaRadius, false))
             {
                 // Same room cannot be checked for deep water.
                 if (cell.InBounds(this.Map) == false)
@@ -208,17 +215,17 @@ namespace FishIndustry
             allowFishingButton.groupKey = groupKeyBase + 1;
             buttonList.Add(allowFishingButton);
 
-            Command_Toggle allowUsingCornButton = new Command_Toggle();
-            allowUsingCornButton.icon = ContentFinder<Texture2D>.Get(ThingDef.Named("RawCorn").graphicData.texPath);
-            allowUsingCornButton.defaultLabel = "FishIndustry.AllowUsingCornLabel".Translate();
-            allowUsingCornButton.defaultDesc = "FishIndustry.AllowUsingCornDesc".Translate();
-            allowUsingCornButton.isActive = (() => this.allowUsingCorn);
-            allowUsingCornButton.toggleAction = delegate
+            Command_Toggle allowUsingGrainButton = new Command_Toggle();
+            allowUsingGrainButton.icon = ContentFinder<Texture2D>.Get(ThingDef.Named("RawCorn").graphicData.texPath);
+            allowUsingGrainButton.defaultLabel = "FishIndustry.AllowUsingGrainLabel".Translate();
+            allowUsingGrainButton.defaultDesc = "FishIndustry.AllowUsingGrainDesc".Translate();
+            allowUsingGrainButton.isActive = (() => this.allowUsingGrain);
+            allowUsingGrainButton.toggleAction = delegate
             {
-                this.allowUsingCorn = !this.allowUsingCorn;
+                this.allowUsingGrain = !this.allowUsingGrain;
             };
-            allowUsingCornButton.groupKey = groupKeyBase + 2;
-            buttonList.Add(allowUsingCornButton);
+            allowUsingGrainButton.groupKey = groupKeyBase + 2;
+            buttonList.Add(allowUsingGrainButton);
 
             return buttonList;
         }
@@ -241,28 +248,28 @@ namespace FishIndustry
             if (this.maxFishStock < 0)
             {
                 // Update after a savegame loading for example.
-                UpdateAquaticCellsAround();
+                UpdateCells();
                 Util_Zone_Fishing.UpdateZoneProperties(this.Map, this.aquaticCells, ref this.oceanCellsCount, ref this.riverCellsCount, ref this.marshCellsCount,
                     ref this.isAffectedByBiome, ref this.isAffectedByToxicFallout, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
+                this.cachedSpeciesInZone = Util_Zone_Fishing.GetSpeciesInZoneText(this.Map.Biome, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount);
             }
             // Fish stock.
             stringBuilder.Append("FishIndustry.FishStock".Translate(this.fishStock));
+            if (Prefs.DevMode)
+            {
+                stringBuilder.Append("/" + this.maxFishStock);
+            }
             // Status.
             stringBuilder.AppendLine();
             if (this.viableCellsCount < Util_Zone_Fishing.minCellsToSpawnFish)
             {
-                stringBuilder.Append("FishIndustry.NotViableNow".Translate());
+                stringBuilder.Append("FishIndustry.NotEnoughViableSpace".Translate());
             }
             else
             {
-                stringBuilder.Append("FishIndustry.SpeciesInZone".Translate() + Util_Zone_Fishing.GetSpeciesInZoneText(this.Map, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount));
+                stringBuilder.Append("FishIndustry.SpeciesInZone".Translate() + this.cachedSpeciesInZone);
             }
             // Affections.
-            if (this.aquaticCells.Count < Util_Zone_Fishing.minCellsToSpawnFish)
-            {
-                stringBuilder.AppendLine();
-                stringBuilder.Append("FishIndustry.TooSmallZone".Translate());
-            }
             if (this.isAffectedByBiome
                 || this.isAffectedByToxicFallout
                 || this.isAffectedByBadTemperature)
@@ -272,7 +279,7 @@ namespace FishIndustry
                 StringBuilder effects = new StringBuilder();
                 if (this.isAffectedByBiome)
                 {
-                    effects.Append("FishIndustry.AffectedByBiome".Translate());
+                    effects.AppendWithComma("FishIndustry.AffectedByBiome".Translate());
                 }
                 if (this.isAffectedByToxicFallout)
                 {
@@ -283,6 +290,12 @@ namespace FishIndustry
                     effects.AppendWithComma("FishIndustry.AffectedByBadTemperature".Translate());
                 }
                 stringBuilder.Append(effects);
+            }
+            // Debug.
+            if (Prefs.DevMode)
+            {
+                stringBuilder.AppendLine();
+                stringBuilder.Append("Spawn mean time: " + GenDate.ToStringTicksToPeriod((int)cachedFishSpawnMtb));
             }
             return stringBuilder.ToString();
         }

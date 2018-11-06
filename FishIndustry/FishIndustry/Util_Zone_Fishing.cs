@@ -16,8 +16,7 @@ namespace FishIndustry
     /// Util_Zone_Fishing utility class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public static class Util_Zone_Fishing
     {
         public const int minCellsToSpawnFish = 50;
@@ -30,12 +29,8 @@ namespace FishIndustry
                 || (terrainDef == TerrainDefOf.WaterMovingShallow)
                 || (terrainDef == TerrainDefOf.WaterDeep)
                 || (terrainDef == TerrainDefOf.WaterOceanDeep)
-                || (terrainDef == TerrainDefOf.WaterMovingDeep)
-                || (terrainDef == TerrainDef.Named("Marsh"))
-                // Patch for bridge mod compatibility.
-                || terrainDef.defName.Contains("WaterShallow")
-                || terrainDef.defName.Contains("WaterDeep")
-                || terrainDef.defName.Contains("Marsh"))
+                || (terrainDef == TerrainDefOf.WaterMovingChestDeep)
+                || (terrainDef == TerrainDef.Named("Marsh")))
             {
                 return true;
             }
@@ -61,7 +56,7 @@ namespace FishIndustry
 
             UpdateViableCells(map, aquaticCells, ref oceanCellsCount, ref riverCellsCount, ref marshCellsCount, ref zoneIsOutdoor, ref zoneIsUnroofed);
             UpdateAffectionIndicators(map, zoneIsOutdoor, zoneIsUnroofed, ref isAffectedByBiome, ref isAffectedByToxicFallout, ref isAffectedByBadTemperature);
-            UpdateMaxFishStock(map, oceanCellsCount + riverCellsCount + marshCellsCount, isAffectedByBiome, isAffectedByToxicFallout, isAffectedByBadTemperature, ref maxFishStock);
+            UpdateMaxFishStock(map.Biome, oceanCellsCount + riverCellsCount + marshCellsCount, isAffectedByBiome, isAffectedByToxicFallout, isAffectedByBadTemperature, ref maxFishStock);
         }
 
         public static void UpdateViableCells(Map map, List<IntVec3> aquaticCells,
@@ -109,7 +104,7 @@ namespace FishIndustry
             ref bool isAffectedByBiome, ref bool isAffectedByToxicFallout, ref bool isAffectedByBadTemperature)
         {
             // Update biome indicator.
-            if (GetBiomeMaxFishStockFactor(map) < 1f)
+            if (GetBiomeMaxFishStockFactor(map.Biome) < 1f)
             {
                 isAffectedByBiome = true;
             }
@@ -128,7 +123,7 @@ namespace FishIndustry
             }
         }
 
-        public static void UpdateMaxFishStock(Map map, int viableCellsCount, bool isAffectedByBiome, bool isAffectedByToxicFallout, bool isAffectedByBadTemperature, ref int maxFishStock)
+        public static void UpdateMaxFishStock(BiomeDef biome, int viableCellsCount, bool isAffectedByBiome, bool isAffectedByToxicFallout, bool isAffectedByBadTemperature, ref int maxFishStock)
         {
             const float minCellsPerFish = 50f;
             float environmentFactor = 1f; // [0.5f; 1f].
@@ -139,7 +134,7 @@ namespace FishIndustry
                 maxFishStock = 0;
                 return;
             }
-            biomeFactor = GetBiomeMaxFishStockFactor(map);
+            biomeFactor = GetBiomeMaxFishStockFactor(biome);
             if (isAffectedByToxicFallout)
             {
                 environmentFactor -= 0.25f;
@@ -149,11 +144,11 @@ namespace FishIndustry
                 environmentFactor -= 0.25f;
             }
             float maxFishStockFloat = ((float)viableCellsCount / minCellsPerFish) * biomeFactor * environmentFactor;
-            maxFishStock = Mathf.RoundToInt(maxFishStockFloat);
+            maxFishStock = Math.Max(1, Mathf.RoundToInt(maxFishStockFloat));
         }
 
-        // FishSpawnRateFactor in [1f; 4f].
-        public static void UpdateFishSpawnRateFactor(Map map, int oceanCellsCount, int riverCellsCount, int marshCellsCount, bool isAffectedByToxicFallout, bool isAffectedByBadTemperature, ref float spawnRateFactor)
+        // FishSpawnRateFactor in [1f; 4f]. This modifies the average time necessary to spawn a new fish.
+        public static void ComputeFishSpawnRateFactor(Map map, int oceanCellsCount, int riverCellsCount, int marshCellsCount, bool isAffectedByToxicFallout, bool isAffectedByBadTemperature, out float spawnRateFactor)
         {
             // Fishstock spawn rate in ocean > river > marsh.
             const float oceanCellFactor = 1f;
@@ -167,7 +162,7 @@ namespace FishIndustry
                 return;
             }
 
-            float biomeFactor = GetBiomeFishSpawnRateFactor(map);
+            float biomeFactor = GetBiomeFishSpawnRateFactor(map.Biome);
             float waterQualityFactor = viableCellsCount / (oceanCellsCount * oceanCellFactor + riverCellsCount * riverCellFactor + marshCellsCount * marshCellFactor); // [1f; 2f].
             float seasonFactor = 1f; // [1f; 2f].
             if (isAffectedByBadTemperature
@@ -181,63 +176,65 @@ namespace FishIndustry
                 seasonFactor += 0.5f;
             }
             spawnRateFactor = biomeFactor * waterQualityFactor * seasonFactor;
+            spawnRateFactor /= Settings.fishRespawnRateFactor;
             return;
         }
 
-        public static float GetBiomeMaxFishStockFactor(Map map)
+        public static float GetBiomeMaxFishStockFactor(BiomeDef biome)
         {
             float biomeFactor = 1f;
-            if (map.Biome == BiomeDefOf.BorealForest)
+            if (biome == BiomeDefOf.BorealForest)
             {
                 biomeFactor = 0.8f;
             }
-            else if ((map.Biome == BiomeDefOf.Tundra)
-                || (map.Biome == BiomeDefOf.AridShrubland))
+            else if ((biome == BiomeDefOf.Tundra)
+                || (biome == BiomeDefOf.AridShrubland))
             {
                 biomeFactor = 0.6f;
             }
-            else if ((map.Biome == BiomeDefOf.IceSheet)
-                || (map.Biome == BiomeDefOf.Desert))
+            else if ((biome == BiomeDefOf.SeaIce)
+                || (biome == BiomeDefOf.Desert))
             {
                 biomeFactor = 0.4f;
             }
-            else if ((map.Biome == BiomeDefOf.SeaIce)
-                || (map.Biome == BiomeDef.Named("ExtremeDesert")))
+            else if ((biome == BiomeDefOf.IceSheet)
+                || (biome == BiomeDef.Named("ExtremeDesert")))
             {
                 biomeFactor = 0.2f;
             }
             return biomeFactor;
         }
 
-        public static float GetBiomeFishSpawnRateFactor(Map map)
+        // This impacts negatively the respawn rate.
+        public static float GetBiomeFishSpawnRateFactor(BiomeDef biome)
         {
             float biomeFactor = 1f;
-            if (map.Biome == BiomeDefOf.BorealForest)
+            if (biome == BiomeDefOf.BorealForest)
             {
                 biomeFactor = 1.2f;
             }
-            else if ((map.Biome == BiomeDefOf.Tundra)
-                || (map.Biome == BiomeDefOf.AridShrubland))
+            else if ((biome == BiomeDefOf.Tundra)
+                || (biome == BiomeDefOf.AridShrubland))
             {
                 biomeFactor = 1.4f;
             }
-            else if ((map.Biome == BiomeDefOf.IceSheet)
-                || (map.Biome == BiomeDefOf.Desert))
+            else if ((biome == BiomeDefOf.SeaIce)
+                || (biome == BiomeDefOf.Desert))
             {
                 biomeFactor = 1.6f;
             }
-            else if ((map.Biome == BiomeDefOf.SeaIce)
-                || (map.Biome == BiomeDef.Named("ExtremeDesert")))
+            else if ((biome == BiomeDefOf.IceSheet)
+                || (biome == BiomeDef.Named("ExtremeDesert")))
             {
                 biomeFactor = 1.8f;
             }
             return biomeFactor;
         }
         
-        public static string GetSpeciesInZoneText(Map map, int oceanCellsCount, int riverCellsCount, int marshCellsCount)
+        public static string GetSpeciesInZoneText(BiomeDef biome, int oceanCellsCount, int riverCellsCount, int marshCellsCount)
         {
             StringBuilder speciesInZone = new StringBuilder();
-            foreach (PawnKindDef_FishSpecies species in Util_FishIndustry.GetFishSpeciesList(map.Biome))
+            foreach (PawnKindDef_FishSpecies species in Util_FishIndustry.GetFishSpeciesList(biome))
             {
                 if ((oceanCellsCount > 0)
                     && (species.livesInOcean))

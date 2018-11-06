@@ -15,8 +15,7 @@ namespace FishIndustry
     /// WorkGiver_FishingZone class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class WorkGiver_FishingZone : WorkGiver_Scanner
     {
         public override PathEndMode PathEndMode
@@ -37,7 +36,7 @@ namespace FishIndustry
                 if ((fishingZone != null)
                     && fishingZone.allowFishing)
                 {
-                    foreach (IntVec3 cell in fishingZone.fishesPosition)
+                    foreach (IntVec3 cell in fishingZone.fishingSpots)
                     {
                         if ((cell.IsForbidden(pawn) == false)
                             && pawn.CanReserveAndReach(cell, this.PathEndMode, Danger.Some))
@@ -49,8 +48,8 @@ namespace FishIndustry
             }
             return jobCells;
         }
-        
-        public override Job JobOnCell(Pawn pawn, IntVec3 cell)
+
+        public override Job JobOnCell(Pawn pawn, IntVec3 cell, bool forced = false)
         {
             return new Job(Util_FishIndustry.FishAtFishingZoneJobDef, cell);
         }

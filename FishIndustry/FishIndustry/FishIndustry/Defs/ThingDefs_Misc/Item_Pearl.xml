@@ -7,7 +7,7 @@
     <description>A beautiful pearl. Useless as many luxuries but so nice to wear!</description>
     <graphicData>
       <texPath>Things/Item/Resource/Pearl</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
+      <graphicClass>Graphic_StackCount</graphicClass>
     </graphicData>
     <resourceReadoutPriority>Middle</resourceReadoutPriority>
     <drawGUIOverlay>true</drawGUIOverlay>
@@ -19,6 +19,7 @@
       <MarketValue>250</MarketValue>
       <MaxHitPoints>20</MaxHitPoints>
       <Flammability>0.2</Flammability>
+      <Mass>0.005</Mass>
     </statBases>
     <thingCategories>
       <li>Items</li>

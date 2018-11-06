@@ -15,8 +15,7 @@ namespace FishIndustry
     /// WorkGiver_AquacultureBasin class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class WorkGiver_AquacultureBasin : WorkGiver_Scanner
     {
 		public override ThingRequest PotentialWorkThingRequest
@@ -54,7 +53,9 @@ namespace FishIndustry
                 return false;
             }
 
-            if (aquacultureBasin.breedingIsFinished)
+            if (aquacultureBasin.fishIsHarvestable
+                || aquacultureBasin.speciesShouldBeChanged
+                || aquacultureBasin.shouldBeMaintained)
             {
                 return true;
             }
@@ -63,10 +64,21 @@ namespace FishIndustry
 
 		public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
-            Job job = new Job();
+            Job job = null;
             Building_AquacultureBasin aquacultureBasin = t as Building_AquacultureBasin;
 
-            job = new Job(Util_FishIndustry.HarvestAquacultureBasinProductionJobDef, aquacultureBasin);
+            if (aquacultureBasin.fishIsHarvestable)
+            {
+                job = new Job(Util_FishIndustry.AquacultureBasinHarvestJobDef, aquacultureBasin);
+            }
+            else if (aquacultureBasin.speciesShouldBeChanged)
+            {
+                job = new Job(Util_FishIndustry.AquacultureBasinChangeSpeciesJobDef, aquacultureBasin);
+            }
+            else if (aquacultureBasin.shouldBeMaintained)
+            {
+                job = new Job(Util_FishIndustry.AquacultureBasinMaintainJobDef, aquacultureBasin);
+            }
             return job;
 		}
     }

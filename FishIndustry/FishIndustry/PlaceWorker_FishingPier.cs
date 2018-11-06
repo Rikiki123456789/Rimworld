@@ -13,12 +13,11 @@ using Verse;         // RimWorld universal objects are here
 namespace FishIndustry
 {
     /// <summary>
-    /// FishingPier custom PlaceWorker class.
+    /// PlaceWorker_FishingPier class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
-    public class PlaceWorker_FishingPierSpawner : PlaceWorker
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
+    public class PlaceWorker_FishingPier : PlaceWorker
     {
         public static int lastMoteUpdateSecond = 0;
         public static int lastMoteUpdateTick = 0;
@@ -57,21 +56,18 @@ namespace FishIndustry
                 return new AcceptanceReport("FishIndustry.TooCloseFishingZone".Translate());
             }
 
-            // Check fishing pier bank cell is on a "solid" terrain.
-            if (Util_Zone_Fishing.IsAquaticTerrain(map, loc))
-            {
-                return new AcceptanceReport("FishIndustry.FishingPier_MustTouchBank".Translate());
-            }
-            // Check fishing pier middle and river cells are on water.
-            if ((Util_Zone_Fishing.IsAquaticTerrain(map, loc + new IntVec3(0, 0, 1).RotatedBy(rot)) == false)
-                || (Util_Zone_Fishing.IsAquaticTerrain(map, loc + new IntVec3(0, 0, 2).RotatedBy(rot)) == false))
+            // Check fishing pier is on water.
+            if ((Util_Zone_Fishing.IsAquaticTerrain(map, loc + new IntVec3(0, 0, -1).RotatedBy(rot)) == false)
+                || (Util_Zone_Fishing.IsAquaticTerrain(map, loc + new IntVec3(0, 0, 0).RotatedBy(rot)) == false)
+                || (Util_Zone_Fishing.IsAquaticTerrain(map, loc + new IntVec3(0, 0, 1).RotatedBy(rot)) == false))
             {
                 return new AcceptanceReport("FishIndustry.FishingPier_PierMustBeOnWater".Translate());
             }
+
             // Check fishing zone is on water.
             for (int xOffset = -1; xOffset <= 1; xOffset++)
             {
-                for (int yOffset = 3; yOffset <= 5; yOffset++)
+                for (int yOffset = 2; yOffset <= 4; yOffset++)
                 {
                     if (Util_Zone_Fishing.IsAquaticTerrain(map, loc + new IntVec3(xOffset, 0, yOffset).RotatedBy(rot)) == false)
                     {
@@ -94,6 +90,17 @@ namespace FishIndustry
             }
 
             return true;
+        }
+
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
+        {
+            base.DrawGhost(def, center, rot, ghostCol);
+            SimpleColor circleColor = SimpleColor.Red;
+            if (ghostCol == Designator_Place.CanPlaceColor)
+            {
+                circleColor = SimpleColor.Green;
+            }
+            GenDraw.DrawCircleOutline(center.ToVector3Shifted() + new Vector3(0, AltitudeLayer.MetaOverlays.AltitudeFor(), 3).RotatedBy(rot.AsAngle), 1.5f, circleColor);
         }
 
         public void RemoveLastRespawnRateMote(Map map)
@@ -119,8 +126,9 @@ namespace FishIndustry
             {
                 return;
             }
-            int aquaticCellsAround = Util_PlaceWorker.GetAquaticCellsInRadius(map, position + new IntVec3(0, 0, 1).RotatedBy(rotation), Building_FishingPier.aquaticAreaRadius);
-            int aquaticCellsProportionInPercent = Mathf.RoundToInt(((float)aquaticCellsAround / (float)(GenRadial.NumCellsInRadius(Building_FishingPier.aquaticAreaRadius) - 3)) * 100f); // 3 cells will actually be occupied by the pier.
+            // Get aquatic cells around the fishing spot.
+            int aquaticCellsAround = Util_PlaceWorker.GetAquaticCellsInRadius(map, position + new IntVec3(0, 0, 2).RotatedBy(rotation), Building_FishingPier.aquaticAreaRadius) - 3; // 3 cells will actually be occupied by the pier.
+            int aquaticCellsProportionInPercent = Mathf.RoundToInt(((float)aquaticCellsAround / (float)(GenRadial.NumCellsInRadius(Building_FishingPier.aquaticAreaRadius) - 3)) * 100f);
 
             Color textColor = Color.red;
             string aquaticCellsProportionAsText = "";
