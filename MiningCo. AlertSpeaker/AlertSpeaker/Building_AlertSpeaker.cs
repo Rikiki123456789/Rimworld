@@ -16,8 +16,7 @@ namespace AlertSpeaker
     /// AlertSpeaker class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     [StaticConstructorOnStartup]
     class Building_AlertSpeaker : Building
     {
@@ -26,14 +25,15 @@ namespace AlertSpeaker
         public const int earlyPhaseTicksThreshold = GenDate.TicksPerDay / 4; // Maximum duration the adrenaline boost can last: 1/4 day.
 
         // Danger phase.
-        public static int randomTickOffset = 0; // To avoid concomitant CPU load.
-        public static int lastUpdateTick = 0;
+        public static int updatePeriodInTicks = GenTicks.TicksPerRealSecond;
+        public static int nextUpdateTick = 0;
         public static int alertStartTick = 0;
         public static StoryDanger previousDangerRate = StoryDanger.None;
         public static StoryDanger currentDangerRate = StoryDanger.None;
 
         // Drawing parameters.
         public CompGlower glowerComp = null;
+        public static int lastDrawingUpdateTick = 0;
         public static float glowRadius = 0f;
         public static ColorInt glowColor = new ColorInt(0, 0, 0, 255);
         public static float redAlertLightAngle = 0f;
@@ -45,7 +45,7 @@ namespace AlertSpeaker
         // Sound parameters.
         public static bool soundIsEnabled = true;
         public static int nextAlarmSoundTick = 0;
-        public const int alarmSoundPeriod = 20 * GenTicks.TicksPerRealSecond; // 20 s.
+        public const int alarmSoundPeriodInTicks = 20 * GenTicks.TicksPerRealSecond; // 20 s.
         public static SoundDef lowDangerAlarmSound = SoundDef.Named("LowDangerAlarm");
         public static SoundDef highDangerAlarmSound = SoundDef.Named("HighDangerAlarm");
 
@@ -61,7 +61,6 @@ namespace AlertSpeaker
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
-            randomTickOffset = Rand.Range(0, GenTicks.TicksPerRealSecond);
             this.glowerComp = this.GetComp<CompGlower>();
             this.powerComp = this.GetComp<CompPowerTrader>();
         }
@@ -72,6 +71,7 @@ namespace AlertSpeaker
         public override void ExposeData()
         {
             base.ExposeData();
+            Scribe_Values.Look<int>(ref nextUpdateTick, "nextUpdateTick", 0);
             Scribe_Values.Look<int>(ref alertStartTick, "alertStartTick", 0);
             Scribe_Values.Look<StoryDanger>(ref previousDangerRate, "previousDangerRate", StoryDanger.None);
             Scribe_Values.Look<StoryDanger>(ref currentDangerRate, "currentDangerRate", StoryDanger.None);
@@ -101,9 +101,8 @@ namespace AlertSpeaker
         /// </summary>
         public static List<IntVec3> GetAreaOfEffectCells(Map map, IntVec3 position)
         {
-            IEnumerable<IntVec3> cellsInRange = GenRadial.RadialCellsAround(position, Building_AlertSpeaker.alertSpeakerMaxRange, true);
             List<IntVec3> effectZoneCells = new List<IntVec3>();
-            foreach (IntVec3 cell in cellsInRange)
+            foreach (IntVec3 cell in GenRadial.RadialCellsAround(position, Building_AlertSpeaker.alertSpeakerMaxRange, true))
             {
                 if (cell.GetRoom(map) == position.GetRoom(map))
                 {
@@ -135,32 +134,36 @@ namespace AlertSpeaker
                 return;
             }
 
-            int tickCounter = Find.TickManager.TicksGame;
-            if (tickCounter > lastUpdateTick)
+            // This treatment is performed periodically only once for all speakers.
+            if (Find.TickManager.TicksGame > nextUpdateTick) // Strict greater than so this treatment is only done once for all alert speakers.
             {
-                lastUpdateTick = tickCounter;
-                if ((tickCounter % GenTicks.TicksPerRealSecond) == randomTickOffset)
+                nextUpdateTick = Find.TickManager.TicksGame + updatePeriodInTicks;
+                previousDangerRate = currentDangerRate;
+                currentDangerRate = this.Map.dangerWatcher.DangerRating;
+                if (currentDangerRate != previousDangerRate)
                 {
-                    // Danger rate is refreshed only once per second for all speakers.
-                    previousDangerRate = currentDangerRate;
-                    currentDangerRate = this.Map.dangerWatcher.DangerRating;
-                    if (currentDangerRate != previousDangerRate)
-                    {
-                        PerformTreatmentOnDangerRateTransition();
-                    }
+                    PerformTreatmentOnDangerRateChange();
                 }
+
                 PerformSoundTreatment();
-                ComputeDrawingParameters();
             }
 
-            if ((tickCounter % GenTicks.TicksPerRealSecond) == randomTickOffset)
+            // This treatment is performed by all alert speaker on update tick.
+            if (nextUpdateTick == Find.TickManager.TicksGame + updatePeriodInTicks)
             {
-                if (powerComp.PowerOn)
+                UpdateGlowerParameters();
+                if (this.powerComp.PowerOn)
                 {
-                    PerformTreatmentDuringAlert();
+                    TryApplyAdrenalineBonus();
                 }
             }
-            PerformDrawingTreatment();
+
+            // This treatment is performed every tick only once for all speakers.
+            if (Find.TickManager.TicksGame > lastDrawingUpdateTick)
+            {
+                lastDrawingUpdateTick = Find.TickManager.TicksGame;
+                UpdateDrawingParameters();
+            }
         }
 
         /// <summary>
@@ -175,7 +178,7 @@ namespace AlertSpeaker
         /// Transition 4: decreased danger rating.
         ///   => keep the medium adrenaline boost (nothing to do).
         /// </summary>
-        public void PerformTreatmentOnDangerRateTransition()
+        public void PerformTreatmentOnDangerRateChange()
         {
             // Transition 1: beginning alert.
             if ((previousDangerRate == StoryDanger.None)
@@ -219,14 +222,14 @@ namespace AlertSpeaker
         }
         
         /// <summary>
-        /// Performs the treatments during an alert according to the current danger rate.
+        /// Try to apply an adrenaline boost according to the current danger rate.
         ///   o danger rate == None => no bonus.
         ///   o danger rate == Low  => small adrenaline.
         ///   o danger rate == High => medium adrenaline.
         ///   
         /// No bonus is applied when alert is lasting for too long.
         /// </summary>
-        public void PerformTreatmentDuringAlert()
+        public void TryApplyAdrenalineBonus()
         {
             if (currentDangerRate == StoryDanger.None)
             {
@@ -235,6 +238,7 @@ namespace AlertSpeaker
 
             if (Find.TickManager.TicksGame <= alertStartTick + earlyPhaseTicksThreshold)
             {
+                // Alert is on for not too long.
                 foreach (Pawn colonist in this.Map.mapPawns.FreeColonists)
                 {
                     if ((colonist.Downed == false)
@@ -349,7 +353,7 @@ namespace AlertSpeaker
             }
             if (Find.TickManager.TicksGame >= nextAlarmSoundTick)
             {
-                nextAlarmSoundTick = Find.TickManager.TicksGame + alarmSoundPeriod * (int)Find.TickManager.CurTimeSpeed;
+                nextAlarmSoundTick = Find.TickManager.TicksGame + alarmSoundPeriodInTicks * (int)Find.TickManager.CurTimeSpeed;
                 if (currentDangerRate == StoryDanger.Low)
                 {
                     PlayOneLowDangerAlarmSound();
@@ -386,12 +390,12 @@ namespace AlertSpeaker
         // ===================== Drawing functions =====================
 
         /// <summary>
-        /// Compute the global drawing parameters.
-        ///   o danger rate == None => small green light.
-        ///   o danger rate == Low  => medium yellow light ramping up and down.
-        ///   o danger rate == High => big flashing red light.
+        /// Update the global drawing parameters.
+        ///   o danger rate == None => no light.
+        ///   o danger rate == Low  => yellow light.
+        ///   o danger rate == High => rotating red light.
         /// </summary>
-        public void ComputeDrawingParameters()
+        public void UpdateDrawingParameters()
         {
             const float rotationPeriod = 2f * GenTicks.TicksPerRealSecond;
             const float rotationAngleStep = 360f / rotationPeriod;
@@ -402,7 +406,7 @@ namespace AlertSpeaker
                 case StoryDanger.None:
                     glowRadius = 0;
                     glowColor.r = 0;
-                    glowColor.g = 220;
+                    glowColor.g = 0;
                     glowColor.b = 0;
                     break;
                 case StoryDanger.Low:
@@ -436,9 +440,9 @@ namespace AlertSpeaker
         }
 
         /// <summary>
-        /// Performs the drawing treatment. Applies the drawing parameters.
+        /// Performs the glower parameters if necessary.
         /// </summary>
-        public void PerformDrawingTreatment()
+        public void UpdateGlowerParameters()
         {
             if ((this.glowerComp.Props.glowRadius != glowRadius)
                 || (this.glowerComp.Props.glowColor != glowColor))
@@ -460,7 +464,7 @@ namespace AlertSpeaker
             if ((currentDangerRate == StoryDanger.High)
                 && (this.powerComp.PowerOn))
             {
-                redAlertLightMatrix.SetTRS(this.Position.ToVector3Shifted() + new Vector3(0f, 10f, -0.25f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect, (redAlertLightAngle + this.Rotation.AsAngle).ToQuat(), redAlertLightScale);
+                redAlertLightMatrix.SetTRS(this.Position.ToVector3Shifted() + new Vector3(0f, 10f, -0.25f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect, (this.Rotation.AsAngle + redAlertLightAngle).ToQuat(), redAlertLightScale);
                 Graphics.DrawMesh(MeshPool.plane10, redAlertLightMatrix, FadedMaterialPool.FadedVersionOf(redAlertLight, redAlertLightIntensity), 0);
             }
 

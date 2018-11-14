@@ -5,10 +5,6 @@
     <defName>ResearchAlertSpeaker</defName>
     <label>alert speaker</label>
     <description>Design alert speakers to warn your colonists when the colony is attacked and boost their adrenaline.</description>
-    <descriptionDiscovered>You have developped the alert speakers.
-
-- You can now build alert speakers to warn your colonists from incoming threats.
-    </descriptionDiscovered>
     <techLevel>Industrial</techLevel>
     <baseCost>500</baseCost>
     <prerequisites>

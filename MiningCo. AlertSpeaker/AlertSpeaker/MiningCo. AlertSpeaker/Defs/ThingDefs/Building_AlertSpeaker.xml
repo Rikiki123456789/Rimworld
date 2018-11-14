@@ -2,18 +2,6 @@
 
 <Defs>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>AlertSpeaker</defName>
     <label>Alert speaker</label>
@@ -27,10 +15,13 @@
     <placeWorkers>
       <li>AlertSpeaker.PlaceWorker_AlertSpeaker</li>
     </placeWorkers>
-    <minifiedDef>MinifiedAlertSpeaker</minifiedDef>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
     <costList>
       <Steel>20</Steel>
-      <Component>1</Component>
+      <ComponentIndustrial>1</ComponentIndustrial>
     </costList>
     <altitudeLayer>Skyfaller</altitudeLayer>
     <fillPercent>0.2</fillPercent>
@@ -48,7 +39,7 @@
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
+        <shortCircuitInRain>false</shortCircuitInRain>
         <basePowerConsumption>50</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable"/>
