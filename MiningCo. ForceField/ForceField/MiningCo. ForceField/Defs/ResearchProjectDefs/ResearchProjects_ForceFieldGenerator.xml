@@ -4,13 +4,7 @@
   <ResearchProjectDef>
     <defName>ResearchForceField</defName>
     <label>force field</label>
-    <description>Local tribes are sometimes not really "cooperative" when an excavation outpost is established in "their" territory.
-Force field generators are perfect to protect your security forces under a rain of arrows and pila.</description>
-    <descriptionDiscovered>You have developped the force field generator.
-
-- You can now build force field generators to protect your security forces from incoming projectiles.
-- Watch out for heavy rockets though!
-    </descriptionDiscovered>
+    <description>Design force field generator. This advanced defensive building is able to absorb or repel incoming projectiles until it is completely discharged.</description>
     <techLevel>Industrial</techLevel>
     <baseCost>3000</baseCost>
     <prerequisites>

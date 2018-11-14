@@ -15,8 +15,7 @@ namespace ForceField
     /// Building_ForceField class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     [StaticConstructorOnStartup]
     public class Building_ForceFieldGenerator : Building
     {
@@ -30,8 +29,8 @@ namespace ForceField
         {
             Offline,
             Initializing,
-            Charging,
             Sustaining,
+            Charging,
             Discharging
         }
         
@@ -68,8 +67,6 @@ namespace ForceField
         };
         public Matrix4x4 forceFieldAbsorbtionMatrix = default(Matrix4x4);
         
-        public const int drawingPeriodInTicks = 120;
-        public int drawingCounterInTicks = 0;
         public int nextSparkTick = 0;
 
         public float[] matrixFadingCoefficient = new float[5];
@@ -118,30 +115,40 @@ namespace ForceField
 
             this.properties = (ThingDef_FieldGenerator)this.def;
 
+            // Components initialization.
+            this.powerComp = base.GetComp<CompPowerTrader>();
+            
             // Force field covered cells initialization.
             this.coveredCells = Building_ForceFieldGenerator.GetCoveredCells(this.Position, this.Rotation);
 
             // Force field effect positions.
-            Vector3 effectCell = new Vector3();
-            effectCell = this.Position.ToVector3Shifted() + new Vector3(-2.1f, 0f, 0.1f).RotatedBy(this.Rotation.AsAngle);
-            effectCells.Add(effectCell);
+            Vector3 effectCell = this.Position.ToVector3Shifted() + new Vector3(-2.1f, 0f, 0.1f).RotatedBy(this.Rotation.AsAngle);
+            this.effectCells.Add(effectCell);
             effectCell = this.Position.ToVector3Shifted() + new Vector3(-1.2f, 0f, 0.8f).RotatedBy(this.Rotation.AsAngle);
-            effectCells.Add(effectCell);
+            this.effectCells.Add(effectCell);
             effectCell = this.Position.ToVector3Shifted() + new Vector3(0f, 0f, 1f).RotatedBy(this.Rotation.AsAngle);
-            effectCells.Add(effectCell);
+            this.effectCells.Add(effectCell);
             effectCell = this.Position.ToVector3Shifted() + new Vector3(1.2f, 0f, 0.8f).RotatedBy(this.Rotation.AsAngle);
-            effectCells.Add(effectCell);
+            this.effectCells.Add(effectCell);
             effectCell = this.Position.ToVector3Shifted() + new Vector3(2.1f, 0f, 0.1f).RotatedBy(this.Rotation.AsAngle);
-            effectCells.Add(effectCell);
+            this.effectCells.Add(effectCell);
 
-            // Components initialization.
-            powerComp = base.GetComp<CompPowerTrader>();
-            
             // Textures initialization.
-            forceFieldMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
-            forceFieldAbsorbtionMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
+            this.forceFieldMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
+            this.forceFieldAbsorbtionMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
         }
 
+        /// <summary>
+        /// Reset shield when moving it.
+        /// </summary>
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        {
+            this.effectCells.Clear();
+            this.forceFieldState = ForceFieldState.Offline;
+            this.forceFieldCharge = 0;
+            base.DeSpawn(mode);
+        }
+        
         /// <summary>
         /// Saves and loads internal state variables (stored in savegame data).
         /// </summary>
@@ -152,6 +159,9 @@ namespace ForceField
             Scribe_Values.Look<float>(ref forceFieldCharge, "forceFieldCharge");
         }
 
+        /// <summary>
+        /// Get the cells protected by the force field.
+        /// </summary>
         public static List<IntVec3> GetCoveredCells(IntVec3 origin, Rot4 rotation)
         {
             List<IntVec3> coveredCells = new List<IntVec3>();
@@ -167,6 +177,10 @@ namespace ForceField
         }
 
         // ===================== Main treatment =====================
+        /// <summary>
+        /// Adjust power consumption acording to the state.
+        /// Try to absorb a projectile if force field is charged.
+        /// </summary>
         public override void Tick()
         {
             base.Tick();
@@ -176,9 +190,8 @@ namespace ForceField
                 switch (this.forceFieldState)
                 {
                     case ForceFieldState.Offline:
-                        this.powerComp.powerOutputInt = -10;
-                        if (((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) >= -this.properties.powerOutputDuringInitialization)
-                            || (this.powerComp.PowerNet.CurrentStoredEnergy() > 0))
+                        this.powerComp.powerOutputInt = -10; // Just a small energy drain so it only starts initialization when power is available.
+                        if (PowerGridHasEnoughPower(this.properties.powerOutputDuringInitialization))
                         {
                             this.initializationElapsedTimeInTicks = 0;
                             this.forceFieldState = ForceFieldState.Initializing;
@@ -189,8 +202,17 @@ namespace ForceField
                         this.initializationElapsedTimeInTicks++;
                         if (this.initializationElapsedTimeInTicks >= this.properties.initializationDurationInTicks)
                         {
+                            this.forceFieldState = ForceFieldState.Sustaining;
+                            this.forceFieldCharge = Mathf.Max((10f / 100f) * this.properties.forceFieldMaxCharge, this.forceFieldCharge);
+                            SoundDefOf.EnergyShield_Reset.PlayOneShot(new TargetInfo(this.Position, this.Map));
+                        }
+                        break;
+                    case ForceFieldState.Sustaining:
+                        this.powerComp.powerOutputInt = this.properties.powerOutputDuringSustain;
+                        if ((this.forceFieldCharge < this.properties.forceFieldMaxCharge)
+                            && PowerGridHasEnoughPower(this.properties.powerOutputDuringCharge - this.properties.powerOutputDuringSustain))
+                        {
                             this.forceFieldState = ForceFieldState.Charging;
-                            this.forceFieldCharge = (10f / 100) * this.properties.forceFieldMaxCharge;
                         }
                         break;
                     case ForceFieldState.Charging:
@@ -202,18 +224,11 @@ namespace ForceField
                             this.forceFieldState = ForceFieldState.Sustaining;
                         }
                         break;
-                    case ForceFieldState.Sustaining:
-                        this.powerComp.powerOutputInt = this.properties.powerOutputDuringSustain;
-                        if (this.forceFieldCharge < this.properties.forceFieldMaxCharge)
-                        {
-                            this.forceFieldState = ForceFieldState.Charging;
-                        }
-                        break;
                     case ForceFieldState.Discharging:
-                        this.powerComp.powerOutputInt = this.properties.powerOutputDuringDischarge;
-                        if ((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) >= -this.properties.powerOutputDuringCharge)
+                        this.powerComp.powerOutputInt = this.properties.powerOutputDuringSustain;
+                        if (PowerGridHasEnoughPower(this.properties.powerOutputDuringSustain))
                         {
-                            this.forceFieldState = ForceFieldState.Charging;
+                            this.forceFieldState = ForceFieldState.Sustaining;
                         }
                         else
                         {
@@ -242,7 +257,7 @@ namespace ForceField
                         this.forceFieldState = ForceFieldState.Discharging;
                         break;
                     case ForceFieldState.Discharging:
-                        this.powerComp.powerOutputInt = this.properties.powerOutputDuringDischarge;
+                        this.powerComp.powerOutputInt = this.properties.powerOutputDuringSustain;
                         this.forceFieldCharge -= this.properties.forceFieldMaxCharge / (float)this.properties.dischargeDurationInTicks;
                         if (this.forceFieldCharge <= 0)
                         {
@@ -256,10 +271,21 @@ namespace ForceField
             {
                 TryAbsorbIncomingProjectiles();
             }
-
-            ComputeDrawingParameters();
+            UpdateDrawingParameters();
         }
 
+        /// <summary>
+        /// Check if power grid can provided enough power.
+        /// </summary>
+        public bool PowerGridHasEnoughPower(float neededPowerSupply)
+        {
+            return (this.powerComp.PowerNet.CurrentStoredEnergy() > 0)
+                || ((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) >= -neededPowerSupply);
+        }
+
+        /// <summary>
+        /// Look for a projectile in covered cells and try to absorb/deflect it.
+        /// </summary>
         public void TryAbsorbIncomingProjectiles()
         {
             List<ProjectileWithAngle> incomingProjectiles = GetIncomingProjectiles();
@@ -288,6 +314,10 @@ namespace ForceField
             }
         }
 
+        /// <summary>
+        /// Get incoming projectiles in covered cells.
+        /// Only projectiles coming from front are considered valid.
+        /// </summary>
         public List<ProjectileWithAngle> GetIncomingProjectiles()
         {
             List<ProjectileWithAngle> incomingProjectiles = new List<ProjectileWithAngle>();
@@ -312,6 +342,9 @@ namespace ForceField
             return incomingProjectiles;
         }
 
+        /// <summary>
+        /// Check a projectile is coming from front.
+        /// </summary>
         public bool IsProjectileIncoming(ref ProjectileWithAngle projectileWithAngle)
         {
             Vector3 generatorToProjectile = this.Position.ToVector3() - projectileWithAngle.projectile.ExactPosition;
@@ -334,6 +367,7 @@ namespace ForceField
                 {
                     this.forceFieldCharge = 0;
                     this.forceFieldState = ForceFieldState.Offline;
+                    SoundDefOf.EnergyShield_Broken.PlayOneShot(new TargetInfo(projectileWithAngle.projectile.Position, this.Map));
                 }
                 SoundInfo soundInfo = SoundInfo.InMap(new TargetInfo(projectileWithAngle.projectile.Position, this.Map), MaintenanceType.None);
                 SoundDefOf.Thunder_OnMap.PlayOneShot(soundInfo);
@@ -343,6 +377,7 @@ namespace ForceField
             }
             else
             {
+                // Force field charge is too low to repel a rocket.
                 this.forceFieldCharge = 0;
                 this.forceFieldState = ForceFieldState.Offline;
             }
@@ -360,6 +395,11 @@ namespace ForceField
             {
                 this.forceFieldCharge = 0;
                 this.forceFieldState = ForceFieldState.Offline;
+                SoundDefOf.EnergyShield_Broken.PlayOneShot(new TargetInfo(projectileWithAngle.projectile.Position, this.Map));
+            }
+            else
+            {
+                SoundDefOf.EnergyShield_AbsorbDamage.PlayOneShot(new TargetInfo(projectileWithAngle.projectile.Position, this.Map));
             }
 
             Projectile deflectedProjectile = ThingMaker.MakeThing(projectileWithAngle.projectile.def) as Projectile;
@@ -374,7 +414,7 @@ namespace ForceField
             Thing projectileLauncher = ReflectionHelper.GetInstanceField(typeof(Projectile), projectileWithAngle.projectile, "launcher") as Thing;
             if (projectileLauncher == null)
             {
-                Log.Warning("M&Co. ForceField mod: projectileLauncher is null!");
+                Log.Warning("MiningCo. ForceField mod: projectileLauncher is null!");
                 return;
             }
             if (this.Rotation == Rot4.North)
@@ -428,18 +468,23 @@ namespace ForceField
 
             rebounceVector = new Vector3(xSign * rebounceVectorMagnitude * (float)Math.Sin(rebounceAngleInRadians), 0f, zSign * rebounceVectorMagnitude * (float)Math.Cos(rebounceAngleInRadians));
             LocalTargetInfo rebounceCell = new LocalTargetInfo((projectileWithAngle.projectile.ExactPosition + rebounceVector).ToIntVec3());
-            deflectedProjectile.Launch(this, projectileWithAngle.projectile.ExactPosition, rebounceCell);
+            deflectedProjectile.Launch(this, projectileWithAngle.projectile.ExactPosition, rebounceCell, rebounceCell, ProjectileHitFlags.None);
             projectileWithAngle.projectile.Destroy();
             ActivateMatrixAbsorbtionEffect(projectileWithAngle.projectile.ExactPosition);
         }
 
         public void TreatStandardProjectile(ProjectileWithAngle projectileWithAngle)
         {
-            this.forceFieldCharge -= projectileWithAngle.projectile.def.projectile.damageAmountBase;
+            this.forceFieldCharge -= projectileWithAngle.projectile.def.projectile.GetDamageAmount(1f);
             if (this.forceFieldCharge <= 0)
             {
                 this.forceFieldCharge = 0;
                 this.forceFieldState = ForceFieldState.Offline;
+                SoundDefOf.EnergyShield_Broken.PlayOneShot(new TargetInfo(projectileWithAngle.projectile.Position, this.Map));
+            }
+            else
+            {
+                SoundDefOf.EnergyShield_AbsorbDamage.PlayOneShot(new TargetInfo(projectileWithAngle.projectile.Position, this.Map));
             }
             projectileWithAngle.projectile.Destroy();
             ActivateMatrixAbsorbtionEffect(projectileWithAngle.projectile.ExactPosition);
@@ -481,7 +526,7 @@ namespace ForceField
             GenDraw.DrawFieldEdges(coverdCellsList);
         }
 
-        public void ComputeDrawingParameters()
+        public void UpdateDrawingParameters()
         {
             const float fadingOffset = 0.3f;
             const float fadingVariable = 0.7f;
@@ -504,7 +549,7 @@ namespace ForceField
                     MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("Mote_ElectricalSpark"), null);
                     moteThrown.Scale = 0.8f;
                     moteThrown.exactRotation = Rand.Range(0f, 360f);
-                    moteThrown.exactPosition = this.effectCells[effectCellIndex] + new Vector3(Rand.Range(-0.1f, 0.1f), 0f, Rand.Range(-0.1f, 0.1f));
+                    moteThrown.exactPosition = this.effectCells[effectCellIndex] + Vector3Utility.RandomHorizontalOffset(0.15f);
                     GenSpawn.Spawn(moteThrown, moteThrown.exactPosition.ToIntVec3(), this.Map);
                 }
             }
@@ -519,7 +564,7 @@ namespace ForceField
                     MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
                     moteThrown.Scale = 4f;
                     moteThrown.exactRotation = Rand.Range(0f, 360f);
-                    moteThrown.exactPosition = this.effectCells[matrixIndex] + new Vector3(Rand.Range(-0.2f, 0.2f), 0f, Rand.Range(-0.2f, 0.2f));
+                    moteThrown.exactPosition = this.effectCells[matrixIndex] + Vector3Utility.RandomHorizontalOffset(0.3f);
                     GenSpawn.Spawn(moteThrown, moteThrown.exactPosition.ToIntVec3(), this.Map);
                 }
                 if (this.matrixAbsorbtionCounterInTicks[matrixIndex] > 0)
@@ -582,7 +627,7 @@ namespace ForceField
 
             string stateAsString = GetStateAsString(this.forceFieldState);
             stringBuilder.AppendLine("Status: " + stateAsString);
-            stringBuilder.Append("Force field charge: " + (int)this.forceFieldCharge + "/" + this.properties.forceFieldMaxCharge);
+            stringBuilder.Append("Charge: " + (int)this.forceFieldCharge + " / " + this.properties.forceFieldMaxCharge);
 
             return stringBuilder.ToString();
         }
@@ -600,20 +645,25 @@ namespace ForceField
                     stateAsString = "offline";
                     break;
                 case ForceFieldState.Initializing:
-                    stateAsString = "initializing";
+                    int initializationProgressinPercent = Mathf.RoundToInt(((float)this.initializationElapsedTimeInTicks / (float)this.properties.initializationDurationInTicks) * 100f);
+                    stateAsString = "initializing (" + initializationProgressinPercent + " %)";
                     break;
                 case ForceFieldState.Charging:
                     stateAsString = "charging";
                     break;
                 case ForceFieldState.Sustaining:
                     stateAsString = "sustaining";
+                    if ((this.forceFieldCharge < this.properties.forceFieldMaxCharge)
+                        && ((this.powerComp.PowerNet.CurrentEnergyGainRate() / CompPower.WattsToWattDaysPerTick) < -this.properties.powerOutputDuringCharge))
+                    {
+                        stateAsString += " (not enough power to charge)";
+                    }
                     break;
                 case ForceFieldState.Discharging:
                     stateAsString = "discharging";
                     break;
             }
-
-            return (stateAsString);
+            return stateAsString;
         }
     }
 }

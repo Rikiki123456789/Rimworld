@@ -1,22 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase" Class="ForceField.ThingDef_FieldGenerator">
     <defName>ForceFieldGenerator</defName>
     <label>force field generator</label>
-    <description>This defensive building will charge up and sustain a forward force field. It is able to absorb or repel incoming projectiles until it is completely discharged. Once discharged, the generator needs some time to reinitialize. When powered down, the generator will send back a part of its energy to the power net.</description>
+    <description>An advanced defensive building. Consumes a lot of power to charge up its forward force field. It is then able to absorb or repel incoming projectiles. Once discharged, the generator needs some time to reinitialize.</description>
     <thingClass>ForceField.Building_ForceFieldGenerator</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -32,16 +20,22 @@
     </placeWorkers>
     <castEdgeShadows>true</castEdgeShadows>
     <fillPercent>0.5</fillPercent>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
     <useHitPoints>true</useHitPoints>
     <statBases>
       <WorkToBuild>10000</WorkToBuild>
       <MaxHitPoints>300</MaxHitPoints>
       <Flammability>1.0</Flammability>
+      <Mass>35</Mass>
+      <Beauty>5</Beauty>
     </statBases>
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
+        <shortCircuitInRain>false</shortCircuitInRain>
         <basePowerConsumption>1000</basePowerConsumption>
         <transmitsPower>true</transmitsPower>
       </li>
@@ -53,7 +47,7 @@
     <costList>
       <Steel>150</Steel>
       <Plasteel>50</Plasteel>
-      <Component>10</Component>
+      <ComponentIndustrial>10</ComponentIndustrial>
     </costList>
     <killedLeavings>
       <ChunkSlagSteel>1</ChunkSlagSteel>
@@ -67,14 +61,13 @@
       <li>ResearchForceField</li>
     </researchPrerequisites>
 
-    <powerOutputDuringInitialization>-125</powerOutputDuringInitialization>
-    <powerOutputDuringCharge>-1000</powerOutputDuringCharge>
+    <powerOutputDuringInitialization>-250</powerOutputDuringInitialization>
+    <powerOutputDuringCharge>-2000</powerOutputDuringCharge>
     <powerOutputDuringSustain>-250</powerOutputDuringSustain>
-    <powerOutputDuringDischarge>500</powerOutputDuringDischarge>
     
-    <initializationDurationInTicks>300</initializationDurationInTicks>
+    <initializationDurationInTicks>1200</initializationDurationInTicks>
     <chargeDurationInTicks>3000</chargeDurationInTicks>
-    <dischargeDurationInTicks>1500</dischargeDurationInTicks>
+    <dischargeDurationInTicks>12000</dischargeDurationInTicks>
     
     <forceFieldMaxCharge>500</forceFieldMaxCharge>
     <rocketAbsorbtionProportion>0.5</rocketAbsorbtionProportion>

@@ -15,20 +15,18 @@ namespace ForceField
     /// Force field ThingDef custom variables class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class ThingDef_FieldGenerator : ThingDef
     {
         // Power consumption.
-        public int powerOutputDuringInitialization = -125;
-        public int powerOutputDuringCharge = -1000;
+        public int powerOutputDuringInitialization = -250;
+        public int powerOutputDuringCharge = -2000;
         public int powerOutputDuringSustain = -250;
-        public int powerOutputDuringDischarge = 500;
 
         // Durations.
         public int initializationDurationInTicks = 300;
         public int chargeDurationInTicks = 3000;
-        public int dischargeDurationInTicks = 1500;
+        public int dischargeDurationInTicks = 12000;
 
         // Force field charge.
         public float forceFieldMaxCharge = 250f;
