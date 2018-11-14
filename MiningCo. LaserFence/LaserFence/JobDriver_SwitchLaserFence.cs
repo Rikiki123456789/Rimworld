@@ -20,7 +20,7 @@ namespace LaserFence
     {
         public TargetIndex pylonIndex = TargetIndex.A;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetA, this.job);
         }
@@ -35,7 +35,7 @@ namespace LaserFence
             {
                 initAction = () =>
                 {
-                    (this.TargetThingA as Building_LaserFencePylon).SwitchLaserFence();
+                    (this.TargetThingA as Building_LaserFencePylon).Notify_PawnSwitchedLaserFence();
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
             };

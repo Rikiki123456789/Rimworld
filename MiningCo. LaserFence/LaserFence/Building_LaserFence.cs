@@ -16,30 +16,22 @@ namespace LaserFence
     /// Building_LaserFence class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class Building_LaserFence : Building
     {
         public const int buildingCheckPeriodInTicks = 30;
-        public const int plantCheckPeriodInTick = GenTicks.TickRareInterval;
+        public const int plantOrPawnCheckPeriodInTick = GenTicks.TickRareInterval;
         public int nextBuildingCheckTick = 0;
-        public int nextPlantCheckTick = 0;
+        public int nextPlantOrPawnCheckTick = 0;
         public Building_LaserFencePylon pylon = null;
 
-        // ===================== Setup work =====================
-        public override void SpawnSetup(Map map, bool respawningAfterLoad)
-        {
-            base.SpawnSetup(map, respawningAfterLoad);
-
-            this.nextBuildingCheckTick = Find.TickManager.TicksGame + Rand.Range(0, buildingCheckPeriodInTicks);
-            this.nextPlantCheckTick = Find.TickManager.TicksGame + Rand.Range(0, plantCheckPeriodInTick);
-        }
-
-
+        // ===================== Setup work =====================        
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_References.Look<Building_LaserFencePylon>(ref pylon, "pylon");
+            Scribe_Values.Look<int>(ref this.nextBuildingCheckTick, "nextBuildingCheckTick");
+            Scribe_Values.Look<int>(ref this.nextPlantOrPawnCheckTick, "nextPlantOrPawnCheckTick");
         }
 
         // ===================== Main function =====================
@@ -58,9 +50,9 @@ namespace LaserFence
                 }
             }
             // Check if a plant or pawn is in the laser fence path.
-            if (Find.TickManager.TicksGame >= this.nextPlantCheckTick)
+            if (Find.TickManager.TicksGame >= this.nextPlantOrPawnCheckTick)
             {
-                this.nextPlantCheckTick = Find.TickManager.TicksGame + plantCheckPeriodInTick;
+                this.nextPlantOrPawnCheckTick = Find.TickManager.TicksGame + plantOrPawnCheckPeriodInTick;
                 List<Thing> thingList = this.Position.GetThingList(this.Map);
                 for (int thingIndex = thingList.Count - 1; thingIndex >= 0; thingIndex--)
                 {

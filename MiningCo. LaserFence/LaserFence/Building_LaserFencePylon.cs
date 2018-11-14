@@ -16,19 +16,16 @@ namespace LaserFence
     /// Building_LaserFencePylon class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     [StaticConstructorOnStartup]
     public class Building_LaserFencePylon : Building
     {
-        public const int pylonMaxDistance = 5;
         public const int updatePeriodInTicks = 30;
         public int nextUpdateTick = 0;
 
         // Pylon state.
         public bool[] connectionIsAllowedByUser = new bool[4] { true, true, true, true };
         public bool[] cachedConnectionIsAllowedByUser = new bool[4] { true, true, true, true };
-        public Building_LaserFencePylon[] linkedPylons = new Building_LaserFencePylon[4] { null, null, null, null };
         public int[] fenceLength = new int[4] { 0, 0, 0, 0 };
 
         public bool manualSwitchIsPending
@@ -59,16 +56,31 @@ namespace LaserFence
         public static Texture2D westFenceActive = ContentFinder<Texture2D>.Get("Ui/Commands/WestFenceActive");
         public static Texture2D westFenceInactive = ContentFinder<Texture2D>.Get("Ui/Commands/WestFenceInactive");
 
+        // Draw.
+        public static Material connectorNorth = MaterialPool.MatFrom("Things/Building/Security/LaserFencePylonConnectorNorth");
+        public static Material connectorSouth = MaterialPool.MatFrom("Things/Building/Security/LaserFencePylonConnectorSouth");
+        public static Material connectorEast = MaterialPool.MatFrom("Things/Building/Security/LaserFencePylonConnectorEast");
+        public static Material connectorWest = MaterialPool.MatFrom("Things/Building/Security/LaserFencePylonConnectorWest");
+        public Vector3 connectorScale = new Vector3(1f, 1f, 1f);
+        public Matrix4x4 connectorMatrix = default(Matrix4x4);
+
         // ===================== Setup work =====================
+        /// <summary>
+        /// Used to initialize the pylon.
+        /// </summary>
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
             this.powerComp = this.TryGetComp<CompPowerTrader>();
-            this.nextUpdateTick = Find.TickManager.TicksGame + Rand.Range(0, updatePeriodInTicks);
+            connectorMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, (0f).ToQuat(), connectorScale);
         }
 
-        public override void DeSpawn()
+        /// <summary>
+        /// Called when pylon is minified for example.
+        /// Deactivate all the fences and reset connection allowance to default.
+        /// </summary>
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
         {
             DeactivateAllFences();
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
@@ -79,11 +91,14 @@ namespace LaserFence
             base.DeSpawn();
         }
 
+        /// <summary>
+        /// Deactivate all the fences and destroy the pylon.
+        /// </summary>
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                if (this.linkedPylons[directionAsInt] != null)
+                if (this.fenceLength[directionAsInt] > 0)
                 {
                     this.DeactivateFence(new Rot4(directionAsInt));
                 }
@@ -91,20 +106,29 @@ namespace LaserFence
             base.Destroy(mode);
         }
 
+        /// <summary>
+        /// Save/load instance data values.
+        /// </summary>
         public override void ExposeData()
         {
             base.ExposeData();
 
+            Scribe_Values.Look<int>(ref this.nextUpdateTick, "nextUpdateTick");
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
                 Scribe_Values.Look<bool>(ref connectionIsAllowedByUser[directionAsInt], "connectionIsAllowedByUser" + directionAsInt, true);
                 Scribe_Values.Look<bool>(ref cachedConnectionIsAllowedByUser[directionAsInt], "cachedConnectionIsAllowedByUser" + directionAsInt, true);
-                Scribe_References.Look<Building_LaserFencePylon>(ref linkedPylons[directionAsInt], "linkedPylon" + directionAsInt);
+                //Scribe_References.Look<Building_LaserFencePylon>(ref linkedPylons[directionAsInt], "linkedPylon" + directionAsInt);
                 Scribe_Values.Look<int>(ref fenceLength[directionAsInt], "fenceLength" + directionAsInt, 0);
             }
         }
 
         // ===================== Main function =====================
+        /// <summary>
+        /// When spawned:
+        /// - if unpowered, deactivate all fences,
+        /// - else, try to connect to nearby pylons.
+        /// </summary>
         public override void Tick()
         {
             base.Tick();
@@ -127,31 +151,42 @@ namespace LaserFence
             }
         }
 
+        /// <summary>
+        /// Deactivate all the fences in cardinal directions.
+        /// </summary>
         public void DeactivateAllFences()
         {
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                if (this.linkedPylons[directionAsInt] != null)
+                if (this.fenceLength[directionAsInt] > 0)
                 {
                     this.DeactivateFence(new Rot4(directionAsInt));
                 }
             }
         }
 
+        /// <summary>
+        /// Deactivate a fence in a given direction:
+        /// - remove fence elements,
+        /// - inform linked pylon, that it is deactivated.
+        /// </summary>
         public void DeactivateFence(Rot4 direction)
         {
-            if (this.linkedPylons[direction.AsInt] != null)
+            if (this.fenceLength[direction.AsInt] > 0)
             {
+                IntVec3 linkedPylonPosition = this.Position + new IntVec3(0, 0, this.fenceLength[direction.AsInt] + 1).RotatedBy(direction);
+                Building_LaserFencePylon linkedPylon = linkedPylonPosition.GetFirstThing(this.Map, Util_LaserFence.LaserFencePylonDef) as Building_LaserFencePylon;
+                if (linkedPylon != null)
+                {
+                    linkedPylon.RemoveFenceElements(direction.Opposite);
+                }
                 this.RemoveFenceElements(direction);
-                Rot4 linkedPylonDirection = direction;
-                linkedPylonDirection.Rotate(RotationDirection.Clockwise); // Rotate 2 times to get the opposite direction.
-                linkedPylonDirection.Rotate(RotationDirection.Clockwise);
-                this.linkedPylons[direction.AsInt].RemoveFenceElements(linkedPylonDirection);
-                this.linkedPylons[direction.AsInt].linkedPylons[linkedPylonDirection.AsInt] = null;
-                this.linkedPylons[direction.AsInt] = null;
             }
         }
 
+        /// <summary>
+        /// Remove the fence elements in a given direction. Only north and east directions are treated. Other ones will be treated in a mirror way.
+        /// </summary>
         public void RemoveFenceElements(Rot4 direction)
         {
             // Remove north or east laser fences.
@@ -175,11 +210,14 @@ namespace LaserFence
             this.fenceLength[direction.AsInt] = 0;
         }
 
+        /// <summary>
+        /// Try to activate inactive fences in allowed cardinal directions.
+        /// </summary>
         public void TryActivateInactiveFences()
         {
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                if ((this.linkedPylons[directionAsInt] == null)
+                if ((this.fenceLength[directionAsInt] == 0)
                     && this.connectionIsAllowedByUser[directionAsInt])
                 {
                     this.LookForPylon(new Rot4(directionAsInt));
@@ -187,9 +225,12 @@ namespace LaserFence
             }
         }
 
+        /// <summary>
+        /// Look for a pylon to connect to in a given direction.
+        /// </summary>
         public void LookForPylon(Rot4 direction, bool forceConnection = false)
         {
-            for (int offset = 1; offset <= pylonMaxDistance; offset++)
+            for (int offset = 1; offset <= Settings.laserFenceMaxRange + 1; offset++)
             {
                 IntVec3 checkedPosition = this.Position + new IntVec3(0, 0, offset).RotatedBy(direction);
                 foreach (Thing thing in checkedPosition.GetThingList(this.Map))
@@ -217,18 +258,18 @@ namespace LaserFence
             }
         }
 
+        /// <summary>
+        /// Connect to a given pylon if allowed or forced.
+        /// </summary>
         public void TryConnectToPylon(Building_LaserFencePylon linkedPylon, Rot4 direction, int fenceLength, bool forceConnection)
         {
-            Rot4 linkedPylonDirection = direction;
-            linkedPylonDirection.Rotate(RotationDirection.Clockwise); // Rotate 2 times to get the opposite direction.
-            linkedPylonDirection.Rotate(RotationDirection.Clockwise);
             // Check connection is allowed.
             if (forceConnection)
             {
-                linkedPylon.connectionIsAllowedByUser[linkedPylonDirection.AsInt] = true;
-                linkedPylon.cachedConnectionIsAllowedByUser[linkedPylonDirection.AsInt] = true;
+                linkedPylon.connectionIsAllowedByUser[direction.Opposite.AsInt] = true;
+                linkedPylon.cachedConnectionIsAllowedByUser[direction.Opposite.AsInt] = true;
             }
-            if (linkedPylon.connectionIsAllowedByUser[linkedPylonDirection.AsInt] == false)
+            if (linkedPylon.connectionIsAllowedByUser[direction.Opposite.AsInt] == false)
             {
                 this.connectionIsAllowedByUser[direction.AsInt] = false;
                 this.cachedConnectionIsAllowedByUser[direction.AsInt] = false;
@@ -239,18 +280,14 @@ namespace LaserFence
             if ((linkedPowerComp != null)
                 && linkedPowerComp.PowerOn)
             {
-                if (linkedPylon.linkedPylons[linkedPylonDirection.AsInt] != null)
-                {
-                    // If linkedPylon is already connected to a third pylon, first disconnect from it.
-                    linkedPylon.DeactivateFence(linkedPylonDirection);
-                }
-                this.linkedPylons[direction.AsInt] = linkedPylon;
                 this.ActivateFence(direction, fenceLength);
-                linkedPylon.linkedPylons[linkedPylonDirection.AsInt] = this;
-                linkedPylon.ActivateFence(linkedPylonDirection, fenceLength);
+                linkedPylon.ActivateFence(direction.Opposite, fenceLength);
             }
         }
 
+        /// <summary>
+        /// Spawn the fence elements in a given direction. Only north and east directions are treated. Other ones will be treated in a mirror way.
+        /// </summary>
         public void ActivateFence(Rot4 direction, int fenceLength)
         {
             this.fenceLength[direction.AsInt] = fenceLength;
@@ -268,6 +305,10 @@ namespace LaserFence
             }
         }
 
+        // ===================== Exported functions =====================
+        /// <summary>
+        /// Used by a fence element to notify a new building is blocking.
+        /// </summary>
         public void Notify_EdificeIsBlocking()
         {
             this.DeactivateAllFences();
@@ -298,8 +339,10 @@ namespace LaserFence
             this.cachedConnectionIsAllowedByUser[directionAsInt] = !this.cachedConnectionIsAllowedByUser[directionAsInt];
         }
 
-        // Called when a pawn go to a pylon to take into account the player cached configuration.
-        public void SwitchLaserFence()
+        /// <summary>
+        /// Called when a pawn go to a pylon to take into account the player's cached configuration.
+        /// </summary>
+        public void Notify_PawnSwitchedLaserFence()
         {
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
@@ -307,17 +350,24 @@ namespace LaserFence
                 this.connectionIsAllowedByUser[directionAsInt] = this.cachedConnectionIsAllowedByUser[directionAsInt];
                 if (this.connectionIsAllowedByUser[directionAsInt])
                 {
-                    this.LookForPylon(direction, true);
+                    // Connection is allowed. Look for a pylon to connect to.
+                    if (this.fenceLength[direction.AsInt] == 0)
+                    {
+                        this.LookForPylon(direction, true);
+                    }
                 }
                 else
                 {
-                    if (this.linkedPylons[directionAsInt] != null)
+                    // Connection is forbidden. Disconnect from linked pylon if necessary.
+                    if (this.fenceLength[directionAsInt] > 0)
                     {
-                        Rot4 linkedPylonDirection = direction;
-                        linkedPylonDirection.Rotate(RotationDirection.Clockwise); // Rotate 2 times to get the opposite direction.
-                        linkedPylonDirection.Rotate(RotationDirection.Clockwise);
-                        this.linkedPylons[directionAsInt].connectionIsAllowedByUser[linkedPylonDirection.AsInt] = false;
-                        this.linkedPylons[directionAsInt].cachedConnectionIsAllowedByUser[linkedPylonDirection.AsInt] = false;
+                        IntVec3 linkedPylonPosition = this.Position + new IntVec3(0, 0, this.fenceLength[direction.AsInt] + 1).RotatedBy(direction);
+                        Building_LaserFencePylon linkedPylon = linkedPylonPosition.GetFirstThing(this.Map, Util_LaserFence.LaserFencePylonDef) as Building_LaserFencePylon;
+                        if (linkedPylon != null)
+                        {
+                            linkedPylon.connectionIsAllowedByUser[direction.Opposite.AsInt] = false;
+                            linkedPylon.cachedConnectionIsAllowedByUser[direction.Opposite.AsInt] = false;
+                        }
                         this.DeactivateFence(direction);
                     }
                 }
@@ -325,6 +375,9 @@ namespace LaserFence
         }
 
         // ===================== Gizmos =====================
+        /// <summary>
+        /// Get the buttons to toggle fences.
+        /// </summary>
         public override IEnumerable<Gizmo> GetGizmos()
         {
             int groupKeyBase = 700000100;
@@ -345,12 +398,12 @@ namespace LaserFence
             if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
             {
                 northFenceGizmo.icon = northFenceActive;
-                northFenceGizmo.defaultDesc = "Deactivate north fence.";
+                northFenceGizmo.defaultDesc = "Click to deactivate north fence.";
             }
             else
             {
                 northFenceGizmo.icon = northFenceInactive;
-                northFenceGizmo.defaultDesc = "Activate north fence.";
+                northFenceGizmo.defaultDesc = "Click to activate north fence.";
             }
             northFenceGizmo.defaultLabel = "North fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
             northFenceGizmo.activateSound = SoundDef.Named("Click");
@@ -363,12 +416,12 @@ namespace LaserFence
             if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
             {
                 eastFenceGizmo.icon = eastFenceActive;
-                eastFenceGizmo.defaultDesc = "Deactivate east fence.";
+                eastFenceGizmo.defaultDesc = "Click to deactivate east fence.";
             }
             else
             {
                 eastFenceGizmo.icon = eastFenceInactive;
-                eastFenceGizmo.defaultDesc = "Activate east fence.";
+                eastFenceGizmo.defaultDesc = "Click to activate east fence.";
             }
             eastFenceGizmo.defaultLabel = "East fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
             eastFenceGizmo.activateSound = SoundDef.Named("Click");
@@ -381,12 +434,12 @@ namespace LaserFence
             if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
             {
                 southFenceGizmo.icon = southFenceActive;
-                southFenceGizmo.defaultDesc = "Deactivate south fence.";
+                southFenceGizmo.defaultDesc = "Click to deactivate south fence.";
             }
             else
             {
                 southFenceGizmo.icon = southFenceInactive;
-                southFenceGizmo.defaultDesc = "Activate south fence.";
+                southFenceGizmo.defaultDesc = "Click to activate south fence.";
             }
             southFenceGizmo.defaultLabel = "South fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
             southFenceGizmo.activateSound = SoundDef.Named("Click");
@@ -399,12 +452,12 @@ namespace LaserFence
             if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
             {
                 westFenceGizmo.icon = westFenceActive;
-                westFenceGizmo.defaultDesc = "Deactivate west fence.";
+                westFenceGizmo.defaultDesc = "Click to deactivate west fence.";
             }
             else
             {
                 westFenceGizmo.icon = westFenceInactive;
-                westFenceGizmo.defaultDesc = "Activate west fence.";
+                westFenceGizmo.defaultDesc = "Click to activate west fence.";
             }
             westFenceGizmo.defaultLabel = "West fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
             westFenceGizmo.activateSound = SoundDef.Named("Click");
@@ -428,12 +481,48 @@ namespace LaserFence
         }
 
         // ===================== Draw =====================
+        /// <summary>
+        /// Draw the fence connectors.
+        /// </summary>
+        public override void Draw()
+        {
+            base.Draw();
+
+            for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
+            {
+                if (this.fenceLength[directionAsInt] > 0)
+                {
+                    Material connectorTexture = connectorNorth;
+                    if (directionAsInt == Rot4.North.AsInt)
+                    {
+                        connectorTexture = connectorNorth;
+                    }
+                    else if (directionAsInt == Rot4.East.AsInt)
+                    {
+                        connectorTexture = connectorEast;
+                    }
+                    else if (directionAsInt == Rot4.South.AsInt)
+                    {
+                        connectorTexture = connectorSouth;
+                    }
+                    else if (directionAsInt == Rot4.West.AsInt)
+                    {
+                        connectorTexture = connectorWest;
+                    }
+                    Graphics.DrawMesh(MeshPool.plane10, connectorMatrix, connectorTexture, 0);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Highlight the cells that could be crossed by a fence.
+        /// </summary>
         public static void DrawPotentialBuildCells(Map map, IntVec3 pylonPosition)
         {
             List<IntVec3> potentialBuildCells = new List<IntVec3>();
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                for (int offset = 1; offset <= 5; offset++)
+                for (int offset = 1; offset <= Settings.laserFenceMaxRange; offset++)
                 {
                     potentialBuildCells.Add(pylonPosition + new IntVec3(offset, 0, 0).RotatedBy(new Rot4(directionAsInt)));
                 }

@@ -1,28 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef Name="BuildingBase" Abstract="True">
-    <category>Building</category>
-    <thingClass>Building</thingClass>
-    <soundImpactDefault>BulletImpactMetal</soundImpactDefault>
-    <selectable>true</selectable>
-    <drawerType>MapMeshAndRealTime</drawerType>
-    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
-    <repairEffect>Repair</repairEffect>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <filthLeaving>BuildingRubble</filthLeaving>
-  </ThingDef>
-
   <ThingDef ParentName="BuildingBase">
     <defName>LaserFencePylon</defName>
     <label>laser fence pylon</label>
-    <description> An advanced laser fence pylon.
-   - Will automatically connect to nearby pylons in cardinal directions.
-   - Each fence can be independantly activated or deactivated.
-   - Max range of a laser fence: 4 cells.
+    <description>An advanced laser fence pylon.
+- It will automatically connect to nearby pylons in cardinal directions.
+- Fence in each direction can be independantly toggled on or off.
+- Max range of a laser fence: 7 cells.
 
-Warning! Always wear safety glasses before any maintenance operation. Local wildlife/vegetation may catch fire if directly exposed to the laser.
-    </description>
+Warning! Always wear safety glasses before any maintenance operation. Local wildlife/vegetation may catch fire if directly exposed to the laser.</description>
     <thingClass>LaserFence.Building_LaserFencePylon</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -37,7 +24,10 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
     <placeWorkers>
       <li>LaserFence.PlaceWorker_LaserFencePylon</li>
     </placeWorkers>
-    <minifiedDef>MinifiedLaserFence</minifiedDef>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
     <altitudeLayer>Building</altitudeLayer>
     <passability>Impassable</passability>
     <fillPercent>0.6</fillPercent>
@@ -46,6 +36,7 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
       <MaxHitPoints>400</MaxHitPoints>
       <WorkToBuild>2000</WorkToBuild>
       <Flammability>0.0</Flammability>
+      <Mass>20</Mass>
     </statBases>
     <building>
       <allowAutoroof>false</allowAutoroof>
@@ -53,7 +44,7 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
     <holdsRoof>false</holdsRoof>
     <size>(1,1)</size>
     <costList>
-      <Component>1</Component>
+      <ComponentIndustrial>1</ComponentIndustrial>
       <Steel>30</Steel>
     </costList>
     <hasInteractionCell>true</hasInteractionCell>
@@ -63,7 +54,7 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
     <comps>
       <li Class="CompProperties_Power">
         <compClass>CompPowerTrader</compClass>
-        <startElectricalFires>false</startElectricalFires>
+        <shortCircuitInRain>false</shortCircuitInRain>
         <basePowerConsumption>100</basePowerConsumption>
       </li>
       <li Class="CompProperties_Flickable"/>

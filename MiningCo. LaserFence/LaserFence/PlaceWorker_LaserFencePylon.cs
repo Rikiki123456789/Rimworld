@@ -15,35 +15,35 @@ namespace LaserFence
     /// PlaceWorker_LaserFence custom place worker class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class PlaceWorker_LaserFencePylon : PlaceWorker
     {
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
         {
+            Map currentMap = Find.CurrentMap;
+
             // Display potential build cells.
-            foreach (Thing pylon in map.listerThings.ThingsOfDef(Util_LaserFence.LaserFencePylonDef.blueprintDef))
+            foreach (Thing pylon in currentMap.listerThings.ThingsOfDef(Util_LaserFence.LaserFencePylonDef.blueprintDef))
             {
-                if (pylon.Position.InHorDistOf(loc, 6f))
+                if (pylon.Position.InHorDistOf(center, Settings.laserFenceMaxRange + 2f))
                 {
-                    Building_LaserFencePylon.DrawPotentialBuildCells(map, pylon.Position);
+                    Building_LaserFencePylon.DrawPotentialBuildCells(currentMap, pylon.Position);
                 }
             }
-            foreach (Thing pylon in map.listerThings.ThingsOfDef(Util_LaserFence.LaserFencePylonDef.frameDef))
+            foreach (Thing pylon in currentMap.listerThings.ThingsOfDef(Util_LaserFence.LaserFencePylonDef.frameDef))
             {
-                if (pylon.Position.InHorDistOf(loc, 6f))
+                if (pylon.Position.InHorDistOf(center, Settings.laserFenceMaxRange + 2f))
                 {
-                    Building_LaserFencePylon.DrawPotentialBuildCells(map, pylon.Position);
+                    Building_LaserFencePylon.DrawPotentialBuildCells(currentMap, pylon.Position);
                 }
             }
-            foreach (Thing pylon in map.listerThings.ThingsOfDef(Util_LaserFence.LaserFencePylonDef))
+            foreach (Thing pylon in currentMap.listerThings.ThingsOfDef(Util_LaserFence.LaserFencePylonDef))
             {
-                if (pylon.Position.InHorDistOf(loc, 6f))
+                if (pylon.Position.InHorDistOf(center, Settings.laserFenceMaxRange + 2f))
                 {
-                    Building_LaserFencePylon.DrawPotentialBuildCells(map, pylon.Position);
+                    Building_LaserFencePylon.DrawPotentialBuildCells(currentMap, pylon.Position);
                 }
             }
-            return true;
         }
     }
 }

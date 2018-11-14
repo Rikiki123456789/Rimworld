@@ -15,8 +15,7 @@ namespace LaserFence
     /// WorkGiver_LaserFencePylon class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class WorkGiver_LaserFencePylon : WorkGiver_Scanner
     {
 		public override ThingRequest PotentialWorkThingRequest
@@ -34,14 +33,13 @@ namespace LaserFence
             {
                 return false;
             }
-            if (pawn.CanReserveAndReach(pylon, PathEndMode.InteractionCell, Danger.Deadly) == false)
-            {
-                return false;
-            }
-
             if (pawn.Dead
                 || pawn.Downed
                 || pawn.IsBurning())
+            {
+                return false;
+            }
+            if (pawn.CanReserveAndReach(pylon, PathEndMode.InteractionCell, Danger.Deadly) == false)
             {
                 return false;
             }
