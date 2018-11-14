@@ -25,6 +25,9 @@
     <prerequisites>
       <li>ResearchDrillTurret</li>
     </prerequisites>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
     <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
     <tab>MiningCo</tab>
     <researchViewX>1</researchViewX>
