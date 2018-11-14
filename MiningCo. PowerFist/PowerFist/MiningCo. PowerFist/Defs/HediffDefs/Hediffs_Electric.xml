@@ -5,9 +5,10 @@
     <hediffClass>Hediff_Injury</hediffClass>
     <tendable>true</tendable>
     <displayWound>true</displayWound>
+    <labelNounPretty>{0} in the {1}</labelNounPretty>
   </HediffDef>
 
-	<HediffDef ParentName="InjuryBase">
+  <HediffDef ParentName="InjuryBase">
 		<defName>Electric</defName>
 		<label>electrocution</label>
     <comps>
@@ -19,17 +20,17 @@
       <li Class="HediffCompProperties_Infecter">
         <infectionChance>0.20</infectionChance>
       </li>
-      <li Class="HediffCompProperties_GetsOld">
-        <oldLabel>burn scar</oldLabel>
+      <li Class="HediffCompProperties_GetsPermanent">
+        <permanentLabel>burn scar</permanentLabel>
       </li>
     </comps>
-		<injuryProps>
+    <injuryProps>
       <painPerSeverity>0.01875</painPerSeverity>
-      <averagePainPerSeverityOld>0.00625</averagePainPerSeverityOld>
+      <averagePainPerSeverityPermanent>0.00625</averagePainPerSeverityPermanent>
       <canMerge>true</canMerge>
-			<destroyedLabel>Burned off</destroyedLabel>
-			<destroyedOutLabel>Burned out</destroyedOutLabel>
-		</injuryProps>
+      <destroyedLabel>Burned off</destroyedLabel>
+      <destroyedOutLabel>Burned out</destroyedOutLabel>
+    </injuryProps>
 	</HediffDef>
   
 </Defs>

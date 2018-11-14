@@ -66,7 +66,7 @@ namespace PowerFist
             }
         }
 
-        public void Notify_BeginRepel(Pawn targetPawn, IntVec3 baseRepelVector, float maxRepelDistance, int baseRepelDurationInTicks, out float outRepelDistance, out ThingDef obstacleDef)
+        public void Notify_BeginRepel(Pawn attacker, Pawn targetPawn, IntVec3 baseRepelVector, float maxRepelDistance, int baseRepelDurationInTicks, out float outRepelDistance, out ThingDef obstacleDef)
         {
             this.targetPawn = targetPawn;
             this.initialRepelPosition = targetPawn.Position;
@@ -76,7 +76,7 @@ namespace PowerFist
             this.repelDurationInTicks = (int)((float)baseRepelDurationInTicks * (this.repelDistance / maxRepelDistance));
             outRepelDistance = this.repelDistance;
             // At least stun the target during repel.
-            targetPawn.stances.stunner.StunFor((int)this.repelDurationInTicks);
+            targetPawn.stances.stunner.StunFor((int)this.repelDurationInTicks, attacker);
         }
 
         // Look for blocking obstacles and terrain on the repel path (walls, high buildings, big pawns, big plants and impassable terrain like deep water).

@@ -11,10 +11,10 @@
     <makesBlood>false</makesBlood>
     <canInterruptJobs>true</canInterruptJobs>
     <hediff>Electric</hediff>
-    <hediffSkin>Burn</hediffSkin>
+    <hediffSkin>Electric</hediffSkin>
     <harmAllLayersUntilOutside>true</harmAllLayersUntilOutside>
     <impactSoundType>Electric</impactSoundType>
-    <armorCategory>Electric</armorCategory>
+    <armorCategory>Heat</armorCategory>
   </DamageDef>
 
 </Defs>

@@ -5,10 +5,14 @@
     <defName>Repel</defName>
     <requiredCapacity>Push</requiredCapacity>
     <verb>
-      <verbClass>PowerFist.Verb_MeleeAttackWithRepel</verbClass>
+      <verbClass>PowerFist.Verb_MeleeAttackDamageWithRepel</verbClass>
       <meleeDamageDef>Blunt</meleeDamageDef>
     </verb>
-    <combatLogRules>Maneuver_Slash</combatLogRules>
+    <logEntryDef>MeleeAttack</logEntryDef>
+    <combatLogRulesHit>Maneuver_Smash_MeleeHit</combatLogRulesHit>
+    <combatLogRulesDeflect>Maneuver_Smash_MeleeDeflect</combatLogRulesDeflect>
+    <combatLogRulesMiss>Maneuver_Smash_MeleeMiss</combatLogRulesMiss>
+    <combatLogRulesDodge>Maneuver_Smash_MeleeDodge</combatLogRulesDodge>
   </ManeuverDef>
 
 </Defs>

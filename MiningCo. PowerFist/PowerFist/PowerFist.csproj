@@ -32,8 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
-      <HintPath>..\..\..\RimWorld1722Win\RimWorld1722Win_Data\Managed\Assembly-CSharp.dll</HintPath>
+    <Reference Include="Assembly-CSharp, Version=1.0.6850.33525, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -41,15 +42,16 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine">
-      <HintPath>..\..\..\RimWorld1722Win\RimWorld1722Win_Data\Managed\UnityEngine.dll</HintPath>
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ThingDef_PowerFist.cs" />
     <Compile Include="Util_PowerFist.cs" />
     <Compile Include="PowerFistRepeller.cs" />
-    <Compile Include="Verb_MeleeAttackWithRepel.cs" />
+    <Compile Include="Verb_MeleeAttackDamageWithRepel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
@@ -69,20 +71,24 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. PowerFist\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. PowerFist\Defs\ThingDefs_Misc\BaseWeapons.xml" />
     <Content Include="MiningCo. PowerFist\Defs\Things_Special\PowerFistRepeller.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. PowerFist\Defs\ThingDefs_Misc\Weapons_PowerFist.xml">
+    <Content Include="MiningCo. PowerFist\Defs\ThingDefs_Misc\MeleePowerFist.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. PowerFist\Defs\ToolCapacityDefs\ToolCapacity.xml" />
+    <Content Include="MiningCo. PowerFist\Defs\ToolCapacityDefs\ToolCapacity.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MiningCo. PowerFist\Textures\Things\Item\Resource\ColdCrystal.png" />
     <Content Include="MiningCo. PowerFist\Textures\Things\Special\DummyTexture.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. PowerFist\Assemblies"
-xcopy /Y /i /s "$(ProjectDir)\MiningCo. PowerFist" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. PowerFist"</PostBuildEvent>
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. PowerFist" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. PowerFist"
+	</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
