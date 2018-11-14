@@ -38,13 +38,6 @@ namespace FishIndustry
         }
 
         // Terrain.
-        public static TerrainDef FishingPierFloorDeepWaterDef
-        {
-            get
-            {
-                return (TerrainDef.Named("FishingPierFloorDeepWater"));
-            }
-        }
         public static TerrainDef FishingPierFloorShallowWaterDef
         {
             get
@@ -89,15 +82,7 @@ namespace FishIndustry
                 return (ThingDef.Named("Mote_FishingRodWest"));
             }
         }
-
-        public static ThingDef MoteBubbleDef
-        {
-            get
-            {
-                return (ThingDef.Named("Mote_Bubble"));
-            }
-        }
-
+        
         public static ThingDef MoteFishMashgonEastDef
         {
             get
@@ -239,32 +224,7 @@ namespace FishIndustry
                 return (ThingDef.Named("Tailteeth"));
             }
         }
-
-        // Fishes meat def.
-        public static ThingDef MashgonMeatDef
-        {
-            get
-            {
-                return (ThingDef.Named(MashgonDef.defName + "Meat_"));
-            }
-        }
-
-        public static ThingDef BluebladeMeatDef
-        {
-            get
-            {
-                return (ThingDef.Named(BluebladeDef.defName + "Meat_"));
-            }
-        }
-
-        public static ThingDef TailteethMeatDef
-        {
-            get
-            {
-                return (ThingDef.Named(TailteethDef.defName + "Meat_"));
-            }
-        }
-
+        
         // Breedable fishes PawnKindDef.
         public static PawnKindDef MashgonPawnKindDef
         {

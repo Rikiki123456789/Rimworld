@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="Building_AquacultureBasin.cs" />
     <Compile Include="Building_FishingPier.cs" />
-    <Compile Include="Building_FishingPierSpawner.cs" />
     <Compile Include="Alert_AquacultureBasinNeedsHopper.cs" />
     <Compile Include="Alert_AquacultureBasinNotBreeding.cs" />
     <Compile Include="Controller.cs" />
