@@ -97,6 +97,15 @@ namespace Projector
         }
 
         /// <summary>
+        /// Remove the light when minifying.
+        /// </summary>
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        {
+            SwitchOffLight();
+            base.DeSpawn(mode);
+        }
+
+        /// <summary>
         /// Remove the light and destroy the object.
         /// </summary>
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
