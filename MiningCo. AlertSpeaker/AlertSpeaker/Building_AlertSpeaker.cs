@@ -440,7 +440,7 @@ namespace AlertSpeaker
         }
 
         /// <summary>
-        /// Performs the glower parameters if necessary.
+        /// Update the glower parameters if necessary.
         /// </summary>
         public void UpdateGlowerParameters()
         {
