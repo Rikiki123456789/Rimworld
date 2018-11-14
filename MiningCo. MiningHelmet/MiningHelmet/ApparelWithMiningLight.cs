@@ -16,8 +16,7 @@ namespace MiningHelmet
     /// ApparelWithMiningLight class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class ApparelWithMiningLight : Apparel
     {
         public enum LightMode
@@ -35,12 +34,6 @@ namespace MiningHelmet
         public LightMode lightMode = LightMode.Automatic;
 
         // ===================== Setup work =====================
-        public override void SpawnSetup(Map map, bool respawningAfterLoad)
-        {
-            base.SpawnSetup(map, respawningAfterLoad);
-            this.nextUpdateTick = Find.TickManager.TicksGame + Rand.Range(0, updatePeriodInTicks);
-        }
-
         public override void ExposeData()
         {
             base.ExposeData();
@@ -48,6 +41,7 @@ namespace MiningHelmet
             Scribe_References.Look<Thing>(ref this.light, "light");
             Scribe_Values.Look<bool>(ref this.lightIsOn, "lightIsOn");
             Scribe_Values.Look<LightMode>(ref this.lightMode, "lightMode");
+            Scribe_Values.Look<int>(ref this.nextUpdateTick, "nextUpdateTick");
         }
 
         // ===================== Main function =====================

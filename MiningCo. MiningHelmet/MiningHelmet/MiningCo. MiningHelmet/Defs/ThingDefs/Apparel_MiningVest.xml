@@ -2,7 +2,7 @@
 <Defs>
 
   <ThingDef ParentName="ApparelMakeableBase">
-    <defName>MiningVest</defName>
+    <defName>Apparel_MiningVest</defName>
     <label>mining vest</label>
     <description>A working apparel designed for mining operations. Embeds a personal light.</description>
     <thingClass>MiningHelmet.ApparelWithMiningLight</thingClass>
@@ -17,8 +17,8 @@
     </graphicData>
     <costList>
       <Cloth>80</Cloth>
-      <Component>1</Component>
-    </costList>
+      <ComponentIndustrial>1</ComponentIndustrial>
+  </costList>
     <thingCategories>
       <li>Apparel</li>
     </thingCategories>
@@ -29,8 +29,9 @@
       <ArmorRating_Blunt>0.02</ArmorRating_Blunt>
       <ArmorRating_Sharp>0.10</ArmorRating_Sharp>
       <ArmorRating_Heat>0.10</ArmorRating_Heat>
-      <Insulation_Cold>-10</Insulation_Cold>
+      <Insulation_Cold>10</Insulation_Cold>
       <Insulation_Heat>10</Insulation_Heat>
+      <EquipDelay>3</EquipDelay>
     </statBases>
     <equippedStatOffsets>
       <MiningSpeed>0.05</MiningSpeed>

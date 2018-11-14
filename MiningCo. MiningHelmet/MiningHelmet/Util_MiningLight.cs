@@ -16,8 +16,7 @@ namespace MiningHelmet
     /// Util_MiningLight class.
     /// </summary>
     /// <author>Rikiki</author>
-    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.
-    /// Remember learning is always better than just copy/paste...</permission>
+    /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public static class Util_MiningLight
     {
         // Mining light glower.
