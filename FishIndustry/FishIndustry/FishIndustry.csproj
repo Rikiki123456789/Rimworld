@@ -142,6 +142,7 @@
     <Content Include="FishIndustry\Patches\Races_Animal_Fish_Cave.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\Textures\Effects\MicroFungus.png" />
     <Content Include="FishIndustry\Textures\Things\Building\AquacultureBasin.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPier.png" />
     <Content Include="FishIndustry\Textures\Things\Building\FishingPierSpawner.png" />
