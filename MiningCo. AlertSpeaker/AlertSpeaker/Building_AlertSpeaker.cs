@@ -89,7 +89,7 @@ namespace AlertSpeaker
             if ((building != null)
                 && ((building.def == ThingDefOf.Wall)
                 || building.def.building.isNaturalRock
-                || (building.def.fillPercent >= 80)))
+                || (building.def.fillPercent >= 0.80f)))
             {
                 return true;
             }
