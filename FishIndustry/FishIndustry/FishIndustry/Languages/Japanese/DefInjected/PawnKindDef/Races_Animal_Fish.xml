@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Fishes that can only be fished -->
+
+  <PawnKindDefFishSduiggles.label>沼イカ</PawnKindDefFishSduiggles.label>
+  <PawnKindDefFishSduiggles.labelPlural>沼イカの群れ</PawnKindDefFishSduiggles.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.0.label>沼イカの子供</PawnKindDefFishSduiggles.lifeStages.0.label>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelPlural>沼イカの子供の群れ</PawnKindDefFishSduiggles.lifeStages.0.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelMale>男性 沼イカの子供</PawnKindDefFishSduiggles.lifeStages.0.labelMale>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelMalePlural>男性 沼イカの子供の群れ</PawnKindDefFishSduiggles.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelFemale>女性 沼イカの子供</PawnKindDefFishSduiggles.lifeStages.0.labelFemale>
+  <PawnKindDefFishSduiggles.lifeStages.0.labelFemalePlural>女性 沼イカの子供の群れ</PawnKindDefFishSduiggles.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.1.label>若い沼イカ</PawnKindDefFishSduiggles.lifeStages.1.label>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelPlural>若い沼イカの群れ</PawnKindDefFishSduiggles.lifeStages.1.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelMale>男性 若い沼イカ</PawnKindDefFishSduiggles.lifeStages.1.labelMale>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelMalePlural>男性 若い沼イカの群れ</PawnKindDefFishSduiggles.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelFemale>女性 若い沼イカ</PawnKindDefFishSduiggles.lifeStages.1.labelFemale>
+  <PawnKindDefFishSduiggles.lifeStages.1.labelFemalePlural>女性 若い沼イカの群れ</PawnKindDefFishSduiggles.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.2.label>沼イカ</PawnKindDefFishSduiggles.lifeStages.2.label>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelPlural>沼イカの群れ</PawnKindDefFishSduiggles.lifeStages.2.labelPlural>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelMale>男性 沼イカ</PawnKindDefFishSduiggles.lifeStages.2.labelMale>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelMalePlural>男性 沼イカの群れ</PawnKindDefFishSduiggles.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelFemale>女性 沼イカ</PawnKindDefFishSduiggles.lifeStages.2.labelFemale>
+  <PawnKindDefFishSduiggles.lifeStages.2.labelFemalePlural>女性 沼イカの群れ</PawnKindDefFishSduiggles.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishSduiggles.labelMale>男性 沼イカ</PawnKindDefFishSduiggles.labelMale>
+  <PawnKindDefFishSduiggles.labelMalePlural>男性 沼イカの群れ</PawnKindDefFishSduiggles.labelMalePlural>
+  <PawnKindDefFishSduiggles.labelFemale>女性 沼イカ</PawnKindDefFishSduiggles.labelFemale>
+  <PawnKindDefFishSduiggles.labelFemalePlural>女性 沼イカの群れ</PawnKindDefFishSduiggles.labelFemalePlural>
+
+  <PawnKindDefFishSeasnake.label>海蛇</PawnKindDefFishSeasnake.label>
+  <PawnKindDefFishSeasnake.labelPlural>海蛇の群れ</PawnKindDefFishSeasnake.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.0.label>子海蛇</PawnKindDefFishSeasnake.lifeStages.0.label>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelPlural>子海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.0.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelMale>男性 子海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelMale>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelMalePlural>男性 子海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelFemale>女性 子海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelFemale>
+  <PawnKindDefFishSeasnake.lifeStages.0.labelFemalePlural>女性 子海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.1.label>若い海蛇</PawnKindDefFishSeasnake.lifeStages.1.label>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelPlural>若い海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.1.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelMale>男性 若い海蛇</PawnKindDefFishSeasnake.lifeStages.1.labelMale>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelMalePlural>男性 若い海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelFemale>女性 若い海蛇</PawnKindDefFishSeasnake.lifeStages.1.labelFemale>
+  <PawnKindDefFishSeasnake.lifeStages.1.labelFemalePlural>女性 若い海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.2.label>海蛇</PawnKindDefFishSeasnake.lifeStages.2.label>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelPlural>海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.2.labelPlural>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelMale>男性 海蛇</PawnKindDefFishSeasnake.lifeStages.2.labelMale>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelMalePlural>男性 海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelFemale>女性 海蛇</PawnKindDefFishSeasnake.lifeStages.2.labelFemale>
+  <PawnKindDefFishSeasnake.lifeStages.2.labelFemalePlural>女性 海蛇の群れ</PawnKindDefFishSeasnake.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishSeasnake.labelMale>男性 海蛇</PawnKindDefFishSeasnake.labelMale>
+  <PawnKindDefFishSeasnake.labelMalePlural>男性 海蛇の群れ</PawnKindDefFishSeasnake.labelMalePlural>
+  <PawnKindDefFishSeasnake.labelFemale>女性 海蛇</PawnKindDefFishSeasnake.labelFemale>
+  <PawnKindDefFishSeasnake.labelFemalePlural>女性 海蛇の群れ</PawnKindDefFishSeasnake.labelFemalePlural>
+
+
+  <!-- Fishes that can be bred -->
+
+  <PawnKindDefFishMashgon.label>マッシュゴン</PawnKindDefFishMashgon.label>
+  <PawnKindDefFishMashgon.labelPlural>マッシュゴンの群れ</PawnKindDefFishMashgon.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.0.label>マッシュゴンの幼魚</PawnKindDefFishMashgon.lifeStages.0.label>
+  <PawnKindDefFishMashgon.lifeStages.0.labelPlural>マッシュゴンの幼魚の群れ</PawnKindDefFishMashgon.lifeStages.0.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.0.labelMale>男性 マッシュゴンの幼魚</PawnKindDefFishMashgon.lifeStages.0.labelMale>
+  <PawnKindDefFishMashgon.lifeStages.0.labelMalePlural>男性 マッシュゴンの幼魚の群れ</PawnKindDefFishMashgon.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishMashgon.lifeStages.0.labelFemale>女性 マッシュゴンの幼魚</PawnKindDefFishMashgon.lifeStages.0.labelFemale>
+  <PawnKindDefFishMashgon.lifeStages.0.labelFemalePlural>女性 マッシュゴンの幼魚の群れ</PawnKindDefFishMashgon.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishMashgon.lifeStages.1.label>若いマッシュゴン</PawnKindDefFishMashgon.lifeStages.1.label>
+  <PawnKindDefFishMashgon.lifeStages.1.labelPlural>若いマッシュゴンの群れ</PawnKindDefFishMashgon.lifeStages.1.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.1.labelMale>男性 若いマッシュゴン</PawnKindDefFishMashgon.lifeStages.1.labelMale>
+  <PawnKindDefFishMashgon.lifeStages.1.labelMalePlural>男性 若いマッシュゴンの群れ</PawnKindDefFishMashgon.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishMashgon.lifeStages.1.labelFemale>女性 若いマッシュゴン</PawnKindDefFishMashgon.lifeStages.1.labelFemale>
+  <PawnKindDefFishMashgon.lifeStages.1.labelFemalePlural>女性 若いマッシュゴンの群れ</PawnKindDefFishMashgon.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishMashgon.lifeStages.2.label>マッシュゴン</PawnKindDefFishMashgon.lifeStages.2.label>
+  <PawnKindDefFishMashgon.lifeStages.2.labelPlural>マッシュゴンの群れ</PawnKindDefFishMashgon.lifeStages.2.labelPlural>
+  <PawnKindDefFishMashgon.lifeStages.2.labelMale>男性 マッシュゴン</PawnKindDefFishMashgon.lifeStages.2.labelMale>
+  <PawnKindDefFishMashgon.lifeStages.2.labelMalePlural>男性 マッシュゴンの群れ</PawnKindDefFishMashgon.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishMashgon.lifeStages.2.labelFemale>女性 マッシュゴン</PawnKindDefFishMashgon.lifeStages.2.labelFemale>
+  <PawnKindDefFishMashgon.lifeStages.2.labelFemalePlural>女性 マッシュゴンの群れ</PawnKindDefFishMashgon.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishMashgon.labelMale>男性 マッシュゴン</PawnKindDefFishMashgon.labelMale>
+  <PawnKindDefFishMashgon.labelMalePlural>男性 マッシュゴンの群れ</PawnKindDefFishMashgon.labelMalePlural>
+  <PawnKindDefFishMashgon.labelFemale>女性 マッシュゴン</PawnKindDefFishMashgon.labelFemale>
+  <PawnKindDefFishMashgon.labelFemalePlural>女性 マッシュゴンの群れ</PawnKindDefFishMashgon.labelFemalePlural>
+
+  <PawnKindDefFishBlueblade.label>ブルーブレード</PawnKindDefFishBlueblade.label>
+  <PawnKindDefFishBlueblade.labelPlural>ブルーブレードの群れ</PawnKindDefFishBlueblade.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.0.label>ブルーブレードの幼魚</PawnKindDefFishBlueblade.lifeStages.0.label>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelPlural>ブルーブレードの幼魚の群れ</PawnKindDefFishBlueblade.lifeStages.0.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelMale>男性 ブルーブレードの幼魚</PawnKindDefFishBlueblade.lifeStages.0.labelMale>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelMalePlural>男性 ブルーブレードの幼魚の群れ</PawnKindDefFishBlueblade.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelFemale>女性 ブルーブレードの幼魚</PawnKindDefFishBlueblade.lifeStages.0.labelFemale>
+  <PawnKindDefFishBlueblade.lifeStages.0.labelFemalePlural>女性 ブルーブレードの幼魚の群れ</PawnKindDefFishBlueblade.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.1.label>若いブルーブレード</PawnKindDefFishBlueblade.lifeStages.1.label>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelPlural>若いブルーブレードの群れ</PawnKindDefFishBlueblade.lifeStages.1.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelMale>男性 若いブルーブレード</PawnKindDefFishBlueblade.lifeStages.1.labelMale>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelMalePlural>男性 若いブルーブレードの群れ</PawnKindDefFishBlueblade.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelFemale>女性 若いブルーブレード</PawnKindDefFishBlueblade.lifeStages.1.labelFemale>
+  <PawnKindDefFishBlueblade.lifeStages.1.labelFemalePlural>女性 若いブルーブレードの群れ</PawnKindDefFishBlueblade.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.2.label>ブルーブレード</PawnKindDefFishBlueblade.lifeStages.2.label>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelPlural>ブルーブレードの群れ</PawnKindDefFishBlueblade.lifeStages.2.labelPlural>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelMale>男性 ブルーブレード</PawnKindDefFishBlueblade.lifeStages.2.labelMale>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelMalePlural>男性 ブルーブレードの群れ</PawnKindDefFishBlueblade.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelFemale>女性 ブルーブレード</PawnKindDefFishBlueblade.lifeStages.2.labelFemale>
+  <PawnKindDefFishBlueblade.lifeStages.2.labelFemalePlural>女性 ブルーブレードの群れ</PawnKindDefFishBlueblade.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishBlueblade.labelMale>男性 ブルーブレード</PawnKindDefFishBlueblade.labelMale>
+  <PawnKindDefFishBlueblade.labelMalePlural>男性 ブルーブレードの群れ</PawnKindDefFishBlueblade.labelMalePlural>
+  <PawnKindDefFishBlueblade.labelFemale>女性 ブルーブレード</PawnKindDefFishBlueblade.labelFemale>
+  <PawnKindDefFishBlueblade.labelFemalePlural>女性 ブルーブレードの群れ</PawnKindDefFishBlueblade.labelFemalePlural>
+
+  <PawnKindDefFishTailteeth.label>テイルティース</PawnKindDefFishTailteeth.label>
+  <PawnKindDefFishTailteeth.labelPlural>テイルティースの群れ</PawnKindDefFishTailteeth.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.0.label>テイルティースの幼魚</PawnKindDefFishTailteeth.lifeStages.0.label>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelPlural>テイルティースの幼魚の群れ</PawnKindDefFishTailteeth.lifeStages.0.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelMale>男性 テイルティースの幼魚</PawnKindDefFishTailteeth.lifeStages.0.labelMale>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelMalePlural>男性 テイルティースの幼魚の群れ</PawnKindDefFishTailteeth.lifeStages.0.labelMalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelFemale>女性 テイルティースの幼魚</PawnKindDefFishTailteeth.lifeStages.0.labelFemale>
+  <PawnKindDefFishTailteeth.lifeStages.0.labelFemalePlural>女性 テイルティースの幼魚の群れ</PawnKindDefFishTailteeth.lifeStages.0.labelFemalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.1.label>若いテイルティース</PawnKindDefFishTailteeth.lifeStages.1.label>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelPlural>若いテイルティースの群れ</PawnKindDefFishTailteeth.lifeStages.1.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelMale>男性 若いテイルティース</PawnKindDefFishTailteeth.lifeStages.1.labelMale>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelMalePlural>男性 若いテイルティースの群れ</PawnKindDefFishTailteeth.lifeStages.1.labelMalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelFemale>女性 若いテイルティース</PawnKindDefFishTailteeth.lifeStages.1.labelFemale>
+  <PawnKindDefFishTailteeth.lifeStages.1.labelFemalePlural>女性 若いテイルティースの群れ</PawnKindDefFishTailteeth.lifeStages.1.labelFemalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.2.label>テイルティース</PawnKindDefFishTailteeth.lifeStages.2.label>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelPlural>テイルティースの群れ</PawnKindDefFishTailteeth.lifeStages.2.labelPlural>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelMale>男性 テイルティース</PawnKindDefFishTailteeth.lifeStages.2.labelMale>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelMalePlural>男性 テイルティースの群れ</PawnKindDefFishTailteeth.lifeStages.2.labelMalePlural>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelFemale>女性 テイルティース</PawnKindDefFishTailteeth.lifeStages.2.labelFemale>
+  <PawnKindDefFishTailteeth.lifeStages.2.labelFemalePlural>女性 テイルティースの群れ</PawnKindDefFishTailteeth.lifeStages.2.labelFemalePlural>
+  <PawnKindDefFishTailteeth.labelMale>男性 テイルティース</PawnKindDefFishTailteeth.labelMale>
+  <PawnKindDefFishTailteeth.labelMalePlural>男性 テイルティースの群れ</PawnKindDefFishTailteeth.labelMalePlural>
+  <PawnKindDefFishTailteeth.labelFemale>女性 テイルティース</PawnKindDefFishTailteeth.labelFemale>
+  <PawnKindDefFishTailteeth.labelFemalePlural>女性 テイルティースの群れ</PawnKindDefFishTailteeth.labelFemalePlural>
+
+
+</LanguageData>

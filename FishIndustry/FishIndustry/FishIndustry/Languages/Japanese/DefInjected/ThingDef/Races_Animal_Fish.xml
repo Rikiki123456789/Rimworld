@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Fishes that can only be fished -->
+
+  <Sduiggles.label>沼イカ</Sduiggles.label>
+  <Sduiggles.description>湿地や浅瀬で見つかる。こんな外見だが、感情が非常に豊富で頭がよい。誰がそれを釣りたいと思うかって？それを釣るなんて酷い!</Sduiggles.description>
+  <!-- Leather Amount: 0 -->
+  <Meat_Sduiggles.label>くねくねした触手</Meat_Sduiggles.label>
+  <Meat_Sduiggles.description>くねくねした触手</Meat_Sduiggles.description>
+  <Sduiggles.race.meatLabel>くねくねした触手</Sduiggles.race.meatLabel>
+  <Sduiggles.verbs.Verb_MeleeAttack.label>沼イカ</Sduiggles.verbs.Verb_MeleeAttack.label>
+  <Corpse_Sduiggles.label>沼イカの死骸</Corpse_Sduiggles.label>
+  <Corpse_Sduiggles.description>沼イカの死骸</Corpse_Sduiggles.description>
+
+
+  <!-- Fishes that can only be fished -->
+
+  <Seasnake.label>海蛇</Seasnake.label>
+  <Seasnake.description>しばしば野生のテイルティースと間違われ、この平和的な魚は月がない夜に捕まえられる。</Seasnake.description>
+  <!-- Leather Amount: 0 -->
+  <Meat_Seasnake.label>海蛇の切り身</Meat_Seasnake.label>
+  <Meat_Seasnake.description>海蛇の切り身</Meat_Seasnake.description>
+  <Seasnake.race.meatLabel>海蛇の切り身</Seasnake.race.meatLabel>
+  <Seasnake.verbs.Verb_MeleeAttack.label>海蛇</Seasnake.verbs.Verb_MeleeAttack.label>
+  <Corpse_Seasnake.label>海蛇の死骸</Corpse_Seasnake.label>
+  <Corpse_Seasnake.description>海蛇の死骸</Corpse_Seasnake.description>
+
+
+  <!-- Fishes that can be bred -->
+
+  <Mashgon.label>マッシュゴン</Mashgon.label>
+  <Mashgon.description>この小さな貝は湿地と沼地でしばしば見られる。その名前の由来は、それを「沼地ドラゴン」と呼んでいるこの惑星の部族民から来ている。これは捕まえる事が容易で、繁殖も早く、毎日のタンパク源として優秀である。柔らかいし汁気が多く、生で食べたり好みに合わせて焼いたりできる。 実は殆ど栄養が無いが、美味しい!</Mashgon.description>
+  <!-- Leather Amount: 0 -->
+  <Meat_Mashgon.label>殻を剥いた貝</Meat_Mashgon.label>
+  <Meat_Mashgon.description>殻を剥いた貝</Meat_Mashgon.description>
+  <Mashgon.race.meatLabel>殻を剥いた貝</Mashgon.race.meatLabel>
+  <Mashgon.verbs.Verb_MeleeAttack.label>マッシュゴン</Mashgon.verbs.Verb_MeleeAttack.label>
+  <Corpse_Mashgon.label>マッシュゴンの死骸</Corpse_Mashgon.label>
+  <Corpse_Mashgon.description>マッシュゴンの死骸</Corpse_Mashgon.description>
+
+
+  <!-- Fishes that can be bred -->
+
+  <Blueblade.label>ブルーブレード</Blueblade.label>
+  <Blueblade.description>浅瀬で見つかる一般的な魚。 その名前はその水がある所なら生息できる生存力に由来する: 熱帯の礁湖や冷帯で凍っている青い水域の両方に生息する事が可能である。</Blueblade.description>
+  <!-- Leather Amount: 0 -->
+  <Meat_Blueblade.label>ブルーブレードの切り身</Meat_Blueblade.label>
+  <Meat_Blueblade.description>ブルーブレードの切り身</Meat_Blueblade.description>
+  <Blueblade.race.meatLabel>ブルーブレードの切り身</Blueblade.race.meatLabel>
+  <Blueblade.verbs.Verb_MeleeAttack.label>ブルーブレード</Blueblade.verbs.Verb_MeleeAttack.label>
+  <Corpse_Blueblade.label>ブルーブレードの死骸</Corpse_Blueblade.label>
+  <Corpse_Blueblade.description>ブルーブレードの死骸</Corpse_Blueblade.description>
+
+
+  <!-- Fishes that can be bred -->
+
+  <Tailteeth.label>テイルティース</Tailteeth.label>
+  <Tailteeth.description>このどう猛な捕食者はその危険な戦術にその名を冠している。ゆっくりと近寄る事で気が付いていないままの獲物を飲み込み、その大きな尻尾で獲物を深みへと運ぶ。大抵その大きな歯はこの恐ろしい生物の姿を見る最後の光景となる。</Tailteeth.description>
+  <Meat_Tailteeth.label>テイルティースのステーキ</Meat_Tailteeth.label>
+  <Meat_Tailteeth.description>テイルティースのステーキ</Meat_Tailteeth.description>
+  <Tailteeth.race.meatLabel>テイルティースのステーキ</Tailteeth.race.meatLabel>
+  <Tailteeth.verbs.Verb_MeleeAttack.label>テイルティース</Tailteeth.verbs.Verb_MeleeAttack.label>
+  <Corpse_Tailteeth.label>テイルティースの死骸</Corpse_Tailteeth.label>
+  <Corpse_Tailteeth.description>テイルティースの死骸</Corpse_Tailteeth.description>
+
+
+</LanguageData>

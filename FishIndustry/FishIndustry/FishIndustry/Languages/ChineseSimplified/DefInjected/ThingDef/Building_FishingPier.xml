@@ -1,20 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-  <FishingPierSpawner.label>渔业码头</FishingPierSpawner.label>
-  <FishingPierSpawner.description>一个简易但坚实的渔业码头。捕鱼的时候不会弄湿你的双脚。</FishingPierSpawner.description>
-  <FishingPierSpawner_Blueprint.label>渔业码头（蓝图）</FishingPierSpawner_Blueprint.label>
-  <FishingPierSpawner_Frame.label>渔业码头（建造中）</FishingPierSpawner_Frame.label>
-  <FishingPierSpawner_Frame.description>一个简易但坚实的渔业码头。捕鱼的时候不会弄湿你的双脚。</FishingPierSpawner_Frame.description>
-
-  <FishingPierSpawnerOnMud.label>渔业码头（泥地）</FishingPierSpawnerOnMud.label>
-  <FishingPierSpawnerOnMud.description>一个简易但坚实的渔业码头。捕鱼的时候不会弄湿你的双脚。可以建在泥地上，但需要更多的时间和建筑材料。</FishingPierSpawnerOnMud.description>
-  <FishingPierSpawnerOnMud_Blueprint.label>渔业码头 (泥地) (蓝图)</FishingPierSpawnerOnMud_Blueprint.label>
-  <FishingPierSpawnerOnMud_Frame.label>渔业码头 (泥地) (建造中)</FishingPierSpawnerOnMud_Frame.label>
-  <FishingPierSpawnerOnMud_Frame.description>一个简易但坚实的渔业码头。捕鱼的时候不会弄湿你的双脚。可以建在泥地上，但需要更多的时间和建筑材料。</FishingPierSpawnerOnMud_Frame.description>
-
-  <FishingPier.label>渔业码头</FishingPier.label>
-  <FishingPier.description>一个简易但坚实的渔业码头。捕鱼的时候不会弄湿你的双脚。</FishingPier.description>
-
-
+  <FishingPierSpawner.label>垂钓码头</FishingPierSpawner.label>
+  <FishingPierSpawner.description>一个简易但坚实的垂钓码头。垂钓的时候不会弄湿你的双脚。</FishingPierSpawner.description>
+  <FishingPierSpawnerOnMud.label>垂钓码头（泥地）</FishingPierSpawnerOnMud.label>
+  <FishingPierSpawnerOnMud.description>一个简易但坚实的垂钓码头。垂钓的时候不会弄湿你的双脚。可以建在泥地上，但需要更多的时间和建筑材料。</FishingPierSpawnerOnMud.description>
+  <FishingPier.label>垂钓码头</FishingPier.label>
+  <FishingPier.description>一个简易但坚实的垂钓码头。垂钓的时候不会弄湿你的双脚。</FishingPier.description>
+  <FishingPierSpawner_Blueprint.label>垂钓码头（蓝图）</FishingPierSpawner_Blueprint.label>
+  <FishingPierSpawner_Frame.label>垂钓码头（建造中）</FishingPierSpawner_Frame.label>
+  <FishingPierSpawner_Frame.description>一个简易但坚实的垂钓码头。垂钓的时候不会弄湿你的双脚。</FishingPierSpawner_Frame.description>
+  <FishingPierSpawnerOnMud_Blueprint.label>垂钓码头 (泥地) (蓝图)</FishingPierSpawnerOnMud_Blueprint.label>
+  <FishingPierSpawnerOnMud_Frame.label>垂钓码头 (泥地) (建造中)</FishingPierSpawnerOnMud_Frame.label>
+  <FishingPierSpawnerOnMud_Frame.description>一个简易但坚实的垂钓码头。垂钓的时候不会弄湿你的双脚。可以建在泥地上，但需要更多的时间和建筑材料。</FishingPierSpawnerOnMud_Frame.description>
 </LanguageData>

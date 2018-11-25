@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <JobDef_FishAtFishingPier.reportString>TargetAで釣りをしている。</JobDef_FishAtFishingPier.reportString>
+  <JobDef_FishAtFishingZone.reportString>釣りをしています。</JobDef_FishAtFishingZone.reportString>
+  <JobDef_AquacultureBasinHarvest.reportString>TargetAで収穫している。</JobDef_AquacultureBasinHarvest.reportString>
+  <JobDef_AquacultureBasinChangeSpecies.reportString>TargetAで魚種を変更しています。</JobDef_AquacultureBasinChangeSpecies.reportString>
+  <JobDef_AquacultureBasinMaintain.reportString>TarjetAを点検中</JobDef_AquacultureBasinMaintain.reportString>
+
+
+</LanguageData>

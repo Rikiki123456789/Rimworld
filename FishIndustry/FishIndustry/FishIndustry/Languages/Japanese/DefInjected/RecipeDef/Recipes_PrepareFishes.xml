@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- Campfire meal -->
+
+  <GrillFishCampfire.label>魚を焼く</GrillFishCampfire.label>
+  <GrillFishCampfire.jobString>魚を焼いている。</GrillFishCampfire.jobString>
+  <GrillFishCampfire.description>魚を焼く事で安全に食べる事ができる。香ばしい音と味。</GrillFishCampfire.description>
+
+
+</LanguageData>

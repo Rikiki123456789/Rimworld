@@ -2,17 +2,6 @@
 <Defs>
 
   <ResearchProjectDef>
-    <defName>ResearchFishingPier</defName>
-    <label>Fishing pier</label>
-    <description>Learn to build solid piers over water. Can be used to relax or fish from a safe place.</description>
-    <baseCost>800</baseCost>
-    <techLevel>Neolithic</techLevel>
-    <tab>FishIndustry</tab>
-    <researchViewX>0</researchViewX>
-    <researchViewY>0</researchViewY>
-  </ResearchProjectDef>
-
-  <ResearchProjectDef>
     <defName>ResearchAquaculture</defName>
     <label>Aquaculture</label>
     <description>Aquaculture basins are perfect to produce your own tasty seafood. Learn how to adapt your hydroponics into aquaculture basin to breed fishes.</description>

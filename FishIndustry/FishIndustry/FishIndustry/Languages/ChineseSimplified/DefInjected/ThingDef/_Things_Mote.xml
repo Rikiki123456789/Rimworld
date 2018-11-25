@@ -1,13 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-  <!-- These are Mote ThingDefs. Remain the same, DO NOT translate them. -->
-
   <Mote_Bubble.label>Mote</Mote_Bubble.label>
   <Mote_FishingRodNorth.label>Mote</Mote_FishingRodNorth.label>
   <Mote_FishingRodEast.label>Mote</Mote_FishingRodEast.label>
   <Mote_FishingRodSouth.label>Mote</Mote_FishingRodSouth.label>
   <Mote_FishingRodWest.label>Mote</Mote_FishingRodWest.label>
-
-
 </LanguageData>

@@ -32,7 +32,6 @@
     <avoidWander>false</avoidWander>
     <changeable>false</changeable>
     <holdSnow>true</holdSnow>
-
   </TerrainDef>
 
 </Defs>

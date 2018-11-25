@@ -1,8 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
   <FishBody.label>鱼身</FishBody.label>
-  <FishHead.label>鱼头</FishHead.label>
   <FishMouth.label>鱼嘴</FishMouth.label>
   <LeftGill.label>左鳃</LeftGill.label>
   <RightGill.label>右鳃</RightGill.label>
@@ -15,6 +13,5 @@
   <SquidHead.label>乌贼头</SquidHead.label>
   <SquidMouth.label>乌贼口器</SquidMouth.label>
   <Tentacle.label>触手</Tentacle.label>
-
-
+  <FishHead.label>鱼头</FishHead.label>
 </LanguageData>

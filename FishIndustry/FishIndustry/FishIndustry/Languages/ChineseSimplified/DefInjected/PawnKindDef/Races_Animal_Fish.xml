@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <LanguageData>
-
-  <!-- Fishes that can only be fished -->
-
   <PawnKindDefFishSduiggles.label>乌贼</PawnKindDefFishSduiggles.label>
+  <PawnKindDefFishSeasnake.label>海蛇</PawnKindDefFishSeasnake.label>
+  <PawnKindDefFishMashgon.label>龙虾</PawnKindDefFishMashgon.label>
+  <PawnKindDefFishBlueblade.label>蓝刀鱼</PawnKindDefFishBlueblade.label>
+  <PawnKindDefFishTailteeth.label>尾齿鱼</PawnKindDefFishTailteeth.label>
   <PawnKindDefFishSduiggles.labelPlural>乌贼</PawnKindDefFishSduiggles.labelPlural>
   <PawnKindDefFishSduiggles.lifeStages.0.label>乌贼</PawnKindDefFishSduiggles.lifeStages.0.label>
   <PawnKindDefFishSduiggles.lifeStages.0.labelPlural>乌贼群</PawnKindDefFishSduiggles.lifeStages.0.labelPlural>
@@ -27,8 +28,6 @@
   <PawnKindDefFishSduiggles.labelMalePlural>雄性乌贼</PawnKindDefFishSduiggles.labelMalePlural>
   <PawnKindDefFishSduiggles.labelFemale>雌性乌贼</PawnKindDefFishSduiggles.labelFemale>
   <PawnKindDefFishSduiggles.labelFemalePlural>雌性乌贼</PawnKindDefFishSduiggles.labelFemalePlural>
-
-  <PawnKindDefFishSeasnake.label>海蛇</PawnKindDefFishSeasnake.label>
   <PawnKindDefFishSeasnake.labelPlural>海蛇</PawnKindDefFishSeasnake.labelPlural>
   <PawnKindDefFishSeasnake.lifeStages.0.label>海蛇</PawnKindDefFishSeasnake.lifeStages.0.label>
   <PawnKindDefFishSeasnake.lifeStages.0.labelPlural>海蛇</PawnKindDefFishSeasnake.lifeStages.0.labelPlural>
@@ -52,11 +51,6 @@
   <PawnKindDefFishSeasnake.labelMalePlural>雄性海蛇</PawnKindDefFishSeasnake.labelMalePlural>
   <PawnKindDefFishSeasnake.labelFemale>雌性海蛇</PawnKindDefFishSeasnake.labelFemale>
   <PawnKindDefFishSeasnake.labelFemalePlural>雌性海蛇</PawnKindDefFishSeasnake.labelFemalePlural>
-
-
-  <!-- Fishes that can be bred -->
-
-  <PawnKindDefFishMashgon.label>龙虾</PawnKindDefFishMashgon.label>
   <PawnKindDefFishMashgon.labelPlural>龙虾</PawnKindDefFishMashgon.labelPlural>
   <PawnKindDefFishMashgon.lifeStages.0.label>龙虾</PawnKindDefFishMashgon.lifeStages.0.label>
   <PawnKindDefFishMashgon.lifeStages.0.labelPlural>龙虾</PawnKindDefFishMashgon.lifeStages.0.labelPlural>
@@ -80,8 +74,6 @@
   <PawnKindDefFishMashgon.labelMalePlural>雄性龙虾</PawnKindDefFishMashgon.labelMalePlural>
   <PawnKindDefFishMashgon.labelFemale>雌性龙虾</PawnKindDefFishMashgon.labelFemale>
   <PawnKindDefFishMashgon.labelFemalePlural>雌性龙虾</PawnKindDefFishMashgon.labelFemalePlural>
-
-  <PawnKindDefFishBlueblade.label>蓝刀鱼</PawnKindDefFishBlueblade.label>
   <PawnKindDefFishBlueblade.labelPlural>蓝刀鱼</PawnKindDefFishBlueblade.labelPlural>
   <PawnKindDefFishBlueblade.lifeStages.0.label>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.label>
   <PawnKindDefFishBlueblade.lifeStages.0.labelPlural>蓝刀鱼</PawnKindDefFishBlueblade.lifeStages.0.labelPlural>
@@ -105,8 +97,6 @@
   <PawnKindDefFishBlueblade.labelMalePlural>雄性蓝刀鱼</PawnKindDefFishBlueblade.labelMalePlural>
   <PawnKindDefFishBlueblade.labelFemale>雌性蓝刀鱼</PawnKindDefFishBlueblade.labelFemale>
   <PawnKindDefFishBlueblade.labelFemalePlural>雌性蓝刀鱼</PawnKindDefFishBlueblade.labelFemalePlural>
-
-  <PawnKindDefFishTailteeth.label>尾齿鱼</PawnKindDefFishTailteeth.label>
   <PawnKindDefFishTailteeth.labelPlural>尾齿鱼</PawnKindDefFishTailteeth.labelPlural>
   <PawnKindDefFishTailteeth.lifeStages.0.label>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.label>
   <PawnKindDefFishTailteeth.lifeStages.0.labelPlural>尾齿鱼</PawnKindDefFishTailteeth.lifeStages.0.labelPlural>
@@ -130,6 +120,4 @@
   <PawnKindDefFishTailteeth.labelMalePlural>雄性尾齿鱼</PawnKindDefFishTailteeth.labelMalePlural>
   <PawnKindDefFishTailteeth.labelFemale>雌性尾齿鱼</PawnKindDefFishTailteeth.labelFemale>
   <PawnKindDefFishTailteeth.labelFemalePlural>雌性尾齿鱼</PawnKindDefFishTailteeth.labelFemalePlural>
-
-
 </LanguageData>

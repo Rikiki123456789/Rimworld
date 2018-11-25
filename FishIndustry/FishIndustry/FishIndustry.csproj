@@ -77,6 +77,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FishIndustry\Assemblies\" />
+    <Folder Include="FishIndustry\Languages\ChineseSimplified\" />
+    <Folder Include="FishIndustry\Languages\Japanese\" />
     <Folder Include="FishIndustry\Textures\Ui\" />
   </ItemGroup>
   <ItemGroup>
@@ -88,7 +90,7 @@
     </Content>
     <Content Include="FishIndustry\Defs\Bodies\Bodies_Animal_Fish.xml" />
     <Content Include="FishIndustry\Defs\Bodies\BodyParts_Animal_Fish.xml" />
-    <Content Include="FishIndustry\Defs\IncidentDefs\Incident MicroFungus.xml" />
+    <Content Include="FishIndustry\Defs\Storyteller\Incident_MicroFungus.xml" />
     <Content Include="FishIndustry\Defs\JobDefs\Jobs_Joy.xml" />
     <Content Include="FishIndustry\Defs\JoyGiverDefs\JoyGivers.xml">
       <SubType>Designer</SubType>

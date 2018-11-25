@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <WorkGiver_UseAquacultureBasin.verb>使う</WorkGiver_UseAquacultureBasin.verb>
+  <WorkGiver_UseAquacultureBasin.gerund>使っている</WorkGiver_UseAquacultureBasin.gerund>
+
+  <WorkGiver_FishAtFishingPier.verb>釣り</WorkGiver_FishAtFishingPier.verb>
+  <WorkGiver_FishAtFishingPier.gerund>釣っている</WorkGiver_FishAtFishingPier.gerund>
+
+  <WorkGiver_FishAtFishingZone.verb>釣り</WorkGiver_FishAtFishingZone.verb>
+  <WorkGiver_FishAtFishingZone.gerund>釣っている</WorkGiver_FishAtFishingZone.gerund>
+
+
+</LanguageData>

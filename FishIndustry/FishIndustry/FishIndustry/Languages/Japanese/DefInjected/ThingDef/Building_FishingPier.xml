@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <FishingPier.label>釣り用桟橋</FishingPier.label>
+  <FishingPier.description>シンプルでしっかりとした釣用の桟橋。釣ってる最中足が濡れなくて済みます。</FishingPier.description>
+  <Blueprint_FishingPier.label>釣り用桟橋(設計)</Blueprint_FishingPier.label>
+  <Frame_FishingPier.label>釣り用桟橋(施工)</Frame_FishingPier.label>
+  <Frame_FishingPier.description>シンプルでしっかりとした釣用の桟橋。釣ってる最中足が濡れなくて済みます。</Frame_FishingPier.description>
+
+
+</LanguageData>

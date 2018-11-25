@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <Fish.label>魚</Fish.label>
+  <Fish.corePart.parts.left_kidney.customLabel>左腎</Fish.corePart.parts.left_kidney.customLabel>
+  <Fish.corePart.parts.right_kidney.customLabel>右腎</Fish.corePart.parts.right_kidney.customLabel>
+  <Fish.corePart.parts.Head.parts.left_eye.customLabel>左眼</Fish.corePart.parts.Head.parts.left_eye.customLabel>
+  <Fish.corePart.parts.Head.parts.right_eye.customLabel>右眼</Fish.corePart.parts.Head.parts.right_eye.customLabel>
+
+  <Squid.label>イカ</Squid.label>
+  <Squid.corePart.parts.right_kidney.customLabel>右腎</Squid.corePart.parts.right_kidney.customLabel>
+  <Squid.corePart.parts.Head.parts.left_eye.customLabel>左眼</Squid.corePart.parts.Head.parts.left_eye.customLabel>
+  <Squid.corePart.parts.Head.parts.right_eye.customLabel>右眼</Squid.corePart.parts.Head.parts.right_eye.customLabel>
+
+
+</LanguageData>
