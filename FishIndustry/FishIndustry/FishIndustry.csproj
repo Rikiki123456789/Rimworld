@@ -77,7 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="FishIndustry\Assemblies\" />
-    <Folder Include="FishIndustry\Languages\ChineseSimplified\" />
     <Folder Include="FishIndustry\Languages\Japanese\" />
     <Folder Include="FishIndustry\Textures\Ui\" />
   </ItemGroup>
