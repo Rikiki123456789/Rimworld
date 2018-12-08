@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="RockBase">
+    <defName>MineableColdCrystal</defName>
+    <label>cold crystal</label>
+    <description>Some strange crystals burried in the rocks. As bright as it is cold, it lights the suroundings.</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(89,83,68)</color>
+      <colorTwo>(232,232,232)</colorTwo>
+    </graphicData>
+    <statBases>
+      <MaxHitPoints>3000</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>ColdCrystal</mineableThing>
+      <mineableYield>3</mineableYield>
+      <mineableScatterCommonality>0.35</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>
+        <min>3</min>
+        <max>5</max>
+      </mineableScatterLumpSizeRange>
+    </building>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>4</glowRadius>
+        <glowColor>(252,187,113,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <heatPerSecond>-2</heatPerSecond>
+        <heatPushMinTemperature>-15</heatPushMinTemperature>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>
