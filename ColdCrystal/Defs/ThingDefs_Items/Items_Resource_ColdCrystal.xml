@@ -13,6 +13,7 @@
     <soundDrop>ChunkRock_Drop</soundDrop>
     <statBases>
       <Beauty>0</Beauty>
+      <Mass>1.5</Mass>
       <MarketValue>25</MarketValue>
     </statBases>
     <thingCategories>
@@ -20,6 +21,11 @@
     </thingCategories>
     <stackLimit>4</stackLimit>
     <deepCommonality>1</deepCommonality>
+    <deepCountPerPortion>3</deepCountPerPortion>
+    <deepLumpSizeRange>
+      <min>2</min>
+      <max>4</max>
+    </deepLumpSizeRange>
     <comps>
       <li Class="CompProperties_Glower">
         <glowRadius>2</glowRadius>
