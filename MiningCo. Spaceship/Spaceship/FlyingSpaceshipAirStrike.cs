@@ -20,14 +20,11 @@ namespace Spaceship
         public IntVec3 targetPosition = IntVec3.Invalid;
         public float shipToTargetDistance = 0f;
 
-        // Gatling.
+        // Weapons.
         public List<int> weaponRemainingRounds = new List<int>(AirStrikeDef.maxWeapons) { -1, -1, -1 }; // -1 means weapon has not started shooting.
         public List<int> weaponNextShotTick = new List<int>(AirStrikeDef.maxWeapons) { 0, 0, 0 };
         public List<bool> weaponShootRight = new List<bool>(AirStrikeDef.maxWeapons) { true, true, true };
         
-        // Texture.
-        public static Material shipTexture = MaterialPool.MatFrom("Things/StrikeShip/StrikeShip");
-
         // Sound.
         public static readonly SoundDef airStrikeSound = SoundDef.Named("AirStrike");
                 
@@ -40,7 +37,9 @@ namespace Spaceship
             this.ticksBeforeOverflight = this.airStrikeDef.ticksBeforeOverflightInitialValue;
             this.ticksAfterOverflight = 0;
 
+            this.spaceshipKind = SpaceshipKind.Airstrike;
             ComputeAirStrikeRotation(this.targetPosition);
+            ConfigureShipTexture(this.spaceshipKind);
             base.Tick();
         }
 
@@ -164,8 +163,14 @@ namespace Spaceship
                 }
                 this.spaceshipExactPosition += unitVector * this.shipToTargetDistance;
             }
-            // The 5f offset on Y axis is mandatory to be over the fog of war.
-            this.spaceshipExactPosition += new Vector3(0f, 5f, 0f);
+            // The 5f offset on Y axis is mandatory to be over the fog of war. The 0.1f is to ensure spaceship texture is above its shadow.
+            this.spaceshipExactPosition += new Vector3(0f, 5.1f, 0f);
+        }
+
+        public override void ComputeShipShadowExactPosition()
+        {
+            GenCelestial.LightInfo lightInfo = GenCelestial.GetLightSourceInfo(this.Map, GenCelestial.LightType.Shadow);
+            this.spaceshipShadowExactPosition = this.spaceshipExactPosition + 2f * new Vector3(lightInfo.vector.x, -0.1f, lightInfo.vector.y);
         }
 
         public override void ComputeShipExactRotation()
@@ -247,12 +252,12 @@ namespace Spaceship
                     }
                     if (pawn != null)
                     {
-                        projectile.Launch(this, roundOrigin, pawn);
+                        projectile.Launch(this, roundOrigin, pawn, pawn, ProjectileHitFlags.IntendedTarget);
                     }
                     else
                     {
                         roundDestination += new Vector3(Rand.Range(-weaponDef.targetAcquireRange, weaponDef.targetAcquireRange), 0f, 0f).RotatedBy(this.spaceshipExactRotation);
-                        projectile.Launch(this, roundOrigin, roundDestination.ToIntVec3());
+                        projectile.Launch(this, roundOrigin, roundDestination.ToIntVec3(), roundDestination.ToIntVec3(), ProjectileHitFlags.None);
                     }
                 }
                 this.weaponRemainingRounds[weaponIndex]--;
@@ -283,13 +288,6 @@ namespace Spaceship
                 return hostilePawnsAround.RandomElement();
             }
             return null;
-        }
-
-        // ===================== Draw =====================
-        public override void Draw()
-        {
-            this.spaceshipMatrix.SetTRS(this.DrawPos + Altitudes.AltIncVect, (this.spaceshipExactRotation).ToQuat(), this.spaceshipScale);
-            Graphics.DrawMesh(MeshPool.plane10, this.spaceshipMatrix, shipTexture, 0);
         }
     }
 }

@@ -56,7 +56,7 @@ namespace Spaceship
             {
                 if (p.kindDef == Util_PawnKindDefOf.Medic)
                 {
-                    Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, -5);
+                    Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, -5);
                     string letterText = "A MiningCo. medic has been downed or killed while helping your colony.\n\n"
                         + "Medics are precious people, even more on rimworlds. Losing one will obviously anger MiningCo. and nobody wants to anger this company.\n"
                         + "Remember that you must ensure their safety in your area!";

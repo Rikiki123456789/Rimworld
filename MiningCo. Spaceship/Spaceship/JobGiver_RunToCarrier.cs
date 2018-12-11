@@ -22,12 +22,13 @@ namespace Spaceship
 			this.locomotionUrgency = LocomotionUrgency.Sprint;
 		}
 		protected override IntVec3 GetWanderRoot(Pawn pawn)
-		{
+        {
             const int numberOfCellsAhead = 15;
             IntVec3 targetCell = pawn.mindState.duty.focus.Cell;
             Pawn carrier = (pawn.GetLord().CurLordToil as LordToil_EscortDownedPawn).Data.carrier;
             if ((carrier.pather != null)
                 && carrier.pather.Moving
+                && (carrier.pather.curPath != null)
                 && (carrier.pather.curPath.NodesLeftCount > numberOfCellsAhead))
             {
                 targetCell = carrier.pather.curPath.Peek(numberOfCellsAhead);

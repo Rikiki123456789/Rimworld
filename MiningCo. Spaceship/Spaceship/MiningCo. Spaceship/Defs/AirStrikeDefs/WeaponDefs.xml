@@ -5,7 +5,7 @@
     <defName>GatlingWeapon</defName>
     <label>gatling</label>
     <ammoDef>GatlingRound</ammoDef>
-    <soundCastDef>ShotMinigun</soundCastDef>
+    <soundCastDef>Shot_Minigun</soundCastDef>
     <ammoQuantity>100</ammoQuantity>
     <ticksBetweenShots>1</ticksBetweenShots>
     <startShootingDistance>50</startShootingDistance>
@@ -21,7 +21,7 @@
     <defName>AutocannonWeapon</defName>
     <label>autocannon</label>
     <ammoDef>AutocannonRound</ammoDef>
-    <soundCastDef>ShotShotgun</soundCastDef>
+    <soundCastDef>Shot_Shotgun</soundCastDef>
     <ammoQuantity>12</ammoQuantity>
     <ticksBetweenShots>8</ticksBetweenShots>
     <startShootingDistance>50</startShootingDistance>

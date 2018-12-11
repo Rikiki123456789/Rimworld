@@ -5,9 +5,9 @@
 		<defName>Spaceship_DamagedSpaceship</defName>
 		<label>damaged spaceship</label>
 		<category>Misc</category>
-    <targetTypes>
-      <li>MapPlayerHome</li>
-    </targetTypes>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
 		<workerClass>Spaceship.IncidentWorker_DamagedSpaceship</workerClass>
 		<baseChance>0.5</baseChance>
 	</IncidentDef>
@@ -16,9 +16,9 @@
 		<defName>Spaceship_DispatcherDrop</defName>
 		<label>dispatcher drop</label>
 		<category>Misc</category>
-    <targetTypes>
-      <li>MapPlayerHome</li>
-    </targetTypes>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
 		<workerClass>Spaceship.IncidentWorker_DispatcherDrop</workerClass>
 		<baseChance>1.5</baseChance>
 	</IncidentDef>
@@ -27,9 +27,9 @@
 		<defName>Spaceship_DispatcherPick</defName>
 		<label>dispatcher pick</label>
 		<category>Misc</category>
-    <targetTypes>
-      <li>MapPlayerHome</li>
-    </targetTypes>
+    <targetTags>
+      <li>Map_PlayerHome</li>
+    </targetTags>
 		<workerClass>Spaceship.IncidentWorker_DispatcherPick</workerClass>
 		<baseChance>1.5</baseChance>
 	</IncidentDef>

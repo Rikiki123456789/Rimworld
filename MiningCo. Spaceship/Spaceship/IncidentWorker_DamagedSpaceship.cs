@@ -13,9 +13,9 @@ namespace Spaceship
 {
     public class IncidentWorker_DamagedSpaceship : IncidentWorker
     {
-        protected override bool CanFireNowSub(IIncidentTarget target)
+        protected override bool CanFireNowSub(IncidentParms parms)
         {
-            if (base.CanFireNowSub(target) == false)
+            if (base.CanFireNowSub(parms) == false)
             {
                 return false;
             }
@@ -23,7 +23,7 @@ namespace Spaceship
             {
                 return false;
             }
-            Map map = (Map)target;
+            Map map = (Map)parms.target;
             List<Building_LandingPad> freeLandingPads = Util_LandingPad.GetAllFreeLandingPads(map);
             if (freeLandingPads != null)
             {
@@ -44,7 +44,7 @@ namespace Spaceship
             Building_LandingPad landingPad = freeLandingPads.RandomElement();
 
             // Spawn landing damaged spaceship.
-            FlyingSpaceshipLanding damagedSpaceship = Util_Spaceship.SpawnSpaceship(landingPad, SpaceshipKind.Damaged);
+            FlyingSpaceshipLanding damagedSpaceship = Util_Spaceship.SpawnLandingSpaceship(landingPad, SpaceshipKind.Damaged);
             damagedSpaceship.HitPoints = Mathf.RoundToInt(Rand.Range(0.15f, 0.45f) * damagedSpaceship.HitPoints);
             string letterText = "-- Comlink with MiningCo. --\n\n"
                 + "MiningCo. pilot:\n\n"

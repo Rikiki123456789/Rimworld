@@ -18,7 +18,7 @@ namespace Spaceship
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<bool>(ref landingPadLightIsEnabled, "landingPadLightsAreEnabled", true);
+            Scribe_Values.Look<bool>(ref landingPadLightIsEnabled, "landingPadLightIsEnabled", true);
         }
 
         public static void DoSettingsWindowContents(Rect inRect)
@@ -26,7 +26,7 @@ namespace Spaceship
             Listing_Standard list = new Listing_Standard();
             list.ColumnWidth = inRect.width;
             list.Begin(inRect);
-            list.CheckboxLabeled("Enable landing pad lights", ref landingPadLightIsEnabled, "Disable the beacon lights if your are getting a performance hit with dynamic glowers.");
+            list.CheckboxLabeled("Enable landing pad lights", ref landingPadLightIsEnabled, "Disable the beacon lights if your are getting a performance hit with dynamic glowers. Switching the landing pad power off and on may be necessary.");
             list.End();
         }
     }

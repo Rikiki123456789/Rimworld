@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LandingPadBeacon</defName>
+    <label>landing pad beacon</label>
+    <description>Beacon used by ships to land on.</description>
+    <thingClass>Spaceship.Building_LandingPadBeacon</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Building/LandingPadBeacon/LandingPadBeacon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <damageData>
+        <rect>(0.2,0.2,0.6,0.6)</rect>
+      </damageData>
+    </graphicData>
+    <category>Building</category>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Standable</passability>
+    <selectable>false</selectable>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+      <expandHomeArea>false</expandHomeArea>
+    </building>
+    <fillPercent>0.0</fillPercent>
+    <costList>
+      <Steel>15</Steel>
+    </costList>
+    <leaveResourcesWhenKilled>false</leaveResourcesWhenKilled>
+    <soundImpactDefault>BulletImpact_Metal</soundImpactDefault>
+    <rotatable>false</rotatable>
+    <useHitPoints>false</useHitPoints>
+    <statBases>
+      <MaxHitPoints>50</MaxHitPoints>
+      <WorkToMake>170</WorkToMake>
+      <Flammability>0.0</Flammability>
+    </statBases>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LandingPadBeaconGlowerRed</defName>
+    <label>beacon light</label>
+    <description>Landing pad beacon red light.</description>
+    <graphicData>
+      <texPath>Things/Building/LandingPadBeacon/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>false</selectable>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+    </building>
+    <fillPercent>0.0</fillPercent>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <overlightRadius>2.9</overlightRadius>
+        <glowColor>(217,0,0,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LandingPadBeaconGlowerGreen</defName>
+    <label>beacon light</label>
+    <description>Landing pad beacon green light.</description>
+    <graphicData>
+      <texPath>Things/Building/LandingPadBeacon/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>false</selectable>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+    </building>
+    <fillPercent>0.0</fillPercent>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <overlightRadius>2.9</overlightRadius>
+        <glowColor>(0,217,0,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LandingPadBeaconGlowerWhite</defName>
+    <label>beacon light</label>
+    <description>Landing pad beacon white light.</description>
+    <graphicData>
+      <texPath>Things/Building/LandingPadBeacon/DummyTexture</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <selectable>false</selectable>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+    </building>
+    <fillPercent>0.0</fillPercent>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>3</glowRadius>
+        <overlightRadius>2.9</overlightRadius>
+        <glowColor>(217,217,208,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

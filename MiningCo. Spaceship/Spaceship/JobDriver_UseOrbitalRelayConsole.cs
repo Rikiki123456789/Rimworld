@@ -21,7 +21,7 @@ namespace Spaceship
         public AirStrikeDef selectedStrikeDef = null;
         public TimeSpeed previousTimeSpeed = TimeSpeed.Paused;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetThingA, this.job);
         }
@@ -75,7 +75,7 @@ namespace Spaceship
                         mainDiaNode.options.Add(feePaymentDiaOption);
                     }
 
-                    // Cancel option.
+                    // Disconnect option.
                     DiaOption disconnectDiaOption = new DiaOption("Disconnect");
                     disconnectDiaOption.resolveTree = true;
                     mainDiaNode.options.Add(disconnectDiaOption);
@@ -105,10 +105,14 @@ namespace Spaceship
             {
                 cargoSupplyDiaOption.Disable("no available landing pad");
             }
+            else if (this.Map.GameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout))
+            {
+                cargoSupplyDiaOption.Disable("toxic fallout");
+            }
             cargoSupplyDiaOption.action = delegate
             {
                 TradeUtility.LaunchSilver(this.Map, Util_Spaceship.cargoSupplyCostInSilver);
-                Util_Spaceship.SpawnSpaceship(landingPad, SpaceshipKind.CargoRequested);
+                Util_Spaceship.SpawnLandingSpaceship(landingPad, SpaceshipKind.CargoRequested);
             };
             DiaNode supplyShipAcceptedDiaNode = new DiaNode("\"Alright, a supply ship should arrive soon with our best stuff.\n"
                 + "Greetings partner!\"\n\n"
@@ -136,10 +140,14 @@ namespace Spaceship
             {
                 medicalSupplyDiaOption.Disable("no available landing pad");
             }
+            else if (this.Map.GameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout))
+            {
+                medicalSupplyDiaOption.Disable("toxic fallout");
+            }
             medicalSupplyDiaOption.action = delegate
             {
                 TradeUtility.LaunchSilver(this.Map, Util_Spaceship.medicalSupplyCostInSilver);
-                Util_Spaceship.SpawnSpaceship(landingPad, SpaceshipKind.Medical);
+                Util_Spaceship.SpawnLandingSpaceship(landingPad, SpaceshipKind.Medical);
             };
             DiaNode supplyShipAcceptedDiaNode = new DiaNode("\"We are sending you a medical ship immediately.\n\n"
                 + "Hold on down there, we're coming!\n\n" 
@@ -233,10 +241,10 @@ namespace Spaceship
         public void SpawnAirStrikeBeacon(LocalTargetInfo targetPosition)
         {
             TradeUtility.LaunchSilver(this.Map, this.selectedStrikeDef.costInSilver);
-            Building_AirStrikeBeacon AirStrikeBeacon = GenSpawn.Spawn(Util_ThingDefOf.AirStrikeBeacon, targetPosition.Cell, this.Map) as Building_AirStrikeBeacon;
-            AirStrikeBeacon.InitializeAirStrike(targetPosition.Cell, this.selectedStrikeDef);
-            AirStrikeBeacon.SetFaction(Faction.OfPlayer);
-            Messages.Message("Air strike target confirmed!", AirStrikeBeacon, MessageTypeDefOf.CautionInput);
+            Building_AirStrikeBeacon airStrikeBeacon = GenSpawn.Spawn(Util_ThingDefOf.AirStrikeBeacon, targetPosition.Cell, this.Map) as Building_AirStrikeBeacon;
+            airStrikeBeacon.InitializeAirStrike(targetPosition.Cell, this.selectedStrikeDef);
+            airStrikeBeacon.SetFaction(Faction.OfPlayer);
+            Messages.Message("Air strike target confirmed!", airStrikeBeacon, MessageTypeDefOf.CautionInput);
             Find.TickManager.CurTimeSpeed = this.previousTimeSpeed;
             Util_Misc.Partnership.nextAirstrikeMinTick[this.Map] = Find.TickManager.TicksGame + Mathf.RoundToInt(selectedStrikeDef.ammoResupplyDays * GenDate.TicksPerDay);
         }
@@ -255,7 +263,7 @@ namespace Spaceship
                 if (Util_Faction.MiningCoFaction.GoodwillWith(Faction.OfPlayer) < 0)
                 {
                     // Reset goodwill to 0.
-                    Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, -Util_Faction.MiningCoFaction.GoodwillWith(Faction.OfPlayer));
+                    Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, -Util_Faction.MiningCoFaction.GoodwillWith(Faction.OfPlayer));
                 }
             };
             if (TradeUtility.ColonyHasEnoughSilver(this.Map, feeCost) == false)
@@ -264,6 +272,5 @@ namespace Spaceship
             }
             return feePaymentDiaOption;
         }
-
     }
 }

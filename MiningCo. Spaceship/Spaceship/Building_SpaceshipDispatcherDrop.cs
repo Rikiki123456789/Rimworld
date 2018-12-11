@@ -29,8 +29,8 @@ namespace Spaceship
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            if ((this.teamIsDropped == false)
-                && (this.pawnsAboard.Count == pilotsNumber))
+
+            if (respawningAfterLoad == false)
             {
                 this.pawnsAboard.AddRange(Expedition.GenerateExpeditionPawns(this.Map));
             }
@@ -91,7 +91,7 @@ namespace Spaceship
                 LordMaker.MakeNewLord(Util_Faction.MiningCoFaction, new LordJob_ExitMap(exitSpot), this.Map, droppedPawns);
                 // Spawn payment.
                 SpawnPayment(droppedPawns.Count);
-                Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, droppedPawns.Count);
+                Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, droppedPawns.Count);
             }
         }
     }

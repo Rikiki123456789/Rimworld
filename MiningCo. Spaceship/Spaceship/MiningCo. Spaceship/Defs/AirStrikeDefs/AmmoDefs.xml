@@ -1,19 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef Name="BaseBullet" Abstract="True">
-    <category>Projectile</category>
-    <tickerType>Normal</tickerType>
-    <altitudeLayer>Projectile</altitudeLayer>
-    <thingClass>Bullet</thingClass>
-    <label>bullet</label>
-    <useHitPoints>False</useHitPoints>
-    <neverMultiSelect>True</neverMultiSelect>
-    <graphicData>
-      <shaderType>Transparent</shaderType>
-    </graphicData>
-  </ThingDef>
-
   <ThingDef ParentName="BaseBullet">
     <defName>GatlingRound</defName>
     <label>gatling round</label>
@@ -24,9 +11,10 @@
     <projectile>
       <flyOverhead>true</flyOverhead>
       <damageDef>Bullet</damageDef>
-      <damageAmountBase>8</damageAmountBase>
+      <damageAmountBase>12</damageAmountBase>
+      <stoppingPower>2</stoppingPower>
       <speed>120</speed>
-      <soundHitThickRoof>ArtilleryHitThickRoof</soundHitThickRoof>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
     </projectile>
   </ThingDef>
 
@@ -41,10 +29,10 @@
     <projectile>
       <flyOverhead>true</flyOverhead>
       <damageDef>Bomb</damageDef>
-      <damageAmountBase>18</damageAmountBase>
+      <damageAmountBase>20</damageAmountBase>
       <explosionRadius>1.5</explosionRadius>
       <speed>80</speed>
-      <soundHitThickRoof>ArtilleryHitThickRoof</soundHitThickRoof>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
     </projectile>
   </ThingDef>
 
@@ -62,7 +50,7 @@
       <damageAmountBase>40</damageAmountBase>
       <explosionRadius>3</explosionRadius>
       <speed>50</speed>
-      <soundHitThickRoof>ArtilleryHitThickRoof</soundHitThickRoof>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
     </projectile>
   </ThingDef>
 
@@ -80,9 +68,9 @@
       <damageAmountBase>30</damageAmountBase>
       <explosionRadius>7</explosionRadius>
       <preExplosionSpawnChance>0.6</preExplosionSpawnChance>
-      <preExplosionSpawnThingDef>FilthFuel</preExplosionSpawnThingDef>
+      <preExplosionSpawnThingDef>Filth_Fuel</preExplosionSpawnThingDef>
       <speed>10</speed>
-      <soundHitThickRoof>ArtilleryHitThickRoof</soundHitThickRoof>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
     </projectile>
   </ThingDef>
 

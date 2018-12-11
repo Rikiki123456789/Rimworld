@@ -20,7 +20,7 @@ namespace Spaceship
     {
         public TargetIndex medicalSpaceshipIndex = TargetIndex.A;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return true;
         }
@@ -33,7 +33,7 @@ namespace Spaceship
             {
                 return medicalSpaceship.DestroyedOrNull();
             });
-
+             
             yield return Toils_General.Wait(5 * GenTicks.TicksPerRealSecond).WithProgressBarToilDelay(medicalSpaceshipIndex).FailOn(delegate() 
             {
                 return medicalSpaceship.DestroyedOrNull();
@@ -45,7 +45,7 @@ namespace Spaceship
                 {
                     if (medicalSpaceship.orbitalHealingPawnsAboardCount >= Building_SpaceshipMedical.orbitalHealingPawnsAboardMaxCount)
                     {
-                        Messages.Message(this.pawn.NameStringShort + " cannot board MiningCo. medical spaceship.. There is no more any free slot.", this.pawn, MessageTypeDefOf.RejectInput);
+                        Messages.Message(this.pawn.Name.ToStringShort + " cannot board MiningCo. medical spaceship.. There is no more any free slot.", this.pawn, MessageTypeDefOf.RejectInput);
                     }
                     else if (TradeUtility.ColonyHasEnoughSilver(this.pawn.Map, Util_Spaceship.orbitalHealingCost))
                     {
@@ -54,7 +54,7 @@ namespace Spaceship
                     }
                     else
                     {
-                        Messages.Message(this.pawn.NameStringShort + " cannot board MiningCo. medical spaceship.. You have not enough silver to pay for its orbital healing.", this.pawn, MessageTypeDefOf.RejectInput);
+                        Messages.Message(this.pawn.Name.ToStringShort + " cannot board MiningCo. medical spaceship.. You have not enough silver to pay for " + this.pawn.gender.GetPossessive() + " orbital healing.", this.pawn, MessageTypeDefOf.RejectInput);
                     }
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant

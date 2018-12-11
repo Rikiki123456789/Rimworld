@@ -18,7 +18,8 @@ namespace Spaceship
 
 		public override bool ActivateOn(Lord lord, TriggerSignal signal)
 		{
-            if (signal.type == TriggerSignalType.Tick && Find.TickManager.TicksGame % checkInterval == 0)
+            if ((signal.type == TriggerSignalType.Tick)
+                && (Find.TickManager.TicksGame % checkInterval == 0))
             {
                 foreach (Thing thing in (lord.LordJob as LordJob_MiningCoBase).targetDestination.GetThingList(lord.Map))
                 {

@@ -37,7 +37,7 @@ namespace Spaceship
                 {
                     int pickedPawnNumber = this.pawnsAboard.Count - pilotsNumber;
                     SpawnPayment(pickedPawnNumber);
-                    Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, pickedPawnNumber);
+                    Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, pickedPawnNumber);
                 }
             }
             base.Destroy(mode);

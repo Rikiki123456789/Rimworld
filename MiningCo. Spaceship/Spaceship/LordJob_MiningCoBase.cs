@@ -46,12 +46,12 @@ namespace Spaceship
             base.Notify_PawnLost(p, condition);
             if (condition == PawnLostCondition.IncappedOrKilled)
             {
-                Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, pawnLostGoodwillImpact);
+                Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, pawnLostGoodwillImpact);
                 Messages.Message("A MiningCo. employee has been injured or killed in your area. MiningCo. goodwill toward you decreased: " + pawnLostGoodwillImpact + ".", new TargetInfo(p.Position, this.Map), MessageTypeDefOf.NegativeHealthEvent);
             }
             else if (condition == PawnLostCondition.ExitedMap)
             {
-                Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, pawnExitedGoodwillImpact);
+                Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, pawnExitedGoodwillImpact);
             }
         }
     }

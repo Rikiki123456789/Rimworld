@@ -16,10 +16,12 @@ namespace Spaceship
     {
         // Note: "available landing pad" means powered and not reserved.
         // Note: "free landing pad" means only unreserved.
-        
-        // Return the primary landing pad if available
-        //     else a random one
-        //     else null.
+
+        /// <summary>
+        /// Return the primary landing pad if available
+        ///     else a random one
+        ///     else null.
+        /// </summary>
         public static Building_LandingPad GetBestAvailableLandingPad(Map map)
         {
             List<Building_LandingPad> allAvailableLandingPads = GetAllFreeAndPoweredLandingPads(map);
@@ -39,6 +41,11 @@ namespace Spaceship
             return allAvailableLandingPads.RandomElement();
         }
 
+        /// <summary>
+        /// Return the primary landing pad if available and reaching map edge
+        ///     else a random one
+        ///     else null.
+        /// </summary>
         // Return the primary landing pad if available and reaching map edge
         //     else a random one
         //     else null.

@@ -18,7 +18,8 @@ namespace Spaceship
 
 		public override bool ActivateOn(Lord lord, TriggerSignal signal)
 		{
-            if (signal.type == TriggerSignalType.Tick && Find.TickManager.TicksGame % checkInterval == 0)
+            if ((signal.type == TriggerSignalType.Tick)
+                && (Find.TickManager.TicksGame % checkInterval == 0))
             {
                 IntVec3 targetDestination = (lord.LordJob as LordJob_MiningCoBase).targetDestination;
                 foreach (Pawn pawn in lord.ownedPawns)

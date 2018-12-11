@@ -20,7 +20,7 @@ namespace Spaceship
     {
         public TargetIndex spaceshipIndex = TargetIndex.A;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return true;
         }

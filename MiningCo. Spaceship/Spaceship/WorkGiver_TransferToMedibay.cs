@@ -20,11 +20,10 @@ namespace Spaceship
                 return PathEndMode.OnCell;
             }
         }
-
-        public override bool ShouldSkip(Pawn pawn)
+        public override bool ShouldSkip(Pawn pawn, bool forced = false)
         {
             return ((Find.Selector.IsSelected(pawn) == false)
-                || (pawn.Map.listerBuildings.ColonistsHaveBuilding(Util_Spaceship.SpaceshipMedical) == false));
+                || pawn.Map.listerThings.ThingsOfDef(Util_Spaceship.SpaceshipMedical).NullOrEmpty());
         }
 
         public override IEnumerable<Thing> PotentialWorkThingsGlobal(Pawn pawn)
@@ -50,15 +49,16 @@ namespace Spaceship
             {
                 return false;
             }
-            bool hasValidHediff = Util_Misc.OrbitalHealing.HasAnyTreatableHediff(otherPawn);
-
-            foreach (Thing spaceship in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(Util_Spaceship.SpaceshipMedical))
+            if (Util_Misc.OrbitalHealing.HasAnyTreatableHediff(otherPawn) == false)
+            {
+                return false;
+            }
+            foreach (Thing spaceship in pawn.Map.listerThings.ThingsOfDef(Util_Spaceship.SpaceshipMedical))
             {
                 Building_SpaceshipMedical medicalSpaceship = spaceship as Building_SpaceshipMedical;
                 if ((medicalSpaceship != null)
                     && otherPawn.Downed
-                    && hasValidHediff
-                    && pawn.CanReserveAndReach(otherPawn, this.PathEndMode, Danger.Deadly)
+                    && pawn.CanReserveAndReach(otherPawn, this.PathEndMode, Danger.Deadly, ignoreOtherReservations: true)
                     && pawn.CanReach(spaceship, this.PathEndMode, Danger.Deadly)
                     && (medicalSpaceship.orbitalHealingPawnsAboardCount < Building_SpaceshipMedical.orbitalHealingPawnsAboardMaxCount)
                     && TradeUtility.ColonyHasEnoughSilver(pawn.Map, Util_Spaceship.orbitalHealingCost))
@@ -74,7 +74,7 @@ namespace Spaceship
             // Get nearest reachable medical spaceship.
             float minDistance = 99999f;
             Building_SpaceshipMedical nearestMedicalSpaceship = null;
-            foreach (Thing spaceship in pawn.Map.listerBuildings.AllBuildingsColonistOfDef(Util_Spaceship.SpaceshipMedical))
+            foreach (Thing spaceship in pawn.Map.listerThings.ThingsOfDef(Util_Spaceship.SpaceshipMedical))
             {
                 float distance = IntVec3Utility.DistanceTo(t.Position, spaceship.Position);
                 if ((distance < minDistance)

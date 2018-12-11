@@ -76,12 +76,12 @@ namespace Spaceship
                     || carrier.Dead
                     || carrier.Downed)
                 {
-                    Notify_RescuedEnded();
+                    Notify_RescueEnded();
                 }
             }
         }
 
-        public void Notify_RescuedEnded()
+        public void Notify_RescueEnded()
         {
             this.Data.carrier = null;
             this.lord.ReceiveMemo("RescueEnded");

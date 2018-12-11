@@ -15,7 +15,7 @@
         </countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
-        <thingDef>Component</thingDef>
+        <thingDef>ComponentIndustrial</thingDef>
         <price>Expensive</price>
         <countRange>
           <min>3</min>
@@ -39,7 +39,7 @@
         </countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
-        <thingDef>Medicine</thingDef>
+        <thingDef>MedicineIndustrial</thingDef>
         <price>Expensive</price>
         <countRange>
           <min>1</min>
@@ -85,14 +85,14 @@
         </countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
-        <thingDef>Component</thingDef>
+        <thingDef>ComponentIndustrial</thingDef>
         <countRange>
           <min>15</min>
           <max>35</max>
         </countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
-        <thingDef>AdvancedComponent</thingDef>
+        <thingDef>ComponentSpacer</thingDef>
         <price>Expensive</price>
         <countRange>
           <min>5</min>
@@ -116,7 +116,7 @@
         </countRange>
       </li>
 			<li Class="StockGenerator_SingleDef">
-				<thingDef>Medicine</thingDef>
+				<thingDef>MedicineIndustrial</thingDef>
 				<countRange>
 					<min>4</min>
 					<max>8</max>
@@ -144,14 +144,14 @@
         </countRange>
       </li>
       <li Class="StockGenerator_Tag">
-        <tradeTag>MiningHelmet</tradeTag>
+        <tradeTag>Apparel_MiningHelmet</tradeTag>
         <countRange>
           <min>2</min>
           <max>6</max>
         </countRange>
       </li>
       <li Class="StockGenerator_Tag">
-        <tradeTag>MiningVest</tradeTag>
+        <tradeTag>Apparel_MiningVest</tradeTag>
         <countRange>
           <min>2</min>
           <max>6</max>
@@ -220,7 +220,7 @@
         </countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
-        <thingDef>Medicine</thingDef>
+        <thingDef>MedicineIndustrial</thingDef>
         <countRange>
           <min>4</min>
           <max>6</max>
@@ -299,7 +299,7 @@
         </countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
-        <thingDef>Medicine</thingDef>
+        <thingDef>MedicineIndustrial</thingDef>
         <price>Cheap</price>
         <countRange>
           <min>20</min>
@@ -307,7 +307,7 @@
         </countRange>
       </li>
       <li Class="StockGenerator_SingleDef">
-        <thingDef>GlitterworldMedicine</thingDef>
+        <thingDef>MedicineUltratech</thingDef>
         <countRange>
           <min>10</min>
           <max>15</max>

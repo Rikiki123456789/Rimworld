@@ -21,7 +21,8 @@ namespace Spaceship
         private List<Map> originMaps = new List<Map>();   // Only used to expose data.
         private List<int> healEndTicks = new List<int>(); // Only used to expose data.
 
-        public int nextUpdateTick = 0;
+        public const int healUpdatePeriodInTicks = GenTicks.TickRareInterval;
+        public int nextHealUpdateTick = 0;
 
         // ===================== Setup work =====================
         public WorldComponent_OrbitalHealing(World world)
@@ -61,7 +62,7 @@ namespace Spaceship
                 {
                     for (int pawnIndex = 0; pawnIndex < pawns.Count; pawnIndex++)
                     {
-                        HealingPawn healingPawn = new HealingPawn(pawns[pawnIndex], originMaps[pawnIndex], healEndTicks[pawnIndex]);
+                        HealingPawn healingPawn = new HealingPawn(this.pawns[pawnIndex], this.originMaps[pawnIndex], this.healEndTicks[pawnIndex]);
                         this.healingPawns.Add(healingPawn);
                     }
                 }
@@ -72,11 +73,11 @@ namespace Spaceship
         public override void WorldComponentTick()
         {
             base.WorldComponentTick();
-            if ((Find.TickManager.TicksGame >= this.nextUpdateTick)
+            if ((Find.TickManager.TicksGame >= this.nextHealUpdateTick)
                 && (Util_Faction.MiningCoFaction.HostileTo(Faction.OfPlayer) == false))
             {
-                this.nextUpdateTick = Find.TickManager.TicksGame + GenTicks.TickRareInterval;
-                List<HealingPawn> leftAttendedPawns = new List<HealingPawn>();
+                this.nextHealUpdateTick = Find.TickManager.TicksGame + healUpdatePeriodInTicks;
+                List<HealingPawn> leftHealingPawns = new List<HealingPawn>();
                 foreach (HealingPawn healingPawn in this.healingPawns)
                 {
                     bool pawnIsSentToSurface = false;
@@ -86,53 +87,47 @@ namespace Spaceship
                     }
                     if (pawnIsSentToSurface == false)
                     {
-                        leftAttendedPawns.Add(healingPawn);
+                        leftHealingPawns.Add(healingPawn);
                     }
                 }
-                this.healingPawns = leftAttendedPawns.ListFullCopy();
+                this.healingPawns = leftHealingPawns.ListFullCopy();
             }
         }
 
         // ===================== Other functions =====================
         public void Notify_BecameHostileToColony()
         {
-            if (this.healingPawns.Count >= 1)
+            if (this.healingPawns.Count > 0)
             {
-
-                string pawnKeptAsGuestText = "";
-                if (this.healingPawns.Count > 0)
+                string letterText = "";
+                StringBuilder pawnKeptAsGuestString = new StringBuilder();
+                if (this.healingPawns.Count == 1)
                 {
-                    if (this.healingPawns.Count == 1)
-                    {
-                        string hisHerIts = GenderUtility.GetPossessive(this.healingPawns.First().pawn.gender);
-                        string himHerIt = GenderUtility.GetObjective(this.healingPawns.First().pawn.gender);
-                        pawnKeptAsGuestText = "-- Comlink with MiningCo. --\n\n"
-                        + "\"A friend of yours is being healed in our medibay. I think we will keep " + himHerIt + " aboard as... \"guest\" for " + hisHerIts + " own safety.\n"
-                        + "It is really dangerous down there you know and there are lot of menial - ehr, I mean \"interresting\" - tasks to do aboard an orbital station to keep " + himHerIt + " occupied.\n\n"
-                        + "MiningCo. medibay officer out.\"\n\n"
-                        + "-- End of transmission --\n\n"
-                        + "The following colonist is kept as \"guest\" aboard the orbital station until you pay a compensation: " + this.healingPawns.First().pawn.NameStringShort + ".";
-                    }
-                    else
-                    {
-                        pawnKeptAsGuestText = "-- Comlink with MiningCo. --\n\n"
-                        + "\"Some friends of yours are being healed in our medibay. I think we will keep them aboard as... \"guests\" for their own safety.\n"
-                        + "It is really dangerous down there you know and there are lot of menial - ehr, I mean \"interresting\" - tasks to do aboard an orbital station to keep them occupied.\n\n"
-                        + "MiningCo. medibay officer out.\"\n\n"
-                        + "-- End of transmission --\n\n"
-                        + "The following colonists are kept as \"guests\" aboard the orbital station until you pay a compensation: ";
-                        for (int pawnIndex = 0; pawnIndex < this.healingPawns.Count; pawnIndex++)
-                        {
-                            pawnKeptAsGuestText += this.healingPawns[pawnIndex].pawn.NameStringShort;
-                            if (pawnIndex < (this.healingPawns.Count - 1))
-                            {
-                                pawnKeptAsGuestText += ", ";
-                            }
-                        }
-                        pawnKeptAsGuestText += ".";
-                    }
+                    string hisHerIts = GenderUtility.GetPossessive(this.healingPawns.First().pawn.gender);
+                    string himHerIt = GenderUtility.GetObjective(this.healingPawns.First().pawn.gender);
+                    letterText = "-- Comlink with MiningCo. --\n\n"
+                    + "\"A friend of yours is being healed in our medibay. I think we will keep " + himHerIt + " aboard as... \"guest\" for " + hisHerIts + " own safety.\n"
+                    + "It is really dangerous down there, you know, and there are lot of menial - ehr, I mean \"interresting\" - tasks to do aboard an orbital station to keep " + himHerIt + " occupied.\n\n"
+                    + "MiningCo. medibay officer out.\"\n\n"
+                    + "-- End of transmission --\n\n"
+                    + "The following colonist is kept as \"guest\" aboard the orbital station until you pay a compensation: " + this.healingPawns.First().pawn.Name.ToStringShort + ".";
                 }
-                Find.LetterStack.ReceiveLetter("Orbital \"guests\"", pawnKeptAsGuestText, LetterDefOf.NeutralEvent);
+                else
+                {
+                    letterText = "-- Comlink with MiningCo. --\n\n"
+                    + "\"Some friends of yours are being healed in our medibay. I think we will keep them aboard as... \"guests\" for their own safety.\n"
+                    + "It is really dangerous down there, you know, and there are lot of menial - ehr, I mean \"interresting\" - tasks to do aboard an orbital station to keep them occupied.\n\n"
+                    + "MiningCo. medibay officer out.\"\n\n"
+                    + "-- End of transmission --\n\n"
+                    + "The following colonists are kept as \"guests\" aboard the orbital station until you pay a compensation: ";
+                    for (int pawnIndex = 0; pawnIndex < this.healingPawns.Count; pawnIndex++)
+                    {
+                        pawnKeptAsGuestString.AppendWithComma(this.healingPawns[pawnIndex].pawn.Name.ToStringShort);
+                    }
+                    pawnKeptAsGuestString.Append(".");
+                    letterText += pawnKeptAsGuestString.ToString();
+                }
+                Find.LetterStack.ReceiveLetter("Orbital \"guests\"", letterText, LetterDefOf.NeutralEvent);
             }
         }
 
@@ -151,7 +146,7 @@ namespace Spaceship
         public bool IsTreatableHediff(Hediff hediff)
         {
             if (hediff.Visible
-                && (hediff.IsOld() == false)
+                && (hediff.IsPermanent() == false)
                 && (hediff.def.tendable
                 || hediff.def.makesSickThought
                 || hediff.def == HediffDefOf.Hypothermia
@@ -198,20 +193,31 @@ namespace Spaceship
             return healedHediffsCount;
         }
 
-        public bool TrySendPawnBackToSurface(HealingPawn attendedPawn)
+        public bool TrySendPawnBackToSurface(HealingPawn healedPawn)
         {
-            Map originMap = attendedPawn.originMap;
+            bool pawnIsSent = false;
+
+            // First try to send pawn back to its original map.
+            Map originMap = healedPawn.originMap;
             if (Find.Maps.Contains(originMap)
                 && originMap.IsPlayerHome)
             {
-                return SendPawnBackToMap(attendedPawn.pawn, originMap);
-            }
-            else
-            {
-                Map randomPlayerMap = Find.AnyPlayerHomeMap;
-                if (randomPlayerMap != null)
+                pawnIsSent = SendPawnBackToMap(healedPawn.pawn, originMap);
+                if (pawnIsSent)
                 {
-                    return SendPawnBackToMap(attendedPawn.pawn, randomPlayerMap);
+                    return true;
+                }
+            }
+            // Else try with any player home map.
+            foreach (Map randomMap in Find.Maps.InRandomOrder())
+            {
+                if (randomMap.IsPlayerHome)
+                {
+                    pawnIsSent = SendPawnBackToMap(healedPawn.pawn, randomMap);
+                    if (pawnIsSent)
+                    {
+                        return true;
+                    }
                 }
             }
             return false;
@@ -248,34 +254,31 @@ namespace Spaceship
                 string himHerIt = GenderUtility.GetObjective(pawn.gender);
 
                 // Restore needs level.
-                pawn.needs.food.ForceSetLevel(Rand.Range(0.75f, 1f));
-                pawn.needs.rest.ForceSetLevel(Rand.Range(0.75f, 1f));
-                pawn.needs.joy.ForceSetLevel(Rand.Range(0.5f, 0.8f));
-                pawn.needs.comfort.ForceSetLevel(Rand.Range(0.6f, 0.9f));
-                pawn.needs.space.ForceSetLevel(Rand.Range(0.1f, 0.3f)); // Drop-pod is very small.
+                pawn.needs.SetInitialLevels();
+                pawn.needs.roomsize.CurLevel = 0f; // Droppod is quite cramped.
 
                 ActiveDropPodInfo dropPodInfo = new ActiveDropPodInfo();
                 bool healingSuccessful = (Rand.Value < 0.98f);
                 if (healingSuccessful)
                 {
-                    string orbitalHealingFailedText = "-- Comlink with MiningCo. --\n\n"
-                    + "\"Healing of " + pawn.NameStringShort + " is now finished. Everything went fine during the treatment.\n"
+                    string orbitalHealingSuccessfulText = "-- Comlink with MiningCo. --\n\n"
+                    + "\"Healing of " + pawn.Name.ToStringShort + " is now finished. Everything went fine during the treatment.\n"
                     + "We just launched " + hisHerIts + " drop pod toward your colony.\n\n"
                     + "I hope you are satisfied of our services.\n\n"
                     + "MiningCo. medibay officer out.\"\n\n"
                     + "-- End of transmission --";
-                    Find.LetterStack.ReceiveLetter("Orbital healing finished", orbitalHealingFailedText, LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, map));
+                    Find.LetterStack.ReceiveLetter("Orbital healing finished", orbitalHealingSuccessfulText, LetterDefOf.PositiveEvent, new TargetInfo(dropSpot, map));
                 }
                 else
                 {
                     // Dying pawn with heart attack.
-                    string orbitalHealingSuccessfulText = "-- Comlink with MiningCo. --\n\n"
-                    + "\"Though we did our best to heal " + pawn.NameStringShort + ", it seems " + hisHerIts + " metabolism was disturbed by the last injection.\n\n"
+                    string orbitalHealingFailedText = "-- Comlink with MiningCo. --\n\n"
+                    + "\"Though we did our best to heal " + pawn.Name.ToStringShort + ", it seems " + hisHerIts + " metabolism was disturbed by the last injection.\n\n"
                     + "I am affraid that we need to immediately send " + himHerIt + " back to you as our rules strictly forbid civilian bodies storage.\n\n"
                     + "Please accept those silvers as a compensation.\n\n"
                     + "MiningCo. medibay officer out.\"\n\n"
                     + "-- End of transmission --";
-                    Find.LetterStack.ReceiveLetter("Orbital healing interrupted", orbitalHealingSuccessfulText, LetterDefOf.NegativeEvent, new TargetInfo(dropSpot, map));
+                    Find.LetterStack.ReceiveLetter("Orbital healing interrupted", orbitalHealingFailedText, LetterDefOf.NegativeEvent, new TargetInfo(dropSpot, map));
                     pawn.health.AddHediff(HediffDef.Named("HeartAttack"));
                     pawn.health.AddHediff(HediffDefOf.Anesthetic);
                     Thing compensation = ThingMaker.MakeThing(ThingDefOf.Silver);

@@ -14,8 +14,6 @@ namespace Spaceship
 {
     public abstract class Building_SpaceshipDispatcher : Building_Spaceship, IThingHolder
     {
-        public bool turretsAreDeployed = false;
-
         public const int turretsCount = 2;
         public IntVec3[] turretOffsetPositions = new IntVec3[turretsCount]
         {
@@ -41,10 +39,10 @@ namespace Spaceship
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            if (this.turretsAreDeployed == false)
+
+            if (respawningAfterLoad == false)
             {
                 // Spawn vulcan turrets.
-                this.turretsAreDeployed = true;
                 for (int turretIndex = 0; turretIndex < turretsCount; turretIndex++)
                 {
                     Thing vulcanTurret = ThingMaker.MakeThing(Util_ThingDefOf.VulcanTurret, ThingDefOf.Plasteel);
@@ -69,10 +67,12 @@ namespace Spaceship
             base.Destroy(mode);
         }
 
-        public override void ExposeData()
+        // ===================== Other functions =====================
+        public void SpawnPayment(int pawnsCount)
         {
-            base.ExposeData();
-            Scribe_Values.Look<Boolean>(ref this.turretsAreDeployed, "turretsAreDeployed");
+            int paymentTotalAmount = Util_Spaceship.feePerPawnInSilver * pawnsCount;
+            Thing item = SpawnItem(ThingDefOf.Silver, null, paymentTotalAmount, this.Position, this.Map, 0f);
+            Messages.Message("A dispatcher spaceship paid you " + paymentTotalAmount + " silver for using your landing pad.", item, MessageTypeDefOf.PositiveEvent);
         }
 
         // ===================== Inspect panel =====================
@@ -87,7 +87,7 @@ namespace Spaceship
             }
             else
             {
-                stringBuilder.Append("Planned take-off: " + Util_Misc.GetTicksAsStringInDaysHours(this.takeOffTick - Find.TickManager.TicksGame));
+                stringBuilder.Append("Planned take-off: " + GenDate.ToStringTicksToPeriodVerbose(this.takeOffTick - Find.TickManager.TicksGame));
             }
 
             return stringBuilder.ToString();

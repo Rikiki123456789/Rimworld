@@ -14,61 +14,24 @@ namespace Spaceship
     [StaticConstructorOnStartup]
     public class FlyingSpaceshipLanding : FlyingSpaceship
     {
-        public const int horizontalTrajectoryDurationInTicks = 480;
-        public const int verticalTrajectoryDurationInTicks = 240;
+        public const int horizontalTrajectoryDurationInTicks = 8 * GenTicks.TicksPerRealSecond;
+        public const int verticalTrajectoryDurationInTicks = 4 * GenTicks.TicksPerRealSecond;
         public int ticksToLanding = horizontalTrajectoryDurationInTicks + verticalTrajectoryDurationInTicks;
         public IntVec3 landingPadPosition = IntVec3.Invalid;
         public Rot4 landingPadRotation = Rot4.North;
         public int landingDuration = 0;
-
-        // Texture.
-        public Vector3 defaultSpaceshipScale = new Vector3(11f, 1f, 20f);
-        public Vector3 medicalSpaceshipScale = new Vector3(7f, 1f, 11f);
-        public static Material defaultSpaceshipTexture = MaterialPool.MatFrom("Things/SupplySpaceship/SupplySpaceship");
-        public static Material dispatcherTexture = MaterialPool.MatFrom("Things/Dispatcher/DispatcherFlying");
-        public static Material medicalSpaceshipTexture = MaterialPool.MatFrom("Things/MedicalSpaceship/MedicalSpaceship");
-        public Material spaceshipTexture = null;
-        public Vector3 baseSpaceshipScale = new Vector3(1f, 1f, 1f);
-
+        
         // Sound.
         public static readonly SoundDef preLandingSound = SoundDef.Named("DropPodFall");
         public static readonly SoundDef landingSound = SoundDef.Named("SpaceshipLanding");
         
         // ===================== Setup work =====================
-        public override void SpawnSetup(Map map, bool respawningAfterLoad)
-        {
-            base.SpawnSetup(map, respawningAfterLoad);
-            ConfigureShipTexture(this.spaceshipKind);
-        }
-
-        public void ConfigureShipTexture(SpaceshipKind spaceshipKind)
-        {
-            switch (spaceshipKind)
-            {
-                case SpaceshipKind.CargoPeriodic:
-                case SpaceshipKind.CargoRequested:
-                case SpaceshipKind.Damaged:
-                    this.spaceshipTexture = defaultSpaceshipTexture;
-                    this.baseSpaceshipScale = defaultSpaceshipScale;
-                    break;
-                case SpaceshipKind.DispatcherDrop:
-                case SpaceshipKind.DispatcherPick:
-                    this.spaceshipTexture = dispatcherTexture;
-                    this.baseSpaceshipScale = defaultSpaceshipScale;
-                    break;
-                case SpaceshipKind.Medical:
-                    this.spaceshipTexture = medicalSpaceshipTexture;
-                    this.baseSpaceshipScale = medicalSpaceshipScale;
-                    break;
-                default:
-                    Log.ErrorOnce("MiningCo. Spaceship: unhandled SpaceshipKind (" + this.spaceshipKind.ToString() + ") in FlyingSpaceshipLanding.ConfigureShipTexture.", 123456784);
-                    break;
-            }
-        }
-
+        /// <summary>
+        /// Must be called just after spawning the ship to set the correct texture.
+        /// </summary>
         public void InitializeLandingParameters(Building_LandingPad landingPad, int landingDuration, SpaceshipKind spaceshipKind)
         {
-            landingPad.NotifyShipLanding();
+            landingPad.Notify_ShipLanding();
             this.landingPadPosition = landingPad.Position;
             this.landingPadRotation = landingPad.Rotation;
             this.spaceshipExactRotation = this.landingPadRotation.AsAngle;
@@ -124,7 +87,7 @@ namespace Spaceship
                         // Spawn damaged spaceship.
                         Building_SpaceshipDamaged damagedSpaceship = ThingMaker.MakeThing(Util_Spaceship.SpaceshipDamaged) as Building_SpaceshipDamaged;
                         damagedSpaceship.InitializeData_Damaged(Util_Faction.MiningCoFaction, this.HitPoints, this.landingDuration, this.spaceshipKind, this.HitPoints);
-                        // Do not set faction to player. It will be done when repair materials are delivered.
+                        // Faction will be set to player when repair materials are delivered.
                         spaceship = GenSpawn.Spawn(damagedSpaceship, this.landingPadPosition, this.Map, this.landingPadRotation) as Building_Spaceship;
                         break;
                     case SpaceshipKind.DispatcherDrop:
@@ -146,7 +109,7 @@ namespace Spaceship
                         spaceship = GenSpawn.Spawn(medicalSpaceship, this.landingPadPosition, this.Map, this.landingPadRotation) as Building_Spaceship;
                         break;
                     default:
-                        Log.ErrorOnce("MiningCo. Spaceship: unhandled SpaceshipKind (" + this.spaceshipKind.ToString() + ") in SpaceshipLanding.Tick.", 123456783);
+                        Log.ErrorOnce("MiningCo. Spaceship: unhandled SpaceshipKind (" + this.spaceshipKind.ToString() + ").", 123456783);
                         break;
                 }
                 this.Destroy();
@@ -156,27 +119,35 @@ namespace Spaceship
         public override void ComputeShipExactPosition()
         {
             Vector3 exactPosition = this.landingPadPosition.ToVector3ShiftedWithAltitude(AltitudeLayer.Skyfaller);
-            // The 5f offset on Y axis is mandatory to be over the fog of war.
-            exactPosition += new Vector3(0f, 5f, 0f);
+            exactPosition += new Vector3(0f, 5.1f, 0f); // The 5f offset on Y axis is mandatory to be over the fog of war. The 0.1f is to ensure spaceship texture is above its shadow.
+
             if (this.spaceshipKind != SpaceshipKind.Medical)
             {
                 // Texture is not aligned. Need a small offset.
                 exactPosition += new Vector3(0f, 0, 0.5f).RotatedBy(this.landingPadRotation.AsAngle);
             }
+            // Horizontal position.
             if (this.ticksToLanding > verticalTrajectoryDurationInTicks)
             {
                 // Horizontal trajectory.
                 float coefficient = (float)(this.ticksToLanding - verticalTrajectoryDurationInTicks);
                 float num = coefficient * coefficient * 0.001f * 0.8f;
                 exactPosition -= new Vector3(0f, 0f, num).RotatedBy(this.spaceshipExactRotation);
-                exactPosition.z += 3f;
-            }
-            else
-            {
-                // Descent.
-                exactPosition.z += 3f * ((float)this.ticksToLanding / verticalTrajectoryDurationInTicks);
             }
             this.spaceshipExactPosition = exactPosition;
+        }
+
+        public override void ComputeShipShadowExactPosition()
+        {
+            this.spaceshipShadowExactPosition = this.spaceshipExactPosition;
+            float shadowDistanceCoefficient = 2f;
+            if (this.ticksToLanding < verticalTrajectoryDurationInTicks)
+            {
+                // Ascending.
+                shadowDistanceCoefficient *= ((float)this.ticksToLanding / verticalTrajectoryDurationInTicks);
+            }
+            GenCelestial.LightInfo lightInfo = GenCelestial.GetLightSourceInfo(this.Map, GenCelestial.LightType.Shadow);
+            this.spaceshipShadowExactPosition += new Vector3(lightInfo.vector.x, -0.1f, lightInfo.vector.y) * shadowDistanceCoefficient;
         }
 
         public override void ComputeShipExactRotation()
@@ -186,20 +157,21 @@ namespace Spaceship
 
         public override void ComputeShipScale()
         {
-            float coefficient = 1f;
-            if (this.ticksToLanding > verticalTrajectoryDurationInTicks)
-            {
-                // Horizontal trajectory and rotation.
-                coefficient = 1.2f;
-            }
-            else
+            // Default value for horizontal trajectory and rotation.
+            float coefficient = 1.2f;
+            float shadowCoefficient = 0.9f;
+
+            if (this.ticksToLanding <= verticalTrajectoryDurationInTicks)
             {
                 // Descent.
                 coefficient = 1f + 0.2f * ((float)this.ticksToLanding / verticalTrajectoryDurationInTicks);
+                shadowCoefficient = 1f - 0.1f * ((float)this.ticksToLanding / verticalTrajectoryDurationInTicks);
             }
             this.spaceshipScale = this.baseSpaceshipScale * coefficient;
+            this.spaceshipShadowScale = this.baseSpaceshipScale * shadowCoefficient;
         }
-        
+
+        // ===================== Draw =====================
         public override void SetShipVisibleAboveFog()
         {
             if (IsInBoundsAndVisible())
@@ -210,13 +182,6 @@ namespace Spaceship
             {
                 this.Position = this.landingPadPosition;
             }
-        }
-
-        // ===================== Draw =====================
-        public override void Draw()
-        {
-            this.spaceshipMatrix.SetTRS(this.DrawPos + Altitudes.AltIncVect, this.spaceshipExactRotation.ToQuat(), this.spaceshipScale);
-            Graphics.DrawMesh(MeshPool.plane10, this.spaceshipMatrix, this.spaceshipTexture, 0);
         }
     }
 }

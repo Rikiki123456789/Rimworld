@@ -21,7 +21,7 @@ namespace Spaceship
         public TargetIndex downedPawnIndex = TargetIndex.A;
         public TargetIndex travelDestCellIndex = TargetIndex.B;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetThingA, this.job);
         }
@@ -46,32 +46,34 @@ namespace Spaceship
             });
             yield return gotoTravelDestToil;
 
-            Toil arrivedToil = new Toil();
-            arrivedToil.initAction = delegate
+            Toil arrivedToil = new Toil()
             {
-                Building_Spaceship spaceship = null;
-                List<Thing> thingList = this.pawn.Position.GetThingList(this.pawn.Map);
-                foreach (Thing thing in thingList)
+                initAction = () =>
                 {
-                    if (thing is Building_Spaceship)
+                    Building_Spaceship spaceship = null;
+                    List<Thing> thingList = this.pawn.Position.GetThingList(this.pawn.Map);
+                    foreach (Thing thing in thingList)
                     {
-                        spaceship = thing as Building_Spaceship;
-                        break;
+                        if (thing is Building_Spaceship)
+                        {
+                            spaceship = thing as Building_Spaceship;
+                            break;
+                        }
                     }
-                }
-                Thing carriedPawn = null;
-                this.pawn.carryTracker.TryDropCarriedThing(this.pawn.Position, ThingPlaceMode.Near, out carriedPawn);
-                if (spaceship != null)
-                {
-                    spaceship.Notify_PawnBoarding(carriedPawn as Pawn, false);
-                }
-                else if (this.pawn.Position.CloseToEdge(this.pawn.Map, 5))
-                {
-                    carriedPawn.Destroy();
-                    Util_Faction.AffectFactionGoodwillWithOther(this.pawn.Faction, Faction.OfPlayer, LordJob_MiningCoBase.pawnExitedGoodwillImpact);
-                }
+                    Thing carriedPawn = null;
+                    this.pawn.carryTracker.TryDropCarriedThing(this.pawn.Position, ThingPlaceMode.Near, out carriedPawn);
+                    if (spaceship != null)
+                    {
+                        spaceship.Notify_PawnBoarding(carriedPawn as Pawn, false);
+                    }
+                    else if (this.pawn.Position.CloseToEdge(this.pawn.Map, 5))
+                    {
+                        carriedPawn.Destroy();
+                        Util_Faction.AffectGoodwillWith(this.pawn.Faction, Faction.OfPlayer, LordJob_MiningCoBase.pawnExitedGoodwillImpact);
+                    }
+                },
+                defaultCompleteMode = ToilCompleteMode.Instant
             };
-            arrivedToil.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return arrivedToil;
         }
     }

@@ -21,7 +21,7 @@ namespace Spaceship
         public TargetIndex downedPawnIndex = TargetIndex.A;
         public TargetIndex medicalSPaceshipCellIndex = TargetIndex.B;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetThingA, this.job);
         }
@@ -46,30 +46,32 @@ namespace Spaceship
             });
             yield return gotoTravelDestToil;
 
-            Toil arrivedToil = new Toil();
-            arrivedToil.initAction = delegate
+            Toil arrivedToil = new Toil()
             {
-                Thing carriedPawn = null;
-                this.pawn.carryTracker.TryDropCarriedThing(this.pawn.Position, ThingPlaceMode.Near, out carriedPawn);
-                Building_SpaceshipMedical medicalSpaceship = this.pawn.Position.GetFirstThing(this.pawn.Map, Util_Spaceship.SpaceshipMedical) as Building_SpaceshipMedical;
-                if (medicalSpaceship != null)
+                initAction = () =>
                 {
-                    if (medicalSpaceship.orbitalHealingPawnsAboardCount >= Building_SpaceshipMedical.orbitalHealingPawnsAboardMaxCount)
+                    Thing carriedPawn = null;
+                    this.pawn.carryTracker.TryDropCarriedThing(this.pawn.Position, ThingPlaceMode.Near, out carriedPawn);
+                    Building_SpaceshipMedical medicalSpaceship = this.pawn.Position.GetFirstThing(this.pawn.Map, Util_Spaceship.SpaceshipMedical) as Building_SpaceshipMedical;
+                    if (medicalSpaceship != null)
                     {
-                        Messages.Message((carriedPawn as Pawn).NameStringShort + " cannot board MiningCo. medical spaceship.. There is no more any free slot.", carriedPawn, MessageTypeDefOf.RejectInput);
+                        if (medicalSpaceship.orbitalHealingPawnsAboardCount >= Building_SpaceshipMedical.orbitalHealingPawnsAboardMaxCount)
+                        {
+                            Messages.Message((carriedPawn as Pawn).Name.ToStringShort + " cannot board MiningCo. medical spaceship.. There is no more any free slot.", carriedPawn, MessageTypeDefOf.RejectInput);
+                        }
+                        else if (TradeUtility.ColonyHasEnoughSilver(this.pawn.Map, Util_Spaceship.orbitalHealingCost))
+                        {
+                            TradeUtility.LaunchSilver(this.pawn.Map, Util_Spaceship.orbitalHealingCost);
+                            medicalSpaceship.Notify_PawnBoarding(carriedPawn as Pawn, false);
+                        }
+                        else
+                        {
+                            Messages.Message((carriedPawn as Pawn).Name.ToStringShort + " cannot board MiningCo. medical spaceship.. You have not enough silver to pay for " + this.pawn.gender.GetPossessive() + " orbital healing.", carriedPawn, MessageTypeDefOf.RejectInput);
+                        }
                     }
-                    else if (TradeUtility.ColonyHasEnoughSilver(this.pawn.Map, Util_Spaceship.orbitalHealingCost))
-                    {
-                        TradeUtility.LaunchSilver(this.pawn.Map, Util_Spaceship.orbitalHealingCost);
-                        medicalSpaceship.Notify_PawnBoarding(carriedPawn as Pawn, false);
-                    }
-                    else
-                    {
-                        Messages.Message((carriedPawn as Pawn).NameStringShort + " cannot board MiningCo. medical spaceship.. You have not enough silver to pay for its orbital healing.", carriedPawn, MessageTypeDefOf.RejectInput);
-                    }
-                }
+                },
+                defaultCompleteMode = ToilCompleteMode.Instant
             };
-            arrivedToil.defaultCompleteMode = ToilCompleteMode.Instant;
             yield return arrivedToil;
         }
     }

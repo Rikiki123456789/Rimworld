@@ -15,8 +15,8 @@ namespace Spaceship
     public static class Util_Spaceship
     {
         public const int cargoSupplyCostInSilver = 1500;
-        public const int medicalSupplyCostInSilver = 800;
-        public const int orbitalHealingCost = 500;
+        public const int medicalSupplyCostInSilver = 1000;
+        public const int orbitalHealingCost = 250;
         public const int feePerPawnInSilver = 40;
         public const int medicsRecallBeforeTakeOffMarginInTicks = 6 * GenDate.TicksPerHour;
         
@@ -27,7 +27,7 @@ namespace Spaceship
         public const int dispatcherPickDurationInTicks = 2 * GenDate.TicksPerDay;
         public const int medicalSupplyLandingDuration = GenDate.TicksPerDay;
 
-        // Landing and taking off.
+        // Landing and taking off spaceships.
         public static ThingDef SpaceshipLanding
         {
             get
@@ -94,7 +94,7 @@ namespace Spaceship
             }
         }
         
-        public static FlyingSpaceshipLanding SpawnSpaceship(Building_LandingPad landingPad, SpaceshipKind spaceshipKind)
+        public static FlyingSpaceshipLanding SpawnLandingSpaceship(Building_LandingPad landingPad, SpaceshipKind spaceshipKind)
         {
             Building_OrbitalRelay orbitalRelay = Util_OrbitalRelay.GetOrbitalRelay(landingPad.Map);
             int landingDuration = 0; 
@@ -139,6 +139,10 @@ namespace Spaceship
                     Util_Misc.Partnership.nextMedicalSupplyMinTick[landingPad.Map] = Find.TickManager.TicksGame + WorldComponent_Partnership.medicalSpaceshipRequestedSupplyPeriodInTicks;
                     Messages.Message("A MiningCo. medical spaceship is landing.", new TargetInfo(landingPad.Position, landingPad.Map), MessageTypeDefOf.NeutralEvent);
                     break;
+                //case SpaceshipKind.Airstrike: // This case is handled in SpawnStrikeShip function.
+                default:
+                    Log.ErrorOnce("MiningCo. Spaceship: unhandled SpaceshipKind (" + spaceshipKind.ToString() + ").", 123456780);
+                    break;
             }
 
             FlyingSpaceshipLanding flyingSpaceship = ThingMaker.MakeThing(Util_Spaceship.SpaceshipLanding) as FlyingSpaceshipLanding;
@@ -146,5 +150,13 @@ namespace Spaceship
             flyingSpaceship.InitializeLandingParameters(landingPad, landingDuration, spaceshipKind);
             return flyingSpaceship;
         }
+
+        public static void SpawnStrikeShip(Map map, IntVec3 targetPosition, AirStrikeDef airStrikeDef)
+        {
+            FlyingSpaceshipAirStrike strikeShip = ThingMaker.MakeThing(Util_Spaceship.SpaceshipAirStrike) as FlyingSpaceshipAirStrike;
+            GenSpawn.Spawn(strikeShip, targetPosition, map);
+            strikeShip.InitializeAirStrikeData(targetPosition, airStrikeDef);
+        }
+
     }
 }

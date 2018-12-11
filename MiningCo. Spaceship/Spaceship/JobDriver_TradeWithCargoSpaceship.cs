@@ -19,7 +19,7 @@ namespace Spaceship
     {
         public TargetIndex cargoSpaceshipIndex = TargetIndex.A;
 
-        public override bool TryMakePreToilReservations()
+        public override bool TryMakePreToilReservations(bool errorOnFailed)
         {
             return this.pawn.Reserve(this.TargetThingA, this.job);
         }
@@ -31,7 +31,7 @@ namespace Spaceship
             yield return Toils_Goto.GotoCell(TargetIndex.A, PathEndMode.Touch).FailOn(delegate ()
             {
                 return (cargoSpaceship.DestroyedOrNull()
-                || (cargoSpaceship.CanTradeNow == false));
+                    || (cargoSpaceship.CanTradeNow == false));
             });
 
             Toil faceSpaceshipToil = new Toil()

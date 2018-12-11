@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>OrbitalRelay</defName>
+    <label>orbital relay</label>
+    <description>This giant communication array is able to reach nearest MiningCo. ships and comms satellites orbiting around the planet.</description>
+    <thingClass>Spaceship.Building_OrbitalRelay</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Building/OrbitalRelay/OrbitalRelay</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(5,5)</drawSize>
+      <shadowData>
+        <volume>(2.5, 1.0, 2.5)</volume>
+      </shadowData>
+    </graphicData>
+    <uiIconPath>Things/Building/OrbitalRelay/MenuIcon_OrbitalRelay</uiIconPath>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
+    <altitudeLayer>Building</altitudeLayer>
+    <useHitPoints>true</useHitPoints>
+    <fillPercent>0.2</fillPercent>
+    <passability>PassThroughOnly</passability>
+    <pathCost>50</pathCost>
+    <blockWind>true</blockWind>
+    <constructEffect>ConstructMetal</constructEffect>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToBuild>30000</WorkToBuild>
+      <Flammability>0</Flammability>
+      <Beauty>-15</Beauty>
+    </statBases>
+    <size>(5,5)</size>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-3)</interactionCellOffset>
+    <costList>
+      <Steel>350</Steel>
+      <ComponentIndustrial>10</ComponentIndustrial>
+    </costList>
+    <designationCategory>Ship</designationCategory>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Spaceship.PlaceWorker_TotallyNotUnderRoof</li>
+      <li>Spaceship.PlaceWorker_OnlyOneBuilding</li>
+    </placeWorkers>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>350</basePowerConsumption>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+    </comps>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <killedLeavings>
+      <ChunkSlagSteel>5</ChunkSlagSteel>
+    </killedLeavings>
+    <researchPrerequisites>
+      <li>MicroelectronicsBasics</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

@@ -84,7 +84,7 @@ namespace Spaceship
                     expedition = expeditionTroopers;
                     break;
                 default:
-                    Log.ErrorOnce("MiningCo. Spaceship: unhandled ExpeditionKind (" + expeditionKind.ToString() + ") in Expedition.GenerateExpeditionPawns.", 123456782);
+                    Log.ErrorOnce("MiningCo. Spaceship: unhandled ExpeditionKind (" + expeditionKind.ToString() + ").", 123456782);
                     break;
             }
             if (expedition != null)
@@ -102,11 +102,12 @@ namespace Spaceship
             return expeditionPawns;
         }
 
-        public static bool IsTemperatureValidForExpedition(Map map)
+        public static bool IsWeatherValidForExpedition(Map map)
         {
             float temperature = map.mapTemperature.SeasonalTemp;
             if ((temperature >= -20)
-                && (temperature <= 50))
+                && (temperature <= 50)
+                && (map.GameConditionManager.ConditionIsActive(GameConditionDefOf.ToxicFallout) == false))
             {
                 return true;
             }
@@ -127,6 +128,11 @@ namespace Spaceship
 
         public static void RandomlyDamagePawn(Pawn pawn, int injuriesNumber, int damageAmount)
         {
+            if (pawn.story.traits.HasTrait(TraitDef.Named("Wimp")))
+            {
+                // Do not hurt wimp pawns as they could be spawned as dead and break the lord behavior.
+                return;
+            }
             HediffSet hediffSet = pawn.health.hediffSet;
             int injuriesIndex = 0;
             while ((pawn.Dead == false)
@@ -145,7 +151,7 @@ namespace Spaceship
                     def = DamageDefOf.Blunt;
                 }
                 BodyPartRecord forceHitPart = bodyPartRecord;
-                DamageInfo dinfo = new DamageInfo(def, damageAmount, -1f, null, forceHitPart, null, DamageInfo.SourceCategory.ThingOrUnknown);
+                DamageInfo dinfo = new DamageInfo(def, damageAmount, 0f, -1f, null, forceHitPart, null, DamageInfo.SourceCategory.ThingOrUnknown);
                 pawn.TakeDamage(dinfo);
             }
         }

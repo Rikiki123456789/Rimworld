@@ -17,8 +17,7 @@ namespace Spaceship
         public const int medicsNumber = 4;
         public const int tendableColonistCheckPeriodInTicks = 4 * GenTicks.TicksPerRealSecond;
         public const int staffAboardHealPeriodInTicks = GenDate.TicksPerHour;
-
-        public bool medicsAreGenerated = false;
+        
         List<Pawn> medics = new List<Pawn>();
         public int nextTendableColonistCheckTick = 0;
         public int nextStaffAboardHealTick = 0;
@@ -37,7 +36,7 @@ namespace Spaceship
         {
             base.SpawnSetup(map, respawningAfterLoad);
 
-            if (this.medicsAreGenerated == false)
+            if (respawningAfterLoad == false)
             {
                 for (int pawnindex = 0; pawnindex < medicsNumber; pawnindex++)
                 {
@@ -92,8 +91,7 @@ namespace Spaceship
         public override void ExposeData()
         {
             base.ExposeData();
-
-            Scribe_Values.Look<bool>(ref this.medicsAreGenerated, "medicsAreGenerated");
+            
             Scribe_Collections.Look<Pawn>(ref this.medics, "medics", LookMode.Reference);
             Scribe_Values.Look<int>(ref this.availableMedikitsCount, "availableMedikitsCount");
             Scribe_Values.Look<int>(ref this.nextStaffAboardHealTick, "nextStaffAboardHealTick");
@@ -166,7 +164,7 @@ namespace Spaceship
                     int medikitsToSpawnCount = Math.Min(this.availableMedikitsCount, neededMedikitsCount);
                     if (medikitsToSpawnCount > 0)
                     {
-                        SpawnItem(ThingDefOf.Medicine, null, medikitsToSpawnCount, this.Position, this.Map, 0f);
+                        SpawnItem(ThingDefOf.MedicineIndustrial, null, medikitsToSpawnCount, this.Position, this.Map, 0f);
                         this.availableMedikitsCount -= medikitsToSpawnCount;
                     }
                 }
@@ -236,10 +234,7 @@ namespace Spaceship
             // Board to get orbital healing option.
             if (this.IsBurning())
             {
-                FloatMenuOption burningOption = new FloatMenuOption("CannotUseReason".Translate(new object[]
-                {
-                    "BurningLower".Translate()
-                }), null);
+                FloatMenuOption burningOption = new FloatMenuOption("CannotUseReason".Translate("BurningLower".Translate()), null);
                 options.Add(burningOption);
             }
             else
@@ -331,27 +326,22 @@ namespace Spaceship
             stringBuilder.Append(base.GetInspectString());
 
             stringBuilder.AppendLine();
-            stringBuilder.Append("Pawns aboard: ");
-            bool playerPawnAboard = false;
-            foreach (Pawn pawn in this.pawnsAboard)
+            if (this.orbitalHealingPawnsAboardCount > 0)
             {
-                if (pawn.Faction == Faction.OfPlayer)
+                stringBuilder.Append("Pawns aboard: ");
+                StringBuilder pawnsName = new StringBuilder();
+                foreach (Pawn pawn in this.pawnsAboard)
                 {
-                    if (playerPawnAboard == false)
+                    if (pawn.Faction == Faction.OfPlayer)
                     {
-                        // Do not add coma for first pawn.
-                        playerPawnAboard = true;
+                        pawnsName.AppendWithComma(pawn.Name.ToStringShort);
                     }
-                    else
-                    {
-                        stringBuilder.Append(", ");
-                    }
-                    stringBuilder.Append(pawn.NameStringShort);
                 }
+                stringBuilder.Append(pawnsName.ToString());
             }
-            if (playerPawnAboard == false)
+            else
             {
-                stringBuilder.Append("none");
+                stringBuilder.Append("Pawns aboard: none");
             }
             return stringBuilder.ToString();
         }

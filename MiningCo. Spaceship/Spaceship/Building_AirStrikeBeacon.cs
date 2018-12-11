@@ -56,7 +56,7 @@ namespace Spaceship
                 && (Find.TickManager.TicksGame >= this.nextStrikeTick))
             {
                 // Start new run.
-                SpawnStrikeShip();
+                Util_Spaceship.SpawnStrikeShip(this.Map, this.Position, this.airStrikeDef);
                 this.remainingRuns--;
                 this.nextStrikeTick = Find.TickManager.TicksGame + ticksBetweenRuns;
             }
@@ -65,13 +65,6 @@ namespace Spaceship
                 // Air strike is finished.
                 this.Destroy();
             }
-        }
-
-        public void SpawnStrikeShip()
-        {
-            FlyingSpaceshipAirStrike strikeShip = ThingMaker.MakeThing(Util_Spaceship.SpaceshipAirStrike) as FlyingSpaceshipAirStrike;
-            GenSpawn.Spawn(strikeShip, this.Position, this.Map);
-            strikeShip.InitializeAirStrikeData(this.Position, this.airStrikeDef);
         }
 
         // ===================== Gizmos =====================

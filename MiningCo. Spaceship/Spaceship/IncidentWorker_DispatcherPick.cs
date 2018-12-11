@@ -13,9 +13,9 @@ namespace Spaceship
 {
     public class IncidentWorker_DispatcherPick : IncidentWorker
     {
-        protected override bool CanFireNowSub(IIncidentTarget target)
+        protected override bool CanFireNowSub(IncidentParms parms)
         {
-            if (base.CanFireNowSub(target) == false)
+            if (base.CanFireNowSub(parms) == false)
             {
                 return false;
             }
@@ -23,8 +23,8 @@ namespace Spaceship
             {
                 return false;
             }
-            Map map = (Map)target;
-            if (Expedition.IsTemperatureValidForExpedition(map))
+            Map map = (Map)parms.target;
+            if (Expedition.IsWeatherValidForExpedition(map))
             {
                 Building_OrbitalRelay orbitalRelay = Util_OrbitalRelay.GetOrbitalRelay(map);
                 if ((orbitalRelay != null)
@@ -51,7 +51,7 @@ namespace Spaceship
             }
 
             // Spawn landing dispatcher spaceship.
-            FlyingSpaceshipLanding dispatcherSpaceship = Util_Spaceship.SpawnSpaceship(landingPad, SpaceshipKind.DispatcherPick);
+            FlyingSpaceshipLanding dispatcherSpaceship = Util_Spaceship.SpawnLandingSpaceship(landingPad, SpaceshipKind.DispatcherPick);
 
             // Spawn expedition team.
             List<Pawn> teamPawns = Expedition.GenerateExpeditionPawns(map);
@@ -69,7 +69,7 @@ namespace Spaceship
             {
                 // Apply malaria/sleeping sickness to all team pawns in tropical or swamp biomes.
                 HediffDef illness = null;
-                if (Rand.Value < 0.5)
+                if (Rand.Value < 0.5f)
                 {
                     illness = HediffDef.Named("SleepingSickness");
                 }
@@ -85,9 +85,9 @@ namespace Spaceship
             else
             {
                 // Randomly damage some pawns.
-                int downedPawnsNumber = Mathf.RoundToInt(Rand.Range(0.25f, 0.5f) * teamPawns.Count);
-                downedPawnsNumber = Mathf.Clamp(downedPawnsNumber, 1, teamPawns.Count - 1);
-                for (int pawnIndex = 0; pawnIndex < downedPawnsNumber; pawnIndex++)
+                int injuredPawnsNumber = Mathf.RoundToInt(Rand.Range(0.25f, 0.5f) * teamPawns.Count);
+                injuredPawnsNumber = Mathf.Clamp(injuredPawnsNumber, 1, teamPawns.Count - 1);
+                for (int pawnIndex = 0; pawnIndex < injuredPawnsNumber; pawnIndex++)
                 {
                     Expedition.RandomlyDamagePawn(teamPawns[pawnIndex], Rand.Range(1, 2), Rand.Range(12, 20));
                 }

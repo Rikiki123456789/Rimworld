@@ -64,7 +64,7 @@ namespace Spaceship
                 mustBeCapableOfViolence: true,
                 colonistRelationChanceFactor: 0f,
                 certainlyBeenInCryptosleep: true,
-                validator: validator);
+                validatorPreGear: validator);
             pawn = PawnGenerator.GeneratePawn(request);
             SetMedicSkill(ref pawn);
             GeneratePawnApparelAndWeapon(ref pawn, kindDef, map.mapTemperature.SeasonalTemp);
@@ -73,9 +73,10 @@ namespace Spaceship
 
         public static void SetUniformColor(BiomeDef biome, float temperature)
         {
-            // Set uniforms color according to biome.
+            // Set uniform color according to biome.
             string biomeDefName = biome.defName;
-            if (biomeDefName == "IceSheet")
+            if ((biomeDefName == "IceSheet")
+                || (biomeDefName == "SeaIce"))
             {
                 pantColor = colorArmyGrey;
                 shirtColor = colorArmyWhite;
@@ -95,8 +96,11 @@ namespace Spaceship
             else if ((temperature < 0)
                 && ((biomeDefName == "Tundra")
                 || (biomeDefName == "BorealForest")
+                || (biomeDefName == "ColdBog")
                 || (biomeDefName == "TemperateForest")
-                || (biomeDefName == "TropicalRainforest")))
+                || (biomeDefName == "TemperateSwamp")
+                || (biomeDefName == "TropicalRainforest")
+                || (biomeDefName == "TropicalSwamp")))
             {
                 // Uniform colors change according to temperature in these biomes.
                 pantColor = colorArmyGrey;
@@ -148,8 +152,8 @@ namespace Spaceship
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), colorCivilLightGrey);
                 if (Util_Misc.IsModActive("MiningCo. MiningHelmet"))
                 {
-                    GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("MiningHelmet"), null, Color.black, false);
-                    GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("MiningVest"), null, Color.black, false);
+                    GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_MiningHelmet"), null, Color.black, false);
+                    GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_MiningVest"), null, Color.black, false);
                 }
                 else
                 {
@@ -180,10 +184,11 @@ namespace Spaceship
             }
             else if (kindDef == Util_PawnKindDefOf.Medic)
             {
-                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_FlakPants"), null, pantColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_CollarShirt"), ThingDef.Named("Synthread"), shirtColor);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_FlakVest"), null, Color.black, false);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Duster"), ThingDef.Named("Synthread"), colorArmyWhite);
-                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_SimpleHelmet"), ThingDefOf.Plasteel, colorArmyWhite);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_SimpleHelmetMedic"), null, colorArmyWhite);
                 if (needParka)
                 {
                     GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDefOf.Apparel_Parka, ThingDef.Named("Synthread"), colorArmyWhite);
@@ -195,7 +200,7 @@ namespace Spaceship
             {
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
-                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_FlakVest"), null, Color.black, false);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_SimpleHelmet"), ThingDefOf.Plasteel, helmetColor);
                 if (needParka)
                 {
@@ -212,7 +217,7 @@ namespace Spaceship
             }
             else if (kindDef == Util_PawnKindDefOf.Guard)
             {
-                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_FlakPants"), null, pantColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_AdvancedHelmet"), ThingDefOf.Plasteel, helmetColor);
@@ -226,7 +231,7 @@ namespace Spaceship
             else if ((kindDef == Util_PawnKindDefOf.ShockTrooper)
                 || (kindDef == Util_PawnKindDefOf.HeavyGuard))
             {
-                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), pantColor);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_FlakPants"), null, pantColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_BasicShirt"), ThingDef.Named("Synthread"), shirtColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_PowerArmor"), null, armorColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_PowerArmorHelmet"), null, helmetColor);
@@ -241,9 +246,9 @@ namespace Spaceship
             }
             else if (kindDef == Util_PawnKindDefOf.Officer)
             {
-                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDefOf.Hyperweave, pantColor);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_FlakPants"), null, pantColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_CollarShirt"), ThingDefOf.Hyperweave, shirtColor);
-                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_VestPlate"), null, Color.black, false);
+                GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_FlakVest"), null, Color.black, false);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Duster"), ThingDefOf.Hyperweave, armorColor);
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_CowboyHat"), ThingDefOf.Hyperweave, helmetColor);
                 GeneratePawnWeapon(ref pawn, kindDef.itemQuality, ThingDef.Named("Gun_SniperRifle"));

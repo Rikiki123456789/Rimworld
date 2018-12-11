@@ -18,9 +18,10 @@ namespace Spaceship
 
 		public override bool ActivateOn(Lord lord, TriggerSignal signal)
 		{
-            if (signal.type == TriggerSignalType.Tick && Find.TickManager.TicksGame % checkInterval == 0)
+            if ((signal.type == TriggerSignalType.Tick)
+                && (Find.TickManager.TicksGame % checkInterval == 0))
             {
-                foreach (Building spaceship in lord.Map.listerBuildings.AllBuildingsColonistOfDef(Util_Spaceship.SpaceshipMedical))
+                foreach (Building spaceship in lord.Map.listerThings.ThingsOfDef(Util_Spaceship.SpaceshipMedical))
                 {
                     Building_SpaceshipMedical medicalSpaceship = spaceship as Building_SpaceshipMedical;
                     if ((medicalSpaceship != null)

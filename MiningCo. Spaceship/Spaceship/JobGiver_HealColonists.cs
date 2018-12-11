@@ -84,10 +84,9 @@ namespace Spaceship
                 IntVec3 position = patient.Position;
                 List<Thing> searchSet = patient.Map.listerThings.ThingsInGroup(ThingRequestGroup.Medicine);
                 TraverseParms traverseParams = TraverseParms.For(healer, Danger.Some, TraverseMode.ByPawn, false);
-                result = GenClosest.ClosestThing_Global_Reachable(position, patient.Map, searchSet, PathEndMode.ClosestTouch, traverseParams, 9999f, predicate, priorityGetter);
+                result = GenClosest.ClosestThing_Global_Reachable(position, patient.Map, searchSet, PathEndMode.ClosestTouch, traverseParams, 100f, predicate, priorityGetter);
             }
             return result;
         }
-
     }
 }

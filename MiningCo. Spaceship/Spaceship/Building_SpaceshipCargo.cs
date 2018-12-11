@@ -76,18 +76,12 @@ namespace Spaceship
             // Trade option.
             if (this.IsBurning())
             {
-                FloatMenuOption burningOption = new FloatMenuOption("CannotUseReason".Translate(new object[]
-                {
-                    "BurningLower".Translate()
-                }), null);
+                FloatMenuOption burningOption = new FloatMenuOption("CannotUseReason".Translate("BurningLower".Translate()), null);
                 options.Add(burningOption);
             }
             else if (selPawn.skills.GetSkill(SkillDefOf.Social).TotallyDisabled)
             {
-                FloatMenuOption incapableOption = new FloatMenuOption("CannotPrioritizeWorkTypeDisabled".Translate(new object[]
-				{
-					SkillDefOf.Social.LabelCap
-				}), null);
+                FloatMenuOption incapableOption = new FloatMenuOption("CannotPrioritizeWorkTypeDisabled".Translate(SkillDefOf.Social.LabelCap), null);
                 options.Add(incapableOption);
             }
             else
@@ -116,7 +110,7 @@ namespace Spaceship
             }
             else
             {
-                stringBuilder.Append("Planned take-off: " + Util_Misc.GetTicksAsStringInDaysHours(this.takeOffTick - Find.TickManager.TicksGame));
+                stringBuilder.Append("Planned take-off: " + GenDate.ToStringTicksToPeriodVerbose(this.takeOffTick - Find.TickManager.TicksGame));
             }
 
             return stringBuilder.ToString();
@@ -130,7 +124,7 @@ namespace Spaceship
             get
             {
                 return ((this.DestroyedOrNull() == false)
-                    || (this.IsBurning() == false));
+                    && (this.IsBurning() == false));
             }
         }
         public IEnumerable<Thing> Goods
@@ -175,7 +169,7 @@ namespace Spaceship
         public IEnumerable<Thing> ColonyThingsWillingToBuy(Pawn playerNegotiator)
         {
             List<Thing> thingsWillingToBuy = new List<Thing>();
-            foreach (Thing thing in TradeUtility.AllLaunchableThings(this.Map))
+            foreach (Thing thing in TradeUtility.AllLaunchableThingsForTrade(this.Map))
             {
                 thingsWillingToBuy.Add(thing);
             }
@@ -183,7 +177,7 @@ namespace Spaceship
             {
                 foreach (Thing thing in cell.GetThingList(this.Map))
                 {
-                    if ((TradeUtility.EverTradeable(thing.def))
+                    if ((TradeUtility.EverPlayerSellable(thing.def))
                         && this.TraderKind.WillTrade(thing.def)
                         && (thingsWillingToBuy.Contains(thing) == false)) // Do not count thing twice.
                     {

@@ -32,20 +32,23 @@ namespace Spaceship
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-            
-            // Initialize needed materials.
-            if (this.neededMaterials.Count == 0)
+
+            if (respawningAfterLoad == false)
             {
-                this.neededMaterials.Add(ThingDefOf.Component, Rand.RangeInclusive(2, 15));
+                // Initialize needed materials.
+                this.neededMaterials.Add(ThingDefOf.ComponentIndustrial, Rand.RangeInclusive(2, 15));
                 this.neededMaterials.Add(ThingDefOf.Steel, Rand.RangeInclusive(50, 250));
-            }
-            // Initialize available materials.
-            foreach (ThingDef def in this.neededMaterials.Keys)
-            {
-                this.availableMaterials.Add(def, 0);
+                // Initialize available materials.
+                foreach (ThingDef def in this.neededMaterials.Keys)
+                {
+                    this.availableMaterials.Add(def, 0);
+                }
             }
         }
 
+        /// <summary>
+        /// Store initialHitPoints to compare to when ship will take off.
+        /// </summary>
         public void InitializeData_Damaged(Faction faction, int hitPoints, int landingDuration, SpaceshipKind spaceshipKind, int initialHitPoints)
         {
             base.InitializeData(faction, hitPoints, landingDuration, spaceshipKind);
@@ -83,12 +86,9 @@ namespace Spaceship
                 this.nextAvailableMaterialsUpdateTick = Find.TickManager.TicksGame + availableMaterialsUpdatePeriodInTicks;
                 UpdateAvailableMaterials();
             }
-            if ((Find.TickManager.TicksGame % GenTicks.TickLongInterval) == 0)
+            if (this.HitPoints >= this.MaxHitPoints)
             {
-                if (this.HitPoints >= this.MaxHitPoints)
-                {
-                    this.RequestTakeOff();
-                }
+                this.RequestTakeOff();
             }
         }
 
@@ -102,9 +102,7 @@ namespace Spaceship
             }
             foreach (Thing thing in GetNeededMaterialsAround())
             {
-                {
-                    localAvailableMaterials[thing.def] += thing.stackCount;
-                }
+                localAvailableMaterials[thing.def] += thing.stackCount;
             }
             this.availableMaterials = localAvailableMaterials;
         }
@@ -145,7 +143,7 @@ namespace Spaceship
             UpdateAvailableMaterials();
             if (AreNeededMaterialsAvailable() == false)
             {
-                Messages.Message("Not enough materials near spaceship to perform repairs.", this, MessageTypeDefOf.RejectInput);
+                Messages.Message("Not enough materials to perform repairs. Ensure the materials are stockpiled near the spaceship.", this, MessageTypeDefOf.RejectInput);
                 return;
             }
             this.repairsAreStarted = true;
@@ -192,7 +190,7 @@ namespace Spaceship
                         + "-- End of transmission --";
                     Find.LetterStack.ReceiveLetter("Repairs completed", letterText, LetterDefOf.PositiveEvent, new TargetInfo(this.Position, this.Map));
                     SpawnCargoContent(1f);
-                    Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, 10f);
+                    Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, 10);
                 }
                 else if (this.HitPoints >= this.initialHitPoints)
                 {
@@ -205,7 +203,7 @@ namespace Spaceship
                         + "-- End of transmission --";
                     Find.LetterStack.ReceiveLetter("Partial repairs", letterText, LetterDefOf.PositiveEvent, new TargetInfo(this.Position, this.Map));
                     SpawnCargoContent(0.5f);
-                    Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, 5f);
+                    Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, 5);
                 }
                 else
                 {
@@ -217,8 +215,8 @@ namespace Spaceship
                         + "See you partner!\"\n\n"
                         + "-- End of transmission --";
                     Find.LetterStack.ReceiveLetter("Failed repairs", letterText, LetterDefOf.NeutralEvent, new TargetInfo(this.Position, this.Map));
+                    // No relation impact.
                 }
-                // No relation impact.
             }
             else
             {
@@ -236,7 +234,7 @@ namespace Spaceship
                     Util_Misc.Partnership.nextPeriodicSupplyTick[this.Map] = Find.TickManager.TicksGame + 2 * WorldComponent_Partnership.cargoSpaceshipPeriodicSupplyPeriodInTicks;
                     Util_Misc.Partnership.nextRequestedSupplyMinTick[this.Map] = Find.TickManager.TicksGame + 2 * WorldComponent_Partnership.cargoSpaceshipRequestedSupplyPeriodInTicks;
                     Util_Misc.Partnership.nextAirstrikeMinTick[this.Map] = Find.TickManager.TicksGame + 20 * GenDate.TicksPerDay;
-                    Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, -10f);
+                    Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, -10);
                 }
                 else
                 {
@@ -252,7 +250,7 @@ namespace Spaceship
                     Util_Misc.Partnership.nextPeriodicSupplyTick[this.Map] = Find.TickManager.TicksGame + 4 * WorldComponent_Partnership.cargoSpaceshipPeriodicSupplyPeriodInTicks;
                     Util_Misc.Partnership.nextRequestedSupplyMinTick[this.Map] = Find.TickManager.TicksGame + 4 * WorldComponent_Partnership.cargoSpaceshipRequestedSupplyPeriodInTicks;
                     Util_Misc.Partnership.nextAirstrikeMinTick[this.Map] = Find.TickManager.TicksGame + 40 * GenDate.TicksPerDay;
-                    Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, -20f);
+                    Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, -20);
                 }
             }
         }
@@ -266,9 +264,9 @@ namespace Spaceship
             if (this.repairsAreStarted == false)
             {
                 Command_Action startRepairsButton = new Command_Action();
-                startRepairsButton.icon = ContentFinder<Texture2D>.Get("Things/Item/Resource/MedicineGlitterworld");
+                startRepairsButton.icon = ContentFinder<Texture2D>.Get("Things/Item/Resource/Medicine/MedicineUltratech/MedicineUltratech_a");
                 startRepairsButton.defaultLabel = "Start repairs";
-                startRepairsButton.defaultDesc = "Deliver needed materials to repair the spaceship.";
+                startRepairsButton.defaultDesc = "Click to transfer repair materials to the spaceship. Make sure the materials are stockpiled near the spaceship. Your colonists will then be able to repair the spaceship.";
                 startRepairsButton.activateSound = SoundDef.Named("Click");
                 startRepairsButton.action = new Action(TryStartRepairs);
                 startRepairsButton.groupKey = groupKeyBase + 1;
@@ -296,12 +294,16 @@ namespace Spaceship
 
             if (this.repairsAreStarted == false)
             {
-                stringBuilder.Append("Needed materials:");
+                stringBuilder.Append("Repair materials stockpiled nearby:");
                 foreach (ThingDef materialDef in this.neededMaterials.Keys)
                 {
                     stringBuilder.AppendLine();
                     stringBuilder.Append(materialDef.LabelCap + ": " + this.availableMaterials[materialDef] + "/" + this.neededMaterials[materialDef]);
                 }
+            }
+            else
+            {
+                stringBuilder.Append("Repair progress: " + ((float)this.HitPoints / (float)this.MaxHitPoints).ToStringPercent());
             }
             return stringBuilder.ToString();
         }

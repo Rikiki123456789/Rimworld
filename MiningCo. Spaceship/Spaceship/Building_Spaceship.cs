@@ -15,8 +15,7 @@ namespace Spaceship
     // TODO: add a chance for the ship to crash (nearby tile with pirate around after some times).
     // TODO: cannot build ship buildings in cave biome (add NotinCave place worker).
     // TODO: add event with pirates in hijacked cargo spaceship.
-    // TODO: Should medics rescue downed colonist?
-
+    
     public abstract class Building_Spaceship : Building, IThingHolder
     {
         public const int pilotsNumber = 2;
@@ -38,19 +37,19 @@ namespace Spaceship
         public override void SpawnSetup(Map map, bool respawningAfterLoad)
         {
             base.SpawnSetup(map, respawningAfterLoad);
-
-            // Initialize cargo and destroy roof.
-            if (this.things == null)
+            
+            if (respawningAfterLoad == false)
             {
-                this.things = new ThingOwner<Thing>(this);
-                GenerateThings();
+                // Initialize cargo and destroy roof.
+                if (this.things == null)
+                {
+                    this.things = new ThingOwner<Thing>(this);
+                    GenerateThings();
 
-                DestroyRoof();
-            }
+                    DestroyRoof();
+                }
 
-            // Generate pilots.
-            if (this.pawnsAboard.Count == 0)
-            {
+                // Generate pilots.
                 for (int pilotIndex = 0; pilotIndex < pilotsNumber; pilotIndex++)
                 {
                     Pawn pilot = MiningCoPawnGenerator.GeneratePawn(Util_PawnKindDefOf.Pilot, this.Map);
@@ -77,7 +76,7 @@ namespace Spaceship
             Thing landingPad = this.Position.GetFirstThing(this.Map, Util_ThingDefOf.LandingPad);
             if (landingPad != null)
             {
-                (landingPad as Building_LandingPad).NotifyShipTakingOff();
+                (landingPad as Building_LandingPad).Notify_ShipTakingOff();
             }
             if (mode == DestroyMode.KillFinalize)
             {
@@ -90,7 +89,7 @@ namespace Spaceship
                 // Add spaceship cargo cost fee and spread it around.
                 int cargoFeeInSilver = SpawnCargoContent(0.5f);
                 Util_Misc.Partnership.feeInSilver[this.Map] += Mathf.RoundToInt(cargoFeeInSilver * 0.5f);
-                Util_Faction.AffectFactionGoodwillWithOther(Util_Faction.MiningCoFaction, Faction.OfPlayer, -30);
+                Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, -30);
 
                 string spaceshipDestroyedText = "-- Comlink with MiningCo. --\n\n"
                 + "\"We just lost contact with one of our ships in your sector.\n"
@@ -113,7 +112,7 @@ namespace Spaceship
                 GenSpawn.Spawn(spaceship, this.Position, this.Map, this.Rotation);
                 spaceship.InitializeTakingOffParameters(this.Position, this.Rotation, this.spaceshipKind);
                 spaceship.HitPoints = this.HitPoints;
-                if (this.Map.listerBuildings.ColonistsHaveBuilding((Thing b) => b.def == Util_ThingDefOf.OrbitalRelay))
+                if (this.Map.listerBuildings.ColonistsHaveBuilding(Util_ThingDefOf.OrbitalRelay))
                 {
                     Messages.Message("A MiningCo. spaceship is taking off.", spaceship, MessageTypeDefOf.NeutralEvent);
                 }
@@ -217,7 +216,7 @@ namespace Spaceship
                 bool exitSpotIsValid = RCellFinder.TryFindBestExitSpot(survivingPawns.First(), out exitSpot, TraverseMode.PassAllDestroyableThings);
                 if (exitSpotIsValid)
                 {
-                    Lord lord = LordMaker.MakeNewLord(Util_Faction.MiningCoFaction, new LordJob_ExitMap(exitSpot), this.Map, survivingPawns);
+                    LordMaker.MakeNewLord(Util_Faction.MiningCoFaction, new LordJob_ExitMap(exitSpot), this.Map, survivingPawns);
                 }
             }
         }
@@ -236,7 +235,7 @@ namespace Spaceship
             for (int fireIndex = 0; fireIndex < 150; fireIndex++)
             {
                 IntVec3 spawnCell = this.Position + IntVec3Utility.RandomHorizontalOffset(12f);
-                GenSpawn.Spawn(ThingDefOf.FilthFuel, spawnCell, this.Map);
+                GenSpawn.Spawn(ThingDefOf.Filth_Fuel, spawnCell, this.Map);
                 Fire fire = GenSpawn.Spawn(ThingDefOf.Fire, spawnCell, this.Map) as Fire;
                 fire.fireSize = Rand.Range(0.25f, 1.25f);
             }
@@ -279,13 +278,6 @@ namespace Spaceship
             return item;
         }
 
-        public void SpawnPayment(int pawnsCount)
-        {
-            int paymentTotalAmount = Util_Spaceship.feePerPawnInSilver * pawnsCount;
-            Thing item = SpawnItem(ThingDefOf.Silver, null, paymentTotalAmount, this.Position, this.Map, 0f);
-            Messages.Message("A dispatcher spaceship paid you " + paymentTotalAmount + " silver for using your landing pad.", item, MessageTypeDefOf.PositiveEvent);
-        }
-
         public virtual void Notify_PawnBoarding(Pawn pawn, bool isLastLordPawn)
         {
             this.pawnsAboard.Add(pawn);
@@ -306,10 +298,10 @@ namespace Spaceship
         public ThingOwner things = null;
         public void GenerateThings()
         {
-            ItemCollectionGeneratorParams parms = default(ItemCollectionGeneratorParams);
+            ThingSetMakerParams parms = default(ThingSetMakerParams);
             parms.traderDef = this.cargoKind;
             parms.tile = this.Map.Tile;
-            this.things.TryAddRangeOrTransfer(ItemCollectionGeneratorDefOf.TraderStock.Worker.Generate(parms), true);
+            this.things.TryAddRangeOrTransfer(ThingSetMakerDefOf.TraderStock.root.Generate(parms), true);
         }
         public ThingOwner GetDirectlyHeldThings()
         {

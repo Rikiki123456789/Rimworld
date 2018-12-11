@@ -74,43 +74,5 @@ namespace Spaceship
             }
             return false;
         }
-
-        public static string GetTicksAsStringInDaysHours(int durationInTicks)
-        {
-            string remainingTimeAsString = "";
-            int remainingDays = durationInTicks / GenDate.TicksPerDay;
-            int remainingHours = (durationInTicks % GenDate.TicksPerDay) / GenDate.TicksPerHour;
-            if (remainingDays >= 2)
-            {
-                remainingTimeAsString = "~" + remainingDays + " days";
-            }
-            else if (remainingDays >= 1)
-            {
-                if (remainingHours >= 2)
-                {
-                    remainingTimeAsString = "1 day, " + remainingHours + " hours";
-                }
-                else
-                {
-                    remainingTimeAsString = "1 day, " + remainingHours + " hour";
-                }
-            }
-            else
-            {
-                if (remainingHours >= 2)
-                {
-                    remainingTimeAsString = remainingHours + " hours";
-                }
-                else if (remainingHours >= 1)
-                {
-                    remainingTimeAsString = "1 hour";
-                }
-                else
-                {
-                    remainingTimeAsString = "< 1 hour";
-                }
-            }
-            return remainingTimeAsString;
-        }
     }
 }

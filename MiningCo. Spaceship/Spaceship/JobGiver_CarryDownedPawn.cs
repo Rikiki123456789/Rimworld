@@ -39,7 +39,7 @@ namespace Spaceship
             }
             else
             {
-                toil.Notify_RescuedEnded();
+                toil.Notify_RescueEnded();
             }
             return null;
 		}

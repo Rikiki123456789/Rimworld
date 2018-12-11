@@ -18,6 +18,7 @@ namespace Spaceship
         Damaged,
         DispatcherDrop,
         DispatcherPick,
-        Medical
+        Medical,
+        Airstrike
     }
 }

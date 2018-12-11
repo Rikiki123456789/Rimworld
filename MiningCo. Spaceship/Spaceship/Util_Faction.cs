@@ -33,22 +33,109 @@ namespace Spaceship
         }
 
         // ===================== Goodwill management =====================
-        public static bool AffectFactionGoodwillWithOther(Faction faction, Faction other, float goodwillChange)
+        public static bool AffectGoodwillWith(Faction faction, Faction other, int goodwillChange, bool canSendMessage = true, bool canSendHostilityLetter = true, string reason = null, GlobalTargetInfo? lookTarget = null)
+        {
+            if (goodwillChange == 0)
+            {
+                return true;
+            }
+            int num = faction.GoodwillWith(other);
+            int num2 = Mathf.Clamp(num + goodwillChange, -100, 100);
+            if (num == num2)
+            {
+                return true;
+            }
+            FactionRelation factionRelation = faction.RelationWith(other, false);
+            factionRelation.goodwill = num2;
+            bool flag;
+            factionRelation.CheckKindThresholds(faction, canSendHostilityLetter, reason, (!lookTarget.HasValue) ? GlobalTargetInfo.Invalid : lookTarget.Value, out flag);
+            FactionRelation factionRelation2 = other.RelationWith(faction, false);
+            FactionRelationKind kind = factionRelation2.kind;
+            factionRelation2.goodwill = factionRelation.goodwill;
+            factionRelation2.kind = factionRelation.kind;
+            bool flag2;
+            if (kind != factionRelation2.kind)
+            {
+                other.Notify_RelationKindChanged(faction, kind, canSendHostilityLetter, reason, (!lookTarget.HasValue) ? GlobalTargetInfo.Invalid : lookTarget.Value, out flag2);
+            }
+
+            if ((faction == Util_Faction.MiningCoFaction)
+                && (other == Faction.OfPlayer)
+                && (factionRelation.kind == FactionRelationKind.Hostile))
+            {
+                Util_Misc.Partnership.globalGoodwillFeeInSilver = WorldComponent_Partnership.globalGoodwillCostInSilver;
+                Util_Misc.OrbitalHealing.Notify_BecameHostileToColony();
+                foreach (Map map in Find.Maps)
+                {
+                    if (map.IsPlayerHome)
+                    {
+                        List<Building_Spaceship> takeOffRequestList = new List<Building_Spaceship>();
+                        foreach (Thing thing in map.listerThings.AllThings)
+                        {
+                            if (thing is Building_Spaceship)
+                            {
+                                takeOffRequestList.Add(thing as Building_Spaceship);
+                            }
+                        }
+                        foreach (Building_Spaceship spaceship in takeOffRequestList)
+                        {
+                            spaceship.RequestTakeOff();
+                        }
+                    }
+                    LordManager lordManager = map.lordManager;
+                    for (int j = 0; j < lordManager.lords.Count; j++)
+                    {
+                        Lord lord = lordManager.lords[j];
+                        if (lord.faction == Util_Faction.MiningCoFaction)
+                        {
+                            lord.ReceiveMemo("BecameHostileToColony");
+                        }
+                    }
+                }
+            }
+
+            /*else
+            {
+                flag2 = false;
+            }
+            if (canSendMessage && !flag && !flag2 && Current.ProgramState == ProgramState.Playing && (faction.IsPlayer || other.IsPlayer))
+            {
+                Faction faction = (!this.IsPlayer) ? this : other;
+                string text;
+                if (!reason.NullOrEmpty())
+                {
+                    text = "MessageGoodwillChangedWithReason".Translate(faction.name, num.ToString("F0"), factionRelation.goodwill.ToString("F0"), reason);
+                }
+                else
+                {
+                    text = "MessageGoodwillChanged".Translate(faction.name, num.ToString("F0"), factionRelation.goodwill.ToString("F0"));
+                }
+                Messages.Message(text, (!lookTarget.HasValue) ? GlobalTargetInfo.Invalid : lookTarget.Value, ((float)goodwillChange <= 0f) ? MessageTypeDefOf.NegativeEvent : MessageTypeDefOf.PositiveEvent, true);
+            }*/
+            return true;
+        }
+
+
+
+        /*public static bool AffectFactionGoodwillWithOther(Faction faction, Faction other, float goodwillChange)
         {
             float num = faction.GoodwillWith(other);
             float value = num + goodwillChange;
+            if (num == value)
+            {
+                return true;
+            }
+
+
             FactionRelation factionRelation = faction.RelationWith(other, false);
-            factionRelation.goodwill = Mathf.Clamp(value, -100f, 100f);
-            if (!faction.HostileTo(other) && faction.GoodwillWith(other) < -80f)
+            factionRelation.goodwill = Mathf.RoundToInt(Mathf.Clamp(value, -100f, 100f));
+            factionRelation.CheckKindThresholds(other)
+            if (!faction.HostileTo(other) && faction.GoodwillWith(other) < -75f)
             {
                 SetFactionHostileToOther(faction, other, true);
                 if (Current.ProgramState == ProgramState.Playing && Find.TickManager.TicksGame > 100 && other == Faction.OfPlayer)
                 {
-                    Find.LetterStack.ReceiveLetter("LetterLabelRelationsChangeBad".Translate(), "RelationsBrokenDown".Translate(new object[]
-			        {
-				        faction.Name
-			        }), LetterDefOf.NegativeEvent, null);
-
+                    Find.LetterStack.ReceiveLetter("LetterLabelRelationsChangeBad".Translate(), "RelationsBrokenDown".Translate(faction.Name), LetterDefOf.NegativeEvent, null);
                 }
             }
             if (faction.HostileTo(other) && faction.GoodwillWith(other) >= 0f)
@@ -56,16 +143,13 @@ namespace Spaceship
                 SetFactionHostileToOther(faction, other, false);
                 if (Current.ProgramState == ProgramState.Playing && Find.TickManager.TicksGame > 100 && other == Faction.OfPlayer)
                 {
-                    Find.LetterStack.ReceiveLetter("LetterLabelRelationsChangeGood".Translate(), "RelationsWarmed".Translate(new object[]
-			        {
-				        faction.Name
-			        }), LetterDefOf.PositiveEvent, null);
+                    Find.LetterStack.ReceiveLetter("LetterLabelRelationsChangeGood".Translate(), "RelationsWarmed".Translate(faction.Name), LetterDefOf.PositiveEvent, null);
                 }
             }
-            return faction.def.appreciative && (goodwillChange > 0f || factionRelation.goodwill != num);
-        }
+            return true;
+        }*/
 
-        public static void SetFactionHostileToOther(Faction faction, Faction other, bool hostile)
+        /*public static void SetFactionHostileToOther(Faction faction, Faction other, bool hostile)
         {
             FactionRelation factionRelation = faction.RelationWith(other, false);
             if (hostile)
@@ -104,7 +188,7 @@ namespace Spaceship
                         }
                     }
                 }
-                if (!factionRelation.hostile)
+                if (!factionRelation.kind )
                 {
                     other.RelationWith(faction, false).hostile = true;
                     factionRelation.hostile = true;
@@ -155,6 +239,6 @@ namespace Spaceship
                     }
                 }
             }
-        }
+        }*/
     }
 }

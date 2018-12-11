@@ -13,9 +13,9 @@ namespace Spaceship
 {
     public class IncidentWorker_DispatcherDrop : IncidentWorker
     {
-        protected override bool CanFireNowSub(IIncidentTarget target)
+        protected override bool CanFireNowSub(IncidentParms parms)
         {
-            if (base.CanFireNowSub(target) == false)
+            if (base.CanFireNowSub(parms) == false)
             {
                 return false;
             }
@@ -23,8 +23,8 @@ namespace Spaceship
             {
                 return false;
             }
-            Map map = (Map)target;
-            if (Expedition.IsTemperatureValidForExpedition(map))
+            Map map = (Map)parms.target;
+            if (Expedition.IsWeatherValidForExpedition(map))
             {
                 Building_OrbitalRelay orbitalRelay = Util_OrbitalRelay.GetOrbitalRelay(map);
                 if ((orbitalRelay != null)
@@ -51,9 +51,8 @@ namespace Spaceship
             }
 
             // Spawn landing dispatcher spaceship.
-            FlyingSpaceshipLanding dispatcherSpaceship = Util_Spaceship.SpawnSpaceship(landingPad, SpaceshipKind.DispatcherDrop);
+            FlyingSpaceshipLanding dispatcherSpaceship = Util_Spaceship.SpawnLandingSpaceship(landingPad, SpaceshipKind.DispatcherDrop);
             return true;
         }
-
     }
 }

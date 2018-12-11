@@ -10,7 +10,11 @@
     <requiredCountAtGameStart>1</requiredCountAtGameStart>
     <fixedName>MiningCo.</fixedName>
     <techLevel>Spacer</techLevel>
-    <backstoryCategory>Civil</backstoryCategory>
+    <leaderTitle>planetary commander</leaderTitle>
+    <backstoryCategories>
+      <li>Civil</li>
+    </backstoryCategories>
+    <geneticVariance>0.8</geneticVariance>
     <hidden>true</hidden>
     <autoFlee>false</autoFlee>
     <canUseAvoidGrid>false</canUseAvoidGrid>
