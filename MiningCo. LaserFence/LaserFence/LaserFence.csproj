@@ -71,7 +71,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. LaserFence\Defs\ResearchProjectDefs\ResearchTabs.xml" />
-    <Content Include="MiningCo. LaserFence\Defs\ThingDefs\Buildings_Base.xml" />
     <Content Include="MiningCo. LaserFence\Defs\ThingDefs\Building_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>
