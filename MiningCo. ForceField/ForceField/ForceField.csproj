@@ -68,7 +68,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. ForceField\Defs\ResearchProjectDefs\ResearchTabs.xml" />
-    <Content Include="MiningCo. ForceField\Defs\ThingDefs\Buildings_Base.xml" />
     <Content Include="MiningCo. ForceField\Defs\ThingDefs\Building_ForceFieldGenerator.xml">
       <SubType>Designer</SubType>
     </Content>
