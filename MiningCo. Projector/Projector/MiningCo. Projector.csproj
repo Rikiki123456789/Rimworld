@@ -65,7 +65,6 @@
     <Content Include="MiningCo. Projector\Defs\HediffDefs\Hediffs_Blinded.xml" />
     <Content Include="MiningCo. Projector\Defs\ResearchProjectDefs\ResearchProjects_Projector.xml" />
     <Content Include="MiningCo. Projector\Defs\ResearchProjectDefs\ResearchTabs.xml" />
-    <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
     <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_MobileProjectorLight.xml" />
     <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_MobileProjectorTurret.xml" />
     <Content Include="MiningCo. Projector\Defs\ThingDefs_Buildings\Buildings_MobileProjectorTower.xml" />

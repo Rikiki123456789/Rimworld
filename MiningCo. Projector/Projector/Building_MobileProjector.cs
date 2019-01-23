@@ -601,21 +601,21 @@ namespace Projector
             switch (this.lightMode)
             {
                 case (LightMode.Conic):
-                    lightModeButton.defaultLabel = "Ligth mode: conic.";
+                    lightModeButton.defaultLabel = "Light mode: conic.";
                     lightModeButton.defaultDesc = "In this mode, the projector patrols in a conic area in front of it.";
                     break;
                 case (LightMode.Automatic):
-                    lightModeButton.defaultLabel = "Ligth mode: automatic.";
+                    lightModeButton.defaultLabel = "Light mode: automatic.";
                     lightModeButton.defaultDesc = "In this mode, the projector randomly lights the surroundings.";
                     break;
                 case (LightMode.Fixed):
-                    lightModeButton.defaultLabel = "Ligth mode: fixed.";
+                    lightModeButton.defaultLabel = "Light mode: fixed.";
                     lightModeButton.defaultDesc = "In this mode, the projector lights a fixed area.";
                     break;
             }
             lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SwitchMode");
             lightModeButton.activateSound = SoundDef.Named("Click");
-            lightModeButton.action = new Action(SwitchLigthMode);
+            lightModeButton.action = new Action(SwitchLightMode);
             lightModeButton.groupKey = groupKeyBase + 1;
             buttonList.Add(lightModeButton);
 
@@ -694,7 +694,7 @@ namespace Projector
         /// <summary>
         /// Switch light mode.
         /// </summary>
-        public void SwitchLigthMode()
+        public void SwitchLightMode()
         {
             this.groupId = 0;
             switch (this.lightMode)
