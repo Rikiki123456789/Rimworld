@@ -69,7 +69,6 @@
     <Content Include="MiningCo. AlertSpeaker\Defs\SoundDefs\Sounds_AlertSpeaker.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. AlertSpeaker\Defs\ThingDefs\Buildings_Base.xml" />
     <Content Include="MiningCo. AlertSpeaker\Defs\ThingDefs\Building_AlertSpeaker.xml">
       <SubType>Designer</SubType>
     </Content>
