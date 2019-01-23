@@ -84,7 +84,6 @@
     <Content Include="MiningCo. Projector\Textures\Ui\Commands\CommandButton_TurnRight.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MiningCo. Projector\About\Thumbs.db" />
     <None Include="MiningCo. Projector\Textures\Things\Building\Security\MenuIcon_ProjectorTurret.pdn" />
     <None Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_Base.pdn" />
     <None Include="MiningCo. Projector\Textures\Things\Building\Security\ProjectorTower_LightEffect.pdn" />
