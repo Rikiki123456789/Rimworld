@@ -64,11 +64,7 @@
     <Content Include="MiningCo. MiningHelmet\Defs\ThingDefs\Apparel_MiningHelmet.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. MiningHelmet\Defs\ThingDefs\Buildings_Base.xml" />
     <Content Include="MiningCo. MiningHelmet\Defs\ThingDefs\Building_MiningLight.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="MiningCo. MiningHelmet\Defs\ThingDefs\Apparel_Base.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. MiningHelmet\Textures\Things\Apparel\MiningHelmet\MiningHelmet.png" />

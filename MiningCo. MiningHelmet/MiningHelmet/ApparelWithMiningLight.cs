@@ -171,21 +171,21 @@ namespace MiningHelmet
             switch (this.lightMode)
             {
                 case (LightMode.Automatic):
-                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LigthModeAutomatic");
-                    lightModeButton.defaultLabel = "Ligth: automatic.";
+                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LightModeAutomatic");
+                    lightModeButton.defaultLabel = "Light: automatic.";
                     break;
                 case (LightMode.ForcedOn):
-                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LigthModeForcedOn");
-                    lightModeButton.defaultLabel = "Ligth: on.";
+                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LightModeForcedOn");
+                    lightModeButton.defaultLabel = "Light: on.";
                     break;
                 case (LightMode.ForcedOff):
-                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LigthModeForcedOff");
-                    lightModeButton.defaultLabel = "Ligth: off.";
+                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LightModeForcedOff");
+                    lightModeButton.defaultLabel = "Light: off.";
                     break;
             }
             lightModeButton.defaultDesc = "Switch mode.";
             lightModeButton.activateSound = SoundDef.Named("Click");
-            lightModeButton.action = new Action(SwitchLigthMode);
+            lightModeButton.action = new Action(SwitchLightMode);
             lightModeButton.groupKey = groupKeyBase + 1;
             buttonList.Add(lightModeButton);
 
@@ -195,7 +195,7 @@ namespace MiningHelmet
         /// <summary>
         /// Switch light mode.
         /// </summary>
-        public void SwitchLigthMode()
+        public void SwitchLightMode()
         {
             switch (this.lightMode)
             {
