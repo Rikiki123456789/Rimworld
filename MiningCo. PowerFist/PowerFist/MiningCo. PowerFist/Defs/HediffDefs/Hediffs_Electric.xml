@@ -1,13 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <HediffDef Name="InjuryBase" Abstract="True">
-    <hediffClass>Hediff_Injury</hediffClass>
-    <tendable>true</tendable>
-    <displayWound>true</displayWound>
-    <labelNounPretty>{0} in the {1}</labelNounPretty>
-  </HediffDef>
-
   <HediffDef ParentName="InjuryBase">
 		<defName>Electric</defName>
 		<label>electrocution</label>

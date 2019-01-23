@@ -71,7 +71,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. PowerFist\Defs\ResearchProjectDefs\ResearchTabs.xml" />
-    <Content Include="MiningCo. PowerFist\Defs\ThingDefs_Misc\BaseWeapons.xml" />
     <Content Include="MiningCo. PowerFist\Defs\Things_Special\PowerFistRepeller.xml">
       <SubType>Designer</SubType>
     </Content>
