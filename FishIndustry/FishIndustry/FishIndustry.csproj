@@ -98,11 +98,9 @@
     <Content Include="FishIndustry\Defs\TerrainDefs\Terrain_FishingPierFloor.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_Fish.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\Defs\ThingDefs_Misc\Items_Resource_Base.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Items_Resource_Stuff_Leather.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Item_Oyster.xml">
       <SubType>Designer</SubType>
@@ -127,7 +125,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="FishIndustry\Defs\ThingDefs_Misc\Mote_Base.xml" />
-    <Content Include="FishIndustry\Defs\ThingDefs_Races\Races_Animal_Base.xml" />
     <Content Include="FishIndustry\Defs\ThingDefs_Races\Races_Animal_Fish.xml">
       <SubType>Designer</SubType>
     </Content>
