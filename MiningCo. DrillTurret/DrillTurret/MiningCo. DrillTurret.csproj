@@ -67,7 +67,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. DrillTurret\Defs\ResearchProjectDefs\ResearchTabs.xml" />
-    <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Buildings\Buildings_Base.xml" />
     <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Buildings\Buildings_DrillTurret.xml">
       <SubType>Designer</SubType>
     </Content>
