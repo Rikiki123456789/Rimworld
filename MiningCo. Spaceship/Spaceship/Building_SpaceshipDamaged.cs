@@ -81,7 +81,8 @@ namespace Spaceship
             {
                 return;
             }
-            if (Find.TickManager.TicksGame >= this.nextAvailableMaterialsUpdateTick)
+            if ((this.repairsAreStarted == false)
+                && (Find.TickManager.TicksGame >= this.nextAvailableMaterialsUpdateTick))
             {
                 this.nextAvailableMaterialsUpdateTick = Find.TickManager.TicksGame + availableMaterialsUpdatePeriodInTicks;
                 UpdateAvailableMaterials();

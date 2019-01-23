@@ -135,9 +135,6 @@
     <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\AmmoDefs.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Misc\BaseWeapons.xml">
-      <SubType>Designer</SubType>
-    </Content>
     <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\WeaponDefs.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -174,7 +171,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_AirStrikeBeacon.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_Base.xml" />
     <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_Spaceships.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -192,7 +188,6 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Misc\Apparel_Headgear.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Misc\Apparel_Base.xml" />
     <Content Include="MiningCo. Spaceship\Defs\TraderKindDefs\TraderKinds_Spaceship.xml">
       <SubType>Designer</SubType>
     </Content>

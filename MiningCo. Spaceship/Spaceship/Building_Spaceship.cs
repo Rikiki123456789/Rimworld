@@ -112,7 +112,7 @@ namespace Spaceship
                 GenSpawn.Spawn(spaceship, this.Position, this.Map, this.Rotation);
                 spaceship.InitializeTakingOffParameters(this.Position, this.Rotation, this.spaceshipKind);
                 spaceship.HitPoints = this.HitPoints;
-                if (this.Map.listerBuildings.ColonistsHaveBuilding(Util_ThingDefOf.OrbitalRelay))
+                if (Util_OrbitalRelay.GetOrbitalRelay(this.Map) != null)
                 {
                     Messages.Message("A MiningCo. spaceship is taking off.", spaceship, MessageTypeDefOf.NeutralEvent);
                 }

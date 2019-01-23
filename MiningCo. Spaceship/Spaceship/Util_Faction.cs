@@ -35,6 +35,12 @@ namespace Spaceship
         // ===================== Goodwill management =====================
         public static bool AffectGoodwillWith(Faction faction, Faction other, int goodwillChange, bool canSendMessage = true, bool canSendHostilityLetter = true, string reason = null, GlobalTargetInfo? lookTarget = null)
         {
+            if ((faction == null)
+                || (other == null))
+            {
+                Log.ErrorOnce("MiningCo. Spaceship: faction or other is null. Did you started a new world/colony when enabling this mod?", 123456779);
+                return false;
+            }
             if (goodwillChange == 0)
             {
                 return true;

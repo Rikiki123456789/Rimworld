@@ -24,6 +24,11 @@ namespace Spaceship
                 return false;
             }
             Map map = (Map)parms.target;
+            Building_OrbitalRelay orbitalRelay = Util_OrbitalRelay.GetOrbitalRelay(map);
+            if (orbitalRelay == null)
+            {
+                return false;
+            }
             List<Building_LandingPad> freeLandingPads = Util_LandingPad.GetAllFreeLandingPads(map);
             if (freeLandingPads != null)
             {
