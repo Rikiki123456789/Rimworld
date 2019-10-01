@@ -431,8 +431,8 @@ namespace FishIndustry
         public Thing GetProduction()
         {
             Thing product = ThingMaker.MakeThing(this.speciesDef.race.race.meatDef);
-            
-            product.stackCount = Mathf.RoundToInt(((PawnKindDef_FishSpecies)this.speciesDef).breedQuantity * this.fishesHealth);
+
+            product.stackCount = Mathf.CeilToInt(((PawnKindDef_FishSpecies)this.speciesDef).breedQuantity * this.fishesHealth * Settings.fishBreedQuantityFactor);
             if (this.microFungusRemainingDurationInTicks == 0)
             {
                 StartNewBreedingCycle();

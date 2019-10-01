@@ -14,13 +14,15 @@ namespace FishIndustry
     public class Settings : ModSettings
     {
         public static float fishRespawnRateFactor = 1f;
+        public static float fishBreedQuantityFactor = 1f;
         public static bool biomeRestrictionsIsEnabled = true;
 
         public override void ExposeData()
         {
             base.ExposeData();
-            Scribe_Values.Look<float>(ref fishRespawnRateFactor, "fishRespawnFactor");
-            Scribe_Values.Look<bool>(ref biomeRestrictionsIsEnabled, "biomeRestrictionsIsEnabled");
+            Scribe_Values.Look<float>(ref fishRespawnRateFactor, "fishRespawnRateFactor", 1f);
+            Scribe_Values.Look<float>(ref fishBreedQuantityFactor, "fishBreedQuantityFactor", 1f);
+            Scribe_Values.Look<bool>(ref biomeRestrictionsIsEnabled, "biomeRestrictionsIsEnabled", true);
         }
 
         public static void DoSettingsWindowContents(Rect inRect)
@@ -29,7 +31,9 @@ namespace FishIndustry
             list.ColumnWidth = inRect.width / 2f;
             list.Begin(inRect);
             list.Label("FishIndustry.Settings_FishRespawnRateFactorLabel".Translate(fishRespawnRateFactor.ToString("0.0")), -1f, "FishIndustry.Settings_FishRespawnRateFactorDesc".Translate());
-            fishRespawnRateFactor = list.Slider(fishRespawnRateFactor, 0.1f, 10f);
+            fishRespawnRateFactor = list.Slider(fishBreedQuantityFactor, 0.1f, 10f);
+            list.Label("FishIndustry.Settings_FishBreedQuantityFactorLabel".Translate(fishBreedQuantityFactor.ToString("0.0")), -1f, "FishIndustry.Settings_FishBreedQuantityFactorDesc".Translate());
+            fishRespawnRateFactor = list.Slider(fishBreedQuantityFactor, 0.1f, 10f);
             list.Gap(12f);
             list.CheckboxLabeled("FishIndustry.Settings_BiomeRestrictionLabel".Translate(), ref biomeRestrictionsIsEnabled, "FishIndustry.Settings_BiomeRestrictionDesc".Translate());
             list.End();

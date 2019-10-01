@@ -86,8 +86,10 @@
   <FishIndustry.DesignatorFishingZoneDesc>Create a zone where your colonists will try to fish.</FishIndustry.DesignatorFishingZoneDesc>
 
   <!-- Zone -->
-  <FishIndustry.Settings_FishRespawnRateFactorLabel>Fish respawn rate factor in fishing zone: {0}</FishIndustry.Settings_FishRespawnRateFactorLabel>
-  <FishIndustry.Settings_FishRespawnRateFactorDesc>Adjust the frequency at which fishes appear in fishing zones. Note: there will still be no fish during a toxic fallout!</FishIndustry.Settings_FishRespawnRateFactorDesc>
+  <FishIndustry.Settings_FishRespawnRateFactorLabel>Fish respawn rate factor in fishing zone (default is 1.0): {0}</FishIndustry.Settings_FishRespawnRateFactorLabel>
+  <FishIndustry.Settings_FishRespawnRateFactorDesc>Adjust the frequency at which fishes appear in fishing zones. Low value means less fishes, high value means more fishes. Note: there will still be no fish during a toxic fallout!</FishIndustry.Settings_FishRespawnRateFactorDesc>
+  <FishIndustry.Settings_FishBreedQuantityFactorLabel>Fish breed quantity factor (default is 1.0): {0}</FishIndustry.Settings_FishBreedQuantityFactorLabel>
+  <FishIndustry.Settings_FishBreedQuantityFactorDesc>Adjust the amount of meat you get from aquaculture basins when harvesting fishes. Low value means less meat, high value means more meat.</FishIndustry.Settings_FishBreedQuantityFactorDesc>
   <FishIndustry.Settings_BiomeRestrictionLabel>Enable biome restrictions</FishIndustry.Settings_BiomeRestrictionLabel>
   <FishIndustry.Settings_BiomeRestrictionDesc>When enabled, fishes can only be caught in their native biomes. Disable it to allow fishing in all biomes (especially useful for modded biomes). May need to restart the game to take effect.</FishIndustry.Settings_BiomeRestrictionDesc>
 
