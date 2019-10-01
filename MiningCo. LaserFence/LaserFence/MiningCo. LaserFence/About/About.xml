@@ -3,7 +3,9 @@
 	<name>MiningCo. LaserFence</name>
 	<author>Rikiki</author>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153939#msg153942</url>
-  <supportedVersion>1.0.2150</supportedVersion>
+  <supportedVersions>
+    <li>1.0</li>
+  </supportedVersions>
 	<description>This mod adds the MiningCo. laser fence.
 See the forum thread for content/changelog and related mods. https://ludeon.com/forums/index.php?topic=14711.msg153939#msg153942
   </description>

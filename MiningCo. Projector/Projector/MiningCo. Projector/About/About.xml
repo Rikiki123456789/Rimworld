@@ -3,6 +3,8 @@
 	<name>MiningCo. Projector</name>
 	<author>Rikiki</author>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153946#msg153946</url>
-  <supportedVersion>1.0.2150</supportedVersion>
+  <supportedVersions>
+    <li>1.0</li>
+  </supportedVersions>
 	<description>This mod adds the MiningCo. projector, projector tower and projector turret. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153946#msg153946 </description>
 </ModMetaData>

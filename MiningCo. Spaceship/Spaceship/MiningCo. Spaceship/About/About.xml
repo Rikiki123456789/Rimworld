@@ -3,6 +3,8 @@
 	<name>MiningCo. Spaceship</name>
 	<author>Rikiki</author>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153947</url>
-  <supportedVersion>1.0.2150</supportedVersion>
+  <supportedVersions>
+    <li>1.0</li>
+  </supportedVersions>
 	<description>This mod adds MiningCo. spaceships. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153947 </description>
 </ModMetaData>
