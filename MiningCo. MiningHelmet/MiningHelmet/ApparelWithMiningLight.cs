@@ -28,6 +28,7 @@ namespace MiningHelmet
 
         public const int updatePeriodInTicks = GenTicks.TicksPerRealSecond;
         public int nextUpdateTick = 0;
+        public bool needSynchronization = true;
 
         public Thing light;
         public bool lightIsOn = false;
@@ -42,6 +43,13 @@ namespace MiningHelmet
             Scribe_Values.Look<bool>(ref this.lightIsOn, "lightIsOn");
             Scribe_Values.Look<LightMode>(ref this.lightMode, "lightMode");
             Scribe_Values.Look<int>(ref this.nextUpdateTick, "nextUpdateTick");
+            Scribe_Values.Look<bool>(ref this.needSynchronization, "needSynchronization");
+        }
+
+        public override void SpawnSetup(Map map, bool respawningAfterLoad)
+        {
+            base.SpawnSetup(map, respawningAfterLoad);
+            this.needSynchronization = true;
         }
 
         // ===================== Main function =====================
@@ -60,10 +68,30 @@ namespace MiningHelmet
                 || (Find.TickManager.TicksGame >= this.nextUpdateTick))
             {
                 this.nextUpdateTick = Find.TickManager.TicksGame + updatePeriodInTicks;
+
+                if (this.needSynchronization
+                    && (this.Wearer != null))
+                {
+                    SynchronizeLightMode();
+                    this.needSynchronization = false;
+                }
+
                 RefreshLightState();
             }
         }
 
+        public void SynchronizeLightMode()
+        {
+            for (int apparelIndex = 0; apparelIndex < this.Wearer.apparel.WornApparelCount; apparelIndex++)
+            {
+                if (this.Wearer.apparel.WornApparel[apparelIndex] is ApparelWithMiningLight)
+                {
+                    ApparelWithMiningLight apparel = this.Wearer.apparel.WornApparel[apparelIndex] as ApparelWithMiningLight;
+                    apparel.lightMode = this.lightMode;
+                }
+            }
+        }
+        
         public void RefreshLightState()
         {
             bool lightShouldBeOn = ComputeLightState();
@@ -171,7 +199,7 @@ namespace MiningHelmet
             switch (this.lightMode)
             {
                 case (LightMode.Automatic):
-                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LightModeAutomatic");
+                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LigthModeAutomatic");
                     lightModeButton.defaultLabel = "Light: automatic.";
                     break;
                 case (LightMode.ForcedOn):
