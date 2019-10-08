@@ -77,6 +77,8 @@ namespace DrillTurret
                 this.turretTopRotation = this.Rotation.AsAngle;
             }
 
+            this.powerComp.powerStoppedAction = OnPoweredOff;
+
             turretTopMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), turretTopScale);
         }
 
@@ -129,7 +131,6 @@ namespace DrillTurret
             const float baseWeight = 0.25f;
             const float operatorWeight = 0.5f;
             const float researchWeight = 0.25f;
-            const float noPowerFactor = 0.5f;
 
             float drillEfficiency = baseWeight;
 
@@ -141,10 +142,6 @@ namespace DrillTurret
             if (Util_DrillTurret.researchDrillTurretEfficientDrillingDef.IsFinished)
             {
                 drillEfficiency += researchWeight;
-            }
-            if (powerComp.PowerOn == false)
-            {
-                drillEfficiency *= noPowerFactor;
             }
 
             return drillEfficiency;
@@ -160,6 +157,11 @@ namespace DrillTurret
         public override void Tick()
         {
             base.Tick();
+
+            if (this.powerComp.PowerOn == false)
+            {
+                return;
+            }
 
             if (Find.TickManager.TicksGame >= this.nextUpdateTick)
             {
@@ -196,6 +198,14 @@ namespace DrillTurret
         }
 
         // ===================== Utility Function =====================
+        /// <summary>
+        /// Action when powered off.
+        /// </summary>
+        public void OnPoweredOff()
+        {
+            ResetTarget();
+        }
+
         /// <summary>
         /// Look for a valid target to drill: ore deposit or natural wall to mine within direct line of sight.
         /// </summary>
@@ -493,7 +503,10 @@ namespace DrillTurret
             base.Draw();
             this.turretTopMatrix.SetTRS(base.DrawPos + 1.1f * Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), this.turretTopScale);
             Graphics.DrawMesh(MeshPool.plane10, this.turretTopMatrix, turretTopOnTexture, 0);
-            Graphics.DrawMesh(MeshPool.plane10, this.laserBeamMatrix, laserBeamTexture, 0);
+            if (this.powerComp.PowerOn)
+            {
+                Graphics.DrawMesh(MeshPool.plane10, this.laserBeamMatrix, laserBeamTexture, 0);
+            }
 
             if (Find.Selector.IsSelected(this)
                 && (this.targetPosition.IsValid))
