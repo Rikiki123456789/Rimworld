@@ -29,7 +29,6 @@ namespace MobileMineralSonar
         public const float enhancedDetectionChance = 0.4f;
         public static float detectionChance = baseDetectionChance;
 
-        public const int powerConsumption = 3000;
         public int scanRange = 1;
         public int scanProgress = 0;
         private const int scanProgressThresholdPerCell = 1000;
@@ -133,7 +132,12 @@ namespace MobileMineralSonar
         {
             base.Tick();            
             PerformScanUpdate();
-            ThrowFlash();
+
+            if (Find.TickManager.TicksGame >= this.nextFlashTick)
+            {
+                this.nextFlashTick = Find.TickManager.TicksGame + flashPeriodInSeconds * GenTicks.TicksPerRealSecond * (int)Find.TickManager.CurTimeSpeed;
+                ThrowFlash();
+            }
         }
                 
         /// <summary>
@@ -207,20 +211,16 @@ namespace MobileMineralSonar
         }
         public void ThrowFlash()
         {
-            if (Find.TickManager.TicksGame >= this.nextFlashTick)
+            if (!this.Position.ShouldSpawnMotesAt(this.Map) || this.Map.moteCounter.SaturatedLowPriority)
             {
-                if (!this.Position.ShouldSpawnMotesAt(this.Map) || this.Map.moteCounter.SaturatedLowPriority)
-                {
-                    return;
-                }
-                MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
-                moteThrown.Scale = 5f;
-                moteThrown.rotationRate = Rand.Range(-3f, 3f);
-                moteThrown.exactPosition = this.Position.ToVector3Shifted();
-                moteThrown.SetVelocity((float)Rand.Range(0, 360), 1.2f);
-                GenSpawn.Spawn(moteThrown, this.Position, this.Map);
-                this.nextFlashTick = Find.TickManager.TicksGame + flashPeriodInSeconds * GenTicks.TicksPerRealSecond * (int)Find.TickManager.CurTimeSpeed;
+                return;
             }
+            MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
+            moteThrown.Scale = 5f;
+            moteThrown.rotationRate = Rand.Range(-3f, 3f);
+            moteThrown.exactPosition = this.Position.ToVector3Shifted();
+            moteThrown.SetVelocity((float)Rand.Range(0, 360), 1.2f);
+            GenSpawn.Spawn(moteThrown, this.Position, this.Map);
         }
 
         public override void Draw()
