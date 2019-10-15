@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Weapons</RootNamespace>
+    <AssemblyName>MiningCo. Weapons</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp, Version=1.0.6829.29621, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\RimWorld1-0-2282Win64\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\RimWorld1-0-2282Win64\RimWorldWin64_Data\Managed\UnityEngine.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ThingDef_LaserProjectile.cs" />
+    <Compile Include="Projectile_Laser.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MiningCo. Weapons\About\About.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Weapons\Defs\ThingDefs_Misc\Weapons\RangedIndustrial.xml" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\BigLaserRayFiringBlue.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\EnergyBall.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\MediumLaserRayFiringRed.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringBlue.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringCyan.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringGreen.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringOrange.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringPink.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringRed.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringViolet.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\PrismRifle\SmallLaserRayFiringYellow.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\SpotRed.png" />
+    <Content Include="MiningCo. Weapons\Textures\Effects\TinyLaserRayFiringRed.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Building\SecurityWorkbench.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\HeavyLasgun.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\HighPrecisionLasgun.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\LaserGatling.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\LaserRifle.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\PrismRifle.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\Viperlol original textures\GatlingLazer.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\Viperlol original textures\HeavyLasgun.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Equipment\Viperlol original textures\LaserSniper.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Resource\Crysteel.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Resource\TargetingModule.png" />
+    <Content Include="MiningCo. Weapons\Textures\Things\Item\Resource\WeaponParts.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MiningCo. Weapons\Assemblies\" />
+    <Folder Include="MiningCo. Weapons\Textures\Things\Projectile\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MiningCo. Weapons\Textures\Effects\EnergyBall.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Building\SecurityWorkbench.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Building\SecurityWorkbench.psd" />
+    <None Include="MiningCo. Weapons\Textures\Things\Item\Equipment\HeavyLasgun.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Item\Equipment\HighPrecisionLasgun.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Item\Equipment\LaserGatling.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Item\Equipment\PrismRifle.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Item\Resource\Crysteel.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Item\Resource\TargetingModule.pdn" />
+    <None Include="MiningCo. Weapons\Textures\Things\Item\Resource\WeaponParts.pdn" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Weapons\Assemblies"
+xcopy /Y /i /s "$(ProjectDir)\MiningCo. Weapons" "C:\Temp2\RimWorld1-0-2282Win64\Mods\MiningCo. Weapons"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

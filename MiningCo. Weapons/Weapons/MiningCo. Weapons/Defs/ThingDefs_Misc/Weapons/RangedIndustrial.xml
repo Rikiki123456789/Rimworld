@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- ================================= Industrial ==================================== -->
+
+  <ThingDef ParentName="BaseHumanMakeableGun">
+    <defName>Gun_LaserRifle</defName>
+    <label>laser rifle</label>
+    <description>A high-tech laser rifle. Medium firing rate but has a good range and precision.</description>
+    <graphicData>
+      <texPath>Things/Item/Equipment/WeaponRanged/LaserRifle</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Interact_Rifle</soundInteract>
+    <recipeMaker>
+      <researchPrerequisite>PrecisionRifling</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>6</Crafting>
+      </skillRequirements>
+    </recipeMaker>
+    <statBases>
+      <WorkToMake>42000</WorkToMake>
+      <Mass>3.5</Mass>
+      <AccuracyTouch>0.65</AccuracyTouch>
+      <AccuracyShort>0.75</AccuracyShort>
+      <AccuracyMedium>0.73</AccuracyMedium>
+      <AccuracyLong>0.67</AccuracyLong>
+      <RangedWeapon_Cooldown>1.70</RangedWeapon_Cooldown>
+    </statBases>
+    <costList>
+      <Steel>40</Steel>
+      <Plasteel>20</Plasteel>
+      <ComponentSpacer>8</ComponentSpacer>
+    </costList>
+    <verbs>
+      <li>
+        <verbClass>Verb_Shoot</verbClass>
+        <hasStandardCommand>true</hasStandardCommand>
+        <defaultProjectile>LaserRifleProjectile</defaultProjectile>
+        <warmupTime>1.0</warmupTime>
+        <range>30.9</range>
+        <burstShotCount>3</burstShotCount>
+        <ticksBetweenBurstShots>10</ticksBetweenBurstShots>
+        <soundCast>Shot_LaserRifle</soundCast>
+      </li>
+    </verbs>
+    <weaponTags>
+      <li>SpacerGun</li>
+    </weaponTags>
+    <tools>
+      <li>
+        <label>stock</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+      <li>
+        <label>barrel</label>
+        <capacities>
+          <li>Blunt</li>
+          <li>Poke</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>2</cooldownTime>
+      </li>
+    </tools>
+  </ThingDef>
+  <ThingDef ParentName="BaseBullet" Class="Weapons.ThingDef_LaserProjectile">
+    <defName>LaserRifleProjectile</defName>
+    <label>A medium laser ray for a laser rifle.</label>
+    <thingClass>Weapons.Projectile_Laser</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Laser_Medium_Red</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>false</flyOverhead>
+      <damageDef>Bullet</damageDef>
+      <damageAmountBase>13</damageAmountBase>
+      <stoppingPower>0.5</stoppingPower>
+      <speed>1000</speed>
+    </projectile>
+
+    <!-- Projectile_Laser.ThingDef_LaserProjectile parameters -->
+    <preFiringDuration>7</preFiringDuration>
+    <postFiringDuration>23</postFiringDuration>
+  </ThingDef>
+
+</Defs>

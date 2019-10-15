@@ -1,7 +1,9 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual C# Express 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weapons", "Weapons\Weapons.csproj", "{2F2F16BD-BD92-4172-ABC7-08C832751DEA}"
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MiningCo. Weapons", "Weapons\MiningCo. Weapons.csproj", "{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -9,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2F2F16BD-BD92-4172-ABC7-08C832751DEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2F2F16BD-BD92-4172-ABC7-08C832751DEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2F2F16BD-BD92-4172-ABC7-08C832751DEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2F2F16BD-BD92-4172-ABC7-08C832751DEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C575BBF-73CA-4850-A98E-671ECD0B7B0E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
