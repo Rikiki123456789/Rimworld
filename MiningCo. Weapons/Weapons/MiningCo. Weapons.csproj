@@ -48,6 +48,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Projectile_LaserDrawer.cs" />
     <Compile Include="ThingDef_LaserProjectile.cs" />
     <Compile Include="Projectile_Laser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -56,6 +57,7 @@
     <Content Include="MiningCo. Weapons\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. Weapons\Defs\ThingDefs_Misc\Things_Special.xml" />
     <Content Include="MiningCo. Weapons\Defs\ThingDefs_Misc\Weapons\RangedIndustrial.xml" />
     <Content Include="MiningCo. Weapons\Textures\Effects\BigLaserRayFiringBlue.png" />
     <Content Include="MiningCo. Weapons\Textures\Effects\EnergyBall.png" />

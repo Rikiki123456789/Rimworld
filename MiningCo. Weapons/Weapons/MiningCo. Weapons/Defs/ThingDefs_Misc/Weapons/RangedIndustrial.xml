@@ -21,10 +21,10 @@
     <statBases>
       <WorkToMake>42000</WorkToMake>
       <Mass>3.5</Mass>
-      <AccuracyTouch>0.65</AccuracyTouch>
-      <AccuracyShort>0.75</AccuracyShort>
-      <AccuracyMedium>0.73</AccuracyMedium>
-      <AccuracyLong>0.67</AccuracyLong>
+      <AccuracyTouch>0.62</AccuracyTouch>
+      <AccuracyShort>0.72</AccuracyShort>
+      <AccuracyMedium>0.69</AccuracyMedium>
+      <AccuracyLong>0.60</AccuracyLong>
       <RangedWeapon_Cooldown>1.70</RangedWeapon_Cooldown>
     </statBases>
     <costList>
@@ -69,7 +69,7 @@
   </ThingDef>
   <ThingDef ParentName="BaseBullet" Class="Weapons.ThingDef_LaserProjectile">
     <defName>LaserRifleProjectile</defName>
-    <label>A medium laser ray for a laser rifle.</label>
+    <label>laser ray</label>
     <thingClass>Weapons.Projectile_Laser</thingClass>
     <graphicData>
       <texPath>Things/Projectile/Laser_Medium_Red</texPath>
@@ -80,7 +80,7 @@
       <damageDef>Bullet</damageDef>
       <damageAmountBase>13</damageAmountBase>
       <stoppingPower>0.5</stoppingPower>
-      <speed>1000</speed>
+      <speed>50</speed>
     </projectile>
 
     <!-- Projectile_Laser.ThingDef_LaserProjectile parameters -->
