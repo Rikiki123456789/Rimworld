@@ -29,7 +29,7 @@ namespace FishIndustry
         /// - the rest of the fishing pier and the fishing spot must be on water.
         /// - must not be too near another fishing pier.
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
         {
             // Remove old fish stock respawn rate text mote.
             if (lastMotePosition.IsValid
@@ -92,7 +92,7 @@ namespace FishIndustry
             return true;
         }
 
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
         {
             base.DrawGhost(def, center, rot, ghostCol);
             SimpleColor circleColor = SimpleColor.Red;

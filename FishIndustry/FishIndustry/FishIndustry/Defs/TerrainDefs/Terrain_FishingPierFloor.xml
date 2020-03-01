@@ -9,7 +9,9 @@
     <edgeType>Water</edgeType>
     <renderPrecedence>392</renderPrecedence>
     <pathCost>0</pathCost>
-    <acceptFilth>false</acceptFilth>
+    <filthAcceptanceMask>
+      <li>None</li>
+    </filthAcceptanceMask>
     <fertility>0</fertility>
     <avoidWander>false</avoidWander>
     <changeable>false</changeable>
@@ -28,7 +30,9 @@
     <renderPrecedence>326</renderPrecedence>
     <pathCost>0</pathCost>
     <fertility>0</fertility>
-    <acceptFilth>false</acceptFilth>
+    <filthAcceptanceMask>
+      <li>None</li>
+    </filthAcceptanceMask>
     <avoidWander>false</avoidWander>
     <changeable>false</changeable>
     <holdSnow>true</holdSnow>

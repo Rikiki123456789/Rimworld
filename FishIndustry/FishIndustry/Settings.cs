@@ -31,9 +31,9 @@ namespace FishIndustry
             list.ColumnWidth = inRect.width / 2f;
             list.Begin(inRect);
             list.Label("FishIndustry.Settings_FishRespawnRateFactorLabel".Translate(fishRespawnRateFactor.ToString("0.0")), -1f, "FishIndustry.Settings_FishRespawnRateFactorDesc".Translate());
-            fishRespawnRateFactor = list.Slider(fishBreedQuantityFactor, 0.1f, 10f);
+            fishRespawnRateFactor = list.Slider(fishRespawnRateFactor, 0.1f, 100f);
             list.Label("FishIndustry.Settings_FishBreedQuantityFactorLabel".Translate(fishBreedQuantityFactor.ToString("0.0")), -1f, "FishIndustry.Settings_FishBreedQuantityFactorDesc".Translate());
-            fishRespawnRateFactor = list.Slider(fishBreedQuantityFactor, 0.1f, 10f);
+            fishBreedQuantityFactor = list.Slider(fishBreedQuantityFactor, 0.1f, 100f);
             list.Gap(12f);
             list.CheckboxLabeled("FishIndustry.Settings_BiomeRestrictionLabel".Translate(), ref biomeRestrictionsIsEnabled, "FishIndustry.Settings_BiomeRestrictionDesc".Translate());
             list.End();
