@@ -2,9 +2,10 @@
 <ModMetaData>
 	<name>MiningCo. Alert speaker</name>
 	<author>Rikiki</author>
+  <packageId>Rikiki.MiningCo.AlertSpeaker</packageId>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153941#msg153941</url>
   <supportedVersions>
-    <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
-	<description>This mod adds the MiningCo. alert speaker. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153941#msg153941 </description>
+	<description>This mod adds the MiningCo. alert speaker to boost your colonists in case of alert. https://ludeon.com/forums/index.php?topic=14711.msg153941#msg153941 </description>
 </ModMetaData>

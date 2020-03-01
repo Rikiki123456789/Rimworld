@@ -63,6 +63,9 @@ namespace AlertSpeaker
 
             this.glowerComp = this.GetComp<CompGlower>();
             this.powerComp = this.GetComp<CompPowerTrader>();
+
+            // Reset nextUpdateTick as it is static (in case of reloading for example).
+            nextUpdateTick = Find.TickManager.TicksGame + updatePeriodInTicks;
         }
 
         /// <summary>
@@ -488,14 +491,14 @@ namespace AlertSpeaker
             if (soundIsEnabled)
             {
                 soundActivationButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundEnabled");
-                soundActivationButton.defaultDesc = "Disable siren sound.";
-                soundActivationButton.defaultLabel = "Disable siren sound for all alert speakers.";
+                soundActivationButton.defaultLabel = "Disable sound";
+                soundActivationButton.defaultDesc = "Click to disable siren sound for all alert speakers.";
             }
             else
             {
                 soundActivationButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SirenSoundDisabled");
-                soundActivationButton.defaultDesc = "Activate siren sound.";
-                soundActivationButton.defaultLabel = "Enable siren sound for all alert speakers.";
+                soundActivationButton.defaultLabel = "Enable sound";
+                soundActivationButton.defaultDesc = "Click to enable siren sound for all alert speakers.";
             }
             soundActivationButton.activateSound = SoundDef.Named("Click");
             soundActivationButton.action = new Action(PerformSirenSoundAction);
