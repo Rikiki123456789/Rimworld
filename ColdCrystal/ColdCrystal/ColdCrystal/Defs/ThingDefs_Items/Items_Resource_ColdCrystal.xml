@@ -32,7 +32,7 @@
         <glowColor>(44,177,244,0)</glowColor>
       </li>
       <li Class="CompProperties_HeatPusher">
-        <heatPerSecond>-1</heatPerSecond>
+        <heatPerSecond>-4</heatPerSecond>
         <heatPushMinTemperature>-15</heatPushMinTemperature>
       </li>
     </comps>

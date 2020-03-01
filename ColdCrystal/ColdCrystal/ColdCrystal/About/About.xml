@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
-    <name>ColdCrystal</name>
-    <author>Rikiki</author>
-    <url>https://github.com/Rikiki123456789/Rimworld</url>
-    <supportedVersions>
-        <li>1.0</li>
-    </supportedVersions>
-    <description>This mod adds cold crystal. A glowing minable stone that can be used to light rooms. It also seems to absorb some heat. See the forum thread for content/changelog and related mods. https://ludeon.com/forums/index.php?topic=13172.msg133449#msg133449 </description>
+  <name>ColdCrystal</name>
+  <author>Rikiki</author>
+  <packageId>Rikiki.ColdCrystal</packageId>
+  <url>https://ludeon.com/forums/index.php?topic=13172.msg133451#msg133451</url>
+  <supportedVersions>
+    <li>1.1</li>
+  </supportedVersions>
+  <description>This mod adds cold crystal. A glowing minable stone that can be used to light rooms. It also seems to absorb some heat. See the forum thread for content/changelog and related mods. https://ludeon.com/forums/index.php?topic=13172.msg133449#msg133451 </description>
 </ModMetaData>
