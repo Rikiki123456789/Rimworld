@@ -645,8 +645,8 @@ namespace ForceField
                     stateAsString = "offline";
                     break;
                 case ForceFieldState.Initializing:
-                    int initializationProgressinPercent = Mathf.RoundToInt(((float)this.initializationElapsedTimeInTicks / (float)this.properties.initializationDurationInTicks) * 100f);
-                    stateAsString = "initializing (" + initializationProgressinPercent + " %)";
+                    int initializationProgressInPercent = Mathf.RoundToInt(((float)this.initializationElapsedTimeInTicks / (float)this.properties.initializationDurationInTicks) * 100f);
+                    stateAsString = "initializing (" + initializationProgressInPercent + " %)";
                     break;
                 case ForceFieldState.Charging:
                     stateAsString = "charging";

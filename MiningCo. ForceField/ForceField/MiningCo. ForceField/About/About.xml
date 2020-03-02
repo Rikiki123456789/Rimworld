@@ -2,9 +2,10 @@
 <ModMetaData>
 	<name>MiningCo. ForceField</name>
 	<author>Rikiki</author>
-	<url>https://ludeon.com/forums/index.php?topic=14711.msg153943</url>
+  <packageId>Rikiki.MiningCo.ForceField</packageId>
+	<url>https://ludeon.com/forums/index.php?topic=14711.msg153943#msg153943</url>
   <supportedVersions>
-    <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
-	<description>This mod adds the MiningCo. ForceField. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153943 </description>
+	<description>This mod adds the MiningCo. ForceField.</description>
 </ModMetaData>

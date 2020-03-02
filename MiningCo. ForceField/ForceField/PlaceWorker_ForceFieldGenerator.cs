@@ -25,7 +25,7 @@ namespace ForceField
         /// Checks if a new force field generator can be built at this location.
         /// - must not be too near from another force field generator (or it would perturb other fields).
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
         {
             // Check if another force field generator is not too close.
             List<Thing> forceFieldGeneratorList = new List<Thing>();
@@ -53,11 +53,15 @@ namespace ForceField
                 }
             }
 
-            // Display effect zone.
-            List<IntVec3> coveredCells = Building_ForceFieldGenerator.GetCoveredCells(loc, rot);
-            GenDraw.DrawFieldEdges(coveredCells);
-
             return true;
+        }
+
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
+        {
+            base.DrawGhost(def, center, rot, ghostCol, thing);
+            // Display effect zone.
+            List<IntVec3> coveredCells = Building_ForceFieldGenerator.GetCoveredCells(center, rot);
+            GenDraw.DrawFieldEdges(coveredCells);
         }
     }
 }
