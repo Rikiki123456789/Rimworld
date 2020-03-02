@@ -4,7 +4,7 @@
   <ThingDef ParentName="BuildingBase">
     <defName>DrillTurret</defName>
     <label>drill turret</label>
-    <description>An advanced automated turret. Can drill nearby ores and designated rocks. Drilling efficiency can be improved by powering and operating it.</description>
+    <description>An advanced automated turret. Can slowly drill nearby ores and designated rocks in automated mode. Drilling efficiency can be greatly improved by operating it.</description>
     <thingClass>DrillTurret.Building_DrillTurret</thingClass>
     <graphicData>
       <texPath>Things/Building/Security/TurretMini_Base</texPath>

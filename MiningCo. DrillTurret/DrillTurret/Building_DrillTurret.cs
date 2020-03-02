@@ -34,10 +34,13 @@ namespace DrillTurret
         // Components references.
         public CompPowerTrader powerComp;
 
-        // Drill efficiency.
+        // Operator drill efficiency.
         public bool isManned = false;
         public float operatorEfficiency = 0f;
         public int drillEfficiencyInPercent = 0;
+        public const int drillPeriodInTicks = 30;
+        public int nextDrillTick = 0;
+        public int drillDamageAmount = 0;
 
         // Other.
         public IntVec3 targetPosition = IntVec3.Invalid;
@@ -129,7 +132,7 @@ namespace DrillTurret
         public float ComputeDrillEfficiency()
         {
             const float baseWeight = 0.25f;
-            const float operatorWeight = 0.5f;
+            const float operatorWeight = 0.50f;
             const float researchWeight = 0.25f;
 
             float drillEfficiency = baseWeight;
@@ -143,7 +146,7 @@ namespace DrillTurret
             {
                 drillEfficiency += researchWeight;
             }
-
+            drillEfficiency = Mathf.Clamp01(drillEfficiency);
             return drillEfficiency;
         }
 
@@ -186,12 +189,18 @@ namespace DrillTurret
                 // Compute drill efficiency.
                 float drillEfficiency = ComputeDrillEfficiency();
                 this.drillEfficiencyInPercent = Mathf.RoundToInt(Mathf.Clamp(drillEfficiency * 100f, 0f, 100f));
+
+                this.drillDamageAmount = Mathf.CeilToInt(Mathf.Lerp(0f, 100f, drillEfficiency));
+
+                if (this.targetPosition.IsValid)
+                {
+                    DrillRock();
+                }
             }
 
             if (this.targetPosition.IsValid)
             {
-                // Drill and maintain effecter.
-                DrillRock();
+                // Maintain effecter.
                 StartOrMaintainLaserDrillEffecter();
             }
             ComputeDrawingParameters();
@@ -284,50 +293,45 @@ namespace DrillTurret
         }
 
         /// <summary>
-        /// Rotate turret top or drill.
+        /// Drill a rock and spawn some ore at the end.
         /// </summary>
         public void DrillRock()
         {
-            const float researchUnfinishedFactor = 0.75f;
-            const int damagePerTick = 4;
+            const float researchUnfinishedOreQuantityFactor = 0.75f;
             Building rock = this.targetPosition.GetEdifice(this.Map);
             if (rock != null)
             {
                 // Drill rock.
-                if ((this.drillEfficiencyInPercent == 100)
-                    || ((Find.TickManager.TicksGame % 100) <= this.drillEfficiencyInPercent))
+                if (rock.HitPoints > this.drillDamageAmount)
                 {
-                    if (rock.HitPoints > damagePerTick)
+                    // Only damage rock.
+                    rock.TakeDamage(new DamageInfo(DamageDefOf.Mining, this.drillDamageAmount));
+                }
+                else
+                {
+                    // Drill is finished.
+                    if (rock.def.building.isResourceRock
+                        && (rock.def.building.mineableThing != null))
                     {
-                        // Only damage rock.
-                        rock.TakeDamage(new DamageInfo(DamageDefOf.Mining, damagePerTick));
+                        int oreQuantity = rock.def.building.mineableYield;
+                        if (Util_DrillTurret.researchDrillTurretEfficientDrillingDef.IsFinished == false)
+                        {
+                            oreQuantity = Mathf.RoundToInt((float)oreQuantity * researchUnfinishedOreQuantityFactor);
+                        }
+                        Thing ore = ThingMaker.MakeThing(rock.def.building.mineableThing);
+                        ore.stackCount = oreQuantity;
+                        GenSpawn.Spawn(ore, rock.Position, this.Map);
+                        rock.Destroy(DestroyMode.Vanish);
                     }
                     else
                     {
-                        // Drill is finsihed.
-                        if (rock.def.building.isResourceRock
-                            && (rock.def.building.mineableThing != null))
-                        {
-                            int oreQuantity = rock.def.building.mineableYield;
-                            if (Util_DrillTurret.researchDrillTurretEfficientDrillingDef.IsFinished == false)
-                            {
-                                oreQuantity = Mathf.RoundToInt((float)oreQuantity * researchUnfinishedFactor);
-                            }
-                            Thing ore = ThingMaker.MakeThing(rock.def.building.mineableThing);
-                            ore.stackCount = oreQuantity;
-                            GenSpawn.Spawn(ore, rock.Position, this.Map);
-                            rock.Destroy(DestroyMode.Vanish);
-                        }
-                        else
-                        {
-                            rock.Destroy(DestroyMode.KillFinalize);
-                        }
+                        rock.Destroy(DestroyMode.KillFinalize);
                     }
-                    if (rock.DestroyedOrNull())
-                    {
-                        ResetTarget();
-                        LookForNewTarget(out this.targetPosition);
-                    }
+                }
+                if (rock.DestroyedOrNull())
+                {
+                    ResetTarget();
+                    LookForNewTarget(out this.targetPosition);
                 }
             }
         }
@@ -378,16 +382,16 @@ namespace DrillTurret
             switch (this.miningMode)
             {
                 case (MiningMode.Ores):
-                    miningModeButton.defaultLabel = "Mining mode: ORES";
-                    miningModeButton.defaultDesc = "Mining mode: ORES. In this mode, the mining turret automatically drill nearby ores.";
+                    miningModeButton.defaultLabel = "Ores only";
+                    miningModeButton.defaultDesc = "In this mode, the mining turret only drill nearby ores. Click to switch mode.";
                     break;
                 case (MiningMode.OresAndRocks):
-                    miningModeButton.defaultLabel = "Mining mode: ORES and ROCKS";
-                    miningModeButton.defaultDesc = "Mining mode: ORES and ROCKS. In this mode, the mining turret automatically drill nearby ores and designated rocks.";
+                    miningModeButton.defaultLabel = "Ores and rocks";
+                    miningModeButton.defaultDesc = "In this mode, the mining turret automatically drill nearby ores and designated rocks. Click to switch mode.";
                     break;
                 case (MiningMode.Rocks):
-                    miningModeButton.defaultLabel = "Mining mode: ROCKS";
-                    miningModeButton.defaultDesc = "Mining mode: ROCKS. In this mode, the mining turret automatically drill nearby designated rocks.";
+                    miningModeButton.defaultLabel = "Rocks only";
+                    miningModeButton.defaultDesc = "In this mode, the mining turret only drill nearby designated rocks. Click to switch mode.";
                     break;
             }
             miningModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SwitchMode");
@@ -484,14 +488,14 @@ namespace DrillTurret
                 turretTargetVector.y = 0f;
                 this.laserBeamScale.z = turretTargetVector.magnitude - 0.8f;
                 Vector3 positionOffset = turretTargetVector / 2f;
-                laserBeamMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
+                laserBeamMatrix.SetTRS(base.DrawPos + new Vector3(0f, Altitudes.AltitudeFor(AltitudeLayer.Projectile), 0f) + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
             }
             else
             {
                 // Idle laser beam.
                 this.laserBeamScale.z = 1.5f;
                 Vector3 positionOffset = new Vector3(0f, 0f, this.laserBeamScale.z / 2f).RotatedBy(this.turretTopRotation);
-                laserBeamMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
+                laserBeamMatrix.SetTRS(base.DrawPos + new Vector3(0f, Altitudes.AltitudeFor(AltitudeLayer.Projectile), 0f) + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
             }
         }
 
@@ -501,21 +505,11 @@ namespace DrillTurret
         public override void Draw()
         {
             base.Draw();
-            this.turretTopMatrix.SetTRS(base.DrawPos + 1.1f * Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), this.turretTopScale);
+            this.turretTopMatrix.SetTRS(base.DrawPos + new Vector3(0f, Altitudes.AltitudeFor(AltitudeLayer.Projectile), 0f) + Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), this.turretTopScale);
             Graphics.DrawMesh(MeshPool.plane10, this.turretTopMatrix, turretTopOnTexture, 0);
             if (this.powerComp.PowerOn)
             {
                 Graphics.DrawMesh(MeshPool.plane10, this.laserBeamMatrix, laserBeamTexture, 0);
-            }
-
-            if (Find.Selector.IsSelected(this)
-                && (this.targetPosition.IsValid))
-            {
-                Vector3 lineOrigin = this.TrueCenter();
-                Vector3 lineTarget = this.targetPosition.ToVector3Shifted();
-                lineTarget.y = Altitudes.AltitudeFor(AltitudeLayer.MetaOverlays);
-                lineOrigin.y = lineTarget.y;
-                GenDraw.DrawLineBetween(lineOrigin, lineTarget, targetLineTexture);
             }
         }
 

@@ -18,8 +18,8 @@
 
   <ResearchProjectDef>
     <defName>ResearchDrillTurretEfficientDrilling</defName>
-    <label>drill turret: efficient drilling</label>
-    <description>Improve drilling efficiency of drill turret (+25%) and do not waste resources during drilling.</description>
+    <label>efficient drilling</label>
+    <description>Increase drill turret efficiency (+25%) and avoid ore resources waste.</description>
     <techLevel>Industrial</techLevel>
     <baseCost>1000</baseCost>
     <prerequisites>

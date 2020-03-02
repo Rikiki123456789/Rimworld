@@ -2,9 +2,10 @@
 <ModMetaData>
 	<name>MiningCo. DrillTurret</name>
 	<author>Rikiki</author>
+  <packageId>Rikiki.MiningCo.DrillTurret</packageId>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153946</url>
   <supportedVersions>
-    <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
-	<description>This mod adds the MiningCo. drill turret. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153947 </description>
+	<description>This mod adds the MiningCo. drill turret. https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153947 </description>
 </ModMetaData>
