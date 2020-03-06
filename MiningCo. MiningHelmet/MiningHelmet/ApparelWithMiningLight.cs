@@ -199,19 +199,19 @@ namespace MiningHelmet
             switch (this.lightMode)
             {
                 case (LightMode.Automatic):
-                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LigthModeAutomatic");
-                    lightModeButton.defaultLabel = "Light: automatic.";
+                    lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LightModeAutomatic");
+                    lightModeButton.defaultLabel = "Light: automatic";
                     break;
                 case (LightMode.ForcedOn):
                     lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LightModeForcedOn");
-                    lightModeButton.defaultLabel = "Light: on.";
+                    lightModeButton.defaultLabel = "Light: on";
                     break;
                 case (LightMode.ForcedOff):
                     lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_LightModeForcedOff");
-                    lightModeButton.defaultLabel = "Light: off.";
+                    lightModeButton.defaultLabel = "Light: off";
                     break;
             }
-            lightModeButton.defaultDesc = "Switch mode.";
+            lightModeButton.defaultDesc = "Click to switch mode.";
             lightModeButton.activateSound = SoundDef.Named("Click");
             lightModeButton.action = new Action(SwitchLightMode);
             lightModeButton.groupKey = groupKeyBase + 1;
