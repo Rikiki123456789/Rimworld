@@ -29,5 +29,14 @@ namespace PowerFist
                 return DefDatabase<DamageDef>.GetNamed("Electric");
             }
         }
+
+        // Crush mote.
+        public static ThingDef CrushMoteDef
+        {
+            get
+            {
+                return DefDatabase<ThingDef>.GetNamed("Mote_Crush");
+            }
+        }
     }
 }

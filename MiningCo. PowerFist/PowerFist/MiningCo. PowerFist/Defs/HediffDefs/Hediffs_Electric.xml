@@ -4,6 +4,7 @@
   <HediffDef ParentName="InjuryBase">
 		<defName>Electric</defName>
 		<label>electrocution</label>
+    <description>An electrical burn.</description>
     <comps>
       <li Class="HediffCompProperties_TendDuration">
         <labelTendedWell>bandaged</labelTendedWell>

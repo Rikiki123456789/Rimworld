@@ -6,6 +6,7 @@ using System.Text;
 using UnityEngine;
 using Verse;
 using Verse.Noise;
+using Verse.AI;
 using RimWorld;
 using RimWorld.Planet;
 
@@ -40,27 +41,43 @@ namespace PowerFist
             if ((this.repelTicks >= this.repelDurationInTicks)
                 || (this.targetPawn.Dead))
             {
-                if (this.targetPawn.Dead == false)
-                {
-                    // Avoid teleportation when the stun ends.
-                    this.targetPawn.pather.ResetToCurrentPosition();
-                }
                 this.Destroy();
             }
             else
             {
                 // Repel the pawn.
                 float repelProgress = this.repelTicks / this.repelDurationInTicks;
-                IntVec3 offset = new IntVec3(Mathf.RoundToInt((float)(this.repelVector.x) * this.repelDistance * repelProgress), 0, Mathf.RoundToInt((float)(this.repelVector.z) * this.repelDistance * repelProgress));
-                this.targetPawn.Position = this.initialRepelPosition + offset;
-
-                // Stagger pawns on the path.
-                Pawn pawn = this.targetPawn.Position.GetFirstPawn(this.Map);
-                if (pawn != null)
+                IntVec3 newPosition = this.initialRepelPosition + new IntVec3(Mathf.RoundToInt((float)(this.repelVector.x) * this.repelDistance * repelProgress), 0, Mathf.RoundToInt((float)(this.repelVector.z) * this.repelDistance * repelProgress));
+                if (newPosition != this.targetPawn.Position)
                 {
-                    pawn.stances.StaggerFor(2 * GenTicks.TicksPerRealSecond);
-                }
+                    this.targetPawn.Position = newPosition;
+                    
+                    // Stagger pawns on the path.
+                    foreach (Thing thing in this.targetPawn.Position.GetThingList(this.targetPawn.Map))
+                    {
+                        if (thing is Pawn)
+                        {
+                            Pawn pawn = thing as Pawn;
+                            if (pawn != this.targetPawn)
+                            {
+                                pawn.stances.StaggerFor(2 * GenTicks.TicksPerRealSecond);
+                            }
+                        }
+                    }
 
+                    // Avoid teleportation when the stun ends.
+                    this.targetPawn.pather.ResetToCurrentPosition();
+
+                    // If pawn is just waiting, reset job so previous cell is free to move for another pawn.
+                    if ((this.targetPawn.CurJob != null)
+                        && (this.targetPawn.CurJob.def == JobDefOf.Wait_Combat))
+                    {
+                        this.targetPawn.Map.pawnDestinationReservationManager.ReleaseAllClaimedBy(this.targetPawn);
+                        this.targetPawn.pather.StopDead();
+                        this.targetPawn.jobs.EndCurrentJob(JobCondition.InterruptForced);
+                    }
+                }
+                
                 // Generate some dust.
                 MoteMaker.ThrowDustPuff(this.targetPawn.DrawPos, this.Map, 1f);
             }
