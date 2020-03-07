@@ -18,7 +18,7 @@ namespace LaserFence
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class PlaceWorker_LaserFencePylon : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
         {
             Map currentMap = Find.CurrentMap;
 

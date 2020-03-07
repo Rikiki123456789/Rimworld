@@ -48,7 +48,7 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
       <Steel>30</Steel>
     </costList>
     <hasInteractionCell>true</hasInteractionCell>
-    <interactionCellOffset>(-1,0,-1)</interactionCellOffset>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
     <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
     <designationCategory>Security</designationCategory>
     <comps>
@@ -63,6 +63,7 @@ Warning! Always wear safety glasses before any maintenance operation. Local wild
     <researchPrerequisites>
       <li>ResearchLaserFence</li>
     </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
   </ThingDef>
 
   <ThingDef ParentName="BuildingBase">

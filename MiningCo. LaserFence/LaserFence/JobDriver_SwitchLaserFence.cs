@@ -27,15 +27,18 @@ namespace LaserFence
 
         protected override IEnumerable<Toil> MakeNewToils()
         {
-            yield return Toils_Goto.GotoCell(pylonIndex, PathEndMode.InteractionCell);
+            this.FailOnBurningImmobile(pylonIndex);
+            this.FailOnDespawnedNullOrForbidden(pylonIndex);
 
-            yield return Toils_General.Wait(30);
+            yield return Toils_Goto.GotoCell(pylonIndex, PathEndMode.Touch);
+
+            yield return Toils_General.Wait(60);
 
             Toil switchLaserFenceToil = new Toil()
             {
                 initAction = () =>
                 {
-                    (this.TargetThingA as Building_LaserFencePylon).Notify_PawnSwitchedLaserFence();
+                    (this.TargetThingA as Building_LaserFencePylon).Notify_ApplyCachedConfiguration();
                 },
                 defaultCompleteMode = ToilCompleteMode.Instant
             };

@@ -2,11 +2,10 @@
 <ModMetaData>
 	<name>MiningCo. LaserFence</name>
 	<author>Rikiki</author>
+  <packageId>Rikiki.MiningCo.LaserFence</packageId>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153939#msg153942</url>
   <supportedVersions>
-    <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
-	<description>This mod adds the MiningCo. laser fence.
-See the forum thread for content/changelog and related mods. https://ludeon.com/forums/index.php?topic=14711.msg153939#msg153942
-  </description>
+	<description>This mod adds the MiningCo. laser fence.</description>
 </ModMetaData>

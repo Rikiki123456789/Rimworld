@@ -28,6 +28,14 @@ namespace LaserFence
                 return ThingDef.Named("LaserFence");
             }
         }
+        // Laser fence console.
+        public static ThingDef LaserFenceConsoleDef
+        {
+            get
+            {
+                return ThingDef.Named("LaserFenceConsole");
+            }
+        }
 
         // Pylon switch job.
         public static JobDef SwitchLaserFenceDef
@@ -35,6 +43,14 @@ namespace LaserFence
             get
             {
                 return DefDatabase<JobDef>.GetNamed("JobDef_SwitchLaserFence");
+            }
+        }
+        // Console switch job.
+        public static JobDef SwitchLaserFenceConsoleDef
+        {
+            get
+            {
+                return DefDatabase<JobDef>.GetNamed("JobDef_SwitchLaserConsole");
             }
         }
         

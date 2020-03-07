@@ -24,9 +24,9 @@ namespace LaserFence
         public int nextUpdateTick = 0;
 
         // Pylon state.
-        public bool[] connectionIsAllowedByUser = new bool[4] { true, true, true, true };
-        public bool[] cachedConnectionIsAllowedByUser = new bool[4] { true, true, true, true };
-        public int[] fenceLength = new int[4] { 0, 0, 0, 0 };
+        public bool[] connectionIsAllowed = new bool[4] { true, true, true, true }; // Currently used configuration.
+        public bool[] cachedConnectionIsAllowed= new bool[4] { true, true, true, true }; // Desired configuration. Will be used once a pawn operates the console or switches the pylon.
+        public int[] fenceLength = new int[4] { 0, 0, 0, 0 }; // 0 means not connected.
 
         public bool manualSwitchIsPending
         {
@@ -34,7 +34,7 @@ namespace LaserFence
             {
                 for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
                 {
-                    if (this.connectionIsAllowedByUser[directionAsInt] != this.cachedConnectionIsAllowedByUser[directionAsInt])
+                    if (this.connectionIsAllowed[directionAsInt] != this.cachedConnectionIsAllowed[directionAsInt])
                     {
                         return true;
                     }
@@ -85,9 +85,10 @@ namespace LaserFence
             DeactivateAllFences();
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                this.connectionIsAllowedByUser[directionAsInt] = true;
-                this.cachedConnectionIsAllowedByUser[directionAsInt] = true;
+                this.connectionIsAllowed[directionAsInt] = true;
+                this.cachedConnectionIsAllowed[directionAsInt] = true;
             }
+            TryNotifyConsoleConfigurationChanged();
             base.DeSpawn();
         }
 
@@ -116,10 +117,9 @@ namespace LaserFence
             Scribe_Values.Look<int>(ref this.nextUpdateTick, "nextUpdateTick");
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
-                Scribe_Values.Look<bool>(ref connectionIsAllowedByUser[directionAsInt], "connectionIsAllowedByUser" + directionAsInt, true);
-                Scribe_Values.Look<bool>(ref cachedConnectionIsAllowedByUser[directionAsInt], "cachedConnectionIsAllowedByUser" + directionAsInt, true);
-                //Scribe_References.Look<Building_LaserFencePylon>(ref linkedPylons[directionAsInt], "linkedPylon" + directionAsInt);
-                Scribe_Values.Look<int>(ref fenceLength[directionAsInt], "fenceLength" + directionAsInt, 0);
+                Scribe_Values.Look<bool>(ref this.connectionIsAllowed[directionAsInt], "connectionIsAllowedByUser" + directionAsInt, true);
+                Scribe_Values.Look<bool>(ref this.cachedConnectionIsAllowed[directionAsInt], "cachedConnectionIsAllowedByUser" + directionAsInt, true);
+                Scribe_Values.Look<int>(ref this.fenceLength[directionAsInt], "fenceLength" + directionAsInt, 0);
             }
         }
 
@@ -218,7 +218,7 @@ namespace LaserFence
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
                 if ((this.fenceLength[directionAsInt] == 0)
-                    && this.connectionIsAllowedByUser[directionAsInt])
+                    && this.connectionIsAllowed[directionAsInt])
                 {
                     this.LookForPylon(new Rot4(directionAsInt));
                 }
@@ -230,6 +230,7 @@ namespace LaserFence
         /// </summary>
         public void LookForPylon(Rot4 direction, bool forceConnection = false)
         {
+            bool pawnIsPresent = false;
             for (int offset = 1; offset <= Settings.laserFenceMaxRange + 1; offset++)
             {
                 IntVec3 checkedPosition = this.Position + new IntVec3(0, 0, offset).RotatedBy(direction);
@@ -237,17 +238,17 @@ namespace LaserFence
                 {
                     if (thing is Building_LaserFencePylon)
                     {
-                        this.TryConnectToPylon(thing as Building_LaserFencePylon, direction, offset - 1, forceConnection);
+                        this.TryConnectToPylon(thing as Building_LaserFencePylon, direction, offset - 1, forceConnection, pawnIsPresent);
                         return;
                     }
                     if (thing is Pawn)
                     {
-                        // Avoid connecting when an ally is in the path.
+                        // Avoid connecting when a neutral pawn is in the path.
                         Pawn pawn = thing as Pawn;
                         if ((this.Faction != null)
                             && (pawn.HostileTo(this.Faction) == false))
                         {
-                            return;
+                            pawnIsPresent = true;
                         }
                     }
                 }
@@ -261,18 +262,25 @@ namespace LaserFence
         /// <summary>
         /// Connect to a given pylon if allowed or forced.
         /// </summary>
-        public void TryConnectToPylon(Building_LaserFencePylon linkedPylon, Rot4 direction, int fenceLength, bool forceConnection)
+        public void TryConnectToPylon(Building_LaserFencePylon linkedPylon, Rot4 direction, int fenceLength, bool forceConnection, bool pawnIsPresent)
         {
             // Check connection is allowed.
             if (forceConnection)
             {
-                linkedPylon.connectionIsAllowedByUser[direction.Opposite.AsInt] = true;
-                linkedPylon.cachedConnectionIsAllowedByUser[direction.Opposite.AsInt] = true;
+                linkedPylon.connectionIsAllowed[direction.Opposite.AsInt] = true;
+                linkedPylon.cachedConnectionIsAllowed[direction.Opposite.AsInt] = true;
+                TryNotifyConsoleConfigurationChanged();
             }
-            if (linkedPylon.connectionIsAllowedByUser[direction.Opposite.AsInt] == false)
+            if (pawnIsPresent)
             {
-                this.connectionIsAllowedByUser[direction.AsInt] = false;
-                this.cachedConnectionIsAllowedByUser[direction.AsInt] = false;
+                // Avoid connecting when a neutral pawn is in the path but set new configuration so connection will actually happen when pawn will move.
+                return;
+            }
+            if (linkedPylon.connectionIsAllowed[direction.Opposite.AsInt] == false)
+            {
+                this.connectionIsAllowed[direction.AsInt] = false;
+                this.cachedConnectionIsAllowed[direction.AsInt] = false;
+                TryNotifyConsoleConfigurationChanged();
                 return;
             }
             // Check linkedPylon is powered.
@@ -305,6 +313,17 @@ namespace LaserFence
             }
         }
 
+        /// <summary>
+        /// Try to notify laser fence console that laser fence configuration changed.
+        /// </summary>
+        public void TryNotifyConsoleConfigurationChanged()
+        {
+            foreach (Building_LaserFenceConsole console in this.Map.listerBuildings.AllBuildingsColonistOfClass<Building_LaserFenceConsole>())
+            {
+                console.Notify_ConfigurationChanged(this.Map);
+            }
+        }
+
         // ===================== Exported functions =====================
         /// <summary>
         /// Used by a fence element to notify a new building is blocking.
@@ -318,37 +337,41 @@ namespace LaserFence
         public void ToggleNorthFenceStatus()
         {
             int directionAsInt = Rot4.North.AsInt;
-            this.cachedConnectionIsAllowedByUser[directionAsInt] = !this.cachedConnectionIsAllowedByUser[directionAsInt];
+            this.cachedConnectionIsAllowed[directionAsInt] = !this.cachedConnectionIsAllowed[directionAsInt];
+            TryNotifyConsoleConfigurationChanged();
         }
 
         public void ToggleEastFenceStatus()
         {
             int directionAsInt = Rot4.East.AsInt;
-            this.cachedConnectionIsAllowedByUser[directionAsInt] = !this.cachedConnectionIsAllowedByUser[directionAsInt];
+            this.cachedConnectionIsAllowed[directionAsInt] = !this.cachedConnectionIsAllowed[directionAsInt];
+            TryNotifyConsoleConfigurationChanged();
         }
 
         public void ToggleSouthFenceStatus()
         {
             int directionAsInt = Rot4.South.AsInt;
-            this.cachedConnectionIsAllowedByUser[directionAsInt] = !this.cachedConnectionIsAllowedByUser[directionAsInt];
+            this.cachedConnectionIsAllowed[directionAsInt] = !this.cachedConnectionIsAllowed[directionAsInt];
+            TryNotifyConsoleConfigurationChanged();
         }
 
         public void ToggleWestFenceStatus()
         {
             int directionAsInt = Rot4.West.AsInt;
-            this.cachedConnectionIsAllowedByUser[directionAsInt] = !this.cachedConnectionIsAllowedByUser[directionAsInt];
+            this.cachedConnectionIsAllowed[directionAsInt] = !this.cachedConnectionIsAllowed[directionAsInt];
+            TryNotifyConsoleConfigurationChanged();
         }
 
         /// <summary>
-        /// Called when a pawn go to a pylon to take into account the player's cached configuration.
+        /// Called when the player's cached configuration is taken into account.
         /// </summary>
-        public void Notify_PawnSwitchedLaserFence()
+        public void Notify_ApplyCachedConfiguration()
         {
             for (int directionAsInt = 0; directionAsInt < 4; directionAsInt++)
             {
                 Rot4 direction = new Rot4(directionAsInt);
-                this.connectionIsAllowedByUser[directionAsInt] = this.cachedConnectionIsAllowedByUser[directionAsInt];
-                if (this.connectionIsAllowedByUser[directionAsInt])
+                this.connectionIsAllowed[directionAsInt] = this.cachedConnectionIsAllowed[directionAsInt];
+                if (this.connectionIsAllowed[directionAsInt])
                 {
                     // Connection is allowed. Look for a pylon to connect to.
                     if (this.fenceLength[direction.AsInt] == 0)
@@ -365,8 +388,8 @@ namespace LaserFence
                         Building_LaserFencePylon linkedPylon = linkedPylonPosition.GetFirstThing(this.Map, Util_LaserFence.LaserFencePylonDef) as Building_LaserFencePylon;
                         if (linkedPylon != null)
                         {
-                            linkedPylon.connectionIsAllowedByUser[direction.Opposite.AsInt] = false;
-                            linkedPylon.cachedConnectionIsAllowedByUser[direction.Opposite.AsInt] = false;
+                            linkedPylon.connectionIsAllowed[direction.Opposite.AsInt] = false;
+                            linkedPylon.cachedConnectionIsAllowed[direction.Opposite.AsInt] = false;
                         }
                         this.DeactivateFence(direction);
                     }
@@ -395,7 +418,7 @@ namespace LaserFence
 
             Command_Action northFenceGizmo = new Command_Action();
             direction = Rot4.North;
-            if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
+            if (this.cachedConnectionIsAllowed[direction.AsInt])
             {
                 northFenceGizmo.icon = northFenceActive;
                 northFenceGizmo.defaultDesc = "Click to deactivate north fence.";
@@ -405,7 +428,7 @@ namespace LaserFence
                 northFenceGizmo.icon = northFenceInactive;
                 northFenceGizmo.defaultDesc = "Click to activate north fence.";
             }
-            northFenceGizmo.defaultLabel = "North fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
+            northFenceGizmo.defaultLabel = "North: " + GetFenceStatusAsString(direction.AsInt);
             northFenceGizmo.activateSound = SoundDef.Named("Click");
             northFenceGizmo.action = new Action(ToggleNorthFenceStatus);
             northFenceGizmo.groupKey = groupKeyBase + 1;
@@ -413,7 +436,7 @@ namespace LaserFence
 
             Command_Action eastFenceGizmo = new Command_Action();
             direction = Rot4.East;
-            if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
+            if (this.cachedConnectionIsAllowed[direction.AsInt])
             {
                 eastFenceGizmo.icon = eastFenceActive;
                 eastFenceGizmo.defaultDesc = "Click to deactivate east fence.";
@@ -423,7 +446,7 @@ namespace LaserFence
                 eastFenceGizmo.icon = eastFenceInactive;
                 eastFenceGizmo.defaultDesc = "Click to activate east fence.";
             }
-            eastFenceGizmo.defaultLabel = "East fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
+            eastFenceGizmo.defaultLabel = "East: " + GetFenceStatusAsString(direction.AsInt);
             eastFenceGizmo.activateSound = SoundDef.Named("Click");
             eastFenceGizmo.action = new Action(ToggleEastFenceStatus);
             eastFenceGizmo.groupKey = groupKeyBase + 2;
@@ -431,7 +454,7 @@ namespace LaserFence
 
             Command_Action southFenceGizmo = new Command_Action();
             direction = Rot4.South;
-            if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
+            if (this.cachedConnectionIsAllowed[direction.AsInt])
             {
                 southFenceGizmo.icon = southFenceActive;
                 southFenceGizmo.defaultDesc = "Click to deactivate south fence.";
@@ -441,7 +464,7 @@ namespace LaserFence
                 southFenceGizmo.icon = southFenceInactive;
                 southFenceGizmo.defaultDesc = "Click to activate south fence.";
             }
-            southFenceGizmo.defaultLabel = "South fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
+            southFenceGizmo.defaultLabel = "South: " + GetFenceStatusAsString(direction.AsInt);
             southFenceGizmo.activateSound = SoundDef.Named("Click");
             southFenceGizmo.action = new Action(ToggleSouthFenceStatus);
             southFenceGizmo.groupKey = groupKeyBase + 3;
@@ -449,7 +472,7 @@ namespace LaserFence
 
             Command_Action westFenceGizmo = new Command_Action();
             direction = Rot4.West;
-            if (this.cachedConnectionIsAllowedByUser[direction.AsInt])
+            if (this.cachedConnectionIsAllowed[direction.AsInt])
             {
                 westFenceGizmo.icon = westFenceActive;
                 westFenceGizmo.defaultDesc = "Click to deactivate west fence.";
@@ -459,7 +482,7 @@ namespace LaserFence
                 westFenceGizmo.icon = westFenceInactive;
                 westFenceGizmo.defaultDesc = "Click to activate west fence.";
             }
-            westFenceGizmo.defaultLabel = "West fence: " + GetFenceStatusAsString(direction.AsInt) + ".";
+            westFenceGizmo.defaultLabel = "West: " + GetFenceStatusAsString(direction.AsInt);
             westFenceGizmo.activateSound = SoundDef.Named("Click");
             westFenceGizmo.action = new Action(ToggleWestFenceStatus);
             westFenceGizmo.groupKey = groupKeyBase + 4;
@@ -470,13 +493,13 @@ namespace LaserFence
 
         public string GetFenceStatusAsString(int directionAsInt)
         {
-            if (this.cachedConnectionIsAllowedByUser[directionAsInt])
+            if (this.cachedConnectionIsAllowed[directionAsInt])
             {
-                return "activated";
+                return "on";
             }
             else
             {
-                return "deactivated";
+                return "off";
             }
         }
 
