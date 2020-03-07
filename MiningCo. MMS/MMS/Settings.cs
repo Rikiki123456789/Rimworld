@@ -26,7 +26,7 @@ namespace MobileMineralSonar
             Listing_Standard list = new Listing_Standard();
             list.ColumnWidth = inRect.width / 2f;
             list.Begin(inRect);
-            list.CheckboxLabeled("Period light", ref periodicLightIsEnabled, "When enabled, the MMS will periodically emits a short flash of light. This can help you locate it.");
+            list.CheckboxLabeled("Enable periodic light", ref periodicLightIsEnabled, "When enabled, the MMS will periodically emits a short flash of light. This can help you locate it.");
             list.End();
         }
     }
