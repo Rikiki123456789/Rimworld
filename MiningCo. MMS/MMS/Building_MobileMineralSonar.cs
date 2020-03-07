@@ -72,7 +72,7 @@ namespace MobileMineralSonar
         public Vector3 scanSpotScale = new Vector3(1f, 1f, 1f);
 
         // ===================== Static functions =====================
-        public static void ActivateEnhancedScan()
+        public static void Notify_EnhancedScanResearchCompleted()
         {
             maxScanRange = enhancedMaxScanRange;
             detectionChance = enhancedDetectionChance;
@@ -133,10 +133,13 @@ namespace MobileMineralSonar
             base.Tick();            
             PerformScanUpdate();
 
-            if (Find.TickManager.TicksGame >= this.nextFlashTick)
+            if (Settings.periodicLightIsEnabled)
             {
-                this.nextFlashTick = Find.TickManager.TicksGame + flashPeriodInSeconds * GenTicks.TicksPerRealSecond * (int)Find.TickManager.CurTimeSpeed;
-                ThrowFlash();
+                if (Find.TickManager.TicksGame >= this.nextFlashTick)
+                {
+                    this.nextFlashTick = Find.TickManager.TicksGame + flashPeriodInSeconds * GenTicks.TicksPerRealSecond * (int)Find.TickManager.CurTimeSpeed;
+                    ThrowFlash();
+                }
             }
         }
                 
@@ -209,6 +212,8 @@ namespace MobileMineralSonar
                 }
             }
         }
+
+        // ===================== Draw =====================
         public void ThrowFlash()
         {
             if (!this.Position.ShouldSpawnMotesAt(this.Map) || this.Map.moteCounter.SaturatedLowPriority)
@@ -324,6 +329,7 @@ namespace MobileMineralSonar
             }
         }
 
+        // ===================== Inspect panel =====================
         /// <summary>
         /// Build the string giving some basic information that is shown when the mobile mineral sonar is selected.
         /// </summary>

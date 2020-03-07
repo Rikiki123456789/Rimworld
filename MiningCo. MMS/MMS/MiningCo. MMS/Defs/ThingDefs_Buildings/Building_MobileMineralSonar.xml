@@ -5,7 +5,7 @@
   <ThingDef ParentName="BuildingBase" Class="MobileMineralSonar.ThingDef_MobileMineralSonar">
     <defName>MobileMineralSonar</defName>
     <label>mobile mineral sonar</label>
-    <description>Slowly scans the surrounding area to detect mineral ores. Works drastically faster when powered.</description>
+    <description>Slowly scans the surrounding area to detect mineral ores. Works much more faster when powered.</description>
     <thingClass>MobileMineralSonar.Building_MobileMineralSonar</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
@@ -53,6 +53,7 @@
     <tradeTags>
       <li>ExoticMisc</li>
     </tradeTags>
+    <constructionSkillPrerequisite>6</constructionSkillPrerequisite>
 
     <scannedThingDefs>
       <li>MineableSteel</li>

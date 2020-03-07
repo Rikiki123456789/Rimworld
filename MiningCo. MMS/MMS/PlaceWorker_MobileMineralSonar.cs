@@ -20,13 +20,13 @@ namespace MobileMineralSonar
     public class PlaceWorker_MobileMineralSonar : PlaceWorker
     {
         /// <summary>
-        /// Display the scan range of built mobile mineral sonar and the max scan range at the tested position.
-        /// Allow placement nearly anywhere.
+        /// Display the scan range of built mobile mineral sonar and the max scan range (according to research level) at the tested position.
         /// </summary>
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
+        public override void DrawGhost(ThingDef def, IntVec3 center, Rot4 rot, Color ghostCol, Thing thing = null)
         {
-            IEnumerable<Building> mobileMineralSonarList = map.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("MobileMineralSonar"));
+            base.DrawGhost(def, center, rot, ghostCol, thing);
 
+            IEnumerable<Building> mobileMineralSonarList = Find.CurrentMap.listerBuildings.AllBuildingsColonistOfDef(ThingDef.Named("MobileMineralSonar"));
             if (mobileMineralSonarList != null)
             {
                 foreach (Building mobileMineralSonar in mobileMineralSonarList)
@@ -34,14 +34,14 @@ namespace MobileMineralSonar
                     (mobileMineralSonar as Building_MobileMineralSonar).DrawMaxScanRange();
                 }
             }
-            
+
             if (ResearchProjectDef.Named("ResearchMobileMineralSonarEnhancedScan").IsFinished)
             {
                 Material scanRange50 = MaterialPool.MatFrom("Effects/ScanRange50");
                 Vector3 scanRangeScale50 = new Vector3(100f, 1f, 100f);
                 Matrix4x4 scanRangeMatrix50 = default(Matrix4x4);
                 // The 10f offset on Y axis is mandatory to be over the fog of war.
-                scanRangeMatrix50.SetTRS(loc.ToVector3ShiftedWithAltitude(AltitudeLayer.Blueprint) + new Vector3(0f, 15f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
+                scanRangeMatrix50.SetTRS(center.ToVector3ShiftedWithAltitude(AltitudeLayer.Blueprint) + new Vector3(0f, 15f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
                 Graphics.DrawMesh(MeshPool.plane10, scanRangeMatrix50, scanRange50, 0);
             }
             else
@@ -50,11 +50,9 @@ namespace MobileMineralSonar
                 Vector3 scanRangeScale30 = new Vector3(60f, 1f, 60f);
                 Matrix4x4 scanRangeMatrix30 = default(Matrix4x4);
                 // The 10f offset on Y axis is mandatory to be over the fog of war.
-                scanRangeMatrix30.SetTRS(loc.ToVector3ShiftedWithAltitude(AltitudeLayer.Blueprint) + new Vector3(0f, 15f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale30);
+                scanRangeMatrix30.SetTRS(center.ToVector3ShiftedWithAltitude(AltitudeLayer.Blueprint) + new Vector3(0f, 15f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale30);
                 Graphics.DrawMesh(MeshPool.plane10, scanRangeMatrix30, scanRange30, 0);
             }
-
-            return true;
         }
     }
 }

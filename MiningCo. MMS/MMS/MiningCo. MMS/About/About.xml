@@ -2,9 +2,10 @@
 <ModMetaData>
 	<name>MiningCo. MMS</name>
 	<author>Rikiki</author>
+  <packageId>Rikiki.MiningCo.Mms</packageId>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153939#msg153939</url>
   <supportedVersions>
-    <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
-	<description>This mod adds the MiningCo. mobile mineral sonar. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153939#msg153939</description>
+	<description>This mod adds the MiningCo. mobile mineral sonar.</description>
 </ModMetaData>
