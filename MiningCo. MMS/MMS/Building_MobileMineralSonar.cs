@@ -344,7 +344,7 @@ namespace MobileMineralSonar
             {
                 float scanProgressInPercent = ((float)this.scanProgress / (float)(this.scanRange * scanProgressThresholdPerCell)) * 100;
                 stringBuilder.AppendLine();
-                stringBuilder.Append("Scan progress: " + ((int)scanProgressInPercent).ToString() + "%");
+                stringBuilder.Append("Scan progress: " + ((int)scanProgressInPercent).ToString() + " %");
             }
 
             return stringBuilder.ToString();
