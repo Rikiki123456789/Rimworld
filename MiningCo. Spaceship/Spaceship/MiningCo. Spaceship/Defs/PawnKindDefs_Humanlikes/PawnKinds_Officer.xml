@@ -4,6 +4,13 @@
   <PawnKindDef ParentName="MiningCoPawnKindBase">
     <defName>MiningCoOfficer</defName>
     <label>officer</label>
+    <backstoryFiltersOverride>
+      <li>
+        <categories>
+          <li>Offworld</li>
+        </categories>
+      </li>
+    </backstoryFiltersOverride>
     <combatPower>120</combatPower>
     <minGenerationAge>38</minGenerationAge>
     <maxGenerationAge>55</maxGenerationAge>

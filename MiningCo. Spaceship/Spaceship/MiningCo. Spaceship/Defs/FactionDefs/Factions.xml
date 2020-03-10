@@ -11,13 +11,19 @@
     <fixedName>MiningCo.</fixedName>
     <techLevel>Spacer</techLevel>
     <leaderTitle>planetary commander</leaderTitle>
-    <backstoryCategories>
-      <li>Civil</li>
-    </backstoryCategories>
     <geneticVariance>0.8</geneticVariance>
     <hidden>true</hidden>
     <autoFlee>false</autoFlee>
     <canUseAvoidGrid>false</canUseAvoidGrid>
+    <backstoryFilters>
+      <li>
+        <categories>
+          <li>Offworld</li>
+          <li>Outlander</li>
+          <li>Outsider</li>
+        </categories>
+      </li>
+    </backstoryFilters>
     <hairTags>
       <li>Urban</li>
     </hairTags>

@@ -268,7 +268,7 @@ namespace Spaceship
             };
             if (TradeUtility.ColonyHasEnoughSilver(this.Map, feeCost) == false)
             {
-                feePaymentDiaOption.Disable("not enough silver");
+                feePaymentDiaOption.Disable("not enough silver near orbital trade beacon");
             }
             return feePaymentDiaOption;
         }

@@ -14,17 +14,17 @@ namespace Spaceship
 {
     public class PlaceWorker_NotUnderBuilding : PlaceWorker
     {
-        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null)
+        public override AcceptanceReport AllowsPlacing(BuildableDef checkingDef, IntVec3 loc, Rot4 rot, Map map, Thing thingToIgnore = null, Thing thing = null)
 		{
             foreach (IntVec3 cell in GenAdj.OccupiedRect(loc, rot, checkingDef.Size).Cells)
 			{
-                foreach (Thing thing in cell.GetThingList(map))
+                foreach (Thing t in cell.GetThingList(map))
                 {
-                    if (((thing.def.category == ThingCategory.Building)
-                        && thing.def.building.isEdifice)
-                        || (thing.def == Util_ThingDefOf.LandingPad)
-                        || (thing.def == Util_ThingDefOf.LandingPad.frameDef)
-                        || (thing.def == Util_ThingDefOf.LandingPad.blueprintDef))
+                    if (((t.def.category == ThingCategory.Building)
+                        && t.def.building.isEdifice)
+                        || (t.def == Util_ThingDefOf.LandingPad)
+                        || (t.def == Util_ThingDefOf.LandingPad.frameDef)
+                        || (t.def == Util_ThingDefOf.LandingPad.blueprintDef))
                     {
                         return new AcceptanceReport("SpaceAlreadyOccupied".Translate());
                     }

@@ -41,10 +41,10 @@
     <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
     <specialDisplayRadius>25.9</specialDisplayRadius>
     <building>
+      <combatPower>45</combatPower>
       <ai_combatDangerous>true</ai_combatDangerous>
       <turretGunDef>Gun_VulcanTurret</turretGunDef>
       <turretBurstCooldownTime>4.0</turretBurstCooldownTime>
-      <turretTopGraphicPath>Things/Building/Security/VulcanTurret/VulcanTurret_Top</turretTopGraphicPath>
       <claimable>false</claimable>
       <deconstructible>false</deconstructible>
     </building>

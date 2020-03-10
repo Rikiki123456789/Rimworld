@@ -21,6 +21,14 @@ namespace Spaceship
             }
         }
 
+        public TradeCurrency TradeCurrency
+        {
+            get
+            {
+                return TradeCurrency.Silver;
+            }
+        }
+
         // ===================== Setup work =====================
         public void InitializeData_Cargo(Faction faction, int hitPoints, int landingDuration, SpaceshipKind spaceshipKind)
         {

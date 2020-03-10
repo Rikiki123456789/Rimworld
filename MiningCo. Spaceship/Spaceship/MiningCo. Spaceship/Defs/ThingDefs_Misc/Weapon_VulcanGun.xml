@@ -20,7 +20,7 @@
     <label>vulcan turret gun</label>
     <description>An advanced charged gun mounted on a spaceship.</description>
     <graphicData>
-      <texPath>Things/Item/Equipment/WeaponRanged/ChargeRifle</texPath>
+      <texPath>Things/Building/Security/VulcanTurret/VulcanTurret_Top</texPath>
       <graphicClass>Graphic_Single</graphicClass>
     </graphicData>
     <altitudeLayer>PawnState</altitudeLayer> <!-- To be over spaceship but under fire effect. -->

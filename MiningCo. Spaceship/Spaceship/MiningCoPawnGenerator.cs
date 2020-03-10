@@ -48,7 +48,7 @@ namespace Spaceship
             {
                 validator = delegate (Pawn medic)
                 {
-                    if (medic.story.WorkTagIsDisabled(WorkTags.Caring))
+                    if ((medic.story.DisabledWorkTagsBackstoryAndTraits & WorkTags.Caring) != 0)
                     {
                         return false;
                     }
@@ -150,7 +150,7 @@ namespace Spaceship
             else if (kindDef == Util_PawnKindDefOf.Miner)
             {
                 GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_Pants"), ThingDef.Named("Synthread"), colorCivilLightGrey);
-                if (Util_Misc.IsModActive("MiningCo. MiningHelmet"))
+                if (Util_Misc.IsModActive("Rikiki.MiningCo.MiningHelmet"))
                 {
                     GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_MiningHelmet"), null, Color.black, false);
                     GeneratePawnApparel(ref pawn, kindDef.itemQuality, ThingDef.Named("Apparel_MiningVest"), null, Color.black, false);
@@ -274,6 +274,7 @@ namespace Spaceship
         {
             ThingWithComps weapon = ThingMaker.MakeThing(weaponDef) as ThingWithComps;
             weapon.TryGetComp<CompQuality>().SetQuality(weaponQuality, ArtGenerationContext.Outsider);
+            weapon.TryGetComp<CompBiocodableWeapon>().CodeFor(pawn);
             pawn.equipment.AddEquipment(weapon);
         }
     }

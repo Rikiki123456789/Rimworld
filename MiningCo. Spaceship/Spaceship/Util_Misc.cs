@@ -62,12 +62,12 @@ namespace Spaceship
             }
         }
 
-        public static bool IsModActive(string modName)
+        public static bool IsModActive(string packageId)
         {
             foreach (ModMetaData mod in ModLister.AllInstalledMods)
             {
                 if (mod.Active
-                    && (mod.Name == modName))
+                    && (mod.PackageId == packageId))
                 {
                     return true;
                 }

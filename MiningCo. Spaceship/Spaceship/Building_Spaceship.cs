@@ -142,7 +142,7 @@ namespace Spaceship
                     RoofDef roof = this.Map.roofGrid.RoofAt(cell);
                     if (roof.filthLeaving != null)
                     {
-                        FilthMaker.MakeFilth(cell, this.Map, roof.filthLeaving, Rand.RangeInclusive(1, 3));
+                        FilthMaker.TryMakeFilth(cell, this.Map, roof.filthLeaving, Rand.RangeInclusive(1, 3));
                     }
                     this.Map.roofGrid.SetRoof(cell, null);
                 }

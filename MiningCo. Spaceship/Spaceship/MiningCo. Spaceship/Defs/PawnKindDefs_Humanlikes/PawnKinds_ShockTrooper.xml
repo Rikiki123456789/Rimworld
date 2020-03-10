@@ -4,6 +4,13 @@
   <PawnKindDef ParentName="MiningCoPawnKindBase">
     <defName>MiningCoShockTrooper</defName>
     <label>shock trooper</label>
+    <backstoryFiltersOverride>
+      <li>
+        <categories>
+          <li>Pirate</li>
+        </categories>
+      </li>
+    </backstoryFiltersOverride>
     <combatPower>120</combatPower>
     <minGenerationAge>27</minGenerationAge>
     <maxGenerationAge>42</maxGenerationAge>

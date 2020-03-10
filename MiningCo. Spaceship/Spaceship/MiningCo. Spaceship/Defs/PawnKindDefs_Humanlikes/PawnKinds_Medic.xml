@@ -4,6 +4,13 @@
   <PawnKindDef ParentName="MiningCoPawnKindBase">
     <defName>MiningCoMedic</defName>
     <label>medic</label>
+    <backstoryFiltersOverride>
+      <li>
+        <categories>
+          <li>Offworld</li>
+        </categories>
+      </li>
+    </backstoryFiltersOverride>
     <combatPower>60</combatPower>
     <minGenerationAge>30</minGenerationAge>
     <maxGenerationAge>65</maxGenerationAge>

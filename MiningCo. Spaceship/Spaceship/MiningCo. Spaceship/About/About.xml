@@ -2,9 +2,10 @@
 <ModMetaData>
 	<name>MiningCo. Spaceship</name>
 	<author>Rikiki</author>
+  <packageId>rikiki.miningco.Spaceship</packageId>
 	<url>https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153947</url>
   <supportedVersions>
-    <li>1.0</li>
+    <li>1.1</li>
   </supportedVersions>
-	<description>This mod adds MiningCo. spaceships. See the forum thread for content/changelog. https://ludeon.com/forums/index.php?topic=14711.msg153947#msg153947 </description>
+	<description>This mod adds MiningCo. spaceships.</description>
 </ModMetaData>
