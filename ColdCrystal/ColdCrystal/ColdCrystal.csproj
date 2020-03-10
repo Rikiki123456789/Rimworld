@@ -299,6 +299,7 @@
     <Content Include="ColdCrystal\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="ColdCrystal\About\PublishedFileId.txt" />
     <Content Include="ColdCrystal\Defs\ThingDefs_Buildings\Buildings_CrystalLamp.xml" />
     <Content Include="ColdCrystal\Defs\ThingDefs_Buildings\Buildings_MinableColdCrystal.xml">
       <SubType>Designer</SubType>
