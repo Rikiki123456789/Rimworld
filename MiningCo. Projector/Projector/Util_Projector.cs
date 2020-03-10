@@ -38,19 +38,18 @@ namespace Projector
         }
 
         // Projector glower.
-        public static ThingDef MobileProjectorLightDef
+        public static ThingDef ProjectorLightTurretDef
         {
             get
             {
-                return ThingDef.Named("MobileProjectorLight");
+                return ThingDef.Named("ProjectorLightTurret");
             }
         }
-
-        public static ThingDef FixedProjectorLightDef
+        public static ThingDef ProjectorLightTowerDef
         {
             get
             {
-                return ThingDef.Named("FixedProjectorLight");
+                return ThingDef.Named("ProjectorLightTower");
             }
         }
 

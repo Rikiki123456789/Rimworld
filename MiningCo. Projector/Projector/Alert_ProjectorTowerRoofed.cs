@@ -33,7 +33,7 @@ namespace Projector
             {
                 foreach (Building building in maps[mapIndex].listerBuildings.AllBuildingsColonistOfDef(Util_Projector.ProjectorTowerDef))
                 {
-                    Building_MobileProjectorTower tower = building as Building_MobileProjectorTower;
+                    Building_ProjectorTower tower = building as Building_ProjectorTower;
                     if (tower.isRoofed)
                     {
                         return AlertReport.CulpritIs(tower);

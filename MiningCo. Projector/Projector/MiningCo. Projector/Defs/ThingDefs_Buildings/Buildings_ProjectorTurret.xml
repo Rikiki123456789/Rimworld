@@ -5,7 +5,7 @@
     <defName>ProjectorTurret</defName>
     <label>projector turret</label>
     <description>A projector mounted on a turret chassis. Can automatically lock onto a nearby hostile. Can be built under roof.</description>
-    <thingClass>Projector.Building_MobileProjectorTurret</thingClass>
+    <thingClass>Projector.Building_ProjectorTurret</thingClass>
     <graphicData>
       <texPath>Things/Building/Security/TurretMini_Base</texPath>
       <graphicClass>Graphic_Single</graphicClass>

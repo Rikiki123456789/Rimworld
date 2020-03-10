@@ -5,6 +5,7 @@
     <defName>BlindedByProjector</defName>
     <hediffClass>HediffWithComps</hediffClass>
     <label>blinded by projector</label>
+    <description>blinded by projector</description>
     <makesSickThought>false</makesSickThought>
     <tendable>false</tendable>
     <stages>

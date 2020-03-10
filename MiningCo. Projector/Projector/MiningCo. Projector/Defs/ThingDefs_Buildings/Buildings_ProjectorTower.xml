@@ -5,7 +5,7 @@
     <defName>ProjectorTower</defName>
     <label>projector tower</label>
     <description>A projector mounted on a high metallic tower. Can automatically lock onto a nearby hostile even over walls. Cannot be built under a roof.</description>
-    <thingClass>Projector.Building_MobileProjectorTower</thingClass>
+    <thingClass>Projector.Building_ProjectorTower</thingClass>
     <graphicData>
       <texPath>Things/Building/Security/ProjectorTower_Base</texPath>
       <graphicClass>Graphic_Single</graphicClass>

@@ -19,7 +19,7 @@ namespace Projector
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     public class PlaceWorker_DrawProjector : PlaceWorker
     {
-        public override void DrawGhost(ThingDef def, IntVec3 loc, Rot4 rot, Color ghostCol)
+        public override void DrawGhost(ThingDef def, IntVec3 loc, Rot4 rot, Color ghostCol, Thing thing = null)
         {
             Graphic baseGraphic = GraphicDatabase.Get<Graphic_Single>("Things/Building/Security/ProjectorTower_ProjectorOff", ShaderDatabase.Cutout, new Vector2(3.5f, 3.5f), Color.white);
             Graphic graphic = GhostUtility.GhostGraphicFor(baseGraphic, def, ghostCol);

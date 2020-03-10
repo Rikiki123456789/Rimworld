@@ -11,12 +11,12 @@ using Verse.Sound;
 namespace Projector
 {
     /// <summary>
-    /// Building_MobileProjector class.
+    /// Building_Projector class.
     /// </summary>
     /// <author>Rikiki</author>
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     [StaticConstructorOnStartup]
-    public abstract class  Building_MobileProjector : Building
+    public abstract class  Building_Projector : Building
     {
         public enum LightMode
         {
@@ -149,6 +149,11 @@ namespace Projector
         public override void Tick()
         {
             base.Tick();
+
+            if (this.Spawned == false)
+            {
+                return;
+            }
             
             if (CheckAdditionalConditions() == false)
             {
@@ -363,11 +368,16 @@ namespace Projector
                 /*Thing potentialLight = position.GetFirstThing(this.Map, Util_Projector.ProjectorLightDef);
                 if (potentialLight == null)*/
                 {
-                    this.light = GenSpawn.Spawn(Util_Projector.MobileProjectorLightDef, position, this.Map);
+                    SpawnGlower(position, this.Map);
                 }
             }
         }
-        
+
+        /// <summary>
+        /// Actually spawn the glower according to the type of projector.
+        /// </summary>
+        public abstract void SpawnGlower(IntVec3 position, Map map);
+
         /// <summary>
         /// Synchronize a group of projectors.
         /// </summary>
@@ -377,19 +387,19 @@ namespace Projector
             {
                 StartNewIdleMotion();
             }
-            foreach (Building_MobileProjector projector in GetPoweredAndIdleProjectorsWithGroupId(this.groupId))
+            foreach (Building_Projector projector in GetPoweredAndIdleProjectorsWithGroupId(this.groupId))
             {
                 projector.StartNewIdleMotion(true);
             }
         }
 
-        public List<Building_MobileProjector> GetPoweredAndIdleProjectorsWithGroupId(int groupId)
+        public List<Building_Projector> GetPoweredAndIdleProjectorsWithGroupId(int groupId)
         {
-            List<Building_MobileProjector> projectorsList = new List<Building_MobileProjector>();
+            List<Building_Projector> projectorsList = new List<Building_Projector>();
 
             foreach (Building building in this.Map.listerBuildings.AllBuildingsColonistOfDef(Util_Projector.ProjectorTowerDef))
             {
-                Building_MobileProjectorTower projector = building as Building_MobileProjectorTower;
+                Building_ProjectorTower projector = building as Building_ProjectorTower;
                 if ((projector != null)
                     && (projector.groupId == groupId)
                     && (projector.target == null)
@@ -401,7 +411,7 @@ namespace Projector
             }
             foreach (Building building in this.Map.listerBuildings.AllBuildingsColonistOfDef(Util_Projector.ProjectorTurretDef))
             {
-                Building_MobileProjectorTurret projector = building as Building_MobileProjectorTurret;
+                Building_ProjectorTurret projector = building as Building_ProjectorTurret;
                 if ((projector != null)
                     && (projector.groupId == groupId)
                     && (projector.target == null)
@@ -496,7 +506,7 @@ namespace Projector
                 {
                     // Group of projectors: check all projectors have finished their pause.
                     bool allProjectorsAreIdle = true;
-                    foreach (Building_MobileProjector projector in GetPoweredAndIdleProjectorsWithGroupId(this.groupId))
+                    foreach (Building_Projector projector in GetPoweredAndIdleProjectorsWithGroupId(this.groupId))
                     {
                         if (projector.idlePauseTicks > 0)
                         {
@@ -506,7 +516,7 @@ namespace Projector
                     }
                     if (allProjectorsAreIdle)
                     {
-                        foreach (Building_MobileProjector projector in GetPoweredAndIdleProjectorsWithGroupId(this.groupId))
+                        foreach (Building_Projector projector in GetPoweredAndIdleProjectorsWithGroupId(this.groupId))
                         {
                             projector.StartNewIdleMotion();
                         }
@@ -601,16 +611,16 @@ namespace Projector
             switch (this.lightMode)
             {
                 case (LightMode.Conic):
-                    lightModeButton.defaultLabel = "Light mode: conic.";
-                    lightModeButton.defaultDesc = "In this mode, the projector patrols in a conic area in front of it.";
+                    lightModeButton.defaultLabel = "Light mode: conic";
+                    lightModeButton.defaultDesc = "The projector patrols in a conic area in front of it. Click to change mode.";
                     break;
                 case (LightMode.Automatic):
-                    lightModeButton.defaultLabel = "Light mode: automatic.";
-                    lightModeButton.defaultDesc = "In this mode, the projector randomly lights the surroundings.";
+                    lightModeButton.defaultLabel = "Light mode: automatic";
+                    lightModeButton.defaultDesc = "The projector randomly lights the surroundings. Click to change mode.";
                     break;
                 case (LightMode.Fixed):
-                    lightModeButton.defaultLabel = "Light mode: fixed.";
-                    lightModeButton.defaultDesc = "In this mode, the projector lights a fixed area.";
+                    lightModeButton.defaultLabel = "Light mode: fixed";
+                    lightModeButton.defaultDesc = "The projector lights a fixed area. Click to change mode.";
                     break;
             }
             lightModeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_SwitchMode");
@@ -625,7 +635,7 @@ namespace Projector
                 Command_Action decreaseRangeButton = new Command_Action();
                 decreaseRangeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_DecreaseRange");
                 decreaseRangeButton.defaultLabel = "Range: " + this.projectorRangeBaseOffset;
-                decreaseRangeButton.defaultDesc = "Decrease range.";
+                decreaseRangeButton.defaultDesc = "Click to decrease range.";
                 decreaseRangeButton.activateSound = SoundDef.Named("Click");
                 decreaseRangeButton.action = new Action(DecreaseProjectorRange);
                 decreaseRangeButton.groupKey = groupKeyBase + 2;
@@ -634,7 +644,7 @@ namespace Projector
                 Command_Action increaseRangeButton = new Command_Action();
                 increaseRangeButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_IncreaseRange");
                 increaseRangeButton.defaultLabel = "";
-                increaseRangeButton.defaultDesc = "Increase range.";
+                increaseRangeButton.defaultDesc = "Click to increase range.";
                 increaseRangeButton.activateSound = SoundDef.Named("Click");
                 increaseRangeButton.action = new Action(IncreaseProjectorRange);
                 increaseRangeButton.groupKey = groupKeyBase + 3;
@@ -644,7 +654,7 @@ namespace Projector
                 Command_Action turnLeftButton = new Command_Action();
                 turnLeftButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_TurnLeft");
                 turnLeftButton.defaultLabel = "Rotation: " + rotation + "°";
-                turnLeftButton.defaultDesc = "Turn left.";
+                turnLeftButton.defaultDesc = "Click to turn left.";
                 turnLeftButton.activateSound = SoundDef.Named("Click");
                 turnLeftButton.action = new Action(AddProjectorBaseRotationLeftOffset);
                 turnLeftButton.groupKey = groupKeyBase + 4;
@@ -653,7 +663,7 @@ namespace Projector
                 Command_Action turnRightButton = new Command_Action();
                 turnRightButton.icon = ContentFinder<Texture2D>.Get("Ui/Commands/CommandButton_TurnRight");
                 turnRightButton.defaultLabel = "";
-                turnRightButton.defaultDesc = "Turn right.";
+                turnRightButton.defaultDesc = "Click to turn right.";
                 turnRightButton.activateSound = SoundDef.Named("Click");
                 turnRightButton.action = new Action(AddProjectorBaseRotationRightOffset);
                 turnRightButton.groupKey = groupKeyBase + 5;
@@ -663,7 +673,7 @@ namespace Projector
             Command_Action setTargetButton = new Command_Action();
             setTargetButton.icon = ContentFinder<Texture2D>.Get("UI/Commands/Attack");
             setTargetButton.defaultLabel = "Set target";
-            setTargetButton.defaultDesc = "Order the tower to light a specific target. Can only target unroofed hostiles in range.";
+            setTargetButton.defaultDesc = "Order the tower to light a specific target.";
             setTargetButton.activateSound = SoundDef.Named("Click");
             setTargetButton.action = new Action(SelectTarget);
             setTargetButton.groupKey = groupKeyBase + 6;
@@ -813,12 +823,12 @@ namespace Projector
                 return;
             }
 
-            List<Building_MobileProjector> projectorsInGroup = new List<Building_MobileProjector>();
+            List<Building_Projector> projectorsInGroup = new List<Building_Projector>();
             foreach (object obj in Find.Selector.SelectedObjectsListForReading)
             {
-                if (obj is Building_MobileProjector)
+                if (obj is Building_Projector)
                 {
-                    projectorsInGroup.Add(obj as Building_MobileProjector);
+                    projectorsInGroup.Add(obj as Building_Projector);
                 }
             }
             if (projectorsInGroup.Count == 1)
@@ -852,7 +862,7 @@ namespace Projector
                 bool idIsFree = true;
                 foreach (Thing thing in this.Map.listerThings.ThingsOfDef(Util_Projector.ProjectorTowerDef))
                 {
-                    Building_MobileProjector tower = thing as Building_MobileProjector;
+                    Building_Projector tower = thing as Building_Projector;
                     if ((tower != null)
                         && (tower.groupId == id))
                     {
@@ -862,7 +872,7 @@ namespace Projector
                 }
                 foreach (Thing thing in this.Map.listerThings.ThingsOfDef(Util_Projector.ProjectorTurretDef))
                 {
-                    Building_MobileProjector turret = thing as Building_MobileProjector;
+                    Building_Projector turret = thing as Building_Projector;
                     if ((turret != null)
                         && (turret.groupId == id))
                     {
