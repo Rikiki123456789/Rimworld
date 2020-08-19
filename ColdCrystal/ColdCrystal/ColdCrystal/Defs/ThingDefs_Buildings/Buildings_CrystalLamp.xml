@@ -1,25 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <Defs>
 
-  <ThingDef ParentName="BuildingBase">
-    <defName>CrystalLamp</defName>
-    <label>crystal lamp</label>
-    <description>A cold crystal installed on a wooden post. Lights an area but the crystal seems to absorb the surrounding heat.</description>
+  <ThingDef ParentName="BuildingBase" Name="CrystalLampBase" Abstract="True">
     <category>Building</category>
-    <graphicData>
-      <texPath>Things/Building/Misc/CrystalLamp</texPath>
-      <graphicClass>Graphic_Single</graphicClass>
-      <drawRotated>false</drawRotated>
-      <damageData>
-        <rect>(0.35,0.35,0.3,0.3)</rect>
-      </damageData>
-    </graphicData>
-    <uiIconPath>Things/Building/Misc/CrystalLamp_MenuIcon</uiIconPath>
     <uiIconScale>0.85</uiIconScale>
     <minifiedDef>MinifiedThing</minifiedDef>
     <thingCategories>
       <li>BuildingsFurniture</li>
     </thingCategories>
+    <designationCategory>Furniture</designationCategory>
     <rotatable>false</rotatable>
     <altitudeLayer>Building</altitudeLayer>
     <passability>PassThroughOnly</passability>
@@ -35,13 +24,28 @@
       <Mass>4</Mass>
     </statBases>
     <selectable>true</selectable>
+    <soundImpactDefault>BulletImpact_Ground</soundImpactDefault>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <resourcesFractionWhenDeconstructed>0.75</resourcesFractionWhenDeconstructed>
+  </ThingDef>
+
+  <ThingDef ParentName="CrystalLampBase">
+    <defName>CrystalLamp</defName> <!-- Name unchanged to keep compatibility. -->
+    <label>cold crystal lamp</label>
+    <description>A cold crystal installed on a wooden post. Lights an area but the crystal seems to absorb the surrounding heat.</description>
+    <graphicData>
+      <texPath>Things/Building/Misc/ColdCrystalLamp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawRotated>false</drawRotated>
+      <damageData>
+        <rect>(0.35,0.35,0.3,0.3)</rect>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Things/Building/Misc/ColdCrystalLamp_MenuIcon</uiIconPath>
     <costList>
       <WoodLog>20</WoodLog>
       <ColdCrystal>1</ColdCrystal>
     </costList>
-    <soundImpactDefault>BulletImpact_Ground</soundImpactDefault>
-    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
-    <resourcesFractionWhenDeconstructed>0.75</resourcesFractionWhenDeconstructed>
     <placeWorkers>
       <li>PlaceWorker_CoolerSimple</li>
     </placeWorkers>
@@ -56,7 +60,39 @@
         <heatPushMinTemperature>-15</heatPushMinTemperature>
       </li>
     </comps>
-    <designationCategory>Furniture</designationCategory>
+  </ThingDef>
+
+  <ThingDef ParentName="CrystalLampBase">
+    <defName>AmberCrystalLamp</defName>
+    <label>amber  crystal lamp</label>
+    <description>An amber crystal installed on a wooden post to light an area. The amber crystal generates an appeasing warm around.</description>
+    <graphicData>
+      <texPath>Things/Building/Misc/AmberCrystalLamp</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawRotated>false</drawRotated>
+      <damageData>
+        <rect>(0.35,0.35,0.3,0.3)</rect>
+      </damageData>
+    </graphicData>
+    <uiIconPath>Things/Building/Misc/AmberCrystalLamp_MenuIcon</uiIconPath>
+    <costList>
+      <WoodLog>20</WoodLog>
+      <AmberCrystal>1</AmberCrystal>
+    </costList>
+    <placeWorkers>
+      <li>PlaceWorker_Heater</li>
+    </placeWorkers>
+    <drawPlaceWorkersWhileSelected>true</drawPlaceWorkersWhileSelected>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>10</glowRadius>
+        <glowColor>(242,166,26,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <heatPerSecond>4</heatPerSecond>
+        <heatPushMaxTemperature>25</heatPushMaxTemperature>
+      </li>
+    </comps>
   </ThingDef>
 
 </Defs>

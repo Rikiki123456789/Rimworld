@@ -7,7 +7,14 @@
 			<li>MineableColdCrystal</li>
 		</value>
 	</Operation>
-  
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/GenStepDef[defName = "PreciousLump"]/genStep/mineables</xpath>
+    <value>
+      <li>MineableAmberCrystal</li>
+    </value>
+  </Operation>
+
 </Patch>
 
 

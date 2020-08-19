@@ -301,10 +301,10 @@
     </Content>
     <Content Include="ColdCrystal\About\PublishedFileId.txt" />
     <Content Include="ColdCrystal\Defs\ThingDefs_Buildings\Buildings_CrystalLamp.xml" />
-    <Content Include="ColdCrystal\Defs\ThingDefs_Buildings\Buildings_MinableColdCrystal.xml">
+    <Content Include="ColdCrystal\Defs\ThingDefs_Buildings\Buildings_MinableCrystal.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="ColdCrystal\Defs\ThingDefs_Items\Items_Resource_ColdCrystal.xml">
+    <Content Include="ColdCrystal\Defs\ThingDefs_Items\Items_Resource_Crystal.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="ColdCrystal\Patches\PreciousLump.xml" />
