@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="RockBase" Name="CrystalRockBase" Abstract="True">
+    <statBases>
+      <MaxHitPoints>3000</MaxHitPoints>
+    </statBases>
+    <building>
+      <isResourceRock>true</isResourceRock>
+      <mineableThing>ColdCrystal</mineableThing>
+      <mineableYield>3</mineableYield>
+      <mineableScatterCommonality>0.35</mineableScatterCommonality>
+      <mineableScatterLumpSizeRange>
+        <min>3</min>
+        <max>5</max>
+      </mineableScatterLumpSizeRange>
+    </building>
+    <!-- Does not work as the structure is impassable. For now, only crystals and crystal lamps actually modify ambiant heat.
+    <comps>
+      <li Class="CompProperties_HeatPusher">
+        <heatPerSecond>-15</heatPerSecond>
+        <heatPushMinTemperature>-15</heatPushMinTemperature>
+      </li>
+    </comps>-->
+  </ThingDef>
+
+  <ThingDef ParentName="CrystalRockBase">
+    <defName>MineableColdCrystal</defName>
+    <label>cold crystal</label>
+    <description>Some strange crystals buried in the rocks. As bright as it is cold, it lights the surroundings.</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(89,83,68)</color>
+      <colorTwo>(232,232,232)</colorTwo>
+    </graphicData>
+    <building>
+      <mineableThing>ColdCrystal</mineableThing>
+    </building>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>4</glowRadius>
+        <glowColor>(44,177,244,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="CrystalRockBase">
+    <defName>MineableAmberCrystal</defName>
+    <label>amber crystal</label>
+    <description>Some strange crystals buried in the rocks. As bright as it is warm, it lights the surroundings.</description>
+    <graphicData>
+      <texPath>Things/Building/Linked/RockFlecked_Atlas</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <shaderType>CutoutComplex</shaderType>
+      <color>(196,128,51)</color>
+      <colorTwo>(232,232,232)</colorTwo>
+    </graphicData>
+    <building>
+      <mineableThing>AmberCrystal</mineableThing>
+    </building>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>4</glowRadius>
+        <glowColor>(242,166,26,0)</glowColor>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>

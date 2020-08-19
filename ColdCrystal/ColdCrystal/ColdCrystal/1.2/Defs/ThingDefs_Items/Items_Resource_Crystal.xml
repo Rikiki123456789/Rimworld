@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ResourceBase" Name="CrystalBase" Abstract="True">
+    <soundInteract>ChunkRock_Drop</soundInteract>
+    <soundDrop>ChunkRock_Drop</soundDrop>
+    <statBases>
+      <Beauty>0</Beauty>
+      <Mass>2.5</Mass>
+      <MarketValue>35</MarketValue>
+    </statBases>
+    <thingCategories>
+      <li>ResourcesRaw</li>
+    </thingCategories>
+    <stackLimit>3</stackLimit>
+    <deepCommonality>1</deepCommonality>
+    <deepCountPerPortion>3</deepCountPerPortion>
+    <deepLumpSizeRange>
+      <min>2</min>
+      <max>7</max>
+    </deepLumpSizeRange>
+  </ThingDef>
+
+  <ThingDef ParentName="CrystalBase">
+    <defName>ColdCrystal</defName>
+    <label>cold crystal</label>
+    <description>A light blue crystal as cold as ice. It it bright enough to light an area and seems to freeze the air nearby.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/ColdCrystal</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>2</glowRadius>
+        <glowColor>(44,177,244,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <heatPerSecond>-4</heatPerSecond>
+        <heatPushMinTemperature>-15</heatPushMinTemperature>
+      </li>
+    </comps>
+  </ThingDef>
+
+  <ThingDef ParentName="CrystalBase">
+    <defName>AmberCrystal</defName>
+    <label>amber crystal</label>
+    <description>A yellow with orange reflections crystal warm to the touch. It emits an appeasing light and a gently warms the surrounding.</description>
+    <graphicData>
+      <texPath>Things/Item/Resource/AmberCrystal</texPath>
+      <graphicClass>Graphic_StackCount</graphicClass>
+    </graphicData>
+    <comps>
+      <li Class="CompProperties_Glower">
+        <glowRadius>2</glowRadius>
+        <glowColor>(44,177,244,0)</glowColor>
+      </li>
+      <li Class="CompProperties_HeatPusher">
+        <heatPerSecond>4</heatPerSecond>
+        <heatPushMaxTemperature>25</heatPushMaxTemperature>
+      </li>
+    </comps>
+  </ThingDef>
+
+</Defs>
