@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <TerrainDef>
+    <defName>FishingPierFloorShallowWater</defName>
+    <label>Fishing pier floor</label>
+    <texturePath>Terrain/Surfaces/WaterShallowRamp</texturePath>
+    <waterDepthShader>Map/WaterDepth</waterDepthShader>
+    <edgeType>Water</edgeType>
+    <renderPrecedence>392</renderPrecedence>
+    <pathCost>0</pathCost>
+    <filthAcceptanceMask>
+      <li>None</li>
+    </filthAcceptanceMask>
+    <fertility>0</fertility>
+    <avoidWander>false</avoidWander>
+    <changeable>false</changeable>
+    <holdSnow>true</holdSnow>
+    <takeSplashes>false</takeSplashes>
+    <tags>
+      <li>Water</li>
+    </tags>
+  </TerrainDef>
+
+  <TerrainDef>
+    <defName>FishingPierFloorMarsh</defName>
+    <label>Fishing pier floor</label>
+    <texturePath>Terrain/Surfaces/Marsh</texturePath>
+    <edgeType>FadeRough</edgeType>
+    <renderPrecedence>326</renderPrecedence>
+    <pathCost>0</pathCost>
+    <fertility>0</fertility>
+    <filthAcceptanceMask>
+      <li>None</li>
+    </filthAcceptanceMask>
+    <avoidWander>false</avoidWander>
+    <changeable>false</changeable>
+    <holdSnow>true</holdSnow>
+  </TerrainDef>
+
+</Defs>

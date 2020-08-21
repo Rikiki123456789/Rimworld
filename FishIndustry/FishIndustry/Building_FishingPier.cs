@@ -32,7 +32,7 @@ namespace FishIndustry
         public bool allowFishing = true;
         public bool allowUsingGrain = true;
 
-        public const float baseFishSpawnMtbPier = 6f * GenDate.TicksPerDay;
+        public const float baseFishSpawnMtbPier = 4f * GenDate.TicksPerDay;
         public List<IntVec3> aquaticCells = new List<IntVec3>();
         
         public const float aquaticAreaRadius = 10f;

@@ -51,8 +51,8 @@ namespace FishIndustry
 
             int fishingDuration = (int)baseFishingDuration;
             Building_FishingPier fishingPier = this.TargetThingA as Building_FishingPier;
-            int thrownCornCount = 0;
-            int nextCornThrowTick = 0;
+            int thrownGrainCount = 0;
+            int nextGrainThrowTick = 0;
 
             this.FailOnBurningImmobile(fishingPierIndex);
 
@@ -78,29 +78,30 @@ namespace FishIndustry
                         this.ReadyForNextToil();
                         return;
                     }
-                    if (Find.TickManager.TicksGame >= nextCornThrowTick)
+                    if (Find.TickManager.TicksGame >= nextGrainThrowTick)
                     {
-                        nextCornThrowTick = Find.TickManager.TicksGame + 3 * GenTicks.TicksPerRealSecond;
-                        // Look for corn in inventory.
-                        Thing corn = null;
+                        nextGrainThrowTick = Find.TickManager.TicksGame + 3 * GenTicks.TicksPerRealSecond;
+                        // Look for grain in inventory.
+                        Thing grain = null;
                         foreach (Thing thing in this.pawn.inventory.innerContainer)
                         {
-                            if (thing.def == Util_FishIndustry.RawCornDef)
+                            if ((thing.def == Util_FishIndustry.RawCornDef)
+                                || (thing.def == Util_FishIndustry.RawRiceDef))
                             {
-                                corn = thing;
+                                grain = thing;
                                 break;
                             }
                         }
-                        if ((corn == null)
-                            || (thrownCornCount >= grainCountToAttractFishes))
+                        if ((grain == null)
+                            || (thrownGrainCount >= grainCountToAttractFishes))
                         {
-                            fishingDuration -= Mathf.CeilToInt((float)fishingDuration * 0.75f * ((float)thrownCornCount / (float)grainCountToAttractFishes));
+                            fishingDuration -= Mathf.CeilToInt((float)fishingDuration * 0.75f * ((float)thrownGrainCount / (float)grainCountToAttractFishes));
                             this.ReadyForNextToil();
                             return;
                         }
-                        // Throw corn grains.
-                        thrownCornCount++;
-                        this.pawn.inventory.innerContainer.Take(corn, 1);
+                        // Throw grains.
+                        thrownGrainCount++;
+                        this.pawn.inventory.innerContainer.Take(grain, 1);
                         for (int cornGrainIndex = 0; cornGrainIndex < 5; cornGrainIndex++)
                         {
                             if (!this.pawn.Position.ShouldSpawnMotesAt(this.pawn.Map) || this.pawn.Map.moteCounter.Saturated)
@@ -130,6 +131,10 @@ namespace FishIndustry
             {
                 initAction = () =>
                 {
+                    // Set toil duration according to number of used grains.
+                    this.CurToil.defaultDuration = fishingDuration;
+                    this.ticksLeftThisToil = fishingDuration;
+
                     ThingDef moteDef = null;
                     if (fishingPier.Rotation == Rot4.North)
                     {
@@ -155,7 +160,7 @@ namespace FishIndustry
                 tickAction = () =>
                 {
                     this.pawn.skills.Learn(SkillDefOf.Shooting, skillGainPerTick);
-                    
+
                     if (this.fishingRodMote != null)
                     {
                         this.fishingRodMote.Maintain();

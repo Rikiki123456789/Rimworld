@@ -64,7 +64,7 @@ namespace FishIndustry
 
 		public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
 		{
-            Job job = new Job();
+            Job job = null;
             Building_FishingPier fishingPier = t as Building_FishingPier;
 
             if ((fishingPier.allowUsingGrain)
@@ -80,22 +80,20 @@ namespace FishIndustry
                 Thing corn = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map, ThingRequest.ForDef(Util_FishIndustry.RawCornDef), Verse.AI.PathEndMode.ClosestTouch, traverseParams, 9999f, predicate);
                 if (corn != null)
                 {
-                    return new Job(JobDefOf.TakeInventory, corn)
-                    {
-                        count = 4 * JobDriver_FishAtFishingPier.grainCountToAttractFishes
-                    };
+                    job = JobMaker.MakeJob(JobDefOf.TakeInventory, corn);
+                    job.count = 4 * JobDriver_FishAtFishingPier.grainCountToAttractFishes;
+                    return job;
                 }
                 // Look for rice to pick.
                 Thing rice = GenClosest.ClosestThingReachable(pawn.Position, pawn.Map, ThingRequest.ForDef(Util_FishIndustry.RawRiceDef), Verse.AI.PathEndMode.ClosestTouch, traverseParams, 9999f, predicate);
                 if (rice != null)
                 {
-                    return new Job(JobDefOf.TakeInventory, rice)
-                    {
-                        count = 4 * JobDriver_FishAtFishingPier.grainCountToAttractFishes
-                    };
+                    job = JobMaker.MakeJob(JobDefOf.TakeInventory, rice);
+                    job.count = 4 * JobDriver_FishAtFishingPier.grainCountToAttractFishes;
+                    return job;
                 }
             }
-            job = new Job(Util_FishIndustry.FishAtFishingPierJobDef, fishingPier, fishingPier.fishingSpotCell);
+            job = JobMaker.MakeJob(Util_FishIndustry.FishAtFishingPierJobDef, fishingPier, fishingPier.fishingSpotCell);
 
             return job;
 		}

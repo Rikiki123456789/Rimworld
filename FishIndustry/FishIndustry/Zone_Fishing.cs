@@ -19,7 +19,7 @@ namespace FishIndustry
     /// <permission>Use this code as you want, just remember to add a link to the corresponding Ludeon forum mod release thread.</permission>
     class Zone_Fishing : Zone
     {
-        public const float baseFishSpawnMtbZone = 9f * GenDate.TicksPerDay;
+        public const float baseFishSpawnMtbZone = 7f * GenDate.TicksPerDay;
 
         public int nextUpdateTick = 0;
 
@@ -28,7 +28,7 @@ namespace FishIndustry
         public int riverCellsCount = 0;
         public int marshCellsCount = 0;
         public bool isAffectedByBiome = false;
-        public bool isAffectedByToxicFallout = false;
+        public bool isAffectedByMapCondition = false;
         public bool isAffectedByBadTemperature = false;
         public int maxFishStock = -1; // Will be updated in GetInspectString if set to -1.
         
@@ -201,7 +201,7 @@ namespace FishIndustry
 
             // Update zone properties.
             Util_Zone_Fishing.UpdateZoneProperties(this.Map, this.Cells, ref this.oceanCellsCount, ref this.riverCellsCount, ref this.marshCellsCount,
-                ref this.isAffectedByBiome, ref this.isAffectedByToxicFallout, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
+                ref this.isAffectedByBiome, ref this.isAffectedByMapCondition, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
             this.cachedSpeciesInZone = Util_Zone_Fishing.GetSpeciesInZoneText(this.Map.Biome, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount);
 
             // Udpdate fish stock. 
@@ -210,7 +210,7 @@ namespace FishIndustry
             {
                 float fishSpawnRateFactor = 0f;
                 Util_Zone_Fishing.ComputeFishSpawnRateFactor(this.Map, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount,
-                    this.isAffectedByToxicFallout, this.isAffectedByBadTemperature, out fishSpawnRateFactor);
+                    this.isAffectedByMapCondition, this.isAffectedByBadTemperature, out fishSpawnRateFactor);
                 cachedFishSpawnMtb = baseFishSpawnMtbZone * fishSpawnRateFactor;
 
                 // Check if fishes should be spawned.
@@ -399,7 +399,7 @@ namespace FishIndustry
                 // Update after a savegame loading for example.
                 UpdateCellsAndFishingSpots();
                 Util_Zone_Fishing.UpdateZoneProperties(this.Map, this.Cells, ref this.oceanCellsCount, ref this.riverCellsCount, ref this.marshCellsCount,
-                    ref this.isAffectedByBiome, ref this.isAffectedByToxicFallout, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
+                    ref this.isAffectedByBiome, ref this.isAffectedByMapCondition, ref this.isAffectedByBadTemperature, ref this.maxFishStock);
                 this.cachedSpeciesInZone = Util_Zone_Fishing.GetSpeciesInZoneText(this.Map.Biome, this.oceanCellsCount, this.riverCellsCount, this.marshCellsCount);
             }
             // Fish stock.
@@ -420,7 +420,7 @@ namespace FishIndustry
             }
             // Affections.
             if (this.isAffectedByBiome
-                || this.isAffectedByToxicFallout
+                || this.isAffectedByMapCondition
                 || this.isAffectedByBadTemperature)
             {
                 stringBuilder.AppendLine();
@@ -430,7 +430,7 @@ namespace FishIndustry
                 {
                     effects.AppendWithComma("FishIndustry.AffectedByBiome".Translate());
                 }
-                if (this.isAffectedByToxicFallout)
+                if (this.isAffectedByMapCondition)
                 {
                     effects.AppendWithComma("FishIndustry.AffectedByToxicFallout".Translate());
                 }
