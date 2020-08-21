@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <WorkGiverDef>
+    <defName>HunterHunt</defName> <!-- Must override it to set its priority over the other fishing jobs. -->
+    <label>hunt</label>
+    <giverClass>WorkGiver_HunterHunt</giverClass>
+    <workType>Hunting</workType>
+    <priorityInType>100</priorityInType>
+    <verb>hunt</verb>
+    <gerund>hunting</gerund>
+    <tagToGive>Fieldwork</tagToGive>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>WorkGiver_UseAquacultureBasin</defName>
+    <giverClass>FishIndustry.WorkGiver_AquacultureBasin</giverClass>
+    <workType>Hunting</workType>
+    <priorityInType>92</priorityInType>
+    <fixedBillGiverDefs>
+      <li>AquacultureBasin</li>
+    </fixedBillGiverDefs>
+    <verb>use</verb>
+    <gerund>using</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>WorkGiver_FishAtFishingPier</defName>
+    <giverClass>FishIndustry.WorkGiver_FishingPier</giverClass>
+    <workType>Hunting</workType>
+    <priorityInType>89</priorityInType>
+    <fixedBillGiverDefs>
+      <li>FishingPier</li>
+    </fixedBillGiverDefs>
+    <verb>fish</verb>
+    <gerund>fishing</gerund>
+    <tagToGive>Fieldwork</tagToGive>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>WorkGiver_FishAtFishingZone</defName>
+    <giverClass>FishIndustry.WorkGiver_FishingZone</giverClass>
+    <workType>Hunting</workType>
+    <priorityInType>88</priorityInType>
+    <verb>fish</verb>
+    <gerund>fishing</gerund>
+    <scanThings>false</scanThings>
+    <scanCells>true</scanCells>
+    <tagToGive>Fieldwork</tagToGive>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+  </WorkGiverDef>
+
+</Defs>

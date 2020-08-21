@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Patch>
+
+  <Operation Class="PatchOperationSequence">
+    <success>Always</success>
+    <operations>
+      <li Class="PatchOperationAdd">
+        <xpath>/Defs/DesignationCategoryDef[defName = "Zone"]/specialDesignatorClasses</xpath>
+        <value>
+          <li>FishIndustry.Designator_ZoneAdd_Fishing</li>
+        </value>
+      </li>
+    </operations>
+  </Operation>
+
+</Patch>

@@ -69,15 +69,15 @@ namespace FishIndustry
 
             if (aquacultureBasin.fishIsHarvestable)
             {
-                job = new Job(Util_FishIndustry.AquacultureBasinHarvestJobDef, aquacultureBasin);
+                job = JobMaker.MakeJob(Util_FishIndustry.AquacultureBasinHarvestJobDef, aquacultureBasin);
             }
             else if (aquacultureBasin.speciesShouldBeChanged)
             {
-                job = new Job(Util_FishIndustry.AquacultureBasinChangeSpeciesJobDef, aquacultureBasin);
+                job = JobMaker.MakeJob(Util_FishIndustry.AquacultureBasinChangeSpeciesJobDef, aquacultureBasin);
             }
             else if (aquacultureBasin.shouldBeMaintained)
             {
-                job = new Job(Util_FishIndustry.AquacultureBasinMaintainJobDef, aquacultureBasin);
+                job = JobMaker.MakeJob(Util_FishIndustry.AquacultureBasinMaintainJobDef, aquacultureBasin);
             }
             return job;
 		}

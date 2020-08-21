@@ -8,6 +8,7 @@ using RimWorld;      // RimWorld specific functions are found here
 using Verse;         // RimWorld universal objects are here
 using Verse.AI;      // Needed when you do something with the AI
 using Verse.Sound;   // Needed when you do something with the Sound
+using System.Threading;
 
 namespace FishIndustry
 {
@@ -36,6 +37,13 @@ namespace FishIndustry
             fishBreedQuantityFactor = list.Slider(fishBreedQuantityFactor, 0.1f, 100f);
             list.Gap(12f);
             list.CheckboxLabeled("FishIndustry.Settings_BiomeRestrictionLabel".Translate(), ref biomeRestrictionsIsEnabled, "FishIndustry.Settings_BiomeRestrictionDesc".Translate());
+            list.Gap(12f);
+            if(list.ButtonText("Reset default values"))
+            {
+                fishRespawnRateFactor = 1f;fishBreedQuantityFactor = 1f;
+                fishBreedQuantityFactor = 1f;
+                biomeRestrictionsIsEnabled = true;
+            }
             list.End();
         }
     }

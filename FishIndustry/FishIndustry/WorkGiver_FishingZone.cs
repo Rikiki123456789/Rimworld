@@ -51,7 +51,7 @@ namespace FishIndustry
 
         public override Job JobOnCell(Pawn pawn, IntVec3 cell, bool forced = false)
         {
-            return new Job(Util_FishIndustry.FishAtFishingZoneJobDef, cell);
+            return JobMaker.MakeJob(Util_FishIndustry.FishAtFishingZoneJobDef, cell);
         }
     }
 }
