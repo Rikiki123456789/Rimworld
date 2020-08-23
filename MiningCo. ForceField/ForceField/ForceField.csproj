@@ -195,7 +195,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. ForceField\Assemblies\1.2"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. ForceField\1.2\Assemblies"
 
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. ForceField" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. ForceField"</PostBuildEvent>
   </PropertyGroup>

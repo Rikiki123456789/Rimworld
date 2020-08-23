@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LaserFencePylon</defName>
+    <label>laser fence pylon</label>
+    <description>An advanced laser fence pylon.
+- It will automatically connect to nearby pylons in cardinal directions.
+- Fence in each direction can be independantly toggled on or off.
+- Max range of a laser fence: 7 cells.
+
+Warning! Always wear safety glasses before any maintenance operation. Local wildlife/vegetation may catch fire if directly exposed to the laser.</description>
+    <thingClass>LaserFence.Building_LaserFencePylon</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Building/Security/LaserFencePylon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+      <shadowData>
+        <volume>(0.3, 1.0, 0.3)</volume>
+      </shadowData>
+    </graphicData>
+    <castEdgeShadows>false</castEdgeShadows>
+    <placeWorkers>
+      <li>LaserFence.PlaceWorker_LaserFencePylon</li>
+    </placeWorkers>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
+    <altitudeLayer>Building</altitudeLayer>
+    <passability>Impassable</passability>
+    <fillPercent>0.6</fillPercent>
+    <rotatable>true</rotatable>
+    <statBases>
+      <MaxHitPoints>400</MaxHitPoints>
+      <WorkToBuild>2000</WorkToBuild>
+      <Flammability>0.0</Flammability>
+      <Mass>20</Mass>
+    </statBases>
+    <building>
+      <allowAutoroof>false</allowAutoroof>
+    </building>
+    <holdsRoof>false</holdsRoof>
+    <size>(1,1)</size>
+    <costList>
+      <ComponentIndustrial>1</ComponentIndustrial>
+      <Steel>30</Steel>
+    </costList>
+    <hasInteractionCell>true</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <designationCategory>Security</designationCategory>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>false</shortCircuitInRain>
+        <basePowerConsumption>100</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+    </comps>
+    <researchPrerequisites>
+      <li>ResearchLaserFence</li>
+    </researchPrerequisites>
+    <constructionSkillPrerequisite>8</constructionSkillPrerequisite>
+  </ThingDef>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LaserFence</defName>
+    <label>laser fence</label>
+    <description>An impassable laser fence.</description>
+    <thingClass>LaserFence.Building_LaserFence</thingClass>
+    <category>Projectile</category> <!-- To avoid wiping items when being spawned (like a freshly uninstalled pylon). -->
+    <graphicData>
+      <texPath>Things/Building/Security/LaserFence</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <altitudeLayer>Projectile</altitudeLayer>
+    <passability>Impassable</passability>
+    <tickerType>Normal</tickerType>
+    <selectable>false</selectable>
+    <fillPercent>0.0</fillPercent>
+    <useHitPoints>false</useHitPoints>
+    <statBases>
+      <Flammability>0.0</Flammability>
+    </statBases>
+    <holdsRoof>false</holdsRoof>
+    <building>
+      <isInert>true</isInert>
+      <isEdifice>false</isEdifice>
+      <deconstructible>false</deconstructible>
+      <claimable>false</claimable>
+      <allowAutoroof>false</allowAutoroof>
+    </building>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  </ThingDef>
+
+</Defs>

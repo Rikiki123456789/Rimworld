@@ -211,7 +211,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. DrillTurret\Assemblies\1.2"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. DrillTurret\1.2\Assemblies"
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. DrillTurret" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. DrillTurret"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

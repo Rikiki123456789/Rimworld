@@ -65,7 +65,7 @@ namespace LaserFence
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             Building_LaserFenceConsole console = t as Building_LaserFenceConsole;
-            return new Job(Util_LaserFence.SwitchLaserFenceConsoleDef, console);
+            return JobMaker.MakeJob(Util_LaserFence.SwitchLaserFenceConsoleDef, console);
 		}
     }
 }

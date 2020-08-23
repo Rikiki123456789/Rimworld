@@ -22,7 +22,7 @@ namespace LaserFence
         {
             get
             {
-                return PathEndMode.Touch;
+                return PathEndMode.InteractionCell;
             }
         }
 
@@ -55,7 +55,7 @@ namespace LaserFence
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
             Building_LaserFencePylon pylon = t as Building_LaserFencePylon;
-            return new Job(Util_LaserFence.SwitchLaserFenceDef, pylon);
+            return JobMaker.MakeJob(Util_LaserFence.SwitchLaserFenceDef, pylon);
 		}
     }
 }

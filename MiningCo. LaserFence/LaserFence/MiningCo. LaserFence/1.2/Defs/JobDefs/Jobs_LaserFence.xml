@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <JobDef>
+		<defName>JobDef_SwitchLaserFence</defName>
+		<driverClass>LaserFence.JobDriver_SwitchLaserFence</driverClass>
+		<reportString>Switching laser fence.</reportString>
+	</JobDef>
+
+  <JobDef>
+		<defName>JobDef_SwitchLaserConsole</defName>
+		<driverClass>LaserFence.JobDriver_OperateLaserFenceConsole</driverClass>
+		<reportString>Switching laser fence with console.</reportString>
+	</JobDef>
+
+</Defs>

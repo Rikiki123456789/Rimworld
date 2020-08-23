@@ -34,8 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.0.6955.24033, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -159,76 +158,6 @@
     <Reference Include="UnityEngine.TerrainPhysicsModule">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TLSModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UNETModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.WindModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.XRModule.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_LaserFenceConsole.cs" />
@@ -248,47 +177,61 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MiningCo. LaserFence\1.1\Defs\JobDefs\Jobs_LaserFence.xml" />
+    <Content Include="MiningCo. LaserFence\1.1\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. LaserFence\1.1\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. LaserFence\1.1\Defs\ThingDefs\Building_LaserFence.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. LaserFence\1.1\Defs\ThingDefs\Building_LaserFenceConsole.xml" />
+    <Content Include="MiningCo. LaserFence\1.1\Defs\WorkGiverDefs\WorkGivers_LaserFence.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="MiningCo. LaserFence\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. LaserFence\About\PublishedFileId.txt" />
-    <Content Include="MiningCo. LaserFence\Defs\JobDefs\Jobs_LaserFence.xml" />
-    <Content Include="MiningCo. LaserFence\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml">
+    <Content Include="MiningCo. LaserFence\1.2\Defs\JobDefs\Jobs_LaserFence.xml" />
+    <Content Include="MiningCo. LaserFence\1.2\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. LaserFence\Defs\ResearchProjectDefs\ResearchTabs.xml" />
-    <Content Include="MiningCo. LaserFence\Defs\ThingDefs\Building_LaserFenceConsole.xml" />
-    <Content Include="MiningCo. LaserFence\Defs\ThingDefs\Building_LaserFence.xml">
+    <Content Include="MiningCo. LaserFence\1.2\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. LaserFence\1.2\Defs\ThingDefs\Building_LaserFenceConsole.xml" />
+    <Content Include="MiningCo. LaserFence\1.2\Defs\ThingDefs\Building_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. LaserFence\Defs\WorkGiverDefs\WorkGivers_LaserFence.xml">
+    <Content Include="MiningCo. LaserFence\1.2\Defs\WorkGiverDefs\WorkGivers_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. LaserFence\Textures\Effects\LaserFence.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Things\Building\Security\DummyTexture.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Things\Building\Security\LaserFencePylon.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\EastFenceActive.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\EastFenceInactive.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\NorthFenceActive.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\NorthFenceInactive.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\SouthFenceActive.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\SouthFenceInactive.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\WestFenceActive.png" />
-    <Content Include="MiningCo. LaserFence\Textures\Ui\Commands\WestFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Effects\LaserFence.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Things\Building\Security\DummyTexture.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Things\Building\Security\LaserFencePylon.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\EastFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\EastFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\NorthFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\NorthFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\SouthFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\SouthFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\WestFenceActive.png" />
+    <Content Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\WestFenceInactive.png" />
+    <Content Include="MiningCo. LaserFence\LoadFolders.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MiningCo. LaserFence\Assemblies\" />
+    <Folder Include="MiningCo. LaserFence\1.1\Assemblies\" />
+    <Folder Include="MiningCo. LaserFence\1.2\Assemblies\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MiningCo. LaserFence\Textures\Effects\Thumbs.db" />
-    <None Include="MiningCo. LaserFence\Textures\Things\Building\Security\LaserFencePylon.pdn" />
-    <None Include="MiningCo. LaserFence\Textures\Things\Building\Security\Thumbs.db" />
-    <None Include="MiningCo. LaserFence\Textures\Ui\Commands\NorthFence.pdn" />
-    <None Include="MiningCo. LaserFence\Textures\Ui\Thumbs.db" />
+    <None Include="MiningCo. LaserFence\Common\Textures\Effects\Thumbs.db" />
+    <None Include="MiningCo. LaserFence\Common\Textures\Things\Building\Security\LaserFencePylon.pdn" />
+    <None Include="MiningCo. LaserFence\Common\Textures\Things\Building\Security\Thumbs.db" />
+    <None Include="MiningCo. LaserFence\Common\Textures\Ui\Commands\NorthFence.pdn" />
+    <None Include="MiningCo. LaserFence\Common\Textures\Ui\Thumbs.db" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. LaserFence\Assemblies"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. LaserFence\1.2\Assemblies\"
 
 
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. LaserFence" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. LaserFence"</PostBuildEvent>

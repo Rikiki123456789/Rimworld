@@ -214,7 +214,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. AlertSpeaker\Assemblies\1.2"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. AlertSpeaker\1.2\Assemblies"
 
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. AlertSpeaker" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. AlertSpeaker"</PostBuildEvent>
   </PropertyGroup>

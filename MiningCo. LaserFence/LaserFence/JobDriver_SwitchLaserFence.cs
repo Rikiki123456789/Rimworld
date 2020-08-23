@@ -30,7 +30,7 @@ namespace LaserFence
             this.FailOnBurningImmobile(pylonIndex);
             this.FailOnDespawnedNullOrForbidden(pylonIndex);
 
-            yield return Toils_Goto.GotoCell(pylonIndex, PathEndMode.Touch);
+            yield return Toils_Goto.GotoThing(pylonIndex, PathEndMode.InteractionCell);
 
             yield return Toils_General.Wait(60);
 

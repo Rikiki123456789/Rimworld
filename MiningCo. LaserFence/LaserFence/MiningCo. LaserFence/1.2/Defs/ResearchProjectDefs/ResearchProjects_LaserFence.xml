@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ResearchLaserFence</defName>
+    <label>laser fence</label>
+    <description>Research how to build laser fences. Those advanced fences will allow you to keep those pesky critters away from your potato farm (and optionaly keep pirates away from your base)!</description>
+    <techLevel>Industrial</techLevel>
+    <baseCost>1200</baseCost>
+    <prerequisites>
+      <li>MultiAnalyzer</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <requiredResearchFacilities>
+      <li>MultiAnalyzer</li>
+    </requiredResearchFacilities>
+    <tab>MiningCo</tab>
+    <researchViewX>2</researchViewX>
+    <researchViewY>1</researchViewY>
+  </ResearchProjectDef>
+
+</Defs>
