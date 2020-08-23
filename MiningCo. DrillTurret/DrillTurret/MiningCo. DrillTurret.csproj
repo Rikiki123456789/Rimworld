@@ -157,75 +157,6 @@
     <Reference Include="UnityEngine.TerrainPhysicsModule">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TLSModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UNETModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.WindModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.XRModule.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_DrillTurret.cs" />
@@ -236,39 +167,51 @@
     <Compile Include="WorkGiver_OperateDrillTurret.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MiningCo. DrillTurret\About\About.xml">
+    <Content Include="MiningCo. DrillTurret\1.1\Defs\Effects\Effecter_LaserDrill.xml" />
+    <Content Include="MiningCo. DrillTurret\1.1\Defs\JobDefs\Jobs_Work.xml" />
+    <Content Include="MiningCo. DrillTurret\1.1\Defs\ResearchProjectDefs\ResearchProjects_DrillTurret.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. DrillTurret\About\Preview.png" />
-    <Content Include="MiningCo. DrillTurret\About\PublishedFileId.txt" />
-    <Content Include="MiningCo. DrillTurret\Defs\Effects\Effecter_LaserDrill.xml" />
-    <Content Include="MiningCo. DrillTurret\Defs\JobDefs\Jobs_Work.xml" />
-    <Content Include="MiningCo. DrillTurret\Defs\ResearchProjectDefs\ResearchProjects_DrillTurret.xml">
+    <Content Include="MiningCo. DrillTurret\1.1\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. DrillTurret\1.1\Defs\ThingDefs_Buildings\Buildings_DrillTurret.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. DrillTurret\Defs\ResearchProjectDefs\ResearchTabs.xml" />
-    <Content Include="MiningCo. DrillTurret\Defs\ThingDefs_Buildings\Buildings_DrillTurret.xml">
+    <Content Include="MiningCo. DrillTurret\1.1\Defs\WorkGiverDefs\WorkGivers.xml" />
+    <Content Include="MiningCo. DrillTurret\Common\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. DrillTurret\Defs\WorkGiverDefs\WorkGivers.xml" />
-    <Content Include="MiningCo. DrillTurret\Textures\Effects\DrillTurret_LaserBeam.png" />
-    <Content Include="MiningCo. DrillTurret\Textures\Things\Building\MenuIcon_DrillTurret.png" />
-    <Content Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_Off.png" />
-    <Content Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_On.png" />
-    <Content Include="MiningCo. DrillTurret\Textures\Ui\Commands\CommandButton_SwitchMode.png" />
+    <Content Include="MiningCo. DrillTurret\Common\About\Preview.png" />
+    <Content Include="MiningCo. DrillTurret\Common\About\PublishedFileId.txt" />
+    <Content Include="MiningCo. DrillTurret\1.2\Defs\Effects\Effecter_LaserDrill.xml" />
+    <Content Include="MiningCo. DrillTurret\1.2\Defs\JobDefs\Jobs_Work.xml" />
+    <Content Include="MiningCo. DrillTurret\1.2\Defs\ResearchProjectDefs\ResearchProjects_DrillTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. DrillTurret\1.2\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. DrillTurret\1.2\Defs\ThingDefs_Buildings\Buildings_DrillTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. DrillTurret\1.2\Defs\WorkGiverDefs\WorkGivers.xml" />
+    <Content Include="MiningCo. DrillTurret\LoadFolders.xml" />
+    <Content Include="MiningCo. DrillTurret\Common\Textures\Effects\DrillTurret_LaserBeam.png" />
+    <Content Include="MiningCo. DrillTurret\Common\Textures\Things\Building\MenuIcon_DrillTurret.png" />
+    <Content Include="MiningCo. DrillTurret\Common\Textures\Things\Building\DrillTurret_Off.png" />
+    <Content Include="MiningCo. DrillTurret\Common\Textures\Things\Building\DrillTurret_On.png" />
+    <Content Include="MiningCo. DrillTurret\Common\Textures\Ui\Commands\CommandButton_SwitchMode.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MiningCo. DrillTurret\Textures\Things\Building\MenuIcon_DrillTurret.pdn" />
-    <None Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_Off.pdn" />
-    <None Include="MiningCo. DrillTurret\Textures\Things\Building\DrillTurret_On.pdn" />
-    <None Include="MiningCo. DrillTurret\Textures\Ui\Commands\CommandButton_SwitchMode.pdn" />
+    <None Include="MiningCo. DrillTurret\Common\Textures\Things\Building\MenuIcon_DrillTurret.pdn" />
+    <None Include="MiningCo. DrillTurret\Common\Textures\Things\Building\DrillTurret_Off.pdn" />
+    <None Include="MiningCo. DrillTurret\Common\Textures\Things\Building\DrillTurret_On.pdn" />
+    <None Include="MiningCo. DrillTurret\Common\Textures\Ui\Commands\CommandButton_SwitchMode.pdn" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MiningCo. DrillTurret\Assemblies\" />
+    <Folder Include="MiningCo. DrillTurret\1.1\Assemblies\" />
+    <Folder Include="MiningCo. DrillTurret\1.2\Assemblies\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. DrillTurret\Assemblies"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. DrillTurret\Assemblies\1.2"
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. DrillTurret" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. DrillTurret"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

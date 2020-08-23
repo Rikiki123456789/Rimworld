@@ -11,7 +11,7 @@
       <li>Hydroponics</li>
     </prerequisites>
     <tab>FishIndustry</tab>
-    <researchViewX>1</researchViewX>
+    <researchViewX>0</researchViewX>
     <researchViewY>0</researchViewY>
   </ResearchProjectDef>
   

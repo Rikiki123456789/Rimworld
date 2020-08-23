@@ -70,7 +70,7 @@ namespace DrillTurret
 
         public override Job JobOnThing(Pawn pawn, Thing t, bool forced = false)
         {
-            return new Job(Util_DrillTurret.operateDrillTurretJobDef, t, 1500, true);
+            return JobMaker.MakeJob(Util_DrillTurret.operateDrillTurretJobDef, t, 1500, true);
         }
     }
 }
