@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ApparelMakeableBase">
+    <defName>Apparel_MiningVest</defName>
+    <label>mining vest</label>
+    <description>A working apparel designed for mining operations. Embeds a personal light.</description>
+    <thingClass>MiningHelmet.ApparelWithMiningLight</thingClass>
+    <techLevel>Industrial</techLevel>
+    <tickerType>Normal</tickerType>
+    <recipeMaker>
+      <researchPrerequisite>Electricity</researchPrerequisite>
+    </recipeMaker>
+    <graphicData>
+      <texPath>Things/Apparel/MiningVest/MiningVest</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <costList>
+      <Cloth>80</Cloth>
+      <ComponentIndustrial>1</ComponentIndustrial>
+  </costList>
+    <thingCategories>
+      <li>Apparel</li>
+    </thingCategories>
+    <statBases>
+      <MaxHitPoints>160</MaxHitPoints>
+      <WorkToMake>20000</WorkToMake>
+      <Mass>2.0</Mass>
+      <ArmorRating_Blunt>0.02</ArmorRating_Blunt>
+      <ArmorRating_Sharp>0.10</ArmorRating_Sharp>
+      <ArmorRating_Heat>0.10</ArmorRating_Heat>
+      <Insulation_Cold>10</Insulation_Cold>
+      <Insulation_Heat>10</Insulation_Heat>
+      <EquipDelay>3</EquipDelay>
+    </statBases>
+    <equippedStatOffsets>
+      <MiningSpeed>0.05</MiningSpeed>
+      <WorkSpeedGlobal>0.05</WorkSpeedGlobal>
+    </equippedStatOffsets>
+    <generateCommonality>0.2</generateCommonality>
+    <apparel>
+      <bodyPartGroups>
+        <li>Torso</li>
+        <li>Shoulders</li>
+        <li>Arms</li>
+        <li>Legs</li>
+      </bodyPartGroups>
+      <wornGraphicPath>Things/Apparel/MiningVest/MiningVest</wornGraphicPath>
+      <layers>
+        <li>Shell</li>
+      </layers>
+    </apparel>
+    <tradeTags>
+      <li>MiningVest</li>
+    </tradeTags>
+  </ThingDef>
+
+</Defs>
