@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <FishMouth.label>口</FishMouth.label>
+  <LeftGill.label>左エラ</LeftGill.label>
+  <RightGill.label>右エラ</RightGill.label>
+  <LeftFin.label>左ヒレ</LeftFin.label>
+  <RightFin.label>右ヒレ</RightFin.label>
+  <DorsalFin.label>右ヒレ</DorsalFin.label>
+  <VentralFin.label>左ヒレ</VentralFin.label>
+  <CaudalFin.label>右ヒレ</CaudalFin.label>
+  <SquidBody.label>胴体</SquidBody.label>
+  <SquidHead.label>頭</SquidHead.label>
+  <SquidMouth.label>口</SquidMouth.label>
+  <Tentacle.label>触手</Tentacle.label>
+
+</LanguageData>

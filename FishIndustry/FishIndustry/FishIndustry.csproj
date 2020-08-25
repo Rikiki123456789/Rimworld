@@ -192,7 +192,6 @@
     <Folder Include="FishIndustry\1.1\Assemblies\" />
     <Folder Include="FishIndustry\1.1\Languages\Japanese\" />
     <Folder Include="FishIndustry\1.2\Assemblies\" />
-    <Folder Include="FishIndustry\1.2\Languages\Japanese\" />
     <Folder Include="FishIndustry\Common\Textures\Ui\" />
   </ItemGroup>
   <ItemGroup>
@@ -243,9 +242,25 @@
     <Content Include="FishIndustry\1.2\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\1.2\Languages\English\Keyed\FishIndustry_Strings.xml">
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\BodyDef\Bodies_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\BodyPartDef\BodyParts_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\IncidentDef\Incident_MicroFungus.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\JobDef\Jobs_FishAndHarvest.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\JobDef\Jobs_Joy.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\PawnKindDef\Races_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\RecipeDef\Recipes_PrepareFishes.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ResearchProjectDef\ResearchProjects_FishIndustry.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ResearchTabDef\ResearchTabs.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\TerrainDef\Terrain_FishingPierFloor.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ThingDef\Building_AquacultureBasin.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ThingDef\Building_FishingPier.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ThingDef\Items_Resource_Stuff_Leather.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ThingDef\Item_Oyster.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ThingDef\Item_Pearl.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ThingDef\Races_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\ThingDef\_Things_Mote.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\WorkGiverDef\WorkGivers_FishIndustry.xml" />
+    <Content Include="FishIndustry\1.2\Languages\Japanese\Keyed\FriendlyName.txt" />
     <Content Include="FishIndustry\1.2\Patches\DesignationCategories.xml">
       <SubType>Designer</SubType>
     </Content>
