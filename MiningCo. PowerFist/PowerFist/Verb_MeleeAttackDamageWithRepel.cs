@@ -127,7 +127,12 @@ namespace PowerFist
         {
             foreach (Apparel apparel in this.CasterPawn.apparel.WornApparel)
             {
-                if (apparel.def == ThingDef.Named("Apparel_PowerArmor"))
+                if ((apparel.def == ThingDef.Named("Apparel_PowerArmor"))
+                    || (apparel.def == ThingDef.Named("Apparel_ArmorMarinePrestige"))
+                    || (apparel.def == ThingDef.Named("Apparel_ArmorMarineGrenadier"))
+                    || (apparel.def == ThingDef.Named("Apparel_ArmorCataphract"))
+                    || (apparel.def == ThingDef.Named("Apparel_ArmorCataphractPrestige"))
+                    || (apparel.def == ThingDef.Named("Apparel_ArmorCataphractPhoenix")))
                 {
                     return true;
                 }
