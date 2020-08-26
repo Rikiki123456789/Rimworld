@@ -242,6 +242,9 @@
     <Content Include="FishIndustry\1.2\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="FishIndustry\1.2\Languages\English\Keyed\FishIndustry_Strings.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\BodyDef\Bodies_Animal_Fish.xml" />
     <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\BodyPartDef\BodyParts_Animal_Fish.xml" />
     <Content Include="FishIndustry\1.2\Languages\Japanese\DefInjected\IncidentDef\Incident_MicroFungus.xml" />
