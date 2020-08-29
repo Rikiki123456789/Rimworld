@@ -31,11 +31,10 @@ namespace Spaceship
         {
             if (pawn.Position != pawn.DutyLocation())
             {
-                return new Job(JobDefOf.Goto, pawn.DutyLocation())
-                {
-                    locomotionUrgency = pawn.mindState.duty.locomotion,
-                    expiryInterval = this.jobMaxDuration
-                };
+                Job job = JobMaker.MakeJob(JobDefOf.Goto, pawn.DutyLocation());
+                job.locomotionUrgency = pawn.mindState.duty.locomotion;
+                job.expiryInterval = this.jobMaxDuration;
+                return job;
             }
             else
             {
@@ -50,7 +49,7 @@ namespace Spaceship
                 }
                 if (spaceship != null)
                 {
-                    return new Job(Util_JobDefOf.BoardSpaceship, spaceship);
+                    return JobMaker.MakeJob(Util_JobDefOf.BoardSpaceship, spaceship);
                 }
             }
             return null;

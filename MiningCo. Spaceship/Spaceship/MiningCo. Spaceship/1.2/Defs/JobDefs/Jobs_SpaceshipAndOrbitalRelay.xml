@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <JobDef>
+		<defName>JobDef_UseOrbitalRelayConsole</defName>
+		<driverClass>Spaceship.JobDriver_UseOrbitalRelayConsole</driverClass>
+		<reportString>using TargetA</reportString>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+	</JobDef>
+
+  <JobDef>
+		<defName>JobDef_TradeWithCargoSpaceship</defName>
+		<driverClass>Spaceship.JobDriver_TradeWithCargoSpaceship</driverClass>
+		<reportString>trading with TargetA</reportString>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+	</JobDef>
+
+  <JobDef>
+		<defName>JobDef_BoardSpaceship</defName>
+		<driverClass>Spaceship.JobDriver_BoardSpaceship</driverClass>
+		<reportString>boarding TargetA</reportString>
+    <alwaysShowWeapon>true</alwaysShowWeapon>
+	</JobDef>
+
+  <JobDef>
+		<defName>JobDef_CarryDownedPawn</defName>
+		<driverClass>Spaceship.JobDriver_CarryDownedPawn</driverClass>
+		<reportString>rescuing TargetA</reportString>
+	</JobDef>
+
+  <JobDef>
+		<defName>JobDef_BoardMedicalSpaceship</defName>
+		<driverClass>Spaceship.JobDriver_BoardMedicalSpaceship</driverClass>
+		<reportString>boarding TargetA</reportString>
+    <alwaysShowWeapon>false</alwaysShowWeapon>
+	</JobDef>
+
+  <JobDef>
+    <defName>JobDef_TransferToMedibay</defName>
+    <driverClass>Spaceship.JobDriver_TransferToMedibay</driverClass>
+    <reportString>transferring TargetA to medibay</reportString>
+  </JobDef>
+
+</Defs>

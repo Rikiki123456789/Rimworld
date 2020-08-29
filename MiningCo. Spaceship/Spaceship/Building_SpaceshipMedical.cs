@@ -251,7 +251,7 @@ namespace Spaceship
                     {
                         Action action = delegate
                         {
-                            Job job = new Job(Util_JobDefOf.BoardMedicalSpaceship, this);
+                            Job job = JobMaker.MakeJob(Util_JobDefOf.BoardMedicalSpaceship, this);
                             selPawn.jobs.TryTakeOrderedJob(job);
                         };
                         string optionLabel = "Board medical spaceship (" + Util_Spaceship.orbitalHealingCost + " silver)";

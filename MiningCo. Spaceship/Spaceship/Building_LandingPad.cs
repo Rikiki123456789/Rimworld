@@ -141,6 +141,22 @@ namespace Spaceship
             beacon.InitializeParameters(this, Color.red, lightPeriodInTicks, lightExternalFrameDurationInTicks, lightPeriodInTicks / 2 + 6 * lightExternalFrameDelayInTicks);
         }
 
+        public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
+        {
+            Map map = this.Map;
+
+            // Destroy all landing pad beacons.
+            foreach (IntVec3 cell in this.OccupiedRect().Cells)
+            {
+                Thing thing = cell.GetFirstThing(this.Map, Util_ThingDefOf.LandingPadBeacon);
+                if (thing != null)
+                {
+                    thing.Destroy();
+                }
+            }
+            base.DeSpawn(mode);
+        }
+
         public override void Destroy(DestroyMode mode = DestroyMode.Vanish)
         {
             Map map = this.Map;

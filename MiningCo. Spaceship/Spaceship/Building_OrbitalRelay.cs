@@ -349,7 +349,7 @@ namespace Spaceship
             // Call MiningCo.
             Action action = delegate
             {
-                Job job = new Job(Util_JobDefOf.UseOrbitalRelayConsole, this);
+                Job job = JobMaker.MakeJob(Util_JobDefOf.UseOrbitalRelayConsole, this);
                 selPawn.jobs.TryTakeOrderedJob(job);
             };
             FloatMenuOption callMiningCoOption = new FloatMenuOption("Call MiningCo.", action);

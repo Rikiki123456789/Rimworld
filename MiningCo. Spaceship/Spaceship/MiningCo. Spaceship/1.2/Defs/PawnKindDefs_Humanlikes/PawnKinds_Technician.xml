@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="MiningCoPawnKindBase">
+    <defName>MiningCoTechnician</defName>
+    <label>technician</label>
+    <combatPower>40</combatPower>
+    <minGenerationAge>18</minGenerationAge>
+    <maxGenerationAge>57</maxGenerationAge>
+    <gearHealthRange>
+      <min>0.7</min>
+      <max>1.6</max>
+    </gearHealthRange>
+    <itemQuality>Normal</itemQuality>
+    <techHediffsMoney>
+      <min>250</min>
+      <max>450</max>
+    </techHediffsMoney>
+    <techHediffsTags>
+      <li>Simple</li>
+    </techHediffsTags>
+    <techHediffsChance>0.15</techHediffsChance>
+    <inventoryOptions>
+      <skipChance>0.2</skipChance>
+      <subOptionsChooseOne>
+        <li>
+          <choiceChance>90</choiceChance>
+          <thingDef>Silver</thingDef>
+          <countRange>
+            <min>10</min>
+            <max>50</max>
+          </countRange>
+        </li>
+      </subOptionsChooseOne>
+    </inventoryOptions>
+  </PawnKindDef>
+
+</Defs>

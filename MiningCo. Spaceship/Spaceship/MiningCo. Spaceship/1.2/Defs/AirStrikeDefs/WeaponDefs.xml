@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <Def Class="Spaceship.WeaponDef">
+    <defName>GatlingWeapon</defName>
+    <label>gatling</label>
+    <ammoDef>GatlingRound</ammoDef>
+    <soundCastDef>Shot_Minigun</soundCastDef>
+    <ammoQuantity>100</ammoQuantity>
+    <ticksBetweenShots>1</ticksBetweenShots>
+    <startShootingDistance>50</startShootingDistance>
+    <ammoTravelDistance>30</ammoTravelDistance>
+    <ammoDispersion>2.5</ammoDispersion>
+    <targetAcquireRange>3.5</targetAcquireRange>
+    <isTwinGun>true</isTwinGun>
+    <horizontalPositionOffset>3.5</horizontalPositionOffset>
+    <verticalPositionOffset>5.0</verticalPositionOffset>
+  </Def> 
+
+  <Def Class="Spaceship.WeaponDef">
+    <defName>AutocannonWeapon</defName>
+    <label>autocannon</label>
+    <ammoDef>AutocannonRound</ammoDef>
+    <soundCastDef>Shot_Shotgun</soundCastDef>
+    <ammoQuantity>12</ammoQuantity>
+    <ticksBetweenShots>8</ticksBetweenShots>
+    <startShootingDistance>50</startShootingDistance>
+    <ammoTravelDistance>30</ammoTravelDistance>
+    <ammoDispersion>2.5</ammoDispersion>
+    <targetAcquireRange>5.0</targetAcquireRange>
+    <isTwinGun>false</isTwinGun>
+    <horizontalPositionOffset>0</horizontalPositionOffset>
+    <verticalPositionOffset>9.0</verticalPositionOffset>
+  </Def>
+
+  <Def Class="Spaceship.WeaponDef">
+    <defName>RocketWeapon</defName>
+    <label>rocket rack</label>
+    <ammoDef>RocketAirstrike</ammoDef> <!-- Do not overwrite vanilla rocket def! -->
+    <soundCastDef>InfernoCannon_Fire</soundCastDef>
+    <ammoQuantity>8</ammoQuantity>
+    <ticksBetweenShots>14</ticksBetweenShots>
+    <startShootingDistance>55</startShootingDistance>
+    <ammoTravelDistance>45</ammoTravelDistance>
+    <isTwinGun>true</isTwinGun>
+    <horizontalPositionOffset>3.5</horizontalPositionOffset>
+    <verticalPositionOffset>0.0</verticalPositionOffset>
+  </Def>
+
+  <Def Class="Spaceship.WeaponDef">
+    <defName>IncendiaryBombWeapon</defName>
+    <label>incendiary bomb</label>
+    <ammoDef>IncendiaryBomb</ammoDef>
+    <soundCastDef>InfernoCannon_Fire</soundCastDef>
+    <ammoQuantity>3</ammoQuantity>
+    <ticksBetweenShots>60</ticksBetweenShots>
+    <startShootingDistance>10</startShootingDistance>
+    <ammoTravelDistance>5</ammoTravelDistance>
+    <isTwinGun>true</isTwinGun>
+    <horizontalPositionOffset>3.0</horizontalPositionOffset>
+    <verticalPositionOffset>0.0</verticalPositionOffset>
+    <disableRainDurationInTicks>30000</disableRainDurationInTicks>
+  </Def>
+
+</Defs>

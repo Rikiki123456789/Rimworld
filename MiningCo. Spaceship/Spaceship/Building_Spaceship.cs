@@ -273,7 +273,7 @@ namespace Spaceship
                 item = ThingMaker.MakeThing(itemDef, stuff);
                 item.stackCount = stackCount;
                 Thing placedItem = null;
-                GenDrop.TryDropSpawn(item, position + IntVec3Utility.RandomHorizontalOffset(radius), map, ThingPlaceMode.Near, out placedItem);
+                GenDrop.TryDropSpawn_NewTmp(item, position + IntVec3Utility.RandomHorizontalOffset(radius), map, ThingPlaceMode.Near, out placedItem);
             }
             return item;
         }

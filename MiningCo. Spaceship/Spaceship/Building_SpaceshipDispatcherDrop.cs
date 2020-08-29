@@ -91,7 +91,6 @@ namespace Spaceship
                 LordMaker.MakeNewLord(Util_Faction.MiningCoFaction, new LordJob_ExitMap(exitSpot), this.Map, droppedPawns);
                 // Spawn payment.
                 SpawnPayment(droppedPawns.Count);
-                Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, droppedPawns.Count);
             }
         }
     }

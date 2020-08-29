@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase" Name="BaseSpaceship">
+    <defName>Spaceship</defName>
+    <label>spaceship</label>
+    <description>A spaceship used by MiningCo. to maintain a link between ground operations and the orbital station orbiting around the planet.</description>
+    <thingClass>Spaceship.Building_Spaceship</thingClass>
+    <graphicData>
+      <texPath>Things/SupplySpaceship/SupplySpaceship</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(11,20)</drawSize>
+      <damageData>
+        <rect>(1,4,7,10)</rect>
+      </damageData>
+    </graphicData>
+    <altitudeLayer>PawnUnused</altitudeLayer> <!-- To be over pawns but under fire effect. -->
+    <passability>PassThroughOnly</passability>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0.0</staticSunShadowHeight>
+    <fillPercent>0.0</fillPercent>
+    <building>
+      <isEdifice>false</isEdifice>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+    </building>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MaxHitPoints>3000</MaxHitPoints>
+      <WorkToBuild>15000</WorkToBuild>
+      <Flammability>0.1</Flammability>
+      <Mass>10000</Mass>
+    </statBases>
+    <tickerType>Normal</tickerType>
+    <size>(9,18)</size>
+    <costList>
+      <Steel>5000</Steel>
+      <Plasteel>1000</Plasteel>
+      <ComponentIndustrial>50</ComponentIndustrial>
+      <ComponentSpacer>5</ComponentSpacer>
+    </costList>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseSpaceship">
+    <defName>SpaceshipCargo</defName>
+    <label>cargo spaceship</label>
+    <description>A spaceship used by MiningCo. to convey bulk resources and materials.</description>
+    <thingClass>Spaceship.Building_SpaceshipCargo</thingClass>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseSpaceship">
+    <defName>SpaceshipDamaged</defName>
+    <label>damaged spaceship</label>
+    <description>A spaceship used by MiningCo. in various missions.
+This ship is damaged and need materials to begin repairs.</description>
+    <thingClass>Spaceship.Building_SpaceshipDamaged</thingClass>
+    <specialDisplayRadius>9.9</specialDisplayRadius>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseSpaceship">
+    <defName>SpaceshipDispatcherDrop</defName>
+    <label>dispatcher spaceship</label>
+    <description>A spaceship used by MiningCo. to transport and dispatch expedition teams.</description>
+    <thingClass>Spaceship.Building_SpaceshipDispatcherDrop</thingClass>
+    <graphicData>
+      <texPath>Things/Dispatcher/Dispatcher</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseSpaceship">
+    <defName>SpaceshipDispatcherPick</defName>
+    <label>dispatcher spaceship</label>
+    <description>A spaceship used by MiningCo. to transport and dispatch expedition teams.</description>
+    <thingClass>Spaceship.Building_SpaceshipDispatcherPick</thingClass>
+    <graphicData>
+      <texPath>Things/Dispatcher/Dispatcher</texPath>
+    </graphicData>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseSpaceship">
+    <defName>SpaceshipMedical</defName>
+    <label>medical spaceship</label>
+    <description>A spaceship used by MiningCo. to assist ground operations. It provides medical assistance to nearby personnel.</description>
+    <thingClass>Spaceship.Building_SpaceshipMedical</thingClass>
+    <graphicData>
+      <texPath>Things/MedicalSpaceship/MedicalSpaceship</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(7,11)</drawSize>
+    </graphicData>
+    <size>(5,9)</size>
+    <statBases>
+      <MaxHitPoints>2000</MaxHitPoints>
+      <WorkToBuild>12000</WorkToBuild>
+      <Mass>7500</Mass>
+    </statBases>
+  </ThingDef>
+
+</Defs>

@@ -96,7 +96,7 @@ namespace Spaceship
             {
                 Action action2 = delegate
                 {
-                    Job job = new Job(Util_JobDefOf.TradeWithCargoSpaceship, this);
+                    Job job = JobMaker.MakeJob(Util_JobDefOf.TradeWithCargoSpaceship, this);
                     selPawn.jobs.TryTakeOrderedJob(job);
 
                 };

@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <WorkGiverDef>
+    <defName>TransferToMedibay</defName>
+    <label>transfer downed pawn to medibay</label>
+    <giverClass>Spaceship.WorkGiver_TransferToMedibay</giverClass>
+    <workType>Hauling</workType>
+    <emergency>false</emergency>
+    <verb>transfer to medibay</verb>
+    <gerund>transferring to medibay</gerund>
+    <requiredCapacities>
+      <li>Manipulation</li>
+    </requiredCapacities>
+    <priorityInType>130</priorityInType>
+    <prioritizeSustains>true</prioritizeSustains>
+  </WorkGiverDef>
+
+</Defs>

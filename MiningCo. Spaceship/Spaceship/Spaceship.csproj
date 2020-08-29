@@ -34,8 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.0.6955.24033, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Assembly-CSharp">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
     <Reference Include="System" />
@@ -159,76 +158,6 @@
     <Reference Include="UnityEngine.TerrainPhysicsModule">
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TerrainPhysicsModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TextCoreModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextCoreModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TextRenderingModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TilemapModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.TLSModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIElementsModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIElementsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UIModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UNETModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UNETModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityAnalyticsModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityAnalyticsModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityConnectModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityTestProtocolModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestAssetBundleModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.UnityWebRequestWWWModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VehiclesModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VehiclesModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VFXModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VFXModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VideoModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VideoModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.VRModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.VRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.WindModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.WindModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.XRModule">
-      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.XRModule.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building_LandingPad.cs" />
@@ -304,108 +233,172 @@
     <Compile Include="FlyingSpaceshipTakingOff.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="MiningCo. Spaceship\Assemblies\" />
-    <Folder Include="MiningCo. Spaceship\Textures\Things\Pawn\Humanlike\Apparel\SimpleHelmetMedic\" />
+    <Folder Include="MiningCo. Spaceship\1.1\Assemblies\" />
+    <Folder Include="MiningCo. Spaceship\1.2\Assemblies\" />
+    <Folder Include="MiningCo. Spaceship\Common\Textures\Things\Pawn\Humanlike\Apparel\SimpleHelmetMedic\" />
     <Folder Include="Textures resources\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\AirStrikeDefs\AirStrikeDefs.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\AirStrikeDefs\AmmoDefs.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\AirStrikeDefs\WeaponDefs.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\DutyDefs\Duties_Dispatcher.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\DutyDefs\Duties_MedicalSpaceship.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\FactionDefs\Factions.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\JobDefs\Jobs_SpaceshipAndOrbitalRelay.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Base.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Geologist.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Guard.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_HeavyGuard.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Medic.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Miner.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Officer.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Pilot.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Scout.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_ShockTrooper.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\PawnKindDefs_Humanlikes\PawnKinds_Technician.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\SoundDefs\AirStrike.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\SoundDefs\SpaceshipLanding.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\SoundDefs\SpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\Storyteller\Incidents_Map_Spaceships.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\Building_AirStrikeBeacon.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\Building_LandingPad.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\Building_LandingPadBeacon.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\Building_OrbitalRelay.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\Building_Spaceships.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\Building_VulcanTurret.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\FlyingSpaceshipLanding.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\FlyingSpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Buildings\FlyingStrikeshipAirStrike.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Misc\Apparel_Headgear.xml" />
+    <Content Include="MiningCo. Spaceship\1.2\Defs\ThingDefs_Misc\Weapon_VulcanGun.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\TraderKindDefs\TraderKinds_Spaceship.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="MiningCo. Spaceship\1.2\Defs\WorkGiverDefs\WorkGivers.xml" />
     <Content Include="MiningCo. Spaceship\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. Spaceship\About\Preview.png" />
     <Content Include="MiningCo. Spaceship\About\PublishedFileId.txt" />
-    <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\AirStrikeDefs.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\AirStrikeDefs\AirStrikeDefs.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\AmmoDefs.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\AirStrikeDefs\AmmoDefs.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\AirStrikeDefs\WeaponDefs.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\AirStrikeDefs\WeaponDefs.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\DutyDefs\Duties_MedicalSpaceship.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\DutyDefs\Duties_Dispatcher.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\DutyDefs\Duties_MedicalSpaceship.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\DutyDefs\Duties_Dispatcher.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\FactionDefs\Factions.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\JobDefs\Jobs_SpaceshipAndOrbitalRelay.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\FactionDefs\Factions.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\JobDefs\Jobs_SpaceshipAndOrbitalRelay.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Medic.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Officer.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_ShockTrooper.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_HeavyGuard.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Guard.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Scout.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Geologist.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Miner.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Technician.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Base.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\PawnKindDefs_Humanlikes\PawnKinds_Pilot.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\SoundDefs\AirStrike.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\SoundDefs\SpaceshipLanding.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\SoundDefs\SpaceshipTakingOff.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\Storyteller\Incidents_Map_Spaceships.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_LandingPad.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Medic.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Officer.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_ShockTrooper.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_HeavyGuard.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Guard.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Scout.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Geologist.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Miner.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Technician.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Base.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\PawnKindDefs_Humanlikes\PawnKinds_Pilot.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\SoundDefs\AirStrike.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\SoundDefs\SpaceshipLanding.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\SoundDefs\SpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\Storyteller\Incidents_Map_Spaceships.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\Building_LandingPad.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_LandingPadBeacon.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\Building_LandingPadBeacon.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_OrbitalRelay.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\Building_OrbitalRelay.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_AirStrikeBeacon.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_Spaceships.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\Building_AirStrikeBeacon.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\Building_Spaceships.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\Building_VulcanTurret.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\Building_VulcanTurret.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\FlyingStrikeshipAirStrike.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\FlyingStrikeshipAirStrike.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\FlyingSpaceshipLanding.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\FlyingSpaceshipLanding.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Buildings\FlyingSpaceshipTakingOff.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Misc\Weapon_VulcanGun.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Buildings\FlyingSpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Misc\Weapon_VulcanGun.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\ThingDefs_Misc\Apparel_Headgear.xml" />
-    <Content Include="MiningCo. Spaceship\Defs\TraderKindDefs\TraderKinds_Spaceship.xml">
+    <Content Include="MiningCo. Spaceship\1.1\Defs\ThingDefs_Misc\Apparel_Headgear.xml" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\TraderKindDefs\TraderKinds_Spaceship.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="MiningCo. Spaceship\Defs\WorkGiverDefs\WorkGivers.xml" />
-    <Content Include="MiningCo. Spaceship\Sounds\AirStrike\credits.txt" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\Building\AirStrikeBeacon\AirStrikeBeacon.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\Building\LandingPadBeacon\DummyTexture.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\Building\LandingPadBeacon\LandingPadBeacon.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\Building\LandingPad\LandingPad.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\MenuIcon_OrbitalRelay.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\OrbitalRelay.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\SatelliteDish.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\MedicalSpaceship\MedicalSpaceship.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\StrikeShip\StrikeShip.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Things\SupplySpaceship\SupplySpaceship.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Ancillary.png" />
-    <Content Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Primary.png" />
+    <Content Include="MiningCo. Spaceship\1.1\Defs\WorkGiverDefs\WorkGivers.xml" />
+    <Content Include="MiningCo. Spaceship\Common\Sounds\AirStrike\credits.txt" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\Building\AirStrikeBeacon\AirStrikeBeacon.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\Building\LandingPadBeacon\DummyTexture.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\Building\LandingPadBeacon\LandingPadBeacon.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\Building\LandingPad\LandingPad.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\Building\OrbitalRelay\MenuIcon_OrbitalRelay.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\Building\OrbitalRelay\OrbitalRelay.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\Building\OrbitalRelay\SatelliteDish.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\MedicalSpaceship\MedicalSpaceship.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\StrikeShip\StrikeShip.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Things\SupplySpaceship\SupplySpaceship.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Ui\Commands\Commands_Ancillary.png" />
+    <Content Include="MiningCo. Spaceship\Common\Textures\Ui\Commands\Commands_Primary.png" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="MiningCo. Spaceship\Sounds\AirStrike\AirStrike.ogg" />
-    <None Include="MiningCo. Spaceship\Sounds\Spaceship\Landing.ogg" />
-    <None Include="MiningCo. Spaceship\Sounds\Spaceship\TakingOff.ogg" />
-    <None Include="MiningCo. Spaceship\Textures\Things\Building\AirStrikeBeacon\AirStrikeBeacon.pdn" />
-    <None Include="MiningCo. Spaceship\Textures\Things\Building\LandingPadBeacon\LandingPadBeacon.pdn" />
-    <None Include="MiningCo. Spaceship\Textures\Things\Building\LandingPad\LandingPad.pdn" />
-    <None Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\OrbitalRelay.pdn" />
-    <None Include="MiningCo. Spaceship\Textures\Things\Building\OrbitalRelay\SatelliteDish.pdn" />
-    <None Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Ancillary.pdn" />
-    <None Include="MiningCo. Spaceship\Textures\Ui\Commands\Commands_Primary.pdn" />
+    <None Include="MiningCo. Spaceship\Common\Sounds\AirStrike\AirStrike.ogg" />
+    <None Include="MiningCo. Spaceship\Common\Sounds\Spaceship\Landing.ogg" />
+    <None Include="MiningCo. Spaceship\Common\Sounds\Spaceship\TakingOff.ogg" />
+    <None Include="MiningCo. Spaceship\Common\Textures\Things\Building\AirStrikeBeacon\AirStrikeBeacon.pdn" />
+    <None Include="MiningCo. Spaceship\Common\Textures\Things\Building\LandingPadBeacon\LandingPadBeacon.pdn" />
+    <None Include="MiningCo. Spaceship\Common\Textures\Things\Building\LandingPad\LandingPad.pdn" />
+    <None Include="MiningCo. Spaceship\Common\Textures\Things\Building\OrbitalRelay\OrbitalRelay.pdn" />
+    <None Include="MiningCo. Spaceship\Common\Textures\Things\Building\OrbitalRelay\SatelliteDish.pdn" />
+    <None Include="MiningCo. Spaceship\Common\Textures\Ui\Commands\Commands_Ancillary.pdn" />
+    <None Include="MiningCo. Spaceship\Common\Textures\Ui\Commands\Commands_Primary.pdn" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Spaceship\Assemblies"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Spaceship\1.2\Assemblies"
 
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. Spaceship" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. Spaceship"</PostBuildEvent>
   </PropertyGroup>

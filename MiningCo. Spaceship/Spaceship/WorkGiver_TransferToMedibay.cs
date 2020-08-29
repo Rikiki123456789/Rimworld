@@ -84,10 +84,9 @@ namespace Spaceship
                     nearestMedicalSpaceship = spaceship as Building_SpaceshipMedical;
                 }
             }
-            return new Job(Util_JobDefOf.TransferToMedibay, t, nearestMedicalSpaceship)
-            {
-                count = 1
-            };
+            Job job = JobMaker.MakeJob(Util_JobDefOf.TransferToMedibay, t, nearestMedicalSpaceship);
+            job.count = 1;
+            return job;
         }
     }
 }

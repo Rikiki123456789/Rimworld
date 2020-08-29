@@ -32,10 +32,9 @@ namespace Spaceship
             Pawn pawnToRescue = Util_DownedPawn.GetNearestReachableDownedPawn(pawn);
             if (pawnToRescue != null)
             {
-                return new Job(Util_JobDefOf.CarryDownedPawn, pawnToRescue, toil.Data.targetDestination)
-                {
-                    count = 1
-                };
+                Job job = JobMaker.MakeJob(Util_JobDefOf.CarryDownedPawn, pawnToRescue, toil.Data.targetDestination);
+                job.count = 1;
+                return job;
             }
             else
             {

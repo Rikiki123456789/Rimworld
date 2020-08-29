@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>AirStrikeBeacon</defName>
+    <label>air strike beacon</label>
+    <description>A beacon to designate an air strike target position.</description>
+    <thingClass>Spaceship.Building_AirStrikeBeacon</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Building/AirStrikeBeacon/AirStrikeBeacon</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(1,1)</drawSize>
+    </graphicData>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
+    <altitudeLayer>Building</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <fillPercent>0.0</fillPercent>
+    <passability>Standable</passability>
+    <pathCost>0</pathCost>
+    <constructEffect>ConstructMetal</constructEffect>
+    <building>
+      <isEdifice>false</isEdifice>
+      <claimable>false</claimable>
+      <deconstructible>false</deconstructible>
+      <expandHomeArea>false</expandHomeArea>
+    </building>
+    <statBases>
+      <Flammability>0</Flammability>
+    </statBases>
+    <size>(1,1)</size>
+    <terrainAffordanceNeeded>Light</terrainAffordanceNeeded>
+  </ThingDef>
+
+</Defs>

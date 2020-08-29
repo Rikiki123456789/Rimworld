@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <DutyDef>
+    <defName>DutyDef_HealColonists</defName>
+    <thinkNode Class="ThinkNode_Priority">
+      <subNodes>
+        <li Class="Spaceship.JobGiver_HealColonists"/>
+        <li Class="JobGiver_WanderNearDutyLocation">
+          <wanderRadius>3</wanderRadius>
+        </li>
+      </subNodes>
+    </thinkNode>
+  </DutyDef>
+
+</Defs>

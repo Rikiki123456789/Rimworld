@@ -35,9 +35,9 @@ namespace Spaceship
                 }
                 if (medicine != null)
                 {
-                    return new Job(JobDefOf.TendPatient, patient, medicine);
+                    return JobMaker.MakeJob(JobDefOf.TendPatient, patient, medicine);
                 }
-                return new Job(JobDefOf.TendPatient, patient);
+                return JobMaker.MakeJob(JobDefOf.TendPatient, patient);
             }
             else
             {
