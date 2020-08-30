@@ -229,7 +229,6 @@
     <Content Include="FishIndustry\1.2\Defs\ThingDefs_Misc\Item_Pearl.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="FishIndustry\1.2\Defs\ThingDefs_Misc\Mote_Base.xml" />
     <Content Include="FishIndustry\1.2\Defs\ThingDefs_Misc\Mote_Fish.xml">
       <SubType>Designer</SubType>
     </Content>
