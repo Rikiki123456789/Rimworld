@@ -111,7 +111,8 @@ namespace MiningHelmet
             if ((this.Wearer == null)
                 || this.Wearer.Dead
                 || this.Wearer.Downed
-                || (this.Wearer.Awake() == false))
+                || (this.Wearer.Awake() == false)
+                || (this.Wearer.CurJobDef == JobDefOf.Lovin))
             {
                 return false;
             }
