@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+    <!--Metals+ Ores-->
+    <Operation Class="PatchOperationFindMod">
+        <mods>
+           <li>MiningCo. MMS</li>
+           <li>Metals+</li>
+        </mods>
+        <match Class="PatchOperationSequence">
+            <success>Always</success>
+            <operations>
+                <li Class="PatchOperationAdd">
+                <xpath>/Defs/ThingDef[defName="MobileMineralSonar"]/scannedThingDefs</xpath>
+                <value>
+                    <li>MineableCopper</li>
+                    <li>MineableTin</li>
+                    <li>MineableIron</li>
+                    <li>MineableTitanium</li>
+                </value>
+                </li>
+            </operations>
+        </match>
+    </Operation>
+    <!--MorrowRim Ebony and Glass-->
+    <Operation Class="PatchOperationFindMod">
+        <mods>
+           <li>MiningCo. MMS</li>
+           <li>MorrowRim - Glass and Ebony</li>
+        </mods>
+        <match Class="PatchOperationSequence">
+            <success>Always</success>
+            <operations>
+                <li Class="PatchOperationAdd">
+                <xpath>/Defs/ThingDef[defName="MobileMineralSonar"]/scannedThingDefs</xpath>
+                <value>
+                    <li>MorrowRim_MineableGlass</li>
+                    <li>MorrowRim_MineableEbony</li>
+                </value>
+                </li>
+            </operations>
+        </match>
+    </Operation>
+</Patch>
