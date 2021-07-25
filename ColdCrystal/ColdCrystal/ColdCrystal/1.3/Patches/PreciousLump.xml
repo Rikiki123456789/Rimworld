@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+  
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/GenStepDef[defName = "PreciousLump"]/genStep/mineables</xpath>
+		<value>
+			<li>MineableColdCrystal</li>
+		</value>
+	</Operation>
+
+  <Operation Class="PatchOperationAdd">
+    <xpath>Defs/GenStepDef[defName = "PreciousLump"]/genStep/mineables</xpath>
+    <value>
+      <li>MineableAmberCrystal</li>
+    </value>
+  </Operation>
+
+</Patch>
+
+
