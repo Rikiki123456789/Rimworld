@@ -62,7 +62,7 @@ namespace FishIndustry
         public const int maintenanceCompleteDegradationPeriodInTicks = GenDate.TicksPerDay;
         public const float maintenanceVariation = 1f / (maintenanceCompleteDegradationPeriodInTicks / updatePeriodInTicks);
         public const int breedingProgressPerMaintenanceInTicks = 2 * GenDate.TicksPerHour;
-        public const int microFungusReductionPerMaintenanceInTicks = 2 * GenDate.TicksPerHour;
+        public const int microFungusReductionPerMaintenanceInTicks = 8 * GenDate.TicksPerHour;
         public float maintenanceQuality = 1f; // [0, 1].
         public bool isWellMaintained
         {
@@ -147,7 +147,7 @@ namespace FishIndustry
                     this.breedingSpeciesTexture = tailTeethTexture;
                 }
             }
-            breedingSpeciesMatrix.SetTRS(base.DrawPos + new Vector3(-1f, 0, -0.7f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0f), 0f.ToQuat(), this.breedingSpeciesScale);
+            breedingSpeciesMatrix.SetTRS(base.DrawPos + new Vector3(-1f, 0f, -0.7f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0f), 0f.ToQuat(), this.breedingSpeciesScale);
             microFungusMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0f), 0f.ToQuat(), this.microFungusScale);
         }
 
@@ -722,7 +722,7 @@ namespace FishIndustry
 
         // ===================== Drawing functions =====================
         /// <summary>
-        /// Set microfungus intensity or throw bubbles according to the current water quality.
+        /// Set microfungus intensity or throw fish fleck.
         /// </summary>
         public void ComputeDrawingParameters()
         {

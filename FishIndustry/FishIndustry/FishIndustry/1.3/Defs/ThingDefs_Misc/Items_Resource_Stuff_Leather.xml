@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="LeatherBase">
+    <defName>Leather_Tailteeth</defName>
+    <label>tailteeth leather</label>
+    <description>Tanned, dried, scraped tailteeth skin. Very durable in combat it is however not adapted to cold climate.</description>
+    <graphicData>
+      <color>(59,86,49)</color>
+    </graphicData>
+    <statBases>
+      <MarketValue>3.8</MarketValue>
+      <StuffPower_Armor_Sharp>1.20</StuffPower_Armor_Sharp>
+      <StuffPower_Insulation_Cold>12</StuffPower_Insulation_Cold>
+      <StuffPower_Insulation_Heat>8</StuffPower_Insulation_Heat>
+    </statBases>
+    <stuffProps>
+      <color>(59,86,49)</color>
+      <commonality>0.025</commonality>
+      <statFactors>
+        <MaxHitPoints>1.5</MaxHitPoints>
+      </statFactors>
+    </stuffProps>
+  </ThingDef>
+
+</Defs>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!--=================== Campfire meal ===============-->
+  
+  <RecipeDef>
+    <defName>GrillFishCampfire</defName>
+    <label>grill fish</label>
+    <description>Grills a fish so it can be eaten. Tasty and crunchy!</description>
+    <jobString>Grilling fish.</jobString>
+    <workSpeedStat>CookSpeed</workSpeedStat>
+    <effectWorking>Cook</effectWorking>
+    <soundWorking>Recipe_CookMeal</soundWorking>
+    <workAmount>700</workAmount>
+    <ingredients>
+      <li>
+        <filter>
+          <categories>
+            <li>Corpses</li>
+          </categories>
+        </filter>
+        <count>1</count>
+      </li>
+    </ingredients>
+    <products>
+      <MealSimple>1</MealSimple>
+    </products>
+    <fixedIngredientFilter>
+      <thingDefs>
+        <li>Corpse_Blueblade</li>
+        <li>Corpse_Seasnake</li>
+      </thingDefs>
+      <specialFiltersToDisallow>
+        <li>AllowRotten</li>
+      </specialFiltersToDisallow>
+    </fixedIngredientFilter>
+    <recipeUsers>
+      <li>Campfire</li>
+    </recipeUsers>
+    <workSkill>Cooking</workSkill>
+  </RecipeDef>
+
+</Defs>

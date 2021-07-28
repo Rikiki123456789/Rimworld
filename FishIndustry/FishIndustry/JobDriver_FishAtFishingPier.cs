@@ -111,14 +111,17 @@ namespace FishIndustry
                             float speed = Rand.Range(1.5f, 3f);
                             Vector3 targetPosition = this.pawn.Position.ToVector3Shifted() + new Vector3(0f, 0f, 2f).RotatedBy(fishingPier.Rotation.AsAngle) + Vector3Utility.RandomHorizontalOffset(1.5f);
                             targetPosition.y = this.pawn.DrawPos.y;
-                            MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_Stone, null);
-                            moteThrown.Scale = 0.2f;
-                            moteThrown.rotationRate = (float)Rand.Range(-300, 300);
-                            moteThrown.exactPosition = this.pawn.DrawPos;
-                            moteThrown.SetVelocity((targetPosition - moteThrown.exactPosition).AngleFlat(), speed);
-                            moteThrown.airTimeLeft = (float)Mathf.RoundToInt((moteThrown.exactPosition - targetPosition).MagnitudeHorizontal() / speed);
-                            GenSpawn.Spawn(moteThrown, this.pawn.Position, this.pawn.Map);
-                            MoteMaker.MakeWaterSplash(targetPosition, this.pawn.Map, 1.8f, 0.5f);
+
+                            FleckCreationData dataStatic = default(FleckCreationData);
+                            dataStatic.def = FleckDefOf.Stone;
+                            dataStatic.spawnPosition = this.pawn.DrawPos;
+                            dataStatic.scale = 0.2f;
+                            dataStatic.rotationRate = Rand.Range(-300, 300);
+                            dataStatic.velocityAngle = (targetPosition - dataStatic.spawnPosition).AngleFlat();
+                            dataStatic.velocitySpeed = speed;
+                            dataStatic.airTimeLeft = Mathf.RoundToInt((targetPosition - dataStatic.spawnPosition).MagnitudeHorizontal() / speed);
+                            this.pawn.Map.flecks.CreateFleck(dataStatic);
+                            FleckMaker.WaterSplash(targetPosition, this.pawn.Map, 1.8f, 0.5f);
                         }
                     }
                 },
@@ -180,7 +183,7 @@ namespace FishIndustry
                     bool catchIsSuccessful = (Rand.Value <= catchSuccessRateOnPier);
                     if (catchIsSuccessful == false)
                     {
-                        MoteMaker.ThrowMetaIcon(this.pawn.Position, this.Map, ThingDefOf.Mote_IncapIcon);
+                        FleckMaker.ThrowMetaIcon(this.pawn.Position, this.Map, FleckDefOf.IncapIcon);
                         this.pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
                         return;
                     }

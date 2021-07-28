@@ -137,7 +137,7 @@ namespace FishIndustry
                     bool catchIsSuccessful = (Rand.Value <= catchSuccessRateInZone);
                     if (catchIsSuccessful == false)
                     {
-                        MoteMaker.ThrowMetaIcon(this.pawn.Position, this.Map, ThingDefOf.Mote_IncapIcon);
+                        FleckMaker.ThrowMetaIcon(this.pawn.Position, this.Map, FleckDefOf.IncapIcon);
                         this.pawn.jobs.EndCurrentJob(JobCondition.Incompletable);
                         return;
                     }

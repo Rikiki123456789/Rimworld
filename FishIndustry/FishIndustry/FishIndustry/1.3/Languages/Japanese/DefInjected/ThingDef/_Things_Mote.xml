@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- These are Mote ThingDefs. Remain the same, DO NOT translate them. -->
+
+  <Mote_FishMashgonEast.label>Mote</Mote_FishMashgonEast.label>
+  <Mote_FishMashgonWest.label>Mote</Mote_FishMashgonWest.label>
+  <Mote_FishBluebladeEast.label>Mote</Mote_FishBluebladeEast.label>
+  <Mote_FishBluebladeWest.label>Mote</Mote_FishBluebladeWest.label>
+  <Mote_FishTailteethEast.label>Mote</Mote_FishTailteethEast.label>
+  <Mote_FishTailteethWest.label>Mote</Mote_FishTailteethWest.label>
+  <Mote_FishingRodNorth.label>Mote</Mote_FishingRodNorth.label>
+  <Mote_FishingRodEast.label>Mote</Mote_FishingRodEast.label>
+  <Mote_FishingRodSouth.label>Mote</Mote_FishingRodSouth.label>
+  <Mote_FishingRodWest.label>Mote</Mote_FishingRodWest.label>
+  <Mote_FishingRodNorth.description>釣り竿</Mote_FishingRodNorth.description>
+  <Mote_FishingRodEast.description>釣り竿</Mote_FishingRodEast.description>
+  <Mote_FishingRodSouth.description>釣り竿</Mote_FishingRodSouth.description>
+  <Mote_FishingRodWest.description>釣り竿</Mote_FishingRodWest.description>
+
+</LanguageData>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <AquacultureBasin.label>水産養殖池</AquacultureBasin.label>
+  <AquacultureBasin.description>池は魚を飼育する為に設計しました。水質は自動管理されます。従って、あなたは外部との温度管理と飼育されている魚に餌をやるために取付けられた自動給餌器でいくらかの餌を提供する必要があります。</AquacultureBasin.description>
+  <Blueprint_AquacultureBasin.label>水産養殖池(設計)</Blueprint_AquacultureBasin.label>
+  <Frame_AquacultureBasin.label>水産養殖池(施工)</Frame_AquacultureBasin.label>
+  <Frame_AquacultureBasin.description>池は魚を飼育する為に設計しました。水質は自動管理されます。従って、あなたは外部との温度管理と飼育されている魚に餌をやるために取付けられた自動給餌器でいくらかの餌を提供する必要があります。</Frame_AquacultureBasin.description>
+
+</LanguageData>
