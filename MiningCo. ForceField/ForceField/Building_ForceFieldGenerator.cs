@@ -134,8 +134,8 @@ namespace ForceField
             this.effectCells.Add(effectCell);
 
             // Textures initialization.
-            this.forceFieldMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
-            this.forceFieldAbsorbtionMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
+            this.forceFieldMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.Building) + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
+            this.forceFieldAbsorbtionMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.Projectile) + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
         }
 
         /// <summary>
@@ -546,11 +546,12 @@ namespace ForceField
                 {
                     this.nextSparkTick = Find.TickManager.TicksGame + Rand.RangeInclusive(150, 300);
                     int effectCellIndex = Rand.RangeInclusive(0, 4);
-                    MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDef.Named("Mote_ElectricalSpark"), null);
-                    moteThrown.Scale = 0.8f;
-                    moteThrown.exactRotation = Rand.Range(0f, 360f);
-                    moteThrown.exactPosition = this.effectCells[effectCellIndex] + Vector3Utility.RandomHorizontalOffset(0.15f);
-                    GenSpawn.Spawn(moteThrown, moteThrown.exactPosition.ToIntVec3(), this.Map);
+                    FleckCreationData fleckData = default(FleckCreationData);
+                    fleckData.def = FleckDefOf.LightningGlow;
+                    fleckData.spawnPosition = this.effectCells[effectCellIndex] + Vector3Utility.RandomHorizontalOffset(0.3f);
+                    fleckData.scale = 2f;
+                    fleckData.rotation = Rand.Range(0f, 360f);
+                    this.Map.flecks.CreateFleck(fleckData);
                 }
             }
 
@@ -561,11 +562,10 @@ namespace ForceField
                 {
                     this.matrixAbsorbtionCounterInTicks[matrixIndex] = matrixAbsorbtionDurationInTicks;
                     this.matrixIsStartingAbsorbion[matrixIndex] = false;
-                    MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
-                    moteThrown.Scale = 4f;
-                    moteThrown.exactRotation = Rand.Range(0f, 360f);
-                    moteThrown.exactPosition = this.effectCells[matrixIndex] + Vector3Utility.RandomHorizontalOffset(0.3f);
-                    GenSpawn.Spawn(moteThrown, moteThrown.exactPosition.ToIntVec3(), this.Map);
+                    Vector3 spawnPosition = this.effectCells[matrixIndex] + Vector3Utility.RandomHorizontalOffset(0.15f);
+                    FleckMaker.Static(spawnPosition, this.Map, FleckDefOf.ExplosionFlash, 2f);
+                    FleckMaker.ThrowDustPuff(spawnPosition, this.Map, Rand.Range(0.8f, 1.2f));
+                    FleckMaker.ThrowDustPuff(spawnPosition, this.Map, Rand.Range(0.8f, 1.2f));
                 }
                 if (this.matrixAbsorbtionCounterInTicks[matrixIndex] > 0)
                 {
