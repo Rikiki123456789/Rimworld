@@ -79,7 +79,7 @@ namespace PowerFist
                 }
                 
                 // Generate some dust.
-                MoteMaker.ThrowDustPuff(this.targetPawn.DrawPos, this.Map, 1f);
+                FleckMaker.ThrowDustPuff(this.targetPawn.DrawPos, this.Map, 1f);
             }
         }
 

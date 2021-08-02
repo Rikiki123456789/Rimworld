@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BaseMeleeWeapon_Blunt_Quality" Class="PowerFist.ThingDef_PowerFist">
+    <defName>MeleeWeapon_PowerFist</defName>
+    <label>power fist</label>
+    <description>An advanced tool used by miners to handle heavy tools. It is often customized for military purposes during crisis.</description>
+    <techLevel>Spacer</techLevel>
+    <graphicData>
+      <texPath>Things/Item/Equipment/WeaponMelee/PowerFist</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <soundInteract>Interact_ChargeRifle</soundInteract>
+    <recipeMaker>
+      <researchPrerequisite>ResearchPowerFist</researchPrerequisite>
+      <skillRequirements>
+        <Crafting>6</Crafting>
+      </skillRequirements>
+      <recipeUsers Inherit="False">
+        <li>FabricationBench</li>
+      </recipeUsers>
+    </recipeMaker>
+    <costList>
+      <Plasteel>50</Plasteel>
+      <ComponentSpacer>2</ComponentSpacer>
+    </costList>
+    <statBases>
+      <WorkToMake>50000</WorkToMake>
+      <Mass>5.0</Mass>
+      <MiningSpeed>0.15</MiningSpeed>
+    </statBases>
+    <weaponTags>
+      <li>MedievalMeleeAdvanced</li>
+    </weaponTags>
+    <tools>
+      <li>
+        <label>ram</label>
+        <labelUsedInLogging>false</labelUsedInLogging>
+        <capacities>
+          <li>Push</li>
+        </capacities>
+        <power>12</power>
+        <cooldownTime>2.2</cooldownTime>
+      </li>
+      <li>
+        <label>piston</label>
+        <capacities>
+          <li>Blunt</li>
+        </capacities>
+        <power>9</power>
+        <cooldownTime>1.8</cooldownTime>
+      </li>
+    </tools>
+    <equippedAngleOffset>-45</equippedAngleOffset>
+    <tradeTags>
+      <li>ExoticMisc</li>
+      <li>PowerFist</li>
+    </tradeTags>
+    
+    <!-- Power fist properties. -->
+    <repelDurationInTicks>20</repelDurationInTicks>
+    <bodySizeSmall>0.5</bodySizeSmall>
+    <bodySizeMedium>1.2</bodySizeMedium>
+    <bodySizeBig>1.7</bodySizeBig>
+    <repelDistanceShort>1</repelDistanceShort>
+    <repelDistanceMedium>2</repelDistanceMedium>
+    <repelDistanceLong>3</repelDistanceLong>
+    <repelDistanceFactorWithPowerArmor>2.0</repelDistanceFactorWithPowerArmor>
+    <stunDurationInTicksShort>100</stunDurationInTicksShort>
+    <stunDurationInTicksMedium>140</stunDurationInTicksMedium>
+    <stunDurationInTicksLong>180</stunDurationInTicksLong>
+    <empDurationInTicks>2400</empDurationInTicks>
+    <crushDamageFactor>0.25</crushDamageFactor>
+    <crushDamageFactorWithPowerArmor>0.5</crushDamageFactorWithPowerArmor>
+    <electricDamageFactorWithPowerArmor>0.5</electricDamageFactorWithPowerArmor>
+  </ThingDef>
+
+</Defs>

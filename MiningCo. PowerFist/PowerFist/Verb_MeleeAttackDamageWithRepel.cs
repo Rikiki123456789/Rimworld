@@ -106,8 +106,7 @@ namespace PowerFist
                     if (casterWearsPowerArmor)
                     {
                         DamageInfo infos = new DamageInfo(DamageDefOf.EMP, Mathf.RoundToInt(empDurationInTicks / StunDurationFactor_EMP), 0, vector.AngleFlat, this.caster, null, this.EquipmentSource.def);
-                        targetPawn.stances.stunner.Notify_DamageApplied(infos, true);
-                        MoteMaker.ThrowExplosionInteriorMote(targetPawn.Position.ToVector3Shifted(), targetPawn.Map, ThingDef.Named("Mote_ElectricalSpark"));
+                        targetPawn.stances.stunner.Notify_DamageApplied(infos);
 
                         int extraDamage = Mathf.RoundToInt(this.EquipmentSource.def.statBases.GetStatValueFromList(StatDefOf.MeleeWeapon_AverageDPS, 5) * electricDamageFactor);
                         DamageInfo infos2 = new DamageInfo(Util_PowerFist.ElectricDamageDef, extraDamage, 0, vector.AngleFlat, this.caster, null, this.EquipmentSource.def);
@@ -117,7 +116,12 @@ namespace PowerFist
                 else if (stunDurationInTicks > 0)
                 {
                     DamageInfo infos = new DamageInfo(DamageDefOf.Stun, Mathf.RoundToInt(stunDurationInTicks / StunDurationFactor_Standard), 0, vector.AngleFlat, this.caster, null, this.EquipmentSource.def);
-                    targetPawn.stances.stunner.Notify_DamageApplied(infos, false);
+                    targetPawn.stances.stunner.Notify_DamageApplied(infos);
+                }
+                // Visual effect with power armor.
+                if (casterWearsPowerArmor)
+                {
+                    FleckMaker.ThrowExplosionInterior(targetPawn.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.MoteOverhead) + Gen.RandomHorizontalVector(0.2f), targetPawn.Map, DefDatabase<FleckDef>.GetNamed("ElectricalSpark"));
                 }
             }
             return result;
@@ -130,6 +134,8 @@ namespace PowerFist
                 if ((apparel.def == ThingDef.Named("Apparel_PowerArmor"))
                     || (apparel.def == ThingDef.Named("Apparel_ArmorMarinePrestige"))
                     || (apparel.def == ThingDef.Named("Apparel_ArmorMarineGrenadier"))
+                    || (apparel.def == ThingDef.Named("Apparel_ArmorRecon"))
+                    || (apparel.def == ThingDef.Named("Apparel_ArmorReconPrestige"))
                     || (apparel.def == ThingDef.Named("Apparel_ArmorCataphract"))
                     || (apparel.def == ThingDef.Named("Apparel_ArmorCataphractPrestige"))
                     || (apparel.def == ThingDef.Named("Apparel_ArmorCataphractPhoenix")))
