@@ -147,8 +147,8 @@ namespace FishIndustry
                     this.breedingSpeciesTexture = tailTeethTexture;
                 }
             }
-            breedingSpeciesMatrix.SetTRS(base.DrawPos + new Vector3(-1f, 0f, -0.7f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0f), 0f.ToQuat(), this.breedingSpeciesScale);
-            microFungusMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 0.1f, 0f), 0f.ToQuat(), this.microFungusScale);
+            breedingSpeciesMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays) + new Vector3(-1f, 0f, -0.7f).RotatedBy(this.Rotation.AsAngle), 0f.ToQuat(), this.breedingSpeciesScale);
+            microFungusMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays), 0f.ToQuat(), this.microFungusScale);
         }
 
         /// <summary>
