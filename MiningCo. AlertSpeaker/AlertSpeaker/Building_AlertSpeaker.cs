@@ -438,6 +438,7 @@ namespace AlertSpeaker
                     {
                         redAlertLightIntensity = 0;
                     }
+                    redAlertLightMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.MetaOverlays) + new Vector3(0f, 0f, -0.25f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect, (this.Rotation.AsAngle + redAlertLightAngle).ToQuat(), redAlertLightScale);
                     break;
             }
         }
@@ -467,7 +468,6 @@ namespace AlertSpeaker
             if ((currentDangerRate == StoryDanger.High)
                 && (this.powerComp.PowerOn))
             {
-                redAlertLightMatrix.SetTRS(this.Position.ToVector3Shifted() + new Vector3(0f, 10f, -0.25f).RotatedBy(this.Rotation.AsAngle) + Altitudes.AltIncVect, (this.Rotation.AsAngle + redAlertLightAngle).ToQuat(), redAlertLightScale);
                 Graphics.DrawMesh(MeshPool.plane10, redAlertLightMatrix, FadedMaterialPool.FadedVersionOf(redAlertLight, redAlertLightIntensity), 0);
             }
 

@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>AlertSpeaker</defName>
+    <label>Alert speaker</label>
+    <description>An alert speaker to warn your colonist from incoming threat.</description>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>Things/Building/AlertSpeaker</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <thingClass>AlertSpeaker.Building_AlertSpeaker</thingClass>
+    <tickerType>Normal</tickerType>
+    <placeWorkers>
+      <li>AlertSpeaker.PlaceWorker_AlertSpeaker</li>
+    </placeWorkers>
+    <minifiedDef>MinifiedThing</minifiedDef>
+    <thingCategories>
+      <li>BuildingsSecurity</li>
+    </thingCategories>
+    <costList>
+      <Steel>20</Steel>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <altitudeLayer>Skyfaller</altitudeLayer>
+    <fillPercent>0.2</fillPercent>
+    <useHitPoints>True</useHitPoints>
+    <statBases>
+      <WorkToBuild>1200</WorkToBuild>
+      <MaxHitPoints>75</MaxHitPoints>
+      <Flammability>0.2</Flammability>
+      <Mass>2</Mass>
+    </statBases>
+    <size>(1,1)</size>
+    <designationCategory>Security</designationCategory>
+    <passability>Standable</passability>
+    <hasInteractionCell>False</hasInteractionCell>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <shortCircuitInRain>false</shortCircuitInRain>
+        <basePowerConsumption>50</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Glower">
+        <glowRadius>5</glowRadius>
+        <glowColor>(255,0,0,0)</glowColor>
+      </li>
+    </comps>
+    <researchPrerequisites>
+      <li>ResearchAlertSpeaker</li>
+    </researchPrerequisites>
+    <leaveResourcesWhenKilled>True</leaveResourcesWhenKilled>
+  </ThingDef>
+
+</Defs>
