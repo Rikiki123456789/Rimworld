@@ -488,14 +488,14 @@ namespace DrillTurret
                 turretTargetVector.y = 0f;
                 this.laserBeamScale.z = turretTargetVector.magnitude - 0.8f;
                 Vector3 positionOffset = turretTargetVector / 2f;
-                laserBeamMatrix.SetTRS(base.DrawPos + new Vector3(0f, Altitudes.AltitudeFor(AltitudeLayer.Projectile), 0f) + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
+                laserBeamMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(Altitudes.AltitudeFor(AltitudeLayer.Projectile)) + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
             }
             else
             {
                 // Idle laser beam.
                 this.laserBeamScale.z = 1.5f;
                 Vector3 positionOffset = new Vector3(0f, 0f, this.laserBeamScale.z / 2f).RotatedBy(this.turretTopRotation);
-                laserBeamMatrix.SetTRS(base.DrawPos + new Vector3(0f, Altitudes.AltitudeFor(AltitudeLayer.Projectile), 0f) + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
+                laserBeamMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(Altitudes.AltitudeFor(AltitudeLayer.Projectile)) + positionOffset, this.turretTopRotation.ToQuat(), this.laserBeamScale);
             }
         }
 
@@ -505,7 +505,7 @@ namespace DrillTurret
         public override void Draw()
         {
             base.Draw();
-            this.turretTopMatrix.SetTRS(base.DrawPos + new Vector3(0f, Altitudes.AltitudeFor(AltitudeLayer.Projectile), 0f) + Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), this.turretTopScale);
+            this.turretTopMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(Altitudes.AltitudeFor(AltitudeLayer.Projectile)) + Altitudes.AltIncVect, this.turretTopRotation.ToQuat(), this.turretTopScale);
             Graphics.DrawMesh(MeshPool.plane10, this.turretTopMatrix, turretTopOnTexture, 0);
             if (this.powerComp.PowerOn)
             {
