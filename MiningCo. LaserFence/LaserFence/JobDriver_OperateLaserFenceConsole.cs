@@ -32,7 +32,7 @@ namespace LaserFence
 
             yield return Toils_Goto.GotoCell(consoleIndex, PathEndMode.InteractionCell);
 
-            yield return Toils_General.Wait(240).WithProgressBarToilDelay(consoleIndex).WithEffect(EffecterDefOf.Research, consoleIndex);
+            yield return Toils_General.Wait(240).WithProgressBarToilDelay(consoleIndex);
 
             Toil operateLaserFenceConsoleToil = new Toil()
             {
