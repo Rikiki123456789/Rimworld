@@ -85,12 +85,12 @@ namespace Spaceship
             }
         }
 
-        // Air strike.
-        public static ThingDef SpaceshipAirStrike
+        // Airstrike.
+        public static ThingDef SpaceshipAirstrike
         {
             get
             {
-                return ThingDef.Named("FlyingSpaceshipAirStrike");
+                return ThingDef.Named("FlyingSpaceshipAirstrike");
             }
         }
         
@@ -151,11 +151,11 @@ namespace Spaceship
             return flyingSpaceship;
         }
 
-        public static void SpawnStrikeShip(Map map, IntVec3 targetPosition, AirStrikeDef airStrikeDef)
+        public static void SpawnStrikeShip(Map map, IntVec3 targetPosition, AirstrikeDef airStrikeDef, Faction faction)
         {
-            FlyingSpaceshipAirStrike strikeShip = ThingMaker.MakeThing(Util_Spaceship.SpaceshipAirStrike) as FlyingSpaceshipAirStrike;
+            FlyingSpaceshipAirstrike strikeShip = ThingMaker.MakeThing(Util_Spaceship.SpaceshipAirstrike) as FlyingSpaceshipAirstrike;
             GenSpawn.Spawn(strikeShip, targetPosition, map);
-            strikeShip.InitializeAirStrikeData(targetPosition, airStrikeDef);
+            strikeShip.InitializeAirstrikeData(targetPosition, airStrikeDef, faction);
         }
 
     }

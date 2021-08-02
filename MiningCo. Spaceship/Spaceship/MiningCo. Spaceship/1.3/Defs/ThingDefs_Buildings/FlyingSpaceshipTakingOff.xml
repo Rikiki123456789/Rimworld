@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef>
+    <defName>FlyingSpaceshipTakingOff</defName>
+    <label>spaceship</label>
+    <description>A spaceship used by MiningCo. to maintain a link between ground operations and the orbital station orbiting around the planet.</description>
+    <thingClass>Spaceship.FlyingSpaceshipTakingOff</thingClass>
+    <category>Ethereal</category>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/SupplySpaceship/SupplySpaceship</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(11,20)</drawSize>
+      <shaderType>CutoutFlying</shaderType>
+    </graphicData>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MaxHitPoints>3000</MaxHitPoints>
+      <Mass>10000</Mass>
+    </statBases>
+    <size>(9,18)</size>
+    <selectable>true</selectable>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <seeThroughFog>true</seeThroughFog>
+  </ThingDef>
+
+</Defs>

@@ -17,6 +17,10 @@ namespace Spaceship
     {
         public static Pawn GetRandomReachableDownedPawn(Pawn carrier)
         {
+            if (carrier.Map == null)
+            {
+                return null;
+            }
             foreach (Pawn downedPawn in carrier.Map.mapPawns.FreeHumanlikesSpawnedOfFaction(carrier.Faction))
             {
                 if (downedPawn.Downed)
@@ -32,6 +36,10 @@ namespace Spaceship
 
         public static Pawn GetNearestReachableDownedPawn(Pawn carrier)
         {
+            if (carrier.Map == null)
+            {
+                return null;
+            }
             Pawn nearestDownedPawn = null;
             float minDistance = 99999f;
             foreach (Pawn downedPawn in carrier.Map.mapPawns.FreeHumanlikesSpawnedOfFaction(carrier.Faction))

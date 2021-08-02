@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <TraderKindDef>
+    <defName>SpaceshipCargoPeriodicSupply</defName>
+    <label>periodic supply</label>
+    <commonality>0</commonality>
+    <orbital>true</orbital>
+    <stockGenerators>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Silver</thingDef>
+        <countRange>
+          <min>2000</min>
+          <max>3000</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>ComponentIndustrial</thingDef>
+        <price>Expensive</price>
+        <countRange>
+          <min>8</min>
+          <max>20</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>ComponentSpacer</thingDef>
+        <price>Expensive</price>
+        <countRange>
+          <min>6</min>
+          <max>16</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Steel</thingDef>
+        <price>Cheap</price>
+        <countRange>
+          <min>400</min>
+          <max>800</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Plasteel</thingDef>
+        <price>Cheap</price>
+        <countRange>
+          <min>150</min>
+          <max>300</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MedicineIndustrial</thingDef>
+        <price>Expensive</price>
+        <countRange>
+          <min>4</min>
+          <max>10</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gold</thingDef>
+        <price>Expensive</price>
+        <countRange>
+          <min>80</min>
+          <max>240</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Chemfuel</thingDef>
+        <countRange>
+          <min>400</min>
+          <max>800</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MealSurvivalPack</thingDef>
+        <countRange>
+          <min>20</min>
+          <max>40</max>
+        </countRange>
+      </li>
+    </stockGenerators>
+  </TraderKindDef>
+
+  <TraderKindDef>
+    <defName>SpaceshipCargoRequestedSupply</defName>
+    <label>special delivery</label>
+    <commonality>0</commonality>
+    <orbital>true</orbital>
+    <stockGenerators>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Silver</thingDef>
+        <countRange>
+          <min>4000</min>
+          <max>8000</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>ComponentIndustrial</thingDef>
+        <countRange>
+          <min>30</min>
+          <max>50</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>ComponentSpacer</thingDef>
+        <price>Expensive</price>
+        <countRange>
+          <min>16</min>
+          <max>30</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Steel</thingDef>
+        <price>Cheap</price>
+        <countRange>
+          <min>2000</min>
+          <max>3500</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Plasteel</thingDef>
+        <price>Cheap</price>
+        <countRange>
+          <min>800</min>
+          <max>2000</max>
+        </countRange>
+      </li>
+			<li Class="StockGenerator_SingleDef">
+				<thingDef>MedicineIndustrial</thingDef>
+				<countRange>
+					<min>20</min>
+					<max>40</max>
+				</countRange>
+			</li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gold</thingDef>
+        <countRange>
+          <min>300</min>
+          <max>700</max>
+        </countRange>
+      </li>
+			<li Class="StockGenerator_SingleDef">
+				<thingDef>Chemfuel</thingDef>
+				<countRange>
+					<min>800</min>
+					<max>1600</max>
+				</countRange>
+			</li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MealSurvivalPack</thingDef>
+        <countRange>
+          <min>40</min>
+          <max>80</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_Tag">
+        <tradeTag>Apparel_MiningHelmet</tradeTag>
+        <countRange>
+          <min>2</min>
+          <max>6</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_Tag">
+        <tradeTag>Apparel_MiningVest</tradeTag>
+        <countRange>
+          <min>2</min>
+          <max>6</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_Tag">
+        <tradeTag>PowerFist</tradeTag>
+        <countRange>
+          <min>2</min>
+          <max>6</max>
+        </countRange>
+      </li>
+    </stockGenerators>
+  </TraderKindDef>
+
+  <TraderKindDef>
+    <defName>SpaceshipCargoDamaged</defName>
+    <label>damaged cargo</label>
+    <commonality>0</commonality>
+    <orbital>true</orbital>
+    <stockGenerators>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Plasteel</thingDef>
+        <price>Cheap</price>
+        <countRange>
+          <min>40</min>
+          <max>120</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gold</thingDef>
+        <price>Expensive</price>
+        <countRange>
+          <min>30</min>
+          <max>80</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MealSurvivalPack</thingDef>
+        <countRange>
+          <min>20</min>
+          <max>40</max>
+        </countRange>
+      </li>
+    </stockGenerators>
+  </TraderKindDef>
+
+  <TraderKindDef>
+    <defName>SpaceshipCargoDispatcher</defName>
+    <label>dispatcher cargo</label>
+    <commonality>0</commonality>
+    <orbital>true</orbital>
+    <stockGenerators>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Chemfuel</thingDef>
+        <countRange>
+          <min>300</min>
+          <max>600</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MealSurvivalPack</thingDef>
+        <countRange>
+          <min>50</min>
+          <max>100</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MedicineIndustrial</thingDef>
+        <countRange>
+          <min>4</min>
+          <max>6</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gun_Autopistol</thingDef>
+        <countRange>
+          <min>1</min>
+          <max>4</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gun_AssaultRifle</thingDef>
+        <countRange>
+          <min>-2</min>
+          <max>2</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gun_ChargeRifle</thingDef>
+        <countRange>
+          <min>-4</min>
+          <max>2</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gun_ChainShotgun</thingDef>
+        <countRange>
+          <min>-2</min>
+          <max>2</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gun_Minigun</thingDef>
+        <countRange>
+          <min>-5</min>
+          <max>2</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Gun_SniperRifle</thingDef>
+        <countRange>
+          <min>-6</min>
+          <max>2</max>
+        </countRange>
+      </li>
+    </stockGenerators>
+  </TraderKindDef>
+
+  <TraderKindDef>
+    <defName>SpaceshipCargoMedical</defName>
+    <label>medical cargo</label>
+    <commonality>0</commonality>
+    <orbital>true</orbital>
+    <stockGenerators>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Silver</thingDef>
+        <countRange>
+          <min>500</min>
+          <max>1200</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>WakeUp</thingDef>
+        <countRange>
+          <min>8</min>
+          <max>15</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>Penoxycyline</thingDef>
+        <countRange>
+          <min>40</min>
+          <max>80</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MedicineIndustrial</thingDef>
+        <price>Cheap</price>
+        <countRange>
+          <min>20</min>
+          <max>40</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MedicineUltratech</thingDef>
+        <countRange>
+          <min>10</min>
+          <max>15</max>
+        </countRange>
+      </li>
+      <li Class="StockGenerator_SingleDef">
+        <thingDef>MealSurvivalPack</thingDef>
+        <countRange>
+          <min>30</min>
+          <max>40</max>
+        </countRange>
+      </li>
+    </stockGenerators>
+  </TraderKindDef>
+
+</Defs>

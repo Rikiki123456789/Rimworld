@@ -115,22 +115,21 @@ namespace Spaceship
             ComputeShipShadowExactPosition();
             ComputeShipExactRotation();
             ComputeShipScale();
-            SetShipVisibleAboveFog();
+            SetShipPositionToBeSelectable();
         }
 
         public abstract void ComputeShipExactPosition();
         public abstract void ComputeShipShadowExactPosition();
         public abstract void ComputeShipExactRotation();
         public abstract void ComputeShipScale();
-        public abstract void SetShipVisibleAboveFog();
+        public abstract void SetShipPositionToBeSelectable();
 
-        public bool IsInBoundsAndVisible()
+        public bool IsInBounds()
         {
-            bool isInBoundsAndVisible = this.DrawPos.ToIntVec3().InBounds(this.Map)
-                && (this.Map.fogGrid.IsFogged(this.DrawPos.ToIntVec3()) == false)
+            bool isInBounds = this.DrawPos.ToIntVec3().InBounds(this.Map)
                 && this.DrawPos.ToIntVec3().x >= 10 && this.DrawPos.ToIntVec3().x < this.Map.Size.x - 10
                 && this.DrawPos.ToIntVec3().z >= 10 && this.DrawPos.ToIntVec3().z < this.Map.Size.z - 10;
-            return isInBoundsAndVisible;
+            return isInBounds;
         }
 
         // ===================== Draw =====================

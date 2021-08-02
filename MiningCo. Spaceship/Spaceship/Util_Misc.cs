@@ -14,8 +14,8 @@ namespace Spaceship
 {
     public static class Util_Misc
     {
-        // Air strike target selection.
-        public static void SelectAirStrikeTarget(Map map, Action<LocalTargetInfo> actionOnValidTarget)
+        // Airstrike target selection.
+        public static void SelectAirstrikeTarget(Map map, Action<LocalTargetInfo> actionOnValidTarget)
         {
             TargetingParameters targetingParams = new TargetingParameters();
             targetingParams.canTargetPawns = false;

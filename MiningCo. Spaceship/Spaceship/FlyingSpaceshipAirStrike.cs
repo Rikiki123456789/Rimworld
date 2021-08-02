@@ -12,38 +12,40 @@ using Verse.Sound;   // Needed when you do something with the Sound
 namespace Spaceship
 {
     [StaticConstructorOnStartup]
-    public class FlyingSpaceshipAirStrike : FlyingSpaceship
+    public class FlyingSpaceshipAirstrike : FlyingSpaceship
     {
         public int ticksBeforeOverflight = 0;
         public int ticksAfterOverflight = 0;
-        public AirStrikeDef airStrikeDef = null;
+        public AirstrikeDef airStrikeDef = null;
         public IntVec3 targetPosition = IntVec3.Invalid;
         public float shipToTargetDistance = 0f;
+        Faction clientFaction = null;
 
         // Weapons.
-        public List<int> weaponRemainingRounds = new List<int>(AirStrikeDef.maxWeapons) { -1, -1, -1 }; // -1 means weapon has not started shooting.
-        public List<int> weaponNextShotTick = new List<int>(AirStrikeDef.maxWeapons) { 0, 0, 0 };
-        public List<bool> weaponShootRight = new List<bool>(AirStrikeDef.maxWeapons) { true, true, true };
+        public List<int> weaponRemainingRounds = new List<int>(AirstrikeDef.maxWeapons) { -1, -1, -1 }; // -1 means weapon has not started shooting.
+        public List<int> weaponNextShotTick = new List<int>(AirstrikeDef.maxWeapons) { 0, 0, 0 };
+        public List<bool> weaponShootRight = new List<bool>(AirstrikeDef.maxWeapons) { true, true, true };
         
         // Sound.
-        public static readonly SoundDef airStrikeSound = SoundDef.Named("AirStrike");
+        public static readonly SoundDef airStrikeSound = SoundDef.Named("Airstrike");
                 
         // ===================== Setup work =====================
-        public void InitializeAirStrikeData(IntVec3 targetPosition, AirStrikeDef airStrikeDef)
+        public void InitializeAirstrikeData(IntVec3 targetPosition, AirstrikeDef airStrikeDef, Faction clientFaction)
         {
             this.targetPosition = targetPosition;
             this.airStrikeDef = airStrikeDef;
+            this.clientFaction = clientFaction;
 
             this.ticksBeforeOverflight = this.airStrikeDef.ticksBeforeOverflightInitialValue;
             this.ticksAfterOverflight = 0;
 
             this.spaceshipKind = SpaceshipKind.Airstrike;
-            ComputeAirStrikeRotation(this.targetPosition);
+            ComputeAirstrikeRotation(this.targetPosition);
             ConfigureShipTexture(this.spaceshipKind);
             base.Tick();
         }
 
-        public void ComputeAirStrikeRotation(IntVec3 targetPosition)
+        public void ComputeAirstrikeRotation(IntVec3 targetPosition)
         {
             int mapHalfSizeX = this.Map.Size.x / 2;
             int mapHalfSizeZ = this.Map.Size.z / 2;
@@ -91,7 +93,7 @@ namespace Spaceship
             Scribe_Values.Look<int>(ref this.ticksBeforeOverflight, "ticksBeforeOverflight");
             Scribe_Values.Look<int>(ref this.ticksAfterOverflight, "ticksAfterOverflight");
             Scribe_Values.Look<IntVec3>(ref this.targetPosition, "targetPosition");
-            Scribe_Defs.Look<AirStrikeDef>(ref this.airStrikeDef, "airStrikeDef");
+            Scribe_Defs.Look<AirstrikeDef>(ref this.airStrikeDef, "airStrikeDef");
             Scribe_Values.Look<float>(ref this.spaceshipExactRotation, "shipRotation");
 
             Scribe_Collections.Look<int>(ref this.weaponRemainingRounds, "weaponRemainingRounds");
@@ -106,7 +108,7 @@ namespace Spaceship
             if (this.ticksBeforeOverflight == this.airStrikeDef.ticksBeforeOverflightPlaySound)
             {
                 // Atmosphere entry sound.
-                FlyingSpaceshipAirStrike.airStrikeSound.PlayOneShot(new TargetInfo(targetPosition, this.Map));
+                FlyingSpaceshipAirstrike.airStrikeSound.PlayOneShot(new TargetInfo(targetPosition, this.Map));
             }
 
             for (int weaponIndex = 0; weaponIndex < this.airStrikeDef.weapons.Count; weaponIndex++)
@@ -133,8 +135,8 @@ namespace Spaceship
         {
             Vector3 unitVector = new Vector3(0f, 0f, 1f).RotatedBy(this.spaceshipExactRotation);
 
-            this.spaceshipExactPosition = this.targetPosition.ToVector3ShiftedWithAltitude(AltitudeLayer.Skyfaller);
-            
+            this.spaceshipExactPosition = this.targetPosition.ToVector3ShiftedWithAltitude(this.def.altitudeLayer);
+
             if (this.ticksBeforeOverflight > 0)
             {
                 if (this.ticksBeforeOverflight > this.airStrikeDef.ticksBeforeOverflightReducedSpeed)
@@ -163,14 +165,12 @@ namespace Spaceship
                 }
                 this.spaceshipExactPosition += unitVector * this.shipToTargetDistance;
             }
-            // The 5f offset on Y axis is mandatory to be over the fog of war. The 0.1f is to ensure spaceship texture is above its shadow.
-            this.spaceshipExactPosition += new Vector3(0f, 5.1f, 0f);
         }
 
         public override void ComputeShipShadowExactPosition()
         {
             GenCelestial.LightInfo lightInfo = GenCelestial.GetLightSourceInfo(this.Map, GenCelestial.LightType.Shadow);
-            this.spaceshipShadowExactPosition = this.spaceshipExactPosition + 2f * new Vector3(lightInfo.vector.x, -0.1f, lightInfo.vector.y);
+            this.spaceshipShadowExactPosition = this.spaceshipExactPosition + 2f * new Vector3(lightInfo.vector.x, -0.01f, lightInfo.vector.y); // The small 0.01f offset is to ensure spaceship shadow is above its texture.
         }
 
         public override void ComputeShipExactRotation()
@@ -182,10 +182,10 @@ namespace Spaceship
         {
             // Equal to default parent value.
         }
-        
-        public override void SetShipVisibleAboveFog()
+
+        public override void SetShipPositionToBeSelectable()
         {
-            if (IsInBoundsAndVisible())
+            if (IsInBounds())
             {
                 this.Position = this.spaceshipExactPosition.ToIntVec3();
             }
@@ -243,7 +243,8 @@ namespace Spaceship
                     {
                         weaponDef.soundCastDef.PlayOneShot(new TargetInfo(roundOrigin.ToIntVec3(), this.Map));
                     }
-                    MoteMaker.MakeStaticMote(roundOrigin, this.Map, ThingDefOf.Mote_ShotFlash, 10f);
+                    FleckMaker.Static(roundOrigin, this.Map, FleckDefOf.ShotFlash, 10f);
+
                     // Look for hostile pawn if weapon has a target acquire range.
                     Pawn pawn = null;
                     if (weaponDef.targetAcquireRange > 0f)
@@ -277,7 +278,7 @@ namespace Spaceship
                 }
                 Pawn pawn = cell.GetFirstPawn(this.Map);
                 if ((pawn != null)
-                    && pawn.HostileTo(Faction.OfPlayer)
+                    && pawn.HostileTo(this.clientFaction)
                     && (pawn.health.Downed == false))
                 {
                     hostilePawnsAround.Add(pawn);

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef Name="MiningCoPawnKindBase" Abstract="True">
+    <race>Human</race>
+    <defaultFactionType>AncientsHostile</defaultFactionType>
+    <baseRecruitDifficulty>0.70</baseRecruitDifficulty>
+    <chemicalAddictionChance>0.025</chemicalAddictionChance>
+    <invNutrition>2.55</invNutrition>
+    <backstoryCryptosleepCommonality>0.25</backstoryCryptosleepCommonality>
+    <apparelIgnoreSeasons>true</apparelIgnoreSeasons>
+    <initialWillRange>1~2</initialWillRange>
+    <initialResistanceRange>10~17</initialResistanceRange>
+  </PawnKindDef>
+  
+</Defs>

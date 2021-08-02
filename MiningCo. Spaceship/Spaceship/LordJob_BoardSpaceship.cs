@@ -20,8 +20,8 @@ namespace Spaceship
         {
         }
 
-        public LordJob_BoardSpaceship(IntVec3 targetDestination)
-            : base(targetDestination)
+        public LordJob_BoardSpaceship(IntVec3 targetDestination, LocomotionUrgency locomotionUrgency = LocomotionUrgency.Walk)
+            : base(targetDestination, locomotionUrgency)
         {
         }
 
@@ -32,9 +32,9 @@ namespace Spaceship
             stateGraph.StartingToil = travelToil;
             LordToil_DefendPoint defendPointToil = new LordToil_DefendPoint(false);
             stateGraph.AddToil(defendPointToil);
-            LordToil_BoardSpaceship boardSpaceshipToil = new LordToil_BoardSpaceship(this.targetDestination, LocomotionUrgency.Walk);
+            LordToil_BoardSpaceship boardSpaceshipToil = new LordToil_BoardSpaceship(this.targetDestination, this.locomotionUrgency);
             stateGraph.AddToil(boardSpaceshipToil);
-            LordToil_EscortDownedPawn escortDownedPawnPeacefullyToil = new LordToil_EscortDownedPawn(this.targetDestination, LocomotionUrgency.Walk);
+            LordToil_EscortDownedPawn escortDownedPawnPeacefullyToil = new LordToil_EscortDownedPawn(this.targetDestination, this.locomotionUrgency);
             stateGraph.AddToil(escortDownedPawnPeacefullyToil);
             LordToil exitMap = stateGraph.AttachSubgraph(new LordJob_ExitMap(IntVec3.Invalid).CreateGraph()).StartingToil;
             

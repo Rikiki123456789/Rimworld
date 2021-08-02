@@ -2,7 +2,7 @@
 <Defs>
 
   <SoundDef>
-    <defName>AirStrike</defName>
+    <defName>Airstrike</defName>
     <context>MapOnly</context>
     <maxVoices>4</maxVoices>
     <maxSimultaneous>1</maxSimultaneous>
@@ -13,7 +13,7 @@
         <onCamera>False</onCamera>
         <grains>
           <li Class="AudioGrain_Clip">
-            <clipPath>AirStrike/AirStrike</clipPath>
+            <clipPath>Airstrike/Airstrike</clipPath>
           </li>
         </grains>
         <volumeRange>

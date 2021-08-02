@@ -50,7 +50,7 @@ namespace Spaceship
             this.ticksSinceTakeOff++;
             if (this.ticksSinceTakeOff <= verticalTrajectoryDurationInTicks)
             {
-                MoteMaker.ThrowDustPuff(GenAdj.CellsAdjacentCardinal(this.landingPadPosition, this.landingPadRotation, Util_ThingDefOf.LandingPad.Size).RandomElement(), this.Map, 3f * (1f - (float)this.ticksSinceTakeOff / (float)verticalTrajectoryDurationInTicks));
+                FleckMaker.ThrowDustPuff(GenAdj.CellsAdjacentCardinal(this.landingPadPosition, this.landingPadRotation, Util_ThingDefOf.LandingPad.Size).RandomElement(), this.Map, 3f * (1f - (float)this.ticksSinceTakeOff / (float)verticalTrajectoryDurationInTicks));
             }
             if (this.ticksSinceTakeOff == 1)
             {
@@ -65,8 +65,7 @@ namespace Spaceship
 
         public override void ComputeShipExactPosition()
         {
-            Vector3 exactPosition = this.landingPadPosition.ToVector3ShiftedWithAltitude(AltitudeLayer.Skyfaller);
-            exactPosition += new Vector3(0f, 5.1f, 0f); // The 5f offset on Y axis is mandatory to be over the fog of war. The 0.1f is to ensure spaceship texture is above its shadow.
+            Vector3 exactPosition = this.landingPadPosition.ToVector3ShiftedWithAltitude(Altitudes.AltitudeFor(this.def.altitudeLayer));
 
             if (this.spaceshipKind != SpaceshipKind.Medical)
             {
@@ -90,11 +89,11 @@ namespace Spaceship
             float shadowDistanceCoefficient = 2f;
             if (this.ticksSinceTakeOff < verticalTrajectoryDurationInTicks)
             {
-                // Ascending.
+                // Taking off.
                 shadowDistanceCoefficient *= ((float)this.ticksSinceTakeOff / verticalTrajectoryDurationInTicks);
             }
             GenCelestial.LightInfo lightInfo = GenCelestial.GetLightSourceInfo(this.Map, GenCelestial.LightType.Shadow);
-            this.spaceshipShadowExactPosition += new Vector3(lightInfo.vector.x, -0.1f, lightInfo.vector.y) * shadowDistanceCoefficient;
+            this.spaceshipShadowExactPosition += new Vector3(lightInfo.vector.x, -0.1f, lightInfo.vector.y) * shadowDistanceCoefficient; // The small 0.01f offset is to ensure spaceship shadow is above its texture.
         }
 
         public override void ComputeShipExactRotation()
@@ -119,9 +118,9 @@ namespace Spaceship
         }
 
         // ===================== Draw =====================
-        public override void SetShipVisibleAboveFog()
+        public override void SetShipPositionToBeSelectable()
         {
-            if (IsInBoundsAndVisible())
+            if (IsInBounds())
             {
                 this.Position = this.spaceshipExactPosition.ToIntVec3();
             }

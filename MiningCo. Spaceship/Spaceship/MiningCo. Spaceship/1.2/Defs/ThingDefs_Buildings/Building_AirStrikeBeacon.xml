@@ -2,13 +2,13 @@
 <Defs>
 
   <ThingDef ParentName="BuildingBase">
-    <defName>AirStrikeBeacon</defName>
-    <label>air strike beacon</label>
-    <description>A beacon to designate an air strike target position.</description>
-    <thingClass>Spaceship.Building_AirStrikeBeacon</thingClass>
+    <defName>AirstrikeBeacon</defName>
+    <label>airstrike beacon</label>
+    <description>A beacon to designate an airstrike target position.</description>
+    <thingClass>Spaceship.Building_AirstrikeBeacon</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
-      <texPath>Things/Building/AirStrikeBeacon/AirStrikeBeacon</texPath>
+      <texPath>Things/Building/AirstrikeBeacon/AirstrikeBeacon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>

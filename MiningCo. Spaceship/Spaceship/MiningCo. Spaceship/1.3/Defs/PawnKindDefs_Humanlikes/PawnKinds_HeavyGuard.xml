@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="MiningCoPawnKindBase">
+    <defName>MiningCoHeavyGuard</defName>
+    <label>guard</label>
+    <combatPower>150</combatPower>
+    <minGenerationAge>32</minGenerationAge>
+    <maxGenerationAge>45</maxGenerationAge>
+    <gearHealthRange>
+      <min>1.0</min>
+      <max>2.5</max>
+    </gearHealthRange>
+    <itemQuality>Superior</itemQuality>
+    <techHediffsMoney>
+      <min>2000</min>
+      <max>3500</max>
+    </techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+    <techHediffsChance>0.7</techHediffsChance>
+    <inventoryOptions>
+      <skipChance>0.7</skipChance>
+      <subOptionsChooseOne>
+        <li>
+          <choiceChance>30</choiceChance>
+          <thingDef>Silver</thingDef>
+          <countRange>
+            <min>150</min>
+            <max>300</max>
+          </countRange>
+        </li>
+        <li>
+          <choiceChance>70</choiceChance>
+          <thingDef>MedicineUltratech</thingDef>
+          <countRange>
+            <min>1</min>
+            <max>2</max>
+          </countRange>
+        </li>
+      </subOptionsChooseOne>
+    </inventoryOptions>
+    <initialWillRange>2~4</initialWillRange>
+    <initialResistanceRange>12~20</initialResistanceRange>
+  </PawnKindDef>
+
+</Defs>

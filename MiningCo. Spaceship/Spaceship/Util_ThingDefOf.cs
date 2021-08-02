@@ -64,12 +64,12 @@ namespace Spaceship
             }
         }
 
-        // Air strike beacon.
-        public static ThingDef AirStrikeBeacon
+        // Airstrike beacon.
+        public static ThingDef AirstrikeBeacon
         {
             get
             {
-                return ThingDef.Named("AirStrikeBeacon");
+                return ThingDef.Named("Building_AirstrikeBeacon");
             }
         }
 

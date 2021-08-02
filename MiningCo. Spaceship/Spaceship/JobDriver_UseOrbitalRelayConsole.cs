@@ -18,7 +18,7 @@ namespace Spaceship
     public class JobDriver_UseOrbitalRelayConsole : JobDriver
     {
         public TargetIndex orbitalRelayConsoleIndex = TargetIndex.A;
-        public AirStrikeDef selectedStrikeDef = null;
+        public AirstrikeDef selectedStrikeDef = null;
         public TimeSpeed previousTimeSpeed = TimeSpeed.Paused;
 
         public override bool TryMakePreToilReservations(bool errorOnFailed)
@@ -181,11 +181,11 @@ namespace Spaceship
         {
             DiaNode airSupportGrantedDiaNode = new DiaNode("\"Your air support request has been approved by my hierarchy.\n"
                 + "What kind of strike should we launch?\"");
-            foreach (AirStrikeDef strikeDef in DefDatabase<AirStrikeDef>.AllDefsListForReading)
+            foreach (AirstrikeDef strikeDef in DefDatabase<AirstrikeDef>.AllDefsListForReading)
             {
-                // Air strike option.
+                // Airstrike option.
                 DiaOption airStrikeDiaOption = new DiaOption(strikeDef.LabelCap + " (" + strikeDef.costInSilver + " silvers)");
-                DiaNode airStrikeDetailsDiaNode = GetAirStrikeDetailsDiaNode(airSupportGrantedDiaNode, strikeDef);
+                DiaNode airStrikeDetailsDiaNode = GetAirstrikeDetailsDiaNode(airSupportGrantedDiaNode, strikeDef);
                 airStrikeDiaOption.link = airStrikeDetailsDiaNode;
                 airSupportGrantedDiaNode.options.Add(airStrikeDiaOption);
             }
@@ -196,7 +196,7 @@ namespace Spaceship
             return airSupportGrantedDiaNode;
         }
         
-        public DiaNode GetAirStrikeDetailsDiaNode(DiaNode parentNode, AirStrikeDef strikeDef)
+        public DiaNode GetAirstrikeDetailsDiaNode(DiaNode parentNode, AirstrikeDef strikeDef)
         {
             DiaNode airStrikeDetailsDiaNode = new DiaNode(strikeDef.LabelCap + "\n\n"
                    + strikeDef.description + "\n\n"
@@ -208,7 +208,7 @@ namespace Spaceship
                 this.previousTimeSpeed = Find.TickManager.CurTimeSpeed;
                 Find.TickManager.CurTimeSpeed = TimeSpeed.Paused;
                 this.selectedStrikeDef = strikeDef;
-                Util_Misc.SelectAirStrikeTarget(this.Map, SpawnAirStrikeBeacon);
+                Util_Misc.SelectAirstrikeTarget(this.Map, SpawnAirstrikeBeacon);
             };
             airStrikeConfirmDiaOption.resolveTree = true;
             if (TradeUtility.ColonyHasEnoughSilver(this.Map, strikeDef.costInSilver) == false)
@@ -238,13 +238,13 @@ namespace Spaceship
             return airSupporDeniedDiaNode;
         }
 
-        public void SpawnAirStrikeBeacon(LocalTargetInfo targetPosition)
+        public void SpawnAirstrikeBeacon(LocalTargetInfo targetPosition)
         {
             TradeUtility.LaunchSilver(this.Map, this.selectedStrikeDef.costInSilver);
-            Building_AirStrikeBeacon airStrikeBeacon = GenSpawn.Spawn(Util_ThingDefOf.AirStrikeBeacon, targetPosition.Cell, this.Map) as Building_AirStrikeBeacon;
-            airStrikeBeacon.InitializeAirStrike(targetPosition.Cell, this.selectedStrikeDef);
+            Building_AirstrikeBeacon airStrikeBeacon = GenSpawn.Spawn(Util_ThingDefOf.AirstrikeBeacon, targetPosition.Cell, this.Map) as Building_AirstrikeBeacon;
+            airStrikeBeacon.InitializeAirstrike(targetPosition.Cell, this.selectedStrikeDef);
             airStrikeBeacon.SetFaction(Faction.OfPlayer);
-            Messages.Message("Air strike target confirmed!", airStrikeBeacon, MessageTypeDefOf.CautionInput);
+            Messages.Message("Airstrike target confirmed!", airStrikeBeacon, MessageTypeDefOf.CautionInput);
             Find.TickManager.CurTimeSpeed = this.previousTimeSpeed;
             Util_Misc.Partnership.nextAirstrikeMinTick[this.Map] = Find.TickManager.TicksGame + Mathf.RoundToInt(selectedStrikeDef.ammoResupplyDays * GenDate.TicksPerDay);
         }

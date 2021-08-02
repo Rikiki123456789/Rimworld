@@ -11,7 +11,7 @@ using Verse;         // RimWorld universal objects are here
 
 namespace Spaceship
 {
-    public class AirStrikeDef : Def
+    public class AirstrikeDef : Def
     {
         public const int maxWeapons = 3;
 

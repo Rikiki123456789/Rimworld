@@ -2,9 +2,9 @@
 <Defs>
 
   <ThingDef>
-    <defName>FlyingSpaceshipAirStrike</defName>
+    <defName>FlyingSpaceshipAirstrike</defName>
     <label>strikeship</label>
-    <thingClass>Spaceship.FlyingSpaceshipAirStrike</thingClass>
+    <thingClass>Spaceship.FlyingSpaceshipAirstrike</thingClass>
     <category>Ethereal</category>
     <tickerType>Normal</tickerType>
     <graphicData>

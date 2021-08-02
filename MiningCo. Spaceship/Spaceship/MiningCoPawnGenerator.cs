@@ -274,7 +274,7 @@ namespace Spaceship
         {
             ThingWithComps weapon = ThingMaker.MakeThing(weaponDef) as ThingWithComps;
             weapon.TryGetComp<CompQuality>().SetQuality(weaponQuality, ArtGenerationContext.Outsider);
-            weapon.TryGetComp<CompBiocodableWeapon>().CodeFor(pawn);
+            weapon.TryGetComp<CompBiocodable>().CodeFor(pawn);
             pawn.equipment.AddEquipment(weapon);
         }
     }

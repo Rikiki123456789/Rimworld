@@ -220,7 +220,7 @@ namespace Spaceship
         {
             List<FloatMenuOption> options = new List<FloatMenuOption>();
 
-            if (selPawn.CanReach(this, PathEndMode.ClosestTouch, Danger.Some, false, TraverseMode.ByPawn) == false)
+            if (selPawn.CanReach(this, PathEndMode.ClosestTouch, Danger.Some, false, false, TraverseMode.ByPawn) == false)
             {
                 return GetFloatMenuOptionsCannotReach(selPawn);
             }

@@ -267,16 +267,16 @@ namespace Spaceship
                     stringBuilder.Append("available in " + remainingTimeAsString);
                 }
 
-                // Air strike.
+                // Airstrike.
                 stringBuilder.AppendLine();
                 if (Find.TickManager.TicksGame >= Util_Misc.Partnership.nextAirstrikeMinTick[this.Map])
                 {
-                    stringBuilder.Append("Air strike: available");
+                    stringBuilder.Append("Airstrike: available");
                 }
                 else
                 {
                     string remainingTimeAsString = GenDate.ToStringTicksToPeriodVerbose(Util_Misc.Partnership.nextAirstrikeMinTick[this.Map] - Find.TickManager.TicksGame);
-                    stringBuilder.Append("Air strike: available in " + remainingTimeAsString);
+                    stringBuilder.Append("Airstrike: available in " + remainingTimeAsString);
                 }
             }
 
@@ -312,7 +312,7 @@ namespace Spaceship
         // ===================== Float menu options =====================
         public override IEnumerable<FloatMenuOption> GetFloatMenuOptions(Pawn selPawn)
         {
-            if (selPawn.CanReach(this, PathEndMode.InteractionCell, Danger.Some, false, TraverseMode.ByPawn) == false)
+            if (selPawn.CanReach(this, PathEndMode.InteractionCell, Danger.Some, false, false, TraverseMode.ByPawn) == false)
             {
                 FloatMenuOption item = new FloatMenuOption("CannotUseNoPath".Translate(), null);
                 return new List<FloatMenuOption>
@@ -417,7 +417,7 @@ namespace Spaceship
         public override void Draw()
         {
             base.Draw();
-            dishMatrix.SetTRS(this.DrawPos + Altitudes.AltIncVect + new Vector3(0f, 3f, 0f), this.dishRotation.ToQuat(), dishScale); // Mind the small offset so dish is above colonists.
+            dishMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, this.dishRotation.ToQuat(), dishScale); // Mind the small offset so dish is above colonists.
             Graphics.DrawMesh(MeshPool.plane10, dishMatrix, Building_OrbitalRelay.dishTexture, 0);
         }
         

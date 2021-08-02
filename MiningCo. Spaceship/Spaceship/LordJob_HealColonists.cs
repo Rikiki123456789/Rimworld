@@ -30,19 +30,22 @@ namespace Spaceship
             StateGraph stateGraph = new StateGraph();
             LordToil_HealColonists healToil = new LordToil_HealColonists(this.targetDestination);
             stateGraph.StartingToil = healToil;
-            LordToil boardSpaceshipToil = stateGraph.AttachSubgraph(new LordJob_BoardSpaceship(this.targetDestination).CreateGraph()).StartingToil;
+            LordToil boardSpaceshipToil = stateGraph.AttachSubgraph(new LordJob_BoardSpaceship(this.targetDestination, LocomotionUrgency.Jog).CreateGraph()).StartingToil;
 
             // Return to spaceship.
             stateGraph.AddTransition(new Transition(healToil, boardSpaceshipToil)
             {
                 triggers =
                 {
+                    new Trigger_PawnHarmed(),
+                    new Trigger_PawnLostViolently(),
                     new Trigger_Memo("HealFinished"),
                     new Trigger_Memo("TakeOffImminent"), // Raised when take-off is requested by player.
                     new Trigger_MedicalSpaceshipTakeOffImminent() // Can happen if medic is busy for too long.
                 },
                 postActions =
                 {
+                    new TransitionAction_CancelMedicalAssistance(),
                     new TransitionAction_EndAllJobs()
                 }
             });

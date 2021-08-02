@@ -52,12 +52,12 @@ namespace Spaceship
                 return true;
             }
             FactionRelation factionRelation = faction.RelationWith(other, false);
-            factionRelation.goodwill = num2;
+            factionRelation.baseGoodwill = num2;
             bool flag;
             factionRelation.CheckKindThresholds(faction, canSendHostilityLetter, reason, (!lookTarget.HasValue) ? GlobalTargetInfo.Invalid : lookTarget.Value, out flag);
             FactionRelation factionRelation2 = other.RelationWith(faction, false);
             FactionRelationKind kind = factionRelation2.kind;
-            factionRelation2.goodwill = factionRelation.goodwill;
+            factionRelation2.baseGoodwill = factionRelation.baseGoodwill;
             factionRelation2.kind = factionRelation.kind;
             bool flag2;
             if (kind != factionRelation2.kind)

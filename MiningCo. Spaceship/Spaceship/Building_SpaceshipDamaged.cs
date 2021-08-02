@@ -230,7 +230,7 @@ namespace Spaceship
                         + "Do not count on our services for some time, \"partner\".\"\n\n"
                         + "-- End of transmission --\n\n"
                         + "Next cargo supply is delayed.\n"
-                        + "Air strike is not available for some time.";
+                        + "Airstrike is not available for some time.";
                     Find.LetterStack.ReceiveLetter("Repairs?!", letterText, LetterDefOf.NegativeEvent, new TargetInfo(this.Position, this.Map));
                     Util_Misc.Partnership.nextPeriodicSupplyTick[this.Map] = Find.TickManager.TicksGame + 2 * WorldComponent_Partnership.cargoSpaceshipPeriodicSupplyPeriodInTicks;
                     Util_Misc.Partnership.nextRequestedSupplyMinTick[this.Map] = Find.TickManager.TicksGame + 2 * WorldComponent_Partnership.cargoSpaceshipRequestedSupplyPeriodInTicks;
@@ -246,7 +246,7 @@ namespace Spaceship
                         + "(You can hear insults before the pilot disconnects.)\n\n"
                         + "-- End of transmission --\n\n"
                         + "Next cargo supply is greatly delayed.\n"
-                        + "Air strike is not available for a long time.";
+                        + "Airstrike is not available for a long time.";
                     Find.LetterStack.ReceiveLetter("Repairs?!", letterText, LetterDefOf.NegativeEvent, new TargetInfo(this.Position, this.Map));
                     Util_Misc.Partnership.nextPeriodicSupplyTick[this.Map] = Find.TickManager.TicksGame + 4 * WorldComponent_Partnership.cargoSpaceshipPeriodicSupplyPeriodInTicks;
                     Util_Misc.Partnership.nextRequestedSupplyMinTick[this.Map] = Find.TickManager.TicksGame + 4 * WorldComponent_Partnership.cargoSpaceshipRequestedSupplyPeriodInTicks;

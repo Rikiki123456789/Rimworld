@@ -24,7 +24,8 @@ namespace Spaceship
                 IntVec3 targetDestination = (lord.LordJob as LordJob_MiningCoBase).targetDestination;
                 foreach (Pawn pawn in lord.ownedPawns)
                 {
-                    if (pawn.CanReach(targetDestination, PathEndMode.OnCell, Danger.Some) == false)
+                    if ((pawn.Map != null)
+                        && pawn.CanReach(targetDestination, PathEndMode.OnCell, Danger.Some) == false)
                     {
                         return true;
                     }
