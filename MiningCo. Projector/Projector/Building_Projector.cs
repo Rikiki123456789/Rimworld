@@ -312,7 +312,12 @@ namespace Projector
                     bool targetIsWearingMarineHelmet = false;
                     foreach (Apparel apparel in this.target.apparel.WornApparel)
                     {
-                        if (apparel.def == ThingDef.Named("Apparel_PowerArmorHelmet"))
+                        if (apparel.def == ThingDef.Named("Apparel_PowerArmorHelmet")
+                            || (apparel.def == ThingDef.Named("Apparel_ArmorMarineHelmetPrestige"))
+                            || (apparel.def == ThingDef.Named("Apparel_ArmorHelmetRecon"))
+                            || (apparel.def == ThingDef.Named("Apparel_ArmorHelmetReconPrestige"))
+                            || (apparel.def == ThingDef.Named("Apparel_ArmorHelmetCataphract"))
+                            || (apparel.def == ThingDef.Named("Apparel_ArmorHelmetCataphractPrestige")))
                         {
                             targetIsWearingMarineHelmet = true;
                             break;
@@ -320,7 +325,7 @@ namespace Projector
                     }
                     bool targetHasBionicEye = false;
                     targetHasBionicEye = this.target.health.hediffSet.HasHediff(HediffDefOf.BionicEye)
-                        || this.target.health.hediffSet.HasHediff(HediffDef.Named("ArchotechEye"));
+                        || this.target.health.hediffSet.HasHediff(HediffDefOf.ArchotechEye);
                     
                     if ((targetHasBionicEye == false)
                         && (targetIsWearingMarineHelmet == false))
