@@ -29,7 +29,6 @@ namespace Spaceship
                     return false;
                 }
                 Pawn pawnToRescue = Util_DownedPawn.GetRandomReachableDownedPawn(lord.ownedPawns.RandomElement());
-
                 if (pawnToRescue == null)
                 {
                     return false;
