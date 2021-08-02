@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="HatMakeableBase">
+   <defName>Apparel_MiningHelmet</defName>
+    <label>mining helmet</label>
+    <description>A miners best friend. This hard hat will help protect you when the roof comes crashing down. Its light is also reassuring when alone in dark caves.</description>
+    <thingClass>MiningHelmet.ApparelWithMiningLight</thingClass>
+    <techLevel>Industrial</techLevel>
+    <tickerType>Normal</tickerType>
+    <recipeMaker>
+      <unfinishedThingDef>UnfinishedTechArmor</unfinishedThingDef>
+      <researchPrerequisite>Electricity</researchPrerequisite>
+    </recipeMaker>
+    <graphicData>
+      <texPath>Things/Apparel/MiningHelmet/MiningHelmet</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <statBases>
+      <WorkToMake>10000</WorkToMake>
+      <ArmorRating_Blunt>0.10</ArmorRating_Blunt>
+      <ArmorRating_Sharp>0.05</ArmorRating_Sharp>
+      <Insulation_Cold>3</Insulation_Cold>
+      <Insulation_Heat>2</Insulation_Heat>
+      <Mass>1</Mass>
+      <EquipDelay>1</EquipDelay>
+    </statBases>
+    <equippedStatOffsets>
+	    <MiningSpeed>0.10</MiningSpeed>
+    </equippedStatOffsets>
+    <costList>
+      <Steel>50</Steel>
+      <Cloth>20</Cloth>
+      <ComponentIndustrial>1</ComponentIndustrial>
+    </costList>
+    <generateCommonality>0.2</generateCommonality>
+    <apparel>
+      <bodyPartGroups>
+        <li>UpperHead</li>
+      </bodyPartGroups>
+      <wornGraphicPath>Things/Apparel/MiningHelmet/MiningHelmet</wornGraphicPath>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+      <tags>
+      </tags>
+    </apparel>
+    <tradeTags>
+      <li>MiningHelmet</li>
+    </tradeTags>
+  </ThingDef>
+  
+</Defs>
