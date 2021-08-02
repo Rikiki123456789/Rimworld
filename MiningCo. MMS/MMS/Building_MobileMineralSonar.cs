@@ -95,14 +95,13 @@ namespace MobileMineralSonar
             // Components initialization.
             powerComp = base.GetComp<CompPowerTrader>();
             powerComp.powerOutputInt = 0;
-            
-            // The 10f offset on Y axis is mandatory to be over the fog of war.
-            scanRangeMatrix10.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale10);
-            scanRangeMatrix20.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale20);
-            scanRangeMatrix30.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale30);
-            scanRangeMatrix40.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale40);
-            scanRangeMatrix50.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
-            satelliteDishMatrix.SetTRS(base.DrawPos + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), satelliteDishScale);
+
+            //scanRangeMatrix10.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale10);
+            //scanRangeMatrix20.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale20);
+            scanRangeMatrix30.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale30);
+            //scanRangeMatrix40.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale40);
+            scanRangeMatrix50.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeScale50);
+            satelliteDishMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.Building) + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), satelliteDishScale);
         }
 
         public override void DeSpawn(DestroyMode mode = DestroyMode.Vanish)
@@ -220,12 +219,7 @@ namespace MobileMineralSonar
             {
                 return;
             }
-            MoteThrown moteThrown = (MoteThrown)ThingMaker.MakeThing(ThingDefOf.Mote_LightningGlow, null);
-            moteThrown.Scale = 5f;
-            moteThrown.rotationRate = Rand.Range(-3f, 3f);
-            moteThrown.exactPosition = this.Position.ToVector3Shifted();
-            moteThrown.SetVelocity((float)Rand.Range(0, 360), 1.2f);
-            GenSpawn.Spawn(moteThrown, this.Position, this.Map);
+            FleckMaker.Static(this.Position.ToVector3Shifted(), this.Map, FleckDefOf.ExplosionFlash, 5f);
         }
 
         public override void Draw()
@@ -294,11 +288,11 @@ namespace MobileMineralSonar
                 scanRangeDynamic = scanRange50;
             }
             scanRangeDynamicScale = new Vector3(2f * scanRange, 1f, 2f * scanRange);
-            scanRangeDynamicMatrix.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeDynamicScale);
+            scanRangeDynamicMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, (0f).ToQuat(), scanRangeDynamicScale);
             Graphics.DrawMesh(MeshPool.plane10, scanRangeDynamicMatrix, scanRangeDynamic, 0);
 
             scanRayDynamicScale = new Vector3(2f * scanRange, 1f, 2f * scanRange);
-            scanRayDynamicMatrix.SetTRS(base.DrawPos + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), scanRayDynamicScale);
+            scanRayDynamicMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, satelliteDishRotation.ToQuat(), scanRayDynamicScale);
             Graphics.DrawMesh(MeshPool.plane10, scanRayDynamicMatrix, scanRayDynamic, 0);
         }
 
@@ -322,7 +316,7 @@ namespace MobileMineralSonar
                         Vector3 sonarToMineralVector = thing.Position.ToVector3Shifted() - this.Position.ToVector3Shifted();
                         float orientation = sonarToMineralVector.AngleFlat();
                         scanSpotDrawingIntensity = 1f - (((satelliteDishRotation - orientation + 360) % 360f) / 360f);
-                        scanSpotMatrix.SetTRS(thing.Position.ToVector3Shifted() + new Vector3(0f, 10f, 0f) + Altitudes.AltIncVect, (0f).ToQuat(), scanSpotScale);
+                        scanSpotMatrix.SetTRS(thing.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.FogOfWar) + Altitudes.AltIncVect, (0f).ToQuat(), scanSpotScale);
                         Graphics.DrawMesh(MeshPool.plane10, scanSpotMatrix, FadedMaterialPool.FadedVersionOf(scanSpot, scanSpotDrawingIntensity), 0);
                     }
                 }
