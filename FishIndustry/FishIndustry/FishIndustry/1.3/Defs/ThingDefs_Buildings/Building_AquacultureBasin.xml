@@ -41,7 +41,7 @@
     </costList>
     <useHitPoints>true</useHitPoints>
     <statBases>
-      <WorkToBuild>1800</WorkToBuild>
+      <WorkToBuild>4000</WorkToBuild>
       <MaxHitPoints>300</MaxHitPoints>
       <Beauty>20</Beauty>
       <Flammability>0.4</Flammability>
