@@ -8,7 +8,7 @@
     <thingClass>Spaceship.Building_AirstrikeBeacon</thingClass>
     <tickerType>Normal</tickerType>
     <graphicData>
-      <texPath>Things/Building/AirstrikeBeacon/AirstrikeBeacon</texPath>
+      <texPath>Things/Building/AirStrikeBeacon/AirStrikeBeacon</texPath>
       <graphicClass>Graphic_Single</graphicClass>
       <drawSize>(1,1)</drawSize>
     </graphicData>
