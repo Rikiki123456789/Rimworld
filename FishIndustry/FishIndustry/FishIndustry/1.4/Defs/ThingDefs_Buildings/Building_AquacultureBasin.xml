@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>AquacultureBasin</defName>
+    <label>aquaculture basin</label>
+    <description>A basin designed to breed fishes. Water quality and temperature are auto-regulated with proper power supply. However, you need to provide raw food with a hopper to feed the bred fishes. Ensuring a regular maintenance of the basin will improve the fishes' growth.</description>
+    <thingClass>FishIndustry.Building_AquacultureBasin</thingClass>
+    <tickerType>Normal</tickerType>
+    <drawerType>MapMeshAndRealTime</drawerType>
+    <graphicData>
+      <texPath>Things/Building/AquacultureBasin</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,3)</drawSize>
+      <damageData>
+        <cornerTL>Damage/Corner</cornerTL>
+        <cornerTR>Damage/Corner</cornerTR>
+        <cornerBL>Damage/Corner</cornerBL>
+        <cornerBR>Damage/Corner</cornerBR>
+      </damageData>
+    </graphicData>
+    <rotatable>false</rotatable>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <altitudeLayer>Building</altitudeLayer>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>500</basePowerConsumption>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+      <li Class="CompProperties_Breakdownable"/>
+      <li Class="CompProperties_Glower">
+        <glowRadius>5</glowRadius>
+        <glowColor>(0,200,255,0)</glowColor>
+      </li>
+    </comps>
+    <costList>
+      <Steel>200</Steel>
+      <ComponentIndustrial>3</ComponentIndustrial>
+    </costList>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <WorkToBuild>4000</WorkToBuild>
+      <MaxHitPoints>300</MaxHitPoints>
+      <Beauty>20</Beauty>
+      <Flammability>0.4</Flammability>
+    </statBases>
+    <size>(3,3)</size>
+    <designationCategory>Production</designationCategory>
+    <passability>Impassable</passability>
+    <hasInteractionCell>True</hasInteractionCell>
+    <interactionCellOffset>(-1,0,-2)</interactionCellOffset>
+    <surfaceType>Item</surfaceType>
+    <building>
+      <nutritionCostPerDispense>1.0</nutritionCostPerDispense>
+      <wantsHopperAdjacent>true</wantsHopperAdjacent>
+    </building>
+    <researchPrerequisites>
+      <li>ResearchAquaculture</li>
+    </researchPrerequisites>
+  </ThingDef>
+</Defs>

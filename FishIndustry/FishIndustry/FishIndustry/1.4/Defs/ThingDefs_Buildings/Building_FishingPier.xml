@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+
+<Defs>
+  <ThingDef ParentName="BuildingBase">
+    <defName>FishingPier</defName>
+    <label>fishing pier</label>
+    <description>A simple and solid fishing pier. Keeps your feet dry while fishing. Fish resplenishment rate is affected by several factors like temperature, biome and other environmental factors.</description>
+    <thingClass>FishIndustry.Building_FishingPier</thingClass>
+    <tickerType>Rare</tickerType>
+    <soundImpactDefault>BulletImpact_Wood</soundImpactDefault>
+    <graphicData>
+      <texPath>Things/Building/FishingPier</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(3,5)</drawSize>
+      <damageData>
+        <rect>(0.05,1,5,1)</rect>
+      </damageData>
+    </graphicData>
+    <terrainAffordanceNeeded>Bridgeable</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>FishIndustry.PlaceWorker_FishingPier</li>
+    </placeWorkers>
+    <altitudeLayer>Building</altitudeLayer>
+    <costList>
+      <WoodLog>200</WoodLog>
+    </costList>
+    <useHitPoints>true</useHitPoints>
+    <statBases>
+      <MaxHitPoints>400</MaxHitPoints>
+      <Beauty>20</Beauty>
+      <Flammability>1.0</Flammability>
+      <WorkToBuild>2500</WorkToBuild>
+    </statBases>
+    <size>(1,3)</size>
+    <designationCategory>Production</designationCategory>
+    <passability>Standable</passability>
+    <hasInteractionCell>True</hasInteractionCell>
+    <interactionCellOffset>(0,0,-1)</interactionCellOffset>
+    <surfaceType>Item</surfaceType>
+    <comps>
+      <li Class="CompProperties_Forbiddable"/>
+    </comps>
+  </ThingDef>
+</Defs>

@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LanguageData>
+
+  <!-- PlaceWorker -->
+  <FishIndustry.FishingPier_InvalidBiome>この養殖池に魚はいません。</FishIndustry.FishingPier_InvalidBiome>
+  <FishIndustry.TooCloseFishingPier>他の釣り用桟橋との距離が近すぎます。</FishIndustry.TooCloseFishingPier>
+  <FishIndustry.TooCloseFishingZone>釣りゾーンから近すぎます。</FishIndustry.TooCloseFishingZone>
+  <FishIndustry.FishingPier_PierMustBeOnWater>釣り用桟橋は水タイルの上に設置する必要があります。</FishIndustry.FishingPier_PierMustBeOnWater>
+  <FishIndustry.FishingPier_TooFewWater>ここには魚が住むのに必要な水が足りません。</FishIndustry.FishingPier_TooFewWater>
+  <FishIndustry.FishingPier_ZoneMustBeOnWater>釣りゾーンは水タイルの上に設置する必要があります。</FishIndustry.FishingPier_ZoneMustBeOnWater>
+
+  <!-- Alerts -->
+  <FishIndustry.NeedHopperLabel>食材ホッパーが必要</FishIndustry.NeedHopperLabel>
+  <FishIndustry.NeedHopperExplanation>食材ホッパーが隣接していない水産養殖池があります。\n\n水産養殖池で養殖を行うためには、生野菜の食材か動物の生肉で満たされており、隣接して設置された食材ホッパーからエサが補充される必要があります。\n\n水産養殖池に隣接して食材ホッパーを建築させてください。</FishIndustry.NeedHopperExplanation>
+
+  <FishIndustry.IdleAquacultureBasinLabel>水産養殖池は休止中</FishIndustry.IdleAquacultureBasinLabel>
+  <FishIndustry.IdleAquacultureBasinExplanation>休止中の水産養殖池があります。\n\n最初にあなたが養殖したい魚の種類を選択してください。その次に、養殖作業者が対応する魚卵（魚の生肉を一個）を供給できることを確認してください。</FishIndustry.IdleAquacultureBasinExplanation>
+
+  <FishIndustry.CriticalIssueLabel>水産養殖池に致命的な問題</FishIndustry.CriticalIssueLabel>
+  <FishIndustry.CriticalIssueExplanation>水産養殖池の1つに致命的な問題が発生中です。\n\n養殖している魚は問題が長引くと死んでしまいます！ 次の条件が満たされていることを確認する必要があります。\n・電気の供給\n・エサの供給\・整備がされているか</FishIndustry.CriticalIssueExplanation>
+
+  <!-- Message -->
+  <FishIndustry.FishesDied>水産養殖池で飼育されていた魚が死亡しました。養殖池の状態を確認してください。</FishIndustry.FishesDied>
+  <FishIndustry.FisherBitten>は釣りをしている最中にテイルティースに噛みつかれました。</FishIndustry.FisherBitten>
+
+  <!-- Gizmo -->
+  <FishIndustry.ChangeSpecies>魚種変更</FishIndustry.ChangeSpecies>
+  <FishIndustry.ChangeSpeciesDescription1>水産養殖池で養殖を開始</FishIndustry.ChangeSpeciesDescription1>
+  <FishIndustry.ChangeSpeciesDescription2>入植者が来てパラメーターを変更可能になったら、クリックして他の種類を選択します。</FishIndustry.ChangeSpeciesDescription2>
+  <FishIndustry.FishLabelPluralMashgon>マッシュゴン</FishIndustry.FishLabelPluralMashgon>
+  <FishIndustry.FishLabelPluralBlueblade>ブルーブレード</FishIndustry.FishLabelPluralBlueblade>
+  <FishIndustry.FishLabelPluralTailteeth>テイルティース</FishIndustry.FishLabelPluralTailteeth>
+  <FishIndustry.FishDescriptionMashgon>養殖時間は短いですが魚の収穫量は少ないです。</FishIndustry.FishDescriptionMashgon>
+  <FishIndustry.FishDescriptionBlueblade>ほどほどの養殖時間でほどほどな魚の収穫量です。</FishIndustry.FishDescriptionBlueblade>
+  <FishIndustry.FishDescriptionTailteeth>養殖時間は長くなりますが魚の収穫量は多くなります。</FishIndustry.FishDescriptionTailteeth>
+  <FishIndustry.Breeding>養殖中</FishIndustry.Breeding>
+  <FishIndustry.BasinIsBreeding>この水産養殖池は養殖中</FishIndustry.BasinIsBreeding>
+  <FishIndustry.WaitingForEggs>産卵を待機中</FishIndustry.WaitingForEggs>
+  <FishIndustry.ClickToCancel>養殖を中止するにはクリックしてください</FishIndustry.ClickToCancel>
+  <FishIndustry.EnsureHaveHunterAndEggs>あなたが養殖を開始するためには利用可能な釣り師といくつかの魚卵（魚の肉を一個）があることを確認してください。</FishIndustry.EnsureHaveHunterAndEggs>
+  <FishIndustry.Breed>養殖</FishIndustry.Breed>
+  <FishIndustry.ClickToStart>クリックすると養殖を開始します</FishIndustry.ClickToStart>
+  <FishIndustry.BreedingRequestedMashgon>マッシュゴンの養殖計画を開始しました。</FishIndustry.BreedingRequestedMashgon>
+  <FishIndustry.BreedingRequestedBlueblade>ブルーブレードの養殖計画を開始しました。</FishIndustry.BreedingRequestedBlueblade>
+  <FishIndustry.BreedingRequestedTailteeth>テイルティースの養殖計画を開始しました。</FishIndustry.BreedingRequestedTailteeth>
+  <FishIndustry.BreedingRequestedButNoEggsMashgon>マッシュゴンの養殖計画が開始されましたが、あなたは養殖を開始するために必要なマシュゴンの卵(生肉)の在庫を持っていません。</FishIndustry.BreedingRequestedButNoEggsMashgon>
+  <FishIndustry.BreedingRequestedButNoEggsBlueblade>ブルーブレードの養殖計画が開始されましたが、あなたは養殖を開始するために必要なブルーブレードの卵(生肉)の在庫を持っていません。</FishIndustry.BreedingRequestedButNoEggsBlueblade>
+  <FishIndustry.BreedingRequestedButNoEggsTailteeth>テイルティースの養殖計画が開始されましたが、あなたは養殖を開始するために必要なテイルティースの卵(生肉)の在庫を持っていません。</FishIndustry.BreedingRequestedButNoEggsTailteeth>
+
+  <FishIndustry.AllowFishingLabel>釣りを許可</FishIndustry.AllowFishingLabel>
+  <FishIndustry.AllowFishingDesc>指定されたエリア内での釣りを狩猟に仕事を割り振った釣り師(狩人)に許可します。</FishIndustry.AllowFishingDesc>
+  <FishIndustry.AllowUsingGrainLabel>撒き餌を許可</FishIndustry.AllowUsingGrainLabel>
+  <FishIndustry.AllowUsingGrainDesc>釣り師(狩人)が穀物を撒き餌に使って魚をより早く確実に釣り上げることを許可します。</FishIndustry.AllowUsingGrainDesc>
+
+  <!-- Inspect String -->
+  <FishIndustry.ProgressLabel>成長段階：{0}</FishIndustry.ProgressLabel>
+  <FishIndustry.ProgressLabelNotBreeding>成長段階：繁殖不可</FishIndustry.ProgressLabelNotBreeding>
+  <FishIndustry.WaterQuality>水質：{0}%</FishIndustry.WaterQuality>
+  <FishIndustry.WaterQualityFishesHealth>水質/魚の健康：{0}%/{1}%</FishIndustry.WaterQualityFishesHealth>
+  <FishIndustry.NeedsMaintenanceNow>今すぐ整備が必要</FishIndustry.NeedsMaintenanceNow>
+  <FishIndustry.Issue>(問題有)</FishIndustry.Issue>
+  <FishIndustry.Issues>(問題有)</FishIndustry.Issues>
+  <FishIndustry.Issue_MicroFungus>(有害細菌)</FishIndustry.Issue_MicroFungus>
+  <FishIndustry.Issue_NoFood>(エサ無し)</FishIndustry.Issue_NoFood>
+  <FishIndustry.Issue_CriticalWaterQuality>(水質汚染)</FishIndustry.Issue_CriticalWaterQuality>
+  <FishIndustry.Issue_BadlyMaintained>(未整備)</FishIndustry.Issue_BadlyMaintained>
+
+  <FishIndustry.FishStock>魚の在庫：{0}</FishIndustry.FishStock>
+  <FishIndustry.TooSmallZone>ゾーンが小さ過ぎる</FishIndustry.TooSmallZone>
+  <FishIndustry.NotEnoughViableSpace>実行可能な空間が足りません</FishIndustry.NotEnoughViableSpace>
+  <FishIndustry.SpeciesInZone>ゾーン生息種：</FishIndustry.SpeciesInZone>
+  <FishIndustry.AffectedBy>影響下：</FishIndustry.AffectedBy>
+  <FishIndustry.AffectedByBiome>生物相</FishIndustry.AffectedByBiome>
+  <FishIndustry.AffectedByToxicFallout>有害な落下物</FishIndustry.AffectedByToxicFallout>
+  <FishIndustry.AffectedByBadTemperature>温度が不適切</FishIndustry.AffectedByBadTemperature>
+
+  <!-- Letters -->
+  <FishIndustry.LetterLabelMicroFungus>有害な細菌が繁殖</FishIndustry.LetterLabelMicroFungus>
+  <FishIndustry.MicroFungus>いくつかの水産養殖池が、有害な水生細菌に感染しています。\nそれによって水中の酸素が欠乏してしまうようです。\nこの酸素欠乏から魚が生き残ることを祈りましょう。</FishIndustry.MicroFungus>
+
+  <FishIndustry.LetterLabelSunkenTreasure>財宝を釣り上げた!</FishIndustry.LetterLabelSunkenTreasure>
+  <FishIndustry.SunkenTreasure>{0}は沈んでいた財宝を釣り上げました!なんて運がいい!\n</FishIndustry.SunkenTreasure>
+
+  <FishIndustry.LetterLabelDeadMarine>死体を釣り上げた!</FishIndustry.LetterLabelDeadMarine>
+  <FishIndustry.LetterDescDeadMarine>{0}が釣りをしていたら死体を釣ってしまった！\n\n「これには本当にうんざりしますが、彼の服装を見てください！この男はおそらく宇宙鉱山会社の社員でした。 保安要員の様です。一体彼に何が起こったのだろうか...」</FishIndustry.LetterDescDeadMarine>
+
+  <!-- Zone -->
+  <FishIndustry.FishingZone>釣りゾーン</FishIndustry.FishingZone>
+  <FishIndustry.DesignatorFishingZoneDesc>入植者が釣りをするゾーンを指定します。必ず水タイルの上に設置する必要があります。</FishIndustry.DesignatorFishingZoneDesc>
+
+  <!-- Zone -->
+  <FishIndustry.Settings_FishRespawnRateFactorLabel>釣り場の魚再出現頻度係数：{0}</FishIndustry.Settings_FishRespawnRateFactorLabel>
+  <FishIndustry.Settings_FishRespawnRateFactorDesc>釣り場に魚が再出現する頻度を調整します。 注意：死の灰が降っている間は魚が沸きません！</FishIndustry.Settings_FishRespawnRateFactorDesc>
+  <FishIndustry.Settings_FishBreedQuantityFactorLabel>魚養殖数量係数（初期値は1.0)：{0}</FishIndustry.Settings_FishBreedQuantityFactorLabel>
+  <FishIndustry.Settings_FishBreedQuantityFactorDesc>魚を収穫する際に、水産養殖池から得られる肉の量を調整します。低い値は肉の量が少ないことを意味し、高い値は肉の量が多いことを意味します。</FishIndustry.Settings_FishBreedQuantityFactorDesc>
+  <FishIndustry.Settings_BiomeRestrictionLabel>気候による制限を有効</FishIndustry.Settings_BiomeRestrictionLabel>
+  <FishIndustry.Settings_BiomeRestrictionDesc>有効にすると、魚はその特有の気候環境でしか釣れません。無効にすると、すべての気候環境で全て釣る事が出来ます（特に、Modで追加された気候環境の場合に便利です）。有効にするにはゲームを再起動する必要があります。</FishIndustry.Settings_BiomeRestrictionDesc>
+
+</LanguageData>

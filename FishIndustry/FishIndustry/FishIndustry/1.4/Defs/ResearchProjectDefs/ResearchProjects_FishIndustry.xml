@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ResearchAquaculture</defName>
+    <label>Aquaculture</label>
+    <description>Aquaculture basins are perfect to produce your own tasty seafood. Learn how to adapt your hydroponics into aquaculture basin to breed fishes.</description>
+    <baseCost>1400</baseCost>
+    <techLevel>Industrial</techLevel>
+    <prerequisites>
+      <li>Hydroponics</li>
+    </prerequisites>
+    <tab>FishIndustry</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>0</researchViewY>
+  </ResearchProjectDef>
+  
+</Defs>

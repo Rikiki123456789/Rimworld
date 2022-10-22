@@ -34,7 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.2.7528.19839, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=1.3.7881.20694, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -188,7 +188,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.SubsystemsModule">
+    <Reference Include="UnityEngine.SubsystemsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -211,7 +212,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TLSModule">
+    <Reference Include="UnityEngine.TLSModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -226,7 +228,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
+    <Reference Include="UnityEngine.UmbraModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UNETModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -241,7 +244,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UnityTestProtocolModule">
+    <Reference Include="UnityEngine.UnityTestProtocolModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -443,6 +447,49 @@
     <Content Include="FishIndustry\1.3\Patches\DesignationCategories.xml" />
     <Content Include="FishIndustry\1.3\Patches\FishMeatTexture.xml" />
     <Content Include="FishIndustry\1.3\Patches\Races_Animal_Fish_Cave.xml" />
+    <Content Include="FishIndustry\1.4\Assemblies\FishIndustry.dll" />
+    <Content Include="FishIndustry\1.4\Defs\Bodies\Bodies_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Defs\Bodies\BodyParts_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Defs\JobDefs\Jobs_FishAndHarvest.xml" />
+    <Content Include="FishIndustry\1.4\Defs\JobDefs\Jobs_Joy.xml" />
+    <Content Include="FishIndustry\1.4\Defs\JoyGiverDefs\JoyGivers.xml" />
+    <Content Include="FishIndustry\1.4\Defs\RecipeDefs\Recipes_PrepareFishes.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ResearchProjectDefs\ResearchProjects_FishIndustry.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="FishIndustry\1.4\Defs\Storyteller\Incident_MicroFungus.xml" />
+    <Content Include="FishIndustry\1.4\Defs\TerrainDefs\Terrain_FishingPierFloor.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Buildings\Building_AquacultureBasin.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Buildings\Building_FishingPier.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Misc\Items_Resource_Stuff_Leather.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Misc\Item_Oyster.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Misc\Item_Pearl.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Misc\Mote_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Misc\Mote_FishingRod.xml" />
+    <Content Include="FishIndustry\1.4\Defs\ThingDefs_Races\Races_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Defs\WorkGiverDefs\WorkGivers_FishIndustry.xml" />
+    <Content Include="FishIndustry\1.4\Languages\English\Keyed\FishIndustry_Strings.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\BodyDef\Bodies_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\BodyPartDef\BodyParts_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\IncidentDef\Incident_MicroFungus.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\JobDef\Jobs_FishAndHarvest.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\JobDef\Jobs_Joy.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\PawnKindDef\Races_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\RecipeDef\Recipes_PrepareFishes.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ResearchProjectDef\ResearchProjects_FishIndustry.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ResearchTabDef\ResearchTabs.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\TerrainDef\Terrain_FishingPierFloor.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ThingDef\Building_AquacultureBasin.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ThingDef\Building_FishingPier.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ThingDef\Items_Resource_Stuff_Leather.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ThingDef\Item_Oyster.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ThingDef\Item_Pearl.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ThingDef\Races_Animal_Fish.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\ThingDef\_Things_Mote.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\DefInjected\WorkGiverDef\WorkGivers_FishIndustry.xml" />
+    <Content Include="FishIndustry\1.4\Languages\Japanese\Keyed\FishIndustry_Strings.xml" />
+    <Content Include="FishIndustry\1.4\Patches\DesignationCategories.xml" />
+    <Content Include="FishIndustry\1.4\Patches\FishMeatTexture.xml" />
+    <Content Include="FishIndustry\1.4\Patches\Races_Animal_Fish_Cave.xml" />
     <Content Include="FishIndustry\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -523,7 +570,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\FishIndustry\1.3\Assemblies"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\FishIndustry\1.4\Assemblies"
 xcopy /Y /i /s $(ProjectDir)\FishIndustry "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\FishIndustry"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
