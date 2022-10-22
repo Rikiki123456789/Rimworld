@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ResearchAlertSpeaker</defName>
+    <label>alert speaker</label>
+    <description>Design alert speakers to warn your colonists when the colony is attacked and boost their adrenaline.</description>
+    <techLevel>Industrial</techLevel>
+    <baseCost>500</baseCost>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <tab>MiningCo</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>2</researchViewY>
+  </ResearchProjectDef>
+  
+</Defs>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+  <SoundDef>
+    <defName>LowDangerAlarm</defName>
+    <context>MapOnly</context>
+    <eventNames/>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>True</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Building/LowDangerAlarm</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>10</min>
+          <max>10</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1</min>
+          <max>1</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+  <SoundDef>
+    <defName>HighDangerAlarm</defName>
+    <context>MapOnly</context>
+    <eventNames/>
+    <maxSimultaneous>1</maxSimultaneous>
+    <subSounds>
+      <li>
+        <onCamera>True</onCamera>
+        <grains>
+          <li Class="AudioGrain_Clip">
+            <clipPath>Building/HighDangerAlarm</clipPath>
+          </li>
+        </grains>
+        <volumeRange>
+          <min>20</min>
+          <max>20</max>
+        </volumeRange>
+        <pitchRange>
+          <min>1</min>
+          <max>1</max>
+        </pitchRange>
+      </li>
+    </subSounds>
+  </SoundDef>
+
+</Defs>
