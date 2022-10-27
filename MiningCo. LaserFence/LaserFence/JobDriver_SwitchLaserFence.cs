@@ -32,7 +32,7 @@ namespace LaserFence
 
             yield return Toils_Goto.GotoThing(pylonIndex, PathEndMode.InteractionCell);
 
-            yield return Toils_General.Wait(60);
+            yield return Toils_General.Wait(60).WithProgressBarToilDelay(pylonIndex);
 
             Toil switchLaserFenceToil = new Toil()
             {
