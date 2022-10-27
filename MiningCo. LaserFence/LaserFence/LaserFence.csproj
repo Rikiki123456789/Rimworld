@@ -34,7 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.3.7877.30321, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=1.3.7879.21553, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -336,6 +336,13 @@
     <Content Include="MiningCo. LaserFence\1.3\Defs\WorkGiverDefs\WorkGivers_LaserFence.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. LaserFence\1.4\Assemblies\MiningCo. LaserFence.dll" />
+    <Content Include="MiningCo. LaserFence\1.4\Defs\JobDefs\Jobs_LaserFence.xml" />
+    <Content Include="MiningCo. LaserFence\1.4\Defs\ResearchProjectDefs\ResearchProjects_LaserFence.xml" />
+    <Content Include="MiningCo. LaserFence\1.4\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. LaserFence\1.4\Defs\ThingDefs\Building_LaserFence.xml" />
+    <Content Include="MiningCo. LaserFence\1.4\Defs\ThingDefs\Building_LaserFenceConsole.xml" />
+    <Content Include="MiningCo. LaserFence\1.4\Defs\WorkGiverDefs\WorkGivers_LaserFence.xml" />
     <Content Include="MiningCo. LaserFence\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -378,7 +385,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. LaserFence\1.3\Assemblies\"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. LaserFence\1.4\Assemblies\"
 
 
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. LaserFence" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. LaserFence"</PostBuildEvent>

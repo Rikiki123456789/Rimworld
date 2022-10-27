@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <WorkGiverDef>
+    <defName>WorkGiverDef_OperateLaserFenceConsole</defName>
+    <giverClass>LaserFence.WorkGiver_LaserFenceConsole</giverClass>
+    <workType>BasicWorker</workType>
+    <canBeDoneWhileDrafted>true</canBeDoneWhileDrafted>
+    <priorityInType>460</priorityInType>
+    <verb>operate</verb>
+    <gerund>operating</gerund>
+  </WorkGiverDef>
+
+  <WorkGiverDef>
+    <defName>WorkGiverDef_SwitchLaserFence</defName>
+    <giverClass>LaserFence.WorkGiver_LaserFencePylon</giverClass>
+    <workType>BasicWorker</workType>
+    <canBeDoneWhileDrafted>true</canBeDoneWhileDrafted>
+    <priorityInType>450</priorityInType>
+    <verb>switch</verb>
+    <gerund>switching</gerund>
+  </WorkGiverDef>
+
+</Defs>
