@@ -34,7 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.2.7528.19839, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=1.3.7879.21553, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -188,7 +188,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.SubsystemsModule">
+    <Reference Include="UnityEngine.SubsystemsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -211,7 +212,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TLSModule">
+    <Reference Include="UnityEngine.TLSModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -226,7 +228,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
+    <Reference Include="UnityEngine.UmbraModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UNETModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -241,7 +244,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UnityTestProtocolModule">
+    <Reference Include="UnityEngine.UnityTestProtocolModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -319,6 +323,13 @@
     <Content Include="MiningCo. Projector\1.2\Defs\ThingDefs_Buildings\Buildings_ProjectorTurret.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="MiningCo. Projector\1.4\Assemblies\MiningCo. Projector.dll" />
+    <Content Include="MiningCo. Projector\1.4\Defs\HediffDefs\Hediffs_Blinded.xml" />
+    <Content Include="MiningCo. Projector\1.4\Defs\ResearchProjectDefs\ResearchProjects_Projector.xml" />
+    <Content Include="MiningCo. Projector\1.4\Defs\ResearchProjectDefs\ResearchTabs.xml" />
+    <Content Include="MiningCo. Projector\1.4\Defs\ThingDefs_Buildings\Buildings_ProjectorLight.xml" />
+    <Content Include="MiningCo. Projector\1.4\Defs\ThingDefs_Buildings\Buildings_ProjectorTower.xml" />
+    <Content Include="MiningCo. Projector\1.4\Defs\ThingDefs_Buildings\Buildings_ProjectorTurret.xml" />
     <Content Include="MiningCo. Projector\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -364,7 +375,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Projector\1.3\Assemblies"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Projector\1.4\Assemblies"
 
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. Projector" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. Projector"
 </PostBuildEvent>

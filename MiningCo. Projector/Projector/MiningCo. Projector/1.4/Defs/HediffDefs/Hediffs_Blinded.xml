@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <HediffDef ParentName="InfectionBase">
+    <defName>BlindedByProjector</defName>
+    <hediffClass>HediffWithComps</hediffClass>
+    <label>blinded by projector</label>
+    <description>blinded by projector</description>
+    <makesSickThought>false</makesSickThought>
+    <tendable>false</tendable>
+    <stages>
+      <li>
+        <capMods>
+          <li>
+            <capacity>Sight</capacity>
+            <offset>-0.3</offset>
+          </li>
+          <li>
+            <capacity>Moving</capacity>
+            <offset>-0.1</offset>
+          </li>
+        </capMods>
+      </li>
+    </stages>
+    <comps>
+      <li Class="HediffCompProperties_Disappears">
+        <disappearsAfterTicks>
+          <min>300</min>
+          <max>360</max>
+        </disappearsAfterTicks>
+      </li>
+    </comps>
+  </HediffDef>
+
+</Defs>

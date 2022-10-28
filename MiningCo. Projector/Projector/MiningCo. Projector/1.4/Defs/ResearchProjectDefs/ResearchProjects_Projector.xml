@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ResearchProjectDef>
+    <defName>ResearchProjector</defName>
+    <label>projector</label>
+    <description>Design projector tower and turret to control your perimeter at night or in dark caves.</description>
+    <techLevel>Industrial</techLevel>
+    <baseCost>500</baseCost>
+    <prerequisites>
+      <li>MicroelectronicsBasics</li>
+    </prerequisites>
+    <requiredResearchBuilding>HiTechResearchBench</requiredResearchBuilding>
+    <tab>MiningCo</tab>
+    <researchViewX>0</researchViewX>
+    <researchViewY>3</researchViewY>
+  </ResearchProjectDef>
+  
+</Defs>
