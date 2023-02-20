@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <Def Class="Spaceship.AirstrikeDef">
+    <defName>GatlingRaid</defName>
+    <label>gatling strafe run</label>
+    <description>Strike ship fills the air with bullets with its twin gatling guns. Covers a large area. Particularly effective against unarmored units.</description>
+    <runsNumber>2</runsNumber>
+    <costInSilver>500</costInSilver>
+    <ammoResupplyDays>10</ammoResupplyDays>
+    <weapons>
+      <li>GatlingWeapon</li>
+    </weapons>
+  </Def>
+
+  <Def Class="Spaceship.AirstrikeDef">
+    <defName>AutocannonRaid</defName>
+    <label>autocannon assault</label>
+    <description>The powerful frontal autocannon can deal high damages to armored units and buildings. It does not cover a wide area though.</description>
+    <runsNumber>3</runsNumber>
+    <costInSilver>1000</costInSilver>
+    <ammoResupplyDays>15</ammoResupplyDays>
+    <weapons>
+      <li>AutocannonWeapon</li>
+    </weapons>
+  </Def>
+
+  <Def Class="Spaceship.AirstrikeDef">
+    <defName>RocketRaid</defName>
+    <label>gatling and rockets strafe run</label>
+    <description>Strike ship attacks with both gatling guns and rockets. A truly devastative assault.</description>
+    <runsNumber>2</runsNumber>
+    <costInSilver>2000</costInSilver>
+    <ammoResupplyDays>20</ammoResupplyDays>
+    <weapons>
+      <li>GatlingWeapon</li>
+      <li>RocketWeapon</li>
+    </weapons>
+  </Def>
+
+  <Def Class="Spaceship.AirstrikeDef">
+    <defName>IncendiaryRaid</defName>
+    <label>incendiary bombing run</label>
+    <description>Strike ship perform a carpet bombing on the targeted area with massive incendiary bombs. Particularly effective against stationnary installations.</description>
+    <runsNumber>1</runsNumber>
+    <costInSilver>2500</costInSilver>
+    <ammoResupplyDays>20</ammoResupplyDays>
+    <cellsTravelledPerTick>0.08</cellsTravelledPerTick>
+    <ticksBeforeOverflightReducedSpeed>60</ticksBeforeOverflightReducedSpeed>
+    <weapons>
+      <li>IncendiaryBombWeapon</li>
+    </weapons>
+  </Def>
+
+</Defs>

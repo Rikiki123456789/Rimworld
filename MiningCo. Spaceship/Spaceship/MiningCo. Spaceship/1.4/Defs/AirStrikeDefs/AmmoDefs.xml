@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- WARNING! Only Projectile_Explosive ammo work for now. Otherwise, there is a strange error returned by the battle log on impact (cannot determine one of the filed?). -->
+  
+  <ThingDef ParentName="BaseBullet">
+    <defName>GatlingRound</defName>
+    <label>gatling round</label>
+    <thingClass>Projectile_Explosive</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Bullet_Small</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>true</flyOverhead>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>12</damageAmountBase>
+      <stoppingPower>2</stoppingPower>
+      <speed>120</speed>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
+      <soundExplode>BulletImpact_Metal</soundExplode>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>AutocannonRound</defName>
+    <label>autocannon round</label>
+    <thingClass>Projectile_Explosive</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/AutocannonRound</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>true</flyOverhead>
+      <damageDef>Bomb</damageDef>
+      <damageAmountBase>20</damageAmountBase>
+      <explosionRadius>1.5</explosionRadius>
+      <speed>80</speed>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>RocketAirstrike</defName>
+    <label>rocket</label>
+    <thingClass>Projectile_Explosive</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Rocket_Big</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>true</flyOverhead>
+      <damageDef>BombSuper</damageDef>
+      <damageAmountBase>40</damageAmountBase>
+      <explosionRadius>3</explosionRadius>
+      <speed>50</speed>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
+    </projectile>
+  </ThingDef>
+
+  <ThingDef ParentName="BaseBullet">
+    <defName>IncendiaryBomb</defName>
+    <label>incendiary bomb</label>
+    <thingClass>Projectile_Explosive</thingClass>
+    <graphicData>
+      <texPath>Things/Projectile/Rocket_Big</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <projectile>
+      <flyOverhead>true</flyOverhead>
+      <damageDef>Flame</damageDef>
+      <damageAmountBase>30</damageAmountBase>
+      <explosionRadius>7</explosionRadius>
+      <preExplosionSpawnChance>0.6</preExplosionSpawnChance>
+      <preExplosionSpawnThingDef>Filth_Fuel</preExplosionSpawnThingDef>
+      <speed>10</speed>
+      <soundHitThickRoof>Artillery_HitThickRoof</soundHitThickRoof>
+    </projectile>
+  </ThingDef>
+
+</Defs>

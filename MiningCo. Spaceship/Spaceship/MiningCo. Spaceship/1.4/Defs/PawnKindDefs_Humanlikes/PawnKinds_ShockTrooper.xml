@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="MiningCoPawnKindBase">
+    <defName>MiningCoShockTrooper</defName>
+    <label>shock trooper</label>
+    <backstoryFiltersOverride>
+      <li>
+        <categories>
+          <li>Pirate</li>
+        </categories>
+      </li>
+    </backstoryFiltersOverride>
+    <combatPower>120</combatPower>
+    <minGenerationAge>27</minGenerationAge>
+    <maxGenerationAge>42</maxGenerationAge>
+    <gearHealthRange>
+      <min>1.0</min>
+      <max>2.3</max>
+    </gearHealthRange>
+    <itemQuality>Superior</itemQuality>
+    <techHediffsMoney>
+      <min>2000</min>
+      <max>3000</max>
+    </techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+    <techHediffsChance>0.6</techHediffsChance>
+    <inventoryOptions>
+      <skipChance>0.8</skipChance>
+      <subOptionsChooseOne>
+        <li>
+          <thingDef>Silver</thingDef>
+          <countRange>
+            <min>120</min>
+            <max>200</max>
+          </countRange>
+        </li>
+        <li>
+          <thingDef>MedicineIndustrial</thingDef>
+          <countRange>
+            <min>2</min>
+            <max>3</max>
+          </countRange>
+        </li>
+      </subOptionsChooseOne>
+    </inventoryOptions>
+    <initialWillRange>2~4</initialWillRange>
+    <initialResistanceRange>12~20</initialResistanceRange>
+  </PawnKindDef>
+
+</Defs>

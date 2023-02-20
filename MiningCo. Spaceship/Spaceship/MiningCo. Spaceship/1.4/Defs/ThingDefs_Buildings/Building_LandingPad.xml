@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="BuildingBase">
+    <defName>LandingPad</defName>
+    <label>landing pad</label>
+    <description>Flat area allowing spaceships to land.</description>
+    <thingClass>Spaceship.Building_LandingPad</thingClass>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/Building/LandingPad/LandingPad</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(9,18)</drawSize>
+    </graphicData>
+    <castEdgeShadows>false</castEdgeShadows>
+    <staticSunShadowHeight>0</staticSunShadowHeight>
+    <altitudeLayer>FloorEmplacement</altitudeLayer>
+    <useHitPoints>false</useHitPoints>
+    <fillPercent>0.0</fillPercent>
+    <passability>Standable</passability>
+    <blockWind>false</blockWind>
+    <constructEffect>ConstructMetal</constructEffect>
+    <building>
+      <isEdifice>false</isEdifice>
+    </building>
+    <statBases>
+      <MaxHitPoints>500</MaxHitPoints>
+      <WorkToMake>10000</WorkToMake>
+      <Flammability>0</Flammability>
+      <Beauty>-20</Beauty>
+    </statBases>
+    <size>(9,18)</size>
+    <costList>
+      <Steel>100</Steel>
+      <ComponentIndustrial>2</ComponentIndustrial>
+    </costList>
+    <designationCategory>Ship</designationCategory>
+    <terrainAffordanceNeeded>Heavy</terrainAffordanceNeeded>
+    <placeWorkers>
+      <li>Spaceship.PlaceWorker_TotallyNotUnderRoof</li>
+      <li>Spaceship.PlaceWorker_NotUnderBuilding</li>
+    </placeWorkers>
+    <comps>
+      <li Class="CompProperties_Power">
+        <compClass>CompPowerTrader</compClass>
+        <basePowerConsumption>100</basePowerConsumption>
+        <transmitsPower>true</transmitsPower>
+        <shortCircuitInRain>false</shortCircuitInRain>
+      </li>
+      <li Class="CompProperties_Flickable"/>
+    </comps>
+    <leaveResourcesWhenKilled>true</leaveResourcesWhenKilled>
+    <researchPrerequisites>
+      <li>MicroelectronicsBasics</li>
+    </researchPrerequisites>
+  </ThingDef>
+
+</Defs>

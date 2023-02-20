@@ -55,7 +55,8 @@ namespace Spaceship
         public override void Notify_PawnLost(Pawn p, PawnLostCondition condition)
         {
             base.Notify_PawnLost(p, condition);
-            if (condition == PawnLostCondition.IncappedOrKilled)
+            if ((condition == PawnLostCondition.Incapped)
+                || (condition == PawnLostCondition.Killed))
             {
                 if (p.kindDef == Util_PawnKindDefOf.Medic)
                 {

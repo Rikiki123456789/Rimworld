@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef ParentName="ArmorHelmetMakeableBase">
+    <defName>Apparel_SimpleHelmetMedic</defName>
+    <label>medic helmet</label>
+    <description>A medic helmet which gives moderate protection against sharp attacks. Not effective against blunt weapons.</description>
+    <techLevel>Industrial</techLevel>
+    <graphicData>
+      <texPath>Things/Pawn/Humanlike/Apparel/SimpleHelmetMedic/SimpleHelmetMedic</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+    </graphicData>
+    <costList>
+      <Steel>40</Steel>
+    </costList>
+		<statBases>
+			<WorkToMake>3200</WorkToMake>
+			<MaxHitPoints>100</MaxHitPoints>
+			<Mass>2</Mass>
+      <ArmorRating_Sharp>0.70</ArmorRating_Sharp>
+      <ArmorRating_Blunt>0.30</ArmorRating_Blunt>
+      <ArmorRating_Heat>0.27</ArmorRating_Heat>
+      <Insulation_Cold>2</Insulation_Cold>
+      <Insulation_Heat>1</Insulation_Heat>
+      <EquipDelay>2.5</EquipDelay>
+    </statBases>
+    <recipeMaker>
+      <recipeUsers>
+        <li>ElectricSmithy</li>
+        <li>FueledSmithy</li>
+      </recipeUsers>
+      <skillRequirements>
+        <Crafting>5</Crafting>
+      </skillRequirements>
+    </recipeMaker>
+		<apparel>
+      <bodyPartGroups>
+        <li>UpperHead</li>
+      </bodyPartGroups>
+      <wornGraphicPath>Things/Pawn/Humanlike/Apparel/SimpleHelmetMedic/SimpleHelmetMedic</wornGraphicPath>
+      <layers>
+        <li>Overhead</li>
+      </layers>
+    </apparel>
+  </ThingDef>
+
+</Defs>

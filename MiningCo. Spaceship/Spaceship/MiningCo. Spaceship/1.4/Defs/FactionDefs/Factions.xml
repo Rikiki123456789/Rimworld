@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!-- Hidden MiningCo. faction -->
+  <FactionDef>
+    <defName>MiningCo</defName>
+    <label>MiningCo.</label>
+    <description>MiningCo. is the most famous deep-space mining company through the galaxy. Though the company is officially only interested in acquiring rare minerals, its private army is never far away when locals or competitor firms threat its assets.</description>
+    <pawnsPlural>miners</pawnsPlural>
+    <requiredCountAtGameStart>1</requiredCountAtGameStart>
+    <fixedName>MiningCo.</fixedName>
+    <techLevel>Spacer</techLevel>
+    <leaderTitle>planetary commander</leaderTitle>
+    <xenotypeSet>
+      <xenotypeChances>
+        <Hussar MayRequire="Ludeon.RimWorld.Biotech">0.05</Hussar>
+        <Dirtmole MayRequire="Ludeon.RimWorld.Biotech">0.05</Dirtmole>
+        <Genie MayRequire="Ludeon.RimWorld.Biotech">0.025</Genie>
+        <Neanderthal MayRequire="Ludeon.RimWorld.Biotech">0.025</Neanderthal>
+      </xenotypeChances>
+    </xenotypeSet>
+    <hidden>true</hidden>
+    <autoFlee>false</autoFlee>
+    <canUseAvoidGrid>false</canUseAvoidGrid>
+    <backstoryFilters>
+      <li>
+        <categories>
+          <li>Offworld</li>
+          <li>Outlander</li>
+          <li>Outsider</li>
+        </categories>
+      </li>
+    </backstoryFilters>
+    <apparelStuffFilter>
+      <thingDefs>
+        <li>Synthread</li>
+        <li>Hyperweave</li>
+      </thingDefs>
+    </apparelStuffFilter>
+
+    <raidLootValueFromPointsCurve>
+      <points>
+        <li>(35,     15)</li>
+        <li>(100,   120)</li>
+        <li>(1000,  500)</li>
+        <li>(2000,  800)</li>
+        <li>(4000, 1000)</li>
+      </points>
+    </raidLootValueFromPointsCurve>
+    <allowedMemes>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Structure_Archist</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Transhumanist</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">HumanPrimacy</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Loyalist</li>
+    </allowedMemes>
+    <requiredMemes>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Structure_Archist</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Transhumanist</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">HumanPrimacy</li>
+      <li MayRequire="Ludeon.RimWorld.Ideology">Loyalist</li>
+    </requiredMemes>
+    <colorSpectrum>
+      <li>(0, 0.4, 0.94)</li>
+      <li>(0.64, 0.8, 1)</li>
+    </colorSpectrum>
+  </FactionDef>
+
+</Defs>

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <PawnKindDef ParentName="MiningCoPawnKindBase">
+    <defName>MiningCoOfficer</defName>
+    <label>officer</label>
+    <backstoryFiltersOverride>
+      <li>
+        <categories>
+          <li>Offworld</li>
+        </categories>
+      </li>
+    </backstoryFiltersOverride>
+    <combatPower>120</combatPower>
+    <minGenerationAge>38</minGenerationAge>
+    <maxGenerationAge>55</maxGenerationAge>
+    <gearHealthRange>
+      <min>1.0</min>
+      <max>2.5</max>
+    </gearHealthRange>
+    <itemQuality>Excellent</itemQuality>
+    <techHediffsMoney>
+      <min>2000</min>
+      <max>4000</max>
+    </techHediffsMoney>
+    <techHediffsTags>
+      <li>Advanced</li>
+    </techHediffsTags>
+    <techHediffsChance>0.8</techHediffsChance>
+    <inventoryOptions>
+      <subOptionsChooseOne>
+        <li>
+          <choiceChance>30</choiceChance>
+          <thingDef>Silver</thingDef>
+          <countRange>
+            <min>250</min>
+            <max>450</max>
+          </countRange>
+        </li>
+        <li>
+          <choiceChance>70</choiceChance>
+          <thingDef>MedicineUltratech</thingDef>
+          <countRange>
+            <min>2</min>
+            <max>4</max>
+          </countRange>
+        </li>
+      </subOptionsChooseOne>
+    </inventoryOptions>
+    <initialWillRange>3~5</initialWillRange>
+    <initialResistanceRange>17~27</initialResistanceRange>
+  </PawnKindDef>
+
+</Defs>

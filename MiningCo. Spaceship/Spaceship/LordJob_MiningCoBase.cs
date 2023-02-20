@@ -47,7 +47,8 @@ namespace Spaceship
         public override void Notify_PawnLost(Pawn p, PawnLostCondition condition)
         {
             base.Notify_PawnLost(p, condition);
-            if (condition == PawnLostCondition.IncappedOrKilled)
+            if ((condition == PawnLostCondition.Incapped)
+                || (condition == PawnLostCondition.Killed))
             {
                 Messages.Message("A MiningCo. employee has been injured or killed in your area. MiningCo. goodwill toward you decreased: " + pawnLostGoodwillImpact + ".", new TargetInfo(p.Position, this.Map), MessageTypeDefOf.NegativeHealthEvent);
                 Util_Faction.AffectGoodwillWith(Util_Faction.MiningCoFaction, Faction.OfPlayer, pawnLostGoodwillImpact);

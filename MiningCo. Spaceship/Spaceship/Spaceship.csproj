@@ -34,7 +34,7 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=1.2.7528.19839, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Assembly-CSharp, Version=1.3.7922.20075, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
@@ -188,7 +188,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.SubstanceModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.SubsystemsModule">
+    <Reference Include="UnityEngine.SubsystemsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.SubsystemsModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -211,7 +212,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TilemapModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.TLSModule">
+    <Reference Include="UnityEngine.TLSModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.TLSModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -226,7 +228,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UIModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UmbraModule">
+    <Reference Include="UnityEngine.UmbraModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UmbraModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UNETModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -241,7 +244,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityConnectModule.dll</HintPath>
     </Reference>
-    <Reference Include="UnityEngine.UnityTestProtocolModule">
+    <Reference Include="UnityEngine.UnityTestProtocolModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\RimWorld\RimWorldWin64_Data\Managed\UnityEngine.UnityTestProtocolModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UnityWebRequestAssetBundleModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -497,6 +501,42 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="MiningCo. Spaceship\1.2\Defs\WorkGiverDefs\WorkGivers.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Assemblies\MiningCo. Spaceship.dll" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\AirStrikeDefs\AirStrikeDefs.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\AirStrikeDefs\AmmoDefs.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\AirStrikeDefs\WeaponDefs.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\DutyDefs\Duties_Dispatcher.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\DutyDefs\Duties_MedicalSpaceship.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\FactionDefs\Factions.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\JobDefs\Jobs_SpaceshipAndOrbitalRelay.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Base.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Geologist.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Guard.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_HeavyGuard.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Medic.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Miner.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Officer.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Pilot.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Scout.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_ShockTrooper.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\PawnKindDefs_Humanlikes\PawnKinds_Technician.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\SoundDefs\AirStrike.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\SoundDefs\SpaceshipLanding.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\SoundDefs\SpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\Storyteller\Incidents_Map_Spaceships.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\Building_AirStrikeBeacon.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\Building_LandingPad.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\Building_LandingPadBeacon.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\Building_OrbitalRelay.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\Building_Spaceships.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\Building_VulcanTurret.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\FlyingSpaceshipLanding.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\FlyingSpaceshipTakingOff.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Buildings\FlyingStrikeshipAirStrike.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Misc\Apparel_Headgear.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\ThingDefs_Misc\Weapon_VulcanGun.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\TraderKindDefs\TraderKinds_Spaceship.xml" />
+    <Content Include="MiningCo. Spaceship\1.4\Defs\WorkGiverDefs\WorkGivers.xml" />
     <Content Include="MiningCo. Spaceship\About\About.xml">
       <SubType>Designer</SubType>
     </Content>
@@ -594,7 +634,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Spaceship\1.3\Assemblies"
+    <PostBuildEvent>xcopy /Y "$(TargetPath)" "$(ProjectDir)\MiningCo. Spaceship\1.4\Assemblies"
 
 xcopy /Y /i /s "$(ProjectDir)\MiningCo. Spaceship" "C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\MiningCo. Spaceship"</PostBuildEvent>
   </PropertyGroup>

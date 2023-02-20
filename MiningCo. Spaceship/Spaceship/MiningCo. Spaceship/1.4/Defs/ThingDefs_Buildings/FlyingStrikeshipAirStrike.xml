@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <ThingDef>
+    <defName>FlyingSpaceshipAirstrike</defName>
+    <label>strikeship</label>
+    <thingClass>Spaceship.FlyingSpaceshipAirstrike</thingClass>
+    <category>Ethereal</category>
+    <tickerType>Normal</tickerType>
+    <graphicData>
+      <texPath>Things/StrikeShip/StrikeShip</texPath>
+      <graphicClass>Graphic_Single</graphicClass>
+      <drawSize>(11,20)</drawSize>
+      <shaderType>CutoutFlying</shaderType>
+    </graphicData>
+    <size>(1,1)</size> <!-- Minimum size to avoid errors when ship is spawned near map edge -->
+    <useHitPoints>false</useHitPoints>
+    <altitudeLayer>MetaOverlays</altitudeLayer>
+    <drawOffscreen>true</drawOffscreen>
+    <seeThroughFog>true</seeThroughFog>
+  </ThingDef>
+
+</Defs>
