@@ -330,7 +330,8 @@ namespace FishIndustry
                 && ((def.ingestible.foodType == FoodTypeFlags.Seed)
                     || (def.ingestible.foodType == FoodTypeFlags.Meat)
                     || (def.ingestible.foodType == FoodTypeFlags.VegetableOrFruit)
-                    || (def.ingestible.foodType == FoodTypeFlags.AnimalProduct));
+                    || (def.ingestible.foodType == FoodTypeFlags.AnimalProduct)
+                    || (def.ingestible.foodType == FoodTypeFlags.Fungus));
         }
 
         /// <summary>
