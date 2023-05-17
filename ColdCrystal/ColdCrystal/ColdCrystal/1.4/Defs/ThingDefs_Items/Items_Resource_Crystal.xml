@@ -13,12 +13,10 @@
       <li>ResourcesRaw</li>
     </thingCategories>
     <stackLimit>3</stackLimit>
-    <deepCommonality>1</deepCommonality>
-    <deepCountPerPortion>3</deepCountPerPortion>
-    <deepLumpSizeRange>
-      <min>2</min>
-      <max>7</max>
-    </deepLumpSizeRange>
+    <deepCommonality>0.3</deepCommonality>
+    <deepCountPerPortion>2</deepCountPerPortion>
+    <deepLumpSizeRange>1~4</deepLumpSizeRange>
+    <deepCountPerCell>6</deepCountPerCell>
   </ThingDef>
 
   <ThingDef ParentName="CrystalBase">
