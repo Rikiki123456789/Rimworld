@@ -134,7 +134,7 @@ namespace ForceField
             this.effectCells.Add(effectCell);
 
             // Textures initialization.
-            this.forceFieldMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.Building) + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
+            this.forceFieldMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.Projectile) + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
             this.forceFieldAbsorbtionMatrix.SetTRS(this.Position.ToVector3ShiftedWithAltitude(AltitudeLayer.Projectile) + new Vector3(0f, 0f, 0.5f).RotatedBy(this.Rotation.AsAngle), this.Rotation.AsAngle.ToQuat(), forceFieldScale);
         }
 
